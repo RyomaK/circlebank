@@ -1,7 +1,17 @@
 package main
 
-import "fmt"
+import (
+	"flag"
+
+	"github.com/RyomaK/circlebank"
+)
 
 func main() {
-
+	var (
+		addr     = flag.String("addr", "8080", "addr to bind")
+		dbconfig = flag.String("dbconfig", "root:@localhost", "db connect")
+	)
+	b := circlebank.New()
+	b.Init(*dbconfig)
+	b.Run(*addr)
 }
