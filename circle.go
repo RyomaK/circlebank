@@ -30,6 +30,7 @@ func (s *Server) Route() {
 	r := mux.NewRouter()
 
 	r.HandleFunc("/api/{univ}/circle/{name}", controller.CircleHandler).Methods("GET")
+	r.HandleFunc("/api/{univ}/search", controller.SearchHandler)
 	s.mux = r
 }
 
