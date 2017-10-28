@@ -1,10 +1,8 @@
-package db
+package model
 
 import (
 	"database/sql"
 	"log"
-
-	_ "github.com/go-sql-driver/mysql"
 )
 
 func DBConnect(config string) *sql.DB {

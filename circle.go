@@ -9,7 +9,7 @@ import (
 	"net/http"
 
 	"github.com/RyomaK/circlebank/controller"
-	"github.com/RyomaK/circlebank/model/db"
+	"github.com/RyomaK/circlebank/model"
 )
 
 type Server struct {
@@ -22,15 +22,16 @@ func New() *Server {
 }
 
 func (s *Server) Init(dbconfig string) {
-	s.db = db.DBConnect(dbconfig)
+	s.db = model.DBConnect(dbconfig)
 	s.Route()
 }
 
 func (s *Server) Route() {
 	r := mux.NewRouter()
 
-	r.HandleFunc("/api/{univ}/circle/{name}", controller.CircleHandler).Methods("GET")
-	r.HandleFunc("/api/{univ}/search", controller.SearchHandler)
+	r.HandleFunc("/api/{univ}/circle/{id}", controller.CircleHandler).Methods("GET")
+	r.HandleFunc("/api/{univ}/tag", controller.SearchHandler)
+	r.HandleFunc("/api/{univ}/tag/{id}", controller.TagCirclesHandler)
 	s.mux = r
 }
 
