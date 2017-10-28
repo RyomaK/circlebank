@@ -13,8 +13,11 @@ import (
 )
 
 type Server struct {
-	db  *sql.DB
+	DB  *sql.DB
 	mux *mux.Router
+}
+
+type CircleHandler struct {
 }
 
 func New() *Server {
@@ -22,16 +25,18 @@ func New() *Server {
 }
 
 func (s *Server) Init(dbconfig string) {
-	s.db = model.DBConnect(dbconfig)
+	s.DB = model.DBConnect(dbconfig)
 	s.Route()
 }
 
 func (s *Server) Route() {
 	r := mux.NewRouter()
 
-	r.HandleFunc("/api/{univ}/circle/{id}", controller.CircleHandler).Methods("GET")
-	r.HandleFunc("/api/{univ}/tag", controller.SearchHandler)
-	r.HandleFunc("/api/{univ}/tag/{id}", controller.TagCirclesHandler)
+	circles := &controller.Circle{DB: s.DB}
+
+	r.HandleFunc("/api/{univ}/circle/{id}", circles.CircleHandler).Methods("GET")
+	r.HandleFunc("/api/{univ}/tag", circles.SearchHandler)
+	r.HandleFunc("/api/{univ}/tag/{id}", circles.TagCirclesHandler)
 	s.mux = r
 }
 

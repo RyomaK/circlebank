@@ -16,6 +16,7 @@ type Circle struct {
 }
 
 func (c *Circle) CircleHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("circlehandler")
 	vars := mux.Vars(r)
 	w.WriteHeader(http.StatusOK)
 	circle := model.GetCircleDetail(c.DB, vars["univ"], vars["id"])
@@ -28,6 +29,7 @@ func (c *Circle) CircleHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func (c *Circle) SearchHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("searchhandler")
 	vars := mux.Vars(r)
 	w.WriteHeader(http.StatusOK)
 	tags := model.GetTags(c.DB, vars["univ"])
@@ -41,12 +43,13 @@ func (c *Circle) SearchHandler(w http.ResponseWriter, r *http.Request) {
 
 func (c *Circle) TagCirclesHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	w.WriteHeader(http.StatusOK)
 	circles := model.GetTagCircles(c.DB, vars["univ"], vars["id"])
+
 	a, err := json.Marshal(circles)
 	if err != nil {
 		fmt.Errorf("err %v", err)
 	}
 	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
 	w.Write(a)
 }
