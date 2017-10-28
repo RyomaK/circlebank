@@ -26,6 +26,7 @@ type Circle struct {
 	Fee       uint   `db:"fee" json:"fee"`
 }
 
+
 type Event struct {
 	ID         uint      `db:"id" json:"id"`
 	Name       string    `db:"name" json:"name"`
@@ -39,6 +40,5 @@ type Event struct {
 
 type Tag struct {
 	ID     uint   `db:"id" json:"id"`
-	UnivId uint   `db:"univ_id" json:"univ_id"`
 	Name   string `db:"name" json:"name"`
 }

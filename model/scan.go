@@ -70,7 +70,7 @@ func ScanCircles(rs *sql.Rows) ([]Circle, error) {
 	structs := []Circle{}
 	var err error
 	for rs.Next() {
-		var s Circle
+		var s = Circle{}
 		if err = rs.Scan(
 			&s.ID,
 			&s.Name,
@@ -139,7 +139,6 @@ func ScanTags(rs *sql.Rows) ([]Tag, error) {
 		var s Tag
 		if err = rs.Scan(
 			&s.ID,
-			&s.UnivId,
 			&s.Name,
 		); err != nil {
 			return []Tag{}, err
