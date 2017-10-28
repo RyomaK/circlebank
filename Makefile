@@ -1,4 +1,4 @@
-DBNAME:=circle
+DBNAME:=circle_bank
 ENV:=development
 
 run:

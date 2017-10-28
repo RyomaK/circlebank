@@ -9,7 +9,7 @@ import (
 func main() {
 	var (
 		addr     = flag.String("addr", "8080", "addr to bind")
-		dbconfig = flag.String("dbconfig", "root:@localhost", "db connect")
+		dbconfig = flag.String("dbconfig", "root:@localhost/circle_bank", "db connect")
 	)
 	b := circlebank.New()
 	b.Init(*dbconfig)

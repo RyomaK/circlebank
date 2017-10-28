@@ -3,28 +3,50 @@ package controller
 import (
 	"fmt"
 	"net/http"
-	"strings"
 
+	"database/sql"
+	"encoding/json"
+
+	"github.com/RyomaK/circlebank/model"
 	"github.com/gorilla/mux"
 )
 
-func CircleHandler(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, "%s Univ %s", vars["univ"], vars["name"])
+type Circle struct {
+	DB *sql.DB
 }
 
-func SearchHandler(w http.ResponseWriter, r *http.Request) {
+func (c *Circle) CircleHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	query := r.URL.Query()
 	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, "%v Univ\n", vars["univ"])
-	//tagをスペースで分ける
-	for i, v := range split(query["tag"][0]) {
-		fmt.Fprintf(w, "tag%d %v\n", i, v)
+	circle := model.GetCircleDetail(c.DB, vars["univ"], vars["id"])
+	a, err := json.Marshal(circle)
+	if err != nil {
+		fmt.Errorf("err %v", err)
 	}
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(a)
 }
 
-func split(str string) []string {
-	return strings.Split(str, " ")
+func (c *Circle) SearchHandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	w.WriteHeader(http.StatusOK)
+	tags := model.GetTags(c.DB, vars["univ"])
+	a, err := json.Marshal(tags)
+	if err != nil {
+		fmt.Errorf("err %v", err)
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(a)
+}
+
+func (c *Circle) TagCirclesHandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	w.WriteHeader(http.StatusOK)
+	circles := model.GetTagCircles(c.DB, vars["univ"], vars["id"])
+	a, err := json.Marshal(circles)
+	if err != nil {
+		fmt.Errorf("err %v", err)
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(a)
 }
