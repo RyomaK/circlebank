@@ -43,7 +43,7 @@ func (s *Server) Route() {
 	r.HandleFunc("/api/logout", users.LogoutHandler).Methods("POST")
 	r.HandleFunc("/api/signup", users.SignUpHandler).Methods("POST")
 
-	r.HandleFunc("/api/user", users.LogoutHandler).Methods("Get")
+	r.HandleFunc("/api/user", users.UserHandler).Methods("Get")
 	s.mux = r
 }
 

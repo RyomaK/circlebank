@@ -61,8 +61,12 @@ func (u *User) LoginHandler(w http.ResponseWriter, r *http.Request) {
 	redirectTarget := "/api/user"
 	if u.login(mail, pass) {
 		setSession(mail, w)
+		io.WriteString(w, "login!")
+		http.Redirect(w, r, redirectTarget, 302)
 	}
-	http.Redirect(w, r, redirectTarget, 302)
+
+	io.WriteString(w, "not login!")
+	http.Redirect(w, r, redirectTarget, 401)
 }
 
 func clearSession(response http.ResponseWriter) {
@@ -98,8 +102,9 @@ func (u *User) SignUpHandler(w http.ResponseWriter, r *http.Request) {
 		person.Sex = r.FormValue("sex")
 		person.Department = r.FormValue("department")
 		person.Subject = r.FormValue("subject")
+		fmt.Print(r.FormValue("name"))
 		if err := model.Regist(u.DB, person); err != nil {
-			log.Printf("err %v", err)
+			log.Printf("err in signHandler %v", err)
 			http.Redirect(w, r, "/api/user", 400)
 			setSession(person.Mail, w)
 		} else {
@@ -123,9 +128,9 @@ func getUserMail(r *http.Request) (userName string) {
 	return userName
 }
 
-func setSession(userName string, w http.ResponseWriter) {
+func setSession(mail string, w http.ResponseWriter) {
 	value := map[string]string{
-		"mail": userName,
+		"mail": mail,
 	}
 	if encoded, err := cookieHandler.Encode("session", value); err == nil {
 		cookie := &http.Cookie{
