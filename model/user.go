@@ -3,21 +3,28 @@ package model
 import (
 	"database/sql"
 	"log"
+	"strconv"
 )
 
 func UserExist(db *sql.DB, mail string) bool {
-	row := db.QueryRow(`SELECT * from users where mail = ?`, mail)
-	if row != nil {
+	row := db.QueryRow(`SELECT id from users where mail = ?`, mail)
+	var id string
+	row.Scan(&id)
+	if id != "" {
 		return true
 	}
 	return false
 }
 
-func GetUnivID(db *sql.DB, name string) string {
+func GetUnivID(db *sql.DB, name string) uint {
 	row := db.QueryRow(`SELECT id from universities where name = ?`, name)
 	var univ_id string
 	row.Scan(&univ_id)
-	return univ_id
+	id, err := strconv.ParseUint(univ_id, 10, 32)
+	if err != nil {
+		log.Printf("err GetUnivID: %v", err)
+	}
+	return uint(id)
 }
 
 func GetUnivName(db *sql.DB, id string) string {
@@ -32,7 +39,7 @@ func Regist(db *sql.DB, user User) error {
 	if err != nil {
 		return err
 	}
-	_, err = stmt.Exec(GetUnivName(db, user.University), user.Name, user.Mail, user.Password, user.Sex, user.Department, user.Subject)
+	_, err = stmt.Exec(GetUnivID(db, user.University), user.Name, user.Mail, user.Password, user.Sex, user.Department, user.Subject)
 	if err != nil {
 		return err
 	}
