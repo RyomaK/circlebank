@@ -150,3 +150,21 @@ func ScanTags(rs *sql.Rows) ([]Tag, error) {
 	}
 	return structs, nil
 }
+
+func ScanUser(r *sql.Row) (User, error) {
+	var s User
+	if err := r.Scan(
+		&s.ID,
+		&s.University,
+		&s.Name,
+		&s.Mail,
+		&s.Password,
+		&s.Sex,
+		&s.Department,
+		&s.Subject,
+	); err != nil {
+		return User{}, err
+	}
+	return s, nil
+}
+
