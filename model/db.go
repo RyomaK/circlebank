@@ -25,3 +25,7 @@ func DbClose(db *sql.DB) {
 		log.Println("close database")
 	}
 }
+
+func Auth(){
+
+}
