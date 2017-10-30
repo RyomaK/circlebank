@@ -31,7 +31,7 @@ func (u *User) UserHandler(w http.ResponseWriter, r *http.Request) {
 		w.Write(a)
 	} else {
 
-		a, err := json.Marshal("{login:nil}")
+		a, err := json.Marshal("{login:}")
 		if err != nil {
 			fmt.Errorf("err %v", err)
 		}
@@ -59,21 +59,31 @@ func (u *User) LoginHandler(w http.ResponseWriter, r *http.Request) {
 	mail := r.FormValue("mail")
 	pass := r.FormValue("password")
 	redirectTarget := "/api/user"
+	login_json := "{login:" + mail + "}"
 	if u.login(mail, pass) {
 		setSession(mail, w)
-		io.WriteString(w, "login!")
-		http.Redirect(w, r, redirectTarget, 302)
+		a, err := json.Marshal(login_json)
+		if err != nil {
+			fmt.Errorf("err %v", err)
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(a)
+	} else {
+		a, err := json.Marshal(login_json)
+		if err != nil {
+			fmt.Errorf("err %v", err)
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(a)
 	}
-
-	io.WriteString(w, "not login!")
-	http.Redirect(w, r, redirectTarget, 401)
+	http.Redirect(w, r, redirectTarget, 200)
 }
 
 func clearSession(response http.ResponseWriter) {
 	cookie := &http.Cookie{
 		Name:   "session",
 		Value:  "",
-		Path:   "/",
+		Path:   "/api",
 		MaxAge: -1,
 	}
 	http.SetCookie(response, cookie)
@@ -136,7 +146,7 @@ func setSession(mail string, w http.ResponseWriter) {
 		cookie := &http.Cookie{
 			Name:  "session",
 			Value: encoded,
-			Path:  "/",
+			Path:  "/api",
 		}
 		http.SetCookie(w, cookie)
 	}
