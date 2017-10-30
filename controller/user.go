@@ -20,13 +20,14 @@ type User struct {
 }
 
 func (u *User) UserHandler(w http.ResponseWriter, r *http.Request) {
-	if isLogin(r) {
+	if IsLogin(r) {
 		fmt.Println("userhandler")
 		user := model.GetUser(u.DB, getUserMail(r))
 		a, err := json.Marshal(user)
 		if err != nil {
 			fmt.Errorf("err %v", err)
 		}
+		w.WriteHeader(http.StatusOK)
 		w.Header().Set("Content-Type", "application/json")
 		w.Write(a)
 	} else {
@@ -35,6 +36,7 @@ func (u *User) UserHandler(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			fmt.Errorf("err %v", err)
 		}
+		w.WriteHeader(http.StatusUnauthorized)
 		w.Header().Set("Content-Type", "application/json")
 		w.Write(a)
 	}
@@ -66,6 +68,7 @@ func (u *User) LoginHandler(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			fmt.Errorf("err %v", err)
 		}
+		w.WriteHeader(http.StatusOK)
 		w.Header().Set("Content-Type", "application/json")
 		w.Write(a)
 	} else {
@@ -73,6 +76,7 @@ func (u *User) LoginHandler(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			fmt.Errorf("err %v", err)
 		}
+		w.WriteHeader(http.StatusUnauthorized)
 		w.Header().Set("Content-Type", "application/json")
 		w.Write(a)
 	}
@@ -101,7 +105,7 @@ func (u *User) SignUpHandler(w http.ResponseWriter, r *http.Request) {
 	b := model.UserExist(u.DB, r.FormValue("mail"))
 
 	if b {
-		w.WriteHeader(409)
+		w.WriteHeader(http.StatusConflict)
 		io.WriteString(w, "given email address is already used.")
 	} else {
 		var person model.User
@@ -115,10 +119,11 @@ func (u *User) SignUpHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Print(r.FormValue("name"))
 		if err := model.Regist(u.DB, person); err != nil {
 			log.Printf("err in signHandler %v", err)
-			http.Redirect(w, r, "/api/user", 400)
+			http.Redirect(w, r, "/api/user", http.StatusNotAcceptable)
 			setSession(person.Mail, w)
 		} else {
-			http.Redirect(w, r, "/api/user", 201)
+			w.WriteHeader(http.StatusCreated)
+			w.Header().Set("Content-Type", "application/json")
 		}
 
 	}
@@ -152,7 +157,7 @@ func setSession(mail string, w http.ResponseWriter) {
 	}
 }
 
-func isLogin(r *http.Request) bool {
+func IsLogin(r *http.Request) bool {
 	if getUserMail(r) == "" {
 		return false
 	}

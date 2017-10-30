@@ -19,6 +19,7 @@ func (c *Circle) CircleHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("circlehandler")
 	vars := mux.Vars(r)
 	w.WriteHeader(http.StatusOK)
+	//ここにeventの配列も後で追加
 	circle := model.GetCircleDetail(c.DB, vars["univ"], vars["id"])
 	a, err := json.Marshal(circle)
 	if err != nil {
