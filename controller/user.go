@@ -20,21 +20,23 @@ type User struct {
 }
 
 func (u *User) UserHandler(w http.ResponseWriter, r *http.Request) {
-	if isLogin(r) {
+	if IsLogin(r) {
 		fmt.Println("userhandler")
 		user := model.GetUser(u.DB, getUserMail(r))
 		a, err := json.Marshal(user)
 		if err != nil {
 			fmt.Errorf("err %v", err)
 		}
+		w.WriteHeader(http.StatusOK)
 		w.Header().Set("Content-Type", "application/json")
 		w.Write(a)
 	} else {
 
-		a, err := json.Marshal("{login:nil}")
+		a, err := json.Marshal("{login:}")
 		if err != nil {
 			fmt.Errorf("err %v", err)
 		}
+		w.WriteHeader(http.StatusUnauthorized)
 		w.Header().Set("Content-Type", "application/json")
 		w.Write(a)
 	}
@@ -59,21 +61,33 @@ func (u *User) LoginHandler(w http.ResponseWriter, r *http.Request) {
 	mail := r.FormValue("mail")
 	pass := r.FormValue("password")
 	redirectTarget := "/api/user"
+	login_json := "{login:" + mail + "}"
 	if u.login(mail, pass) {
 		setSession(mail, w)
-		io.WriteString(w, "login!")
-		http.Redirect(w, r, redirectTarget, 302)
+		a, err := json.Marshal(login_json)
+		if err != nil {
+			fmt.Errorf("err %v", err)
+		}
+		w.WriteHeader(http.StatusOK)
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(a)
+	} else {
+		a, err := json.Marshal(login_json)
+		if err != nil {
+			fmt.Errorf("err %v", err)
+		}
+		w.WriteHeader(http.StatusUnauthorized)
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(a)
 	}
-
-	io.WriteString(w, "not login!")
-	http.Redirect(w, r, redirectTarget, 401)
+	http.Redirect(w, r, redirectTarget, 200)
 }
 
 func clearSession(response http.ResponseWriter) {
 	cookie := &http.Cookie{
 		Name:   "session",
 		Value:  "",
-		Path:   "/",
+		Path:   "/api",
 		MaxAge: -1,
 	}
 	http.SetCookie(response, cookie)
@@ -91,7 +105,7 @@ func (u *User) SignUpHandler(w http.ResponseWriter, r *http.Request) {
 	b := model.UserExist(u.DB, r.FormValue("mail"))
 
 	if b {
-		w.WriteHeader(409)
+		w.WriteHeader(http.StatusConflict)
 		io.WriteString(w, "given email address is already used.")
 	} else {
 		var person model.User
@@ -105,10 +119,11 @@ func (u *User) SignUpHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Print(r.FormValue("name"))
 		if err := model.Regist(u.DB, person); err != nil {
 			log.Printf("err in signHandler %v", err)
-			http.Redirect(w, r, "/api/user", 400)
+			http.Redirect(w, r, "/api/user", http.StatusNotAcceptable)
 			setSession(person.Mail, w)
 		} else {
-			http.Redirect(w, r, "/api/user", 201)
+			w.WriteHeader(http.StatusCreated)
+			w.Header().Set("Content-Type", "application/json")
 		}
 
 	}
@@ -136,13 +151,13 @@ func setSession(mail string, w http.ResponseWriter) {
 		cookie := &http.Cookie{
 			Name:  "session",
 			Value: encoded,
-			Path:  "/",
+			Path:  "/api",
 		}
 		http.SetCookie(w, cookie)
 	}
 }
 
-func isLogin(r *http.Request) bool {
+func IsLogin(r *http.Request) bool {
 	if getUserMail(r) == "" {
 		return false
 	}

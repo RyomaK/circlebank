@@ -1,6 +1,8 @@
 package model
 
-import "database/sql"
+import (
+	"database/sql"
+)
 
 func ScanCircleDetail(r *sql.Row) (CircleDetail, error) {
 	var s CircleDetail
@@ -168,3 +170,44 @@ func ScanUser(r *sql.Row) (User, error) {
 	return s, nil
 }
 
+func ScanEvent(r *sql.Row) (Event, error) {
+	var s Event
+	if err := r.Scan(
+		&s.ID,
+		&s.Name,
+		&s.Content,
+		&s.Agenda,
+		&s.Detail,
+		&s.Capacity,
+		&s.Fee,
+		&s.University,
+	); err != nil {
+		return Event{}, err
+	}
+	return s, nil
+}
+
+func ScanEvents(rs *sql.Rows) ([]Event, error) {
+	structs := []Event{}
+	var err error
+	for rs.Next() {
+		var s Event
+		if err = rs.Scan(
+			&s.ID,
+			&s.Name,
+			&s.Content,
+			&s.Agenda,
+			&s.Detail,
+			&s.Capacity,
+			&s.Fee,
+			&s.University,
+		); err != nil {
+			return []Event{}, err
+		}
+		structs = append(structs, s)
+	}
+	if err = rs.Err(); err != nil {
+		return []Event{}, err
+	}
+	return structs, nil
+}

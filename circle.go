@@ -17,8 +17,7 @@ type Server struct {
 	mux *mux.Router
 }
 
-type CircleHandler struct {
-}
+type handler func(w http.ResponseWriter, r *http.Request) error
 
 func New() *Server {
 	return &Server{}
@@ -34,16 +33,19 @@ func (s *Server) Route() {
 
 	circles := &controller.Circle{DB: s.DB}
 	users := &controller.User{DB: s.DB}
-
+	events := &controller.Event{DB: s.DB}
+	//circle
 	r.HandleFunc("/api/{univ}/circle/{id}", circles.CircleHandler).Methods("GET")
 	r.HandleFunc("/api/{univ}/tag", circles.SearchHandler)
 	r.HandleFunc("/api/{univ}/tag/{id}", circles.TagCirclesHandler)
-
+	//session
 	r.HandleFunc("/api/login", users.LoginHandler).Methods("POST")
 	r.HandleFunc("/api/logout", users.LogoutHandler).Methods("POST")
 	r.HandleFunc("/api/signup", users.SignUpHandler).Methods("POST")
-
+	//user_data
 	r.HandleFunc("/api/user", users.UserHandler).Methods("Get")
+	//event
+	r.HandleFunc("/api/{univ}/circle/{id}/{event}", events.EventHandler).Methods("POST")
 	s.mux = r
 }
 

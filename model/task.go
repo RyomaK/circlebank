@@ -69,3 +69,26 @@ func GetTags(db *sql.DB, univ_name string) []Tag {
 	}
 	return tags
 }
+
+func GetCircleEventDetail(db *sql.DB, univ_id, id string) Event {
+	query := ``
+	row := db.QueryRow(query, univ_id, id)
+	event, err := ScanEvent(row)
+	if err != nil {
+		log.Printf("get event detail: %v ", err)
+		return Event{}
+	}
+	return event
+}
+
+func GetCircleEvents(db *sql.DB, circle_name string) []Event {
+
+	query := ``
+	rows, _ := db.Query(query, circle_name)
+	events, err := ScanEvents(rows)
+	if err != nil {
+		log.Printf("get events: %v ", err)
+		return []Event{}
+	}
+	return events
+}
