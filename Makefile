@@ -1,6 +1,9 @@
 DBNAME:=circle_bank
 ENV:=development
 
+build:
+	godep	go build -o ./cmd/circle/circle ./cmd/circle/circle.go
+
 run:
 	go run ./cmd/circle/circle.go
 
@@ -18,3 +21,4 @@ install:
 	go get -u github.com/gorilla/securecookie
 	go get -u github.com/gorilla/sessions
 	go get -u golang.org/x/crypto/bcrypt
+	godep get
