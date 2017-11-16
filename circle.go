@@ -45,7 +45,7 @@ func (s *Server) Route() {
 	//user_data
 	r.HandleFunc("/api/user", users.UserHandler).Methods("Get")
 	//event
-	r.HandleFunc("/api/{univ}/circle/{id}/{event}", events.EventHandler).Methods("POST")
+	r.HandleFunc("/api/{univ}/circle/{id}/{event}", events.EventHandler).Methods("GET")
 	s.mux = r
 }
 
