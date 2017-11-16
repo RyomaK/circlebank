@@ -2,7 +2,12 @@ package controller
 
 import (
 	"database/sql"
+	"encoding/json"
 	"net/http"
+
+	"fmt"
+
+	"log"
 
 	"github.com/RyomaK/circlebank/model"
 	"github.com/gorilla/mux"
@@ -17,7 +22,20 @@ func (e *Event) EventHandler(w http.ResponseWriter, r *http.Request) {
 	if IsLogin(r) {
 		vars := mux.Vars(r)
 		events := model.GetCircleEventDetail(e.DB, vars["id"], vars["event"])
+		a, err := json.Marshal(events)
+		if err != nil {
+			fmt.Errorf("err %v", err)
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		w.Write(a)
 	} else {
-
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusUnauthorized)
+		a, err := json.Marshal(model.Event{})
+		if err != nil {
+			log.Printf("%v", err)
+		}
+		w.Write(a)
 	}
 }
