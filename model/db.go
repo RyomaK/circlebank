@@ -26,6 +26,6 @@ func DbClose(db *sql.DB) {
 	}
 }
 
-func Auth(){
+func Auth() {
 
 }
