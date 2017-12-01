@@ -7,6 +7,8 @@ import (
 	"database/sql"
 	"encoding/json"
 
+	"log"
+
 	"github.com/RyomaK/circlebank/model"
 	"github.com/gorilla/mux"
 )
@@ -19,55 +21,59 @@ func (c *Circle) CircleHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("circlehandler")
 	vars := mux.Vars(r)
 	//ここにeventの配列も後で追加
-	circle,err := model.GetCircleDetail(c.DB, vars["univ"], vars["id"])
+	circle, err := model.GetCircleDetail(c.DB, vars["univ"], vars["id"])
 	if err != nil {
-		w = SetHeader(w,http.StatusBadRequest)
-		fmt.Errorf("getCircleDetail err %v", err)
+		log.Printf("getCircleDetail err %v", err)
 	}
 	a, err := json.Marshal(circle)
 	if err != nil {
-		fmt.Errorf("Marshal %v", err)
-		w = SetHeader(w,http.StatusBadRequest)
-	}else{
-		w = SetHeader(w,http.StatusOK)
+		log.Printf("Marshal %v", err)
 	}
+	w = SetHeader(w, http.StatusOK)
+	w.Write(a)
+}
+
+func (c *Circle) UnivCircleHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("univcirclehandler")
+	vars := mux.Vars(r)
+	//ここにeventの配列も後で追加
+	circles, err := model.GetUnivCircles(c.DB, vars["univ"])
+	if err != nil {
+		log.Printf("getCircleDetail err %v", err)
+	}
+	a, err := json.Marshal(circles)
+	if err != nil {
+		log.Printf("Marshal %v", err)
+	}
+	w = SetHeader(w, http.StatusOK)
 	w.Write(a)
 }
 
 func (c *Circle) SearchHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("searchhandler")
 	vars := mux.Vars(r)
-	tags,err := model.GetTags(c.DB, vars["univ"])
+	tags, err := model.GetTags(c.DB, vars["univ"])
 	if err != nil {
-		fmt.Errorf("err %v", err)
-		w.WriteHeader(http.StatusNotFound)
+		log.Printf("sarch err %v", err)
 	}
 	a, err := json.Marshal(tags)
 	if err != nil {
-		fmt.Errorf("err %v", err)
-		w.WriteHeader(http.StatusBadRequest)
-	} else {
-		w.WriteHeader(http.StatusOK)
+		log.Printf("err %v", err)
 	}
-	w.Header().Set("Content-Type", "application/json")
+	w = SetHeader(w, http.StatusOK)
 	w.Write(a)
 }
 
 func (c *Circle) TagCirclesHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	circles ,err:= model.GetTagCircles(c.DB, vars["univ"], vars["id"])
+	circles, err := model.GetTagCircles(c.DB, vars["univ"], vars["id"])
 	if err != nil {
-		fmt.Errorf("err %v", err)
-		w.WriteHeader(http.StatusBadRequest)
+		log.Printf("err %v", err)
 	}
 	a, err := json.Marshal(circles)
 	if err != nil {
-		fmt.Errorf("err %v", err)
-		w.WriteHeader(http.StatusBadRequest)
-	}else{
-		w.WriteHeader(http.StatusOK)
+		log.Printf("err %v", err)
 	}
-	w.Header().Set("Content-Type", "application/json")
-
+	w = SetHeader(w, http.StatusOK)
 	w.Write(a)
 }

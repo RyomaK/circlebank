@@ -5,12 +5,10 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"fmt"
-
-	"log"
 
 	"github.com/RyomaK/circlebank/model"
 	"github.com/gorilla/mux"
+	"log"
 )
 
 type Event struct {
@@ -18,28 +16,16 @@ type Event struct {
 }
 
 func (e *Event) EventHandler(w http.ResponseWriter, r *http.Request) {
-	//loginしないと見れない
-	if IsLogin(r) {
-		vars := mux.Vars(r)
-		events,err := model.GetCircleEventDetail(e.DB, vars["id"], vars["event"])
-		if err != nil {
-			fmt.Errorf("err %v", err)
-			w.WriteHeader(http.StatusBadRequest)
-		}
-		a, err := json.Marshal(events)
-		if err != nil {
-			fmt.Errorf("err %v", err)
-		}
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusOK)
-		w.Write(a)
-	} else {
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusUnauthorized)
-		a, err := json.Marshal(model.Event{})
-		if err != nil {
-			log.Printf("%v", err)
-		}
-		w.Write(a)
+	vars := mux.Vars(r)
+	//event_idはそのサークルの
+	events, err := model.GetCircleEventDetail(e.DB, vars["univ"],vars["id"], vars["event_id"])
+	if err != nil {
+		log.Printf("event err %v", err)
 	}
+	a, err := json.Marshal(events)
+	if err != nil {
+		log.Printf("err %v", err)
+	}
+	w = SetHeader(w, http.StatusOK)
+	w.Write(a)
 }
