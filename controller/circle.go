@@ -18,13 +18,20 @@ type Circle struct {
 func (c *Circle) CircleHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("circlehandler")
 	vars := mux.Vars(r)
-	w.WriteHeader(http.StatusOK)
 	//ここにeventの配列も後で追加
-	circle := model.GetCircleDetail(c.DB, vars["univ"], vars["id"])
+	circle,err := model.GetCircleDetail(c.DB, vars["univ"], vars["id"])
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Errorf("getCircleDetail err %v", err)
+	}
 	a, err := json.Marshal(circle)
 	if err != nil {
-		fmt.Errorf("err %v", err)
+		fmt.Errorf("Marshal %v", err)
+		w.WriteHeader(http.StatusBadRequest)
+	}else{
+		w.WriteHeader(http.StatusOK)
 	}
+
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(a)
 }
@@ -32,11 +39,17 @@ func (c *Circle) CircleHandler(w http.ResponseWriter, r *http.Request) {
 func (c *Circle) SearchHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("searchhandler")
 	vars := mux.Vars(r)
-	w.WriteHeader(http.StatusOK)
-	tags := model.GetTags(c.DB, vars["univ"])
+	tags,err := model.GetTags(c.DB, vars["univ"])
+	if err != nil {
+		fmt.Errorf("err %v", err)
+		w.WriteHeader(http.StatusNotFound)
+	}
 	a, err := json.Marshal(tags)
 	if err != nil {
 		fmt.Errorf("err %v", err)
+		w.WriteHeader(http.StatusBadRequest)
+	} else {
+		w.WriteHeader(http.StatusOK)
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(a)
@@ -44,13 +57,19 @@ func (c *Circle) SearchHandler(w http.ResponseWriter, r *http.Request) {
 
 func (c *Circle) TagCirclesHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	circles := model.GetTagCircles(c.DB, vars["univ"], vars["id"])
-
+	circles ,err:= model.GetTagCircles(c.DB, vars["univ"], vars["id"])
+	if err != nil {
+		fmt.Errorf("err %v", err)
+		w.WriteHeader(http.StatusBadRequest)
+	}
 	a, err := json.Marshal(circles)
 	if err != nil {
 		fmt.Errorf("err %v", err)
+		w.WriteHeader(http.StatusBadRequest)
+	}else{
+		w.WriteHeader(http.StatusOK)
 	}
 	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
+
 	w.Write(a)
 }

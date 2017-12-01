@@ -10,7 +10,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-func GetCircleDetail(db *sql.DB, univ, id string) CircleDetail {
+func GetCircleDetail(db *sql.DB, univ, id string) (CircleDetail,error) {
 	query := `select circles.id,circles.name,number,introduction,message_fresh,delegetes.name,delegetes.contact,campus,excite,fee,universities.name
 			  from (circles left outer join universities on univ_id = universities.id)
 			  left outer join delegetes on circles.id = delegetes.circle_id
@@ -19,12 +19,12 @@ func GetCircleDetail(db *sql.DB, univ, id string) CircleDetail {
 	circle, err := ScanCircleDetail(row)
 	if err != nil {
 		log.Printf("get circle detail: %v ", err)
-		return CircleDetail{}
+		return CircleDetail{},err
 	}
-	return circle
+	return circle,nil
 }
 
-func GetUnivCircles(db *sql.DB, univ string) []Circle {
+func GetUnivCircles(db *sql.DB, univ string) ([]Circle ,error){
 	query := `select circles.id,circles.name,number,introduction,campus,excite,fee
 			  from circles
 			  left outer join universities on univ_id = universities.id
@@ -33,12 +33,12 @@ func GetUnivCircles(db *sql.DB, univ string) []Circle {
 	circles, err := ScanCircles(rows)
 	if err != nil {
 		log.Printf("get circles: %v ", err)
-		return []Circle{}
+		return []Circle{},err
 	}
-	return circles
+	return circles,nil
 }
 
-func GetTagCircles(db *sql.DB, univ_name, tag_id string) []Circle {
+func GetTagCircles(db *sql.DB, univ_name, tag_id string) ([]Circle ,error){
 	query := `select circles.id,circles.name,number,introduction,campus,excite,fee
 			  from (circles inner join universities on univ_id = universities.id)
 			  inner join circles_tags on circles.id = circles_tags.circle_id
@@ -49,12 +49,12 @@ func GetTagCircles(db *sql.DB, univ_name, tag_id string) []Circle {
 	circles, err := ScanCircles(rows)
 	if err != nil {
 		log.Printf("not tag circles: %v ", err)
-		return []Circle{}
+		return []Circle{},err
 	}
-	return circles
+	return circles,nil
 }
 
-func GetTags(db *sql.DB, univ_name string) []Tag {
+func GetTags(db *sql.DB, univ_name string) ([]Tag,error) {
 
 	query := `select tags.id, tags.name
 			  from (circles inner join universities on circles.univ_id = universities.id)
@@ -65,30 +65,30 @@ func GetTags(db *sql.DB, univ_name string) []Tag {
 	tags, err := ScanTags(rows)
 	if err != nil {
 		log.Printf("get circles: %v ", err)
-		return []Tag{}
+		return []Tag{} ,err
 	}
-	return tags
+	return tags,nil
 }
 
-func GetCircleEventDetail(db *sql.DB, univ_id, id string) Event {
+func GetCircleEventDetail(db *sql.DB, univ_id, id string)( Event,error ){
 	query := ``
 	row := db.QueryRow(query, univ_id, id)
 	event, err := ScanEvent(row)
 	if err != nil {
 		log.Printf("get event detail: %v ", err)
-		return Event{}
+		return Event{},err
 	}
-	return event
+	return event,nil
 }
 
-func GetCircleEvents(db *sql.DB, circle_name string) []Event {
+func GetCircleEvents(db *sql.DB, circle_name string) ([]Event,error ){
 
 	query := ``
 	rows, _ := db.Query(query, circle_name)
 	events, err := ScanEvents(rows)
 	if err != nil {
 		log.Printf("get events: %v ", err)
-		return []Event{}
+		return []Event{},err
 	}
-	return events
+	return events,nil
 }

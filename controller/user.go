@@ -22,7 +22,10 @@ type User struct {
 func (u *User) UserHandler(w http.ResponseWriter, r *http.Request) {
 	if IsLogin(r) {
 		fmt.Println("userhandler")
-		user := model.GetUser(u.DB, getUserMail(r))
+		user ,err:= model.GetUser(u.DB, getUserMail(r))
+		if err != nil {
+			fmt.Errorf("err %v", err)
+		}
 		a, err := json.Marshal(user)
 		if err != nil {
 			fmt.Errorf("err %v", err)

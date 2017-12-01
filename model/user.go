@@ -54,11 +54,12 @@ func GetUserPass(db *sql.DB, mail string) string {
 	return pass
 }
 
-func GetUser(db *sql.DB, mail string) User {
+func GetUser(db *sql.DB, mail string)( User,error) {
 	row := db.QueryRow(`SELECT * from users where mail = ?`, mail)
 	user, err := ScanUser(row)
 	if err != nil {
 		log.Printf("mail:%v,err:%v", mail, err)
+		return User{},err
 	}
-	return user
+	return user,nil
 }
