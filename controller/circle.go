@@ -21,18 +21,16 @@ func (c *Circle) CircleHandler(w http.ResponseWriter, r *http.Request) {
 	//ここにeventの配列も後で追加
 	circle,err := model.GetCircleDetail(c.DB, vars["univ"], vars["id"])
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		w = SetHeader(w,http.StatusBadRequest)
 		fmt.Errorf("getCircleDetail err %v", err)
 	}
 	a, err := json.Marshal(circle)
 	if err != nil {
 		fmt.Errorf("Marshal %v", err)
-		w.WriteHeader(http.StatusBadRequest)
+		w = SetHeader(w,http.StatusBadRequest)
 	}else{
-		w.WriteHeader(http.StatusOK)
+		w = SetHeader(w,http.StatusOK)
 	}
-
-	w.Header().Set("Content-Type", "application/json")
 	w.Write(a)
 }
 

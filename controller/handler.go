@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"golang.org/x/crypto/bcrypt"
+	"net/http"
 )
 
 func PassToHash(pass string) string {
@@ -19,4 +20,11 @@ func PassToHash(pass string) string {
 		return ""
 	}
 	return string(hash)
+}
+
+func SetHeader(w http.ResponseWriter,stats int)http.ResponseWriter{
+	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.WriteHeader(http.StatusOK)
+	return w
 }
