@@ -2,6 +2,7 @@ package model
 
 import (
 	"database/sql"
+	"fmt"
 )
 
 func ScanCircleDetail(r *sql.Row) (CircleDetail, error) {
