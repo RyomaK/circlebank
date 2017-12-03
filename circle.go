@@ -37,7 +37,7 @@ func (s *Server) Route() {
 	//circle
 	r.HandleFunc("/api/{univ}/circle/{id}", circles.CircleHandler).Methods("GET")
 	r.HandleFunc("/api/{univ}/circle", circles.UnivCircleHandler).Methods("GET")
-	r.HandleFunc("/api/{univ}/tag", circles.SearchHandler)
+	r.HandleFunc("/api/{univ}/tag/", circles.SearchHandler)
 	r.HandleFunc("/api/{univ}/tag/{id}", circles.TagCirclesHandler)
 	//session
 	r.HandleFunc("/api/login", users.LoginHandler).Methods("POST")
