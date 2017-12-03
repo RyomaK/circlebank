@@ -15,7 +15,6 @@ import (
 var (
 	ErrMethodMismatch = errors.New("method is not allowed")
 )
-
 // NewRouter returns a new router instance.
 func NewRouter() *Router {
 	return &Router{namedRoutes: make(map[string]*Route), KeepContext: false}
