@@ -1,5 +1,5 @@
 module.exports = {
-	entry: './assets/js/index.jsx', // エントリポイントのjsxファイル
+	entry: './assets/js/index.js', // エントリポイントのjsxファイル
 	output: {
 		filename: 'bundle.js' // 出力するファイル
 				    },
