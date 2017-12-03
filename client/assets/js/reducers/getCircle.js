@@ -1,4 +1,0 @@
-const getCircle = (state = [],action) => {
-  
-
-}

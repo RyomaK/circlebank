@@ -4,9 +4,3 @@ export const search = value => {
     value
   }
 }
-
-export const getCircle = () => {
-  return{
-    type:'GetCircle'
-  }
-}

@@ -1,7 +1,5 @@
 import axios from 'axios'
 
-
-
 const search = (state="なし", action) => {
   const URL = `http://localhost:8080/api/doshisha/tag/${action.value}`
   switch (action.type){
