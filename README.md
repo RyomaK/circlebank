@@ -13,9 +13,9 @@
 大学毎のtag一覧  
 ### GET```/api/{大学}/tag/{id}```  
 idを持っているサークル一覧
-### GET```/api/user```  
+### GET```/api/login/{provider}```  
 - login　している
- ユーザー情報
+ cookie
 - login していない
  login:""
  

@@ -10,7 +10,10 @@ import (
 	"fmt"
 
 	"github.com/RyomaK/circlebank/model"
+	"github.com/gorilla/mux"
 	"github.com/gorilla/securecookie"
+	"github.com/stretchr/gomniauth"
+	"github.com/stretchr/objx"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -21,7 +24,7 @@ type User struct {
 func (u *User) UserHandler(w http.ResponseWriter, r *http.Request) {
 	if IsLogin(r) {
 		fmt.Println("userhandler")
-		user ,err:= model.GetUser(u.DB, getUserMail(r))
+		user, err := model.GetUser(u.DB, getUserMail(r))
 		if err != nil {
 			log.Printf("err %v", err)
 		}
@@ -29,7 +32,7 @@ func (u *User) UserHandler(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			log.Printf("err %v", err)
 		}
-		w = SetHeader(w,http.StatusOK)
+		w = SetHeader(w, http.StatusOK)
 		w.Write(a)
 	} else {
 
@@ -37,7 +40,7 @@ func (u *User) UserHandler(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			log.Printf("err %v", err)
 		}
-		w = SetHeader(w,http.StatusUnauthorized)
+		w = SetHeader(w, http.StatusUnauthorized)
 		w.Write(a)
 	}
 
@@ -57,24 +60,61 @@ func (u *User) login(mail, pass string) bool {
 
 // login handler
 func (u *User) LoginHandler(w http.ResponseWriter, r *http.Request) {
-	mail := r.FormValue("mail")
-	pass := r.FormValue("password")
-	login_json := "{login:" + mail + "}"
-	if u.login(mail, pass) {
-		setSession(mail, w)
-		a, err := json.Marshal(login_json)
+	vars := mux.Vars(r)
+	action := vars["action"]
+	provider_name := vars["provider"]
+	switch action {
+	case "login":
+		provider, err := gomniauth.Provider(provider_name)
 		if err != nil {
-			fmt.Errorf("err %v", err)
+			http.Error(w, fmt.Sprintf("Error when trying to get provider %s: %s", provider, err), http.StatusBadRequest)
+			return
 		}
-		w = SetHeader(w,http.StatusOK)
-		w.Write(a)
-	} else {
-		a, err := json.Marshal(login_json)
+
+		loginURL, err := provider.GetBeginAuthURL(nil, nil)
 		if err != nil {
-			fmt.Errorf("err %v", err)
+			http.Error(w, fmt.Sprintf("Error when trying to GetBeginAuthURL for %s: %s", provider, err), http.StatusInternalServerError)
+			return
 		}
-		w = SetHeader(w,http.StatusUnauthorized)
-		w.Write(a)
+
+		w.Header().Set("Location", loginURL)
+		w.WriteHeader(http.StatusTemporaryRedirect)
+
+	case "callback":
+		provider, err := gomniauth.Provider(provider_name)
+		if err != nil {
+			http.Error(w, fmt.Sprintf("Error when trying to get provider %s: %s", provider, err), http.StatusBadRequest)
+			return
+		}
+
+		// get the credentials
+		creds, err := provider.CompleteAuth(objx.MustFromURLQuery(r.URL.RawQuery))
+		if err != nil {
+			http.Error(w, fmt.Sprintf("Error when trying to complete auth for %s: %s", provider, err), http.StatusInternalServerError)
+			return
+		}
+
+		// get the user
+		user, err := provider.GetUser(creds)
+		if err != nil {
+			http.Error(w, fmt.Sprintf("Error when trying to get user from %s: %s", provider, err), http.StatusInternalServerError)
+			return
+		}
+
+		// save some data
+		authCookieValue := objx.New(map[string]interface{}{
+			"name": user.Name(),
+		}) //.MustBase64()
+		http.SetCookie(w, &http.Cookie{
+			Name:  "auth",
+			Value: authCookieValue,
+			Path:  "/"})
+		w.Header().Set("Location", "/api/doshisha/circle/1")
+		w.WriteHeader(http.StatusTemporaryRedirect)
+
+	default:
+		w.WriteHeader(http.StatusNotFound)
+		fmt.Fprintf(w, "Auth action %s not supported", action)
 	}
 }
 
@@ -100,7 +140,7 @@ func (u *User) SignUpHandler(w http.ResponseWriter, r *http.Request) {
 
 	if b {
 		w.WriteHeader(http.StatusConflict)
-		a,_ := json.Marshal("{signup:NG}")
+		a, _ := json.Marshal("{signup:NG}")
 		w.Write(a)
 	} else {
 		var person model.User
@@ -113,13 +153,13 @@ func (u *User) SignUpHandler(w http.ResponseWriter, r *http.Request) {
 		person.Subject = r.FormValue("subject")
 		if err := model.Regist(u.DB, person); err != nil {
 			log.Printf("err in signHandler %v", err)
-			a,_ := json.Marshal("{signup:NG}")
+			a, _ := json.Marshal("{signup:NG}")
 			w.Write(a)
 		} else {
 			http.Redirect(w, r, "/api/user", http.StatusNotAcceptable)
 			setSession(person.Mail, w)
-			w = SetHeader(w,http.StatusCreated)
-			a,_ := json.Marshal("{signup:OK}")
+			w = SetHeader(w, http.StatusCreated)
+			a, _ := json.Marshal("{signup:OK}")
 			w.Write(a)
 		}
 
