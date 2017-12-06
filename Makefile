@@ -5,7 +5,8 @@ build:
 	godep	go build -o ./cmd/circle/circle ./cmd/circle/circle.go
 
 run:
-	go run ./cmd/circle/circle.go
+	godep	go build -o ./cmd/circle/circle ./cmd/circle/circle.go	
+	./cmd/circle/circle
 
 test:
 	go test -v ./...
@@ -20,5 +21,6 @@ install:
 	go get -u github.com/gorilla/mux
 	go get -u github.com/gorilla/securecookie
 	go get -u github.com/gorilla/sessions
-	go get -u golang.org/x/crypto/bcrypt
+	go get -u github.com/stretchr/objx
+	go get -u github.com/stretchr/gomniauth
 	godep get

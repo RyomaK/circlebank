@@ -61,9 +61,9 @@ func GetTags(db *sql.DB, univ_name string) ([]Tag, error) {
 	return tags, nil
 }
 
-func GetCircleEventDetail(db *sql.DB, univ,circle_id, id string) (Event, error) {
+func GetCircleEventDetail(db *sql.DB, univ, circle_id, id string) (Event, error) {
 	query := ``
-	row := db.QueryRow(query, univ,circle_id, id)
+	row := db.QueryRow(query, univ, circle_id, id)
 	event, err := ScanEvent(row)
 	if err != nil {
 		return Event{}, err

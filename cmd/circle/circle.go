@@ -12,6 +12,5 @@ func main() {
 		dbconfig = flag.String("dbconfig", "root:@/circle_bank", "db connect")
 	)
 	b := circlebank.New()
-	b.Init(*dbconfig)
-	b.Run(*addr)
+	b.Run(*dbconfig, *addr)
 }
