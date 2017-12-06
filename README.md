@@ -26,7 +26,7 @@ Oauthログイン
 ログアウト
 ### GET```/signup```
 Oauthは通るがDBにデータが登録されていない時
-mail,avatar,name返す
+mail,avatar,name
 ### POST```/signup```
 db登録（未実装）
 
