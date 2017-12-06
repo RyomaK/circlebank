@@ -1,21 +1,19 @@
 import React from "react"
-import { Grid, Col, Row, Button,ButtonToolbar } from 'react-bootstrap';
+import { Grid, Col, Row, Button,ButtonToolbar,Jumbotron } from 'react-bootstrap';
 
-const style = {
-  margin: 12,
-};
+
+
 
 const TopPage = () => {
   return(
+    <div className="top">
   <Grid>
-    <Row><Col md={6} mdOffset={3}>トップページ</Col></Row>
-    <Row><Col md={6} mdOffset={3}>
-      <ButtonToolbar>
-        <Button bsStyle="success">Sign Up</Button>
-        <Button bsStyle="info">Log In</Button>
-      </ButtonToolbar>
-    </Col></Row>
+        <p>トップページ</p>
+        <p><Button bsStyle="success" bsSize="large">Sign Up</Button>
+        <span></span>
+        <Button bsStyle="info"bsSize="large" >Log In</Button></p>
   </Grid>
+  </div>
 )
 }
 

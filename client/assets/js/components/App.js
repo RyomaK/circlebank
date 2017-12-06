@@ -1,15 +1,22 @@
 import React from 'react'
 import Header from './Header'
 import TopPage from './TopPage'
-import VisibleSearchForm from '../containers/VisibleSearchForm'
+import SearchForm from '../containers/SearchForm'
+import TagMenu from '../containers/TagMenu'
+
+
 const App = () => {
   return(
-  <div>
-    <Header />
-    <TopPage />
-    <VisibleSearchForm />
-  </div>
-)
+
+          <div>
+          <Header />
+          <TopPage />
+          <SearchForm />
+          <TagMenu/>
+          </div>
+
+
+  )
 
 }
 

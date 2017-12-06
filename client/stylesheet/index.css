@@ -6,7 +6,31 @@
   height:40px;
   line-height: 40px;
   font-size: 20px;
-  background-color: black;
+  background-color: #00796B;
   color: white;
   float: left;
+}
+.top{
+
+  width: 100vw;
+  height: auto;
+  min-height: 100vh;
+  text-align: center;
+    display: table;
+
+}
+
+.top p{
+  font-size:50px;
+  margin:40px;
+}
+
+.circle{
+  padding: auto;
+  background-color: #B2DFDB;
+
+}
+
+.searchForm{
+  margin-bottom: 20px;
 }
