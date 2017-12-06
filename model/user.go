@@ -39,7 +39,7 @@ func Regist(db *sql.DB, user User) error {
 	if err != nil {
 		return err
 	}
-	_, err = stmt.Exec(GetUnivID(db, user.University), user.Name, user.Mail, user.Password, user.Sex, user.Department, user.Subject)
+	_, err = stmt.Exec(GetUnivID(db, user.University), user.Name, user.Mail, user.Image, user.Sex, user.Department, user.Subject)
 	if err != nil {
 		return err
 	}
@@ -54,12 +54,12 @@ func GetUserPass(db *sql.DB, mail string) string {
 	return pass
 }
 
-func GetUser(db *sql.DB, mail string)( User,error) {
+func GetUser(db *sql.DB, mail string) (User, error) {
 	row := db.QueryRow(`SELECT * from users where mail = ?`, mail)
 	user, err := ScanUser(row)
 	if err != nil {
 		log.Printf("mail:%v,err:%v", mail, err)
-		return User{},err
+		return User{}, err
 	}
-	return user,nil
+	return user, nil
 }

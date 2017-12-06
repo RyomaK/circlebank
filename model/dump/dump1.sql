@@ -189,7 +189,7 @@ CREATE TABLE `users` (
   `univ_id` int(11) DEFAULT NULL,
   `name` varchar(255) NOT NULL DEFAULT '',
   `mail` varchar(255) NOT NULL DEFAULT '',
-  `password` varchar(255) NOT NULL DEFAULT '',
+  `image` varchar(255) NOT NULL DEFAULT '',
   `sex` char(2) NOT NULL DEFAULT '',
   `department` varchar(255) NOT NULL DEFAULT '',
   `subject` varchar(255) NOT NULL DEFAULT '',
@@ -203,7 +203,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,1,'栗栖','ryooomaaa0413@gmail.com','$2a$10$crZjiL38UJG0fO68ddvugOfysSFfsmrUaUC0gAEHqBgceK7Guccvu','1','理工学部','情報システムデザイン学科');
+INSERT INTO `users` VALUES (1,1,'栗栖','ryooomaaa0413@gmail.com','http://gakusen.jp/wp/wp-content/uploads/kurisu-ryoma_profile.jpg','1','理工学部','情報システムデザイン学科');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

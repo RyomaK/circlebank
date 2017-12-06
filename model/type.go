@@ -16,7 +16,6 @@ type CircleDetail struct {
 	University      string `db:"university" json:"university"`
 }
 
-
 type Circle struct {
 	ID        uint   `db:"id" json:"id"`
 	Name      string `db:"name" json:"name"`
@@ -48,7 +47,7 @@ type User struct {
 	University string `db:"university" json:"university"`
 	Name       string `db:"name" json:"name"`
 	Mail       string `db:"mail" json:"mail"`
-	Password   string `db:"password" json:"password"`
+	Image      string `db:"image" json:"image"`
 	Sex        string `db:"sex" json:"sex"`
 	Department string `db:"department" json:"department"`
 	Subject    string `db:"subject" json:"subject"`

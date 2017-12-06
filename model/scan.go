@@ -160,7 +160,7 @@ func ScanUser(r *sql.Row) (User, error) {
 		&s.University,
 		&s.Name,
 		&s.Mail,
-		&s.Password,
+		&s.Image,
 		&s.Sex,
 		&s.Department,
 		&s.Subject,

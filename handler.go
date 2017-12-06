@@ -1,20 +1,23 @@
 package circlebank
 
-//Authをハンドラーにかけて、ログイン判定できたらいいな
+import (
+	"net/http"
+)
 
-/*
-func Auth(h handler) handler {
-	return func(w http.ResponseWriter, r *http.Request) error {
-		if !controller.IsLogin(r) {
-			a, err := json.Marshal("{login:}")
-			if err != nil {
-				fmt.Errorf("err %v", err)
-			}
-			w.Header().Set("Content-Type", "application/json")
-			w.Write(a)
-		}
-		h.ServeHTTP(w, r)
-		return nil
+func Login(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
+	_, err := r.Cookie("auth")
+	if err == http.ErrNoCookie {
+		// not authenticated
+		http.Error(w, "Not Authorized", http.StatusUnauthorized)
+	} else if err != nil {
+		// some other error
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	} else {
+		next(w, r)
 	}
+
 }
-*/
+
+func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusNotFound)
+}
