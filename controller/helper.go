@@ -9,6 +9,12 @@ import (
 	"github.com/stretchr/objx"
 )
 
+type signup struct {
+	Name  string `json:"name"`
+	Mail  string `json:"mail"`
+	Image string `json:"image"`
+}
+
 func SetHeader(w http.ResponseWriter, stats int) http.ResponseWriter {
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -24,9 +30,7 @@ func GetUserData(cookie string) (string, string, string) {
 	data := strings.Split(string(decode), "\"")
 	//avatar,email,name
 	return data[3], data[7], data[11]
-	/*
-	   {"avatar":"https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg","email":"ryooomaaa0413@gmail.com","name":"遼馬栗栖"}
-	*/
+
 }
 
 func getUserEmail(r *http.Request) string {

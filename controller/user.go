@@ -2,7 +2,6 @@ package controller
 
 import (
 	"database/sql"
-	"encoding/base64"
 	"encoding/json"
 	"net/http"
 
@@ -69,7 +68,7 @@ func (u *User) LoginHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		w.Header().Set("Location", loginURL)
-		w.WriteHeader(http.StatusTemporaryRedirect)
+		w = SetHeader(w, http.StatusTemporaryRedirect)
 
 	case "callback":
 		provider, err := gomniauth.Provider(provider_name)
@@ -109,21 +108,21 @@ func (u *User) LoginHandler(w http.ResponseWriter, r *http.Request) {
 		if model.UserExist(u.DB, user.Email()) {
 			// save some data
 			setAuth(w)
-			w.WriteHeader(http.StatusAccepted)
+			w = SetHeader(w, http.StatusAccepted)
 		} else {
 			//signup
-			w.WriteHeader(http.StatusFound)
+			w = SetHeader(w, http.StatusFound)
 		}
 
 	default:
-		w.WriteHeader(http.StatusNotFound)
+		w = SetHeader(w, http.StatusNotFound)
 		fmt.Fprintf(w, "Auth action %s not supported", action)
 	}
 }
 
 func (u *User) LogoutHandler(w http.ResponseWriter, r *http.Request) {
 	clearAuth(w)
-	w.WriteHeader(http.StatusAccepted)
+	w = SetHeader(w, http.StatusAccepted)
 }
 
 func (u *User) SignUpHandler(w http.ResponseWriter, r *http.Request) {
@@ -133,8 +132,8 @@ func (u *User) SignUpHandler(w http.ResponseWriter, r *http.Request) {
 	if b {
 		w.WriteHeader(http.StatusConflict)
 		a, _ := json.Marshal("{signup:already}")
+		w = SetHeader(w, http.StatusAlreadyReported)
 		w.Write(a)
-		w.WriteHeader(http.StatusAlreadyReported)
 	} else {
 		cookies, err := r.Cookie("data")
 		if err != nil {
@@ -152,13 +151,13 @@ func (u *User) SignUpHandler(w http.ResponseWriter, r *http.Request) {
 		if err := model.Regist(u.DB, person); err != nil {
 			log.Printf("err in signHandler %v", err)
 			a, _ := json.Marshal("{signup:NG}")
-			w.WriteHeader(http.StatusNotAcceptable)
+			w = SetHeader(w, http.StatusNotAcceptable)
 			w.Write(a)
 		} else {
 			setAuth(w)
 			w = SetHeader(w, http.StatusCreated)
 			a, _ := json.Marshal("{signup:OK}")
-			w.WriteHeader(http.StatusAccepted)
+			w = SetHeader(w, http.StatusAccepted)
 			w.Write(a)
 		}
 
@@ -171,10 +170,8 @@ func (u *User) SignUpViewHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Errorf("err view signup %v", err)
 	}
-	decode, err := base64.StdEncoding.DecodeString(cookie.Value)
-	if err != nil {
-		fmt.Errorf("err decode base64 %v", err)
-	}
-	a, _ := json.Marshal(string(decode))
+	avatar, email, name := GetUserData(cookie.Value)
+	data := signup{Name: name, Mail: email, Image: avatar}
+	a, _ := json.Marshal(data)
 	w.Write(a)
 }
