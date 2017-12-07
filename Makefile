@@ -13,9 +13,12 @@ test:
 migrate/init:
 	mysql.server start
 	mysql -u root -h localhost --protocol tcp -e "create database \`$(DBNAME)\`" -p
+
 migrate/seed:
 	mysql -u root -p $(DBname) < ./model/dump/dump1.sql
+
 install:
+	go get github.com/kr/godep
 	go get -u github.com/go-sql-driver/mysql
 	go get -u github.com/gorilla/mux
 	go get -u github.com/gorilla/securecookie
