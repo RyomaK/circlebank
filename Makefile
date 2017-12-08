@@ -5,6 +5,7 @@ build:
 	godep	go build -o ./cmd/circle/circle ./cmd/circle/circle.go
 
 run:
+	go build -o ./cmd/circle/circle ./cmd/circle/circle.go
 	./cmd/circle/circle
 
 test:

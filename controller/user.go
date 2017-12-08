@@ -5,12 +5,13 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"github.com/gorilla/mux"
+
 	"log"
 
 	"fmt"
 
 	"github.com/RyomaK/circlebank/model"
-	"github.com/gorilla/mux"
 	"github.com/stretchr/gomniauth"
 	"github.com/stretchr/objx"
 )
@@ -60,13 +61,11 @@ func (u *User) LoginHandler(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, fmt.Sprintf("Error when trying to get provider %s: %s", provider, err), http.StatusBadRequest)
 			return
 		}
-
 		loginURL, err := provider.GetBeginAuthURL(nil, nil)
 		if err != nil {
 			http.Error(w, fmt.Sprintf("Error when trying to GetBeginAuthURL for %s: %s", provider, err), http.StatusInternalServerError)
 			return
 		}
-
 		w.Header().Set("Location", loginURL)
 		w = SetHeader(w, http.StatusTemporaryRedirect)
 
