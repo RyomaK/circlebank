@@ -18,11 +18,6 @@ migrate/seed:
 	mysql -u root -p $(DBname) < ./model/dump/dump1.sql
 
 install:
-	go get github.com/kr/godep
-	go get -u github.com/go-sql-driver/mysql
-	go get -u github.com/gorilla/mux
-	go get -u github.com/gorilla/securecookie
-	go get -u github.com/gorilla/sessions
-	go get -u github.com/stretchr/objx
-	go get -u github.com/stretchr/gomniauth
+	go get -u github.com/tools/godep
+	godep restore
 	godep get

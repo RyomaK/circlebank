@@ -18,6 +18,7 @@ type signup struct {
 func SetHeader(w http.ResponseWriter, stats int) http.ResponseWriter {
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Expose-Headers", "Location")
 	w.WriteHeader(http.StatusOK)
 	return w
 }
