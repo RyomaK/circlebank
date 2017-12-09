@@ -31,9 +31,9 @@ func (s *Server) Run(dbconfig, addr string) {
 
 func (s *Server) Route(addr string) {
 	//gomniauth　setup
-	gomniauth.SetSecurityKey("circlebankfasfdasf")
+	gomniauth.SetSecurityKey("circlebankf")
 	gomniauth.WithProviders(
-		google.New("765408525427-2ph7u0kfr5j17025c1h0ksn7uj84qr23.apps.googleusercontent.com", "z95TtqTrXjdY77B9JQ_19ePS", "http://localhost:8080/auth/callback/google"),
+		google.New("655485724445-iunu8tkefi5a8m8hlhhl7aflcrj6rdcq.apps.googleusercontent.com", "oXM3x_I4iiBH8MYRvlevaeQd", "http://localhost:8080/auth/callback/google"),
 	)
 
 	r := mux.NewRouter()
@@ -46,6 +46,8 @@ func (s *Server) Route(addr string) {
 	r.HandleFunc("/logout", users.LogoutHandler) //.Methods("POST")
 	r.HandleFunc("/signup", users.SignUpHandler).Methods("POST")
 	r.HandleFunc("/signup", users.SignUpViewHandler).Methods("GET")
+	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) { http.ServeFile(w, r, "public/index.html") })
+	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("public"))))
 
 	//not found
 	r.NotFoundHandler = http.HandlerFunc(NotFoundHandler)
@@ -62,7 +64,7 @@ func (s *Server) Route(addr string) {
 	a.Path("/{univ}/circle/{id}").HandlerFunc(circles.CircleHandler).Methods("GET")
 	a.Path("/{univ}/circle").HandlerFunc(circles.UnivCircleHandler).Methods("GET")
 	//tag
-	a.Path("/{univ}/tag").HandlerFunc(circles.SearchHandler)
+	a.Path("/{univ}/tag/").HandlerFunc(circles.SearchHandler)
 	a.Path("/{univ}/tag/{id}").HandlerFunc(circles.TagCirclesHandler)
 	//event
 	a.Path("/{univ}/circle/{id}/{event}").HandlerFunc(events.EventHandler).Methods("GET")

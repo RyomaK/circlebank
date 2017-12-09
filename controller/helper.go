@@ -15,11 +15,11 @@ type signup struct {
 	Image string `json:"image"`
 }
 
-func SetHeader(w http.ResponseWriter, stats int) http.ResponseWriter {
+func SetHeader(w http.ResponseWriter, status int) http.ResponseWriter {
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Expose-Headers", "Location")
-	w.WriteHeader(http.StatusOK)
+	w.WriteHeader(status)
 	return w
 }
 

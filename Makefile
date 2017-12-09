@@ -5,6 +5,7 @@ build:
 	godep	go build -o ./cmd/circle/circle ./cmd/circle/circle.go
 
 run:
+	go build -o ./cmd/circle/circle ./cmd/circle/circle.go
 	./cmd/circle/circle
 
 test:
@@ -20,5 +21,6 @@ migrate/seed:
 install:
 	go get -u github.com/tools/godep
 	godep restore
+	godep save
 	godep get
 
