@@ -9,6 +9,11 @@
 			"Rev": "70c25f62ac605396c6f3e14f2113fd709c79af28"
 		},
 		{
+			"ImportPath": "github.com/dgrijalva/jwt-go",
+			"Comment": "v3.1.0",
+			"Rev": "dbeaa9332f19a944acb5736b4456cfcc02140e29"
+		},
+		{
 			"ImportPath": "github.com/go-sql-driver/mysql",
 			"Comment": "v1.3-42-gfade210",
 			"Rev": "fade21009797158e7b79e04c340118a9220c6f9e"
