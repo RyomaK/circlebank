@@ -2,7 +2,16 @@ package circlebank
 
 import (
 	"net/http"
+
+	jwt "github.com/dgrijalva/jwt-go"
 )
+
+type AuthUser struct {
+	Name   string `json:"name"`
+	Mail   string `json:"mail"`
+	Avatar string `json:"avatar"`
+	jwt.StandardClaims
+}
 
 func Login(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
 	_, err := r.Cookie("auth")
@@ -20,4 +29,6 @@ func Login(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
 
 func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNotFound)
+	str := "ないよ"
+	w.Write([]byte(str))
 }
