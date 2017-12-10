@@ -21,7 +21,7 @@ func SecretKey() string {
 func SetHeader(w http.ResponseWriter, status int) http.ResponseWriter {
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Access-Control-Expose-Headers", "Location")
+	w.Header().Set("Access-Control-Expose-Headers", "Location,user")
 	w.WriteHeader(status)
 	return w
 }
