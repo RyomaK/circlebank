@@ -1,20 +1,39 @@
 package circlebank
 
-//Authをハンドラーにかけて、ログイン判定できたらいいな
+import (
+	"net/http"
 
-/*
-func Auth(h handler) handler {
-	return func(w http.ResponseWriter, r *http.Request) error {
-		if !controller.IsLogin(r) {
-			a, err := json.Marshal("{login:}")
-			if err != nil {
-				fmt.Errorf("err %v", err)
-			}
-			w.Header().Set("Content-Type", "application/json")
-			w.Write(a)
-		}
-		h.ServeHTTP(w, r)
-		return nil
-	}
+	"github.com/RyomaK/circlebank/controller"
+	jwt "github.com/dgrijalva/jwt-go"
+)
+
+type AuthUser struct {
+	Name   string `json:"name"`
+	Mail   string `json:"mail"`
+	Avatar string `json:"avatar"`
+	jwt.StandardClaims
 }
-*/
+
+func Login(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
+	_, err := r.Cookie("auth")
+	if err == http.ErrNoCookie {
+		// not authenticated
+		http.Error(w, "Not Authorized", http.StatusUnauthorized)
+	} else if err != nil {
+		// some other error
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	} else {
+		next(w, r)
+	}
+
+}
+
+func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusNotFound)
+	str := "ないよ"
+	w.Write([]byte(str))
+}
+func Index(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "public/index.html")
+	w = controller.SetHeader(w, 200)
+}

@@ -5,7 +5,8 @@ build:
 	godep	go build -o ./cmd/circle/circle ./cmd/circle/circle.go
 
 run:
-	go run ./cmd/circle/circle.go
+	go build -o ./cmd/circle/circle ./cmd/circle/circle.go
+	./cmd/circle/circle
 
 test:
 	go test -v ./...
@@ -13,12 +14,13 @@ test:
 migrate/init:
 	mysql.server start
 	mysql -u root -h localhost --protocol tcp -e "create database \`$(DBNAME)\`" -p
+
 migrate/seed:
-	mysql -u root -p $(DBname) < ./model/dump/dump.sql
+	mysql -u root -p $(DBname) < ./model/dump/dump1.sql
+
 install:
-	go get -u github.com/go-sql-driver/mysql
-	go get -u github.com/gorilla/mux
-	go get -u github.com/gorilla/securecookie
-	go get -u github.com/gorilla/sessions
-	go get -u golang.org/x/crypto/bcrypt
+	go get -u github.com/tools/godep
+	godep restore
+	godep save
 	godep get
+

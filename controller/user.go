@@ -5,13 +5,15 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"github.com/gorilla/mux"
+
 	"log"
 
 	"fmt"
 
 	"github.com/RyomaK/circlebank/model"
-	"github.com/gorilla/securecookie"
-	"golang.org/x/crypto/bcrypt"
+	"github.com/stretchr/gomniauth"
+	"github.com/stretchr/objx"
 )
 
 type User struct {
@@ -19,79 +21,108 @@ type User struct {
 }
 
 func (u *User) UserHandler(w http.ResponseWriter, r *http.Request) {
-	if IsLogin(r) {
-		fmt.Println("userhandler")
-		user ,err:= model.GetUser(u.DB, getUserMail(r))
-		if err != nil {
-			log.Printf("err %v", err)
-		}
-		a, err := json.Marshal(user)
-		if err != nil {
-			log.Printf("err %v", err)
-		}
-		w = SetHeader(w,http.StatusOK)
-		w.Write(a)
-	} else {
-
-		a, err := json.Marshal("{login:}")
-		if err != nil {
-			log.Printf("err %v", err)
-		}
-		w = SetHeader(w,http.StatusUnauthorized)
-		w.Write(a)
+	fmt.Println("userhandler")
+	user, err := model.GetUser(u.DB, getUserEmail(r))
+	if err != nil {
+		log.Printf("err %v", err)
 	}
-
+	a, err := json.Marshal(user)
+	if err != nil {
+		log.Printf("err %v", err)
+	}
+	w = SetHeader(w, http.StatusOK)
+	w.Write(a)
 }
 
-func (u *User) login(mail, pass string) bool {
-	if (mail == "") && (pass == "") {
-		return false
-	}
-	hash := model.GetUserPass(u.DB, mail)
-	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(pass))
+func (u *User) UserUpdateHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("user update handler")
+	/*user, err := model.GetUser(u.DB, getUserEmail(r))
 	if err != nil {
-		return false
+		log.Printf("err %v", err)
 	}
-	return true
+	a, err := json.Marshal(user)
+	if err != nil {
+		log.Printf("err %v", err)
+	}
+	w = SetHeader(w, http.StatusOK)
+	w.Write(a)
+	*/
 }
 
 // login handler
 func (u *User) LoginHandler(w http.ResponseWriter, r *http.Request) {
-	mail := r.FormValue("mail")
-	pass := r.FormValue("password")
-	login_json := "{login:" + mail + "}"
-	if u.login(mail, pass) {
-		setSession(mail, w)
-		a, err := json.Marshal(login_json)
+	vars := mux.Vars(r)
+	action := vars["action"]
+	provider_name := vars["provider"]
+	switch action {
+	case "login":
+		provider, err := gomniauth.Provider(provider_name)
 		if err != nil {
-			fmt.Errorf("err %v", err)
+			http.Error(w, fmt.Sprintf("Error when trying to get provider %s: %s", provider, err), http.StatusBadRequest)
+			return
 		}
-		w = SetHeader(w,http.StatusOK)
-		w.Write(a)
-	} else {
-		a, err := json.Marshal(login_json)
+		loginURL, err := provider.GetBeginAuthURL(nil, nil)
 		if err != nil {
-			fmt.Errorf("err %v", err)
+			http.Error(w, fmt.Sprintf("Error when trying to GetBeginAuthURL for %s: %s", provider, err), http.StatusInternalServerError)
+			return
 		}
-		w = SetHeader(w,http.StatusUnauthorized)
-		w.Write(a)
+		w.Header().Set("Location", loginURL)
+		w = SetHeader(w, http.StatusTemporaryRedirect)
+
+	case "callback":
+		provider, err := gomniauth.Provider(provider_name)
+		if err != nil {
+			http.Error(w, fmt.Sprintf("Error when trying to get provider %s: %s", provider, err), http.StatusBadRequest)
+			return
+		}
+
+		// get the credentials
+		creds, err := provider.CompleteAuth(objx.MustFromURLQuery(r.URL.RawQuery))
+		if err != nil {
+			http.Error(w, fmt.Sprintf("Error when trying to complete auth for %s: %s", provider, err), http.StatusInternalServerError)
+			return
+		}
+
+		// get the user
+		user, err := provider.GetUser(creds)
+		if err != nil {
+			http.Error(w, fmt.Sprintf("Error when trying to get user from %s: %s", provider, err), http.StatusInternalServerError)
+			return
+		}
+		fmt.Printf("%v", user)
+
+		authCookieValue := objx.New(map[string]interface{}{
+			"name":   user.Name(),
+			"email":  user.Email(),
+			"avatar": user.AvatarURL(),
+		}).MustBase64()
+		http.SetCookie(w, &http.Cookie{
+			Name:  "data",
+			Value: authCookieValue,
+			Path:  "/"})
+
+		//ここにデータベースにmailがあるかどうかを確認
+		//あったら，ログイン
+		//なかったらsignup
+		if model.UserExist(u.DB, user.Email()) {
+			// save some data
+			setAuth(w)
+			http.Redirect(w, r, "http://localhost:8080/", http.StatusOK)
+			//w = SetHeader(w, http.StatusAccepted)
+		} else {
+			//signup
+			w = SetHeader(w, http.StatusFound)
+		}
+
+	default:
+		w = SetHeader(w, http.StatusNotFound)
+		fmt.Fprintf(w, "Auth action %s not supported", action)
 	}
 }
 
-func clearSession(response http.ResponseWriter) {
-	cookie := &http.Cookie{
-		Name:   "session",
-		Value:  "",
-		Path:   "/api",
-		MaxAge: -1,
-	}
-	http.SetCookie(response, cookie)
-}
-
-// logout handler
 func (u *User) LogoutHandler(w http.ResponseWriter, r *http.Request) {
-	clearSession(w)
-	http.Redirect(w, r, "/api/user", 302)
+	clearAuth(w)
+	w = SetHeader(w, http.StatusAccepted)
 }
 
 func (u *User) SignUpHandler(w http.ResponseWriter, r *http.Request) {
@@ -100,26 +131,33 @@ func (u *User) SignUpHandler(w http.ResponseWriter, r *http.Request) {
 
 	if b {
 		w.WriteHeader(http.StatusConflict)
-		a,_ := json.Marshal("{signup:NG}")
+		a, _ := json.Marshal("{signup:already}")
+		w = SetHeader(w, http.StatusAlreadyReported)
 		w.Write(a)
 	} else {
+		cookies, err := r.Cookie("data")
+		if err != nil {
+			fmt.Errorf("cookie err %v", err)
+		}
+		avatar, email, name := GetUserData(cookies.Value)
 		var person model.User
 		person.University = r.FormValue("university")
-		person.Name = r.FormValue("name")
-		person.Mail = r.FormValue("mail")
-		person.Password = PassToHash(r.FormValue("password"))
+		person.Name = name
+		person.Mail = email
+		person.Image = avatar
 		person.Sex = r.FormValue("sex")
 		person.Department = r.FormValue("department")
 		person.Subject = r.FormValue("subject")
 		if err := model.Regist(u.DB, person); err != nil {
 			log.Printf("err in signHandler %v", err)
-			a,_ := json.Marshal("{signup:NG}")
+			a, _ := json.Marshal("{signup:NG}")
+			w = SetHeader(w, http.StatusNotAcceptable)
 			w.Write(a)
 		} else {
-			http.Redirect(w, r, "/api/user", http.StatusNotAcceptable)
-			setSession(person.Mail, w)
-			w = SetHeader(w,http.StatusCreated)
-			a,_ := json.Marshal("{signup:OK}")
+			setAuth(w)
+			w = SetHeader(w, http.StatusCreated)
+			a, _ := json.Marshal("{signup:OK}")
+			w = SetHeader(w, http.StatusAccepted)
 			w.Write(a)
 		}
 
@@ -127,37 +165,13 @@ func (u *User) SignUpHandler(w http.ResponseWriter, r *http.Request) {
 
 }
 
-var cookieHandler = securecookie.New(
-	securecookie.GenerateRandomKey(64),
-	securecookie.GenerateRandomKey(32))
-
-func getUserMail(r *http.Request) (userName string) {
-	if cookie, err := r.Cookie("session"); err == nil {
-		cookieValue := make(map[string]string)
-		if err = cookieHandler.Decode("session", cookie.Value, &cookieValue); err == nil {
-			userName = cookieValue["mail"]
-		}
+func (u *User) SignUpViewHandler(w http.ResponseWriter, r *http.Request) {
+	cookie, err := r.Cookie("data")
+	if err != nil {
+		fmt.Errorf("err view signup %v", err)
 	}
-	return userName
-}
-
-func setSession(mail string, w http.ResponseWriter) {
-	value := map[string]string{
-		"mail": mail,
-	}
-	if encoded, err := cookieHandler.Encode("session", value); err == nil {
-		cookie := &http.Cookie{
-			Name:  "session",
-			Value: encoded,
-			Path:  "/api",
-		}
-		http.SetCookie(w, cookie)
-	}
-}
-
-func IsLogin(r *http.Request) bool {
-	if getUserMail(r) == "" {
-		return false
-	}
-	return true
+	avatar, email, name := GetUserData(cookie.Value)
+	data := signup{Name: name, Mail: email, Image: avatar}
+	a, _ := json.Marshal(data)
+	w.Write(a)
 }
