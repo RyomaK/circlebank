@@ -4,6 +4,10 @@
 	"GodepVersion": "v79",
 	"Deps": [
 		{
+			"ImportPath": "github.com/auth0/go-jwt-middleware",
+			"Rev": "5493cabe49f7bfa6e2ec444a09d334d90cd4e2bd"
+		},
+		{
 			"ImportPath": "github.com/clbanning/x2j",
 			"Comment": "1.1-3-g70c25f6",
 			"Rev": "70c25f62ac605396c6f3e14f2113fd709c79af28"
