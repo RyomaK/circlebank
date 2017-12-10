@@ -1,4 +1,7 @@
 /*header*/
+body{
+  background-color: #FFD6A4;
+}
 
 .header{
   margin-bottom: 40px;
@@ -20,7 +23,6 @@
 
 .circle{
   padding: auto;
-  background-color: #B2DFDB;
 
 }
 
