@@ -1,18 +1,30 @@
 import React from 'react'
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
+import {Grid, Row, Col } from 'react-bootstrap'
 
-const ResultPage = ({id, name}) => {
+const ResultPage = ({circle}) => {
   return(
     <div>
-      検索結果:{id,name}
+    <Col md={5} className="circle">
+      <div>{circle.name}</div>
+      <div>{circle.number}</div>
+      <div>{circle.introduction}</div>
+      <div>{circle.campus}</div>
+    </Col>
+    <Col md={1}></Col>
     </div>
 
   )
 }
 
 ResultPage.propTypes = {
-  id: PropTypes.string,
-  name: PropTypes.string
+  circle: PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+    number: PropTypes.string,
+    introduction: PropTypes.string,
+    campus: PropTypes.string
+  })
 }
 
 

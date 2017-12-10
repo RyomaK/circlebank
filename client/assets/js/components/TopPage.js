@@ -1,22 +1,44 @@
-import React from "react"
-import { Grid, Col, Row, Button,ButtonToolbar } from 'react-bootstrap';
+import React, {Component} from "react"
+import {Grid,Button} from "react-bootstrap"
+import { connect } from 'react-redux'
+import { login } from '../actions/index'
 
-const style = {
-  margin: 12,
-};
 
-const TopPage = () => {
+
+
+
+class TopPage extends Component {
+  render(){
   return(
+    <div className="top">
   <Grid>
-    <Row><Col md={6} mdOffset={3}>トップページ</Col></Row>
-    <Row><Col md={6} mdOffset={3}>
-      <ButtonToolbar>
-        <Button bsStyle="success">Sign Up</Button>
-        <Button bsStyle="info">Log In</Button>
-      </ButtonToolbar>
-    </Col></Row>
+        <p>トップページ</p>
+        <p><Button bsStyle="success" bsSize="large">Sign Up</Button>
+        <span></span>
+        <Button bsStyle="info"bsSize="large" onClick={e =>{
+          e.preventDefault()
+          this.props.onLogin()
+        }}>Log In</Button></p>
   </Grid>
-)
+  </div>
+  )
+}
+}
+const mapStateToProps = state => {
+  return(
+    state
+  )
 }
 
-export default TopPage;
+const mapDispatchToProps= dispatch => {
+  return{
+    onLogin: () => {
+      console.log("a")
+      dispatch(login())
+    }
+  }
+}
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TopPage)
