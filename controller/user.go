@@ -100,8 +100,8 @@ func (u *User) LoginHandler(w http.ResponseWriter, r *http.Request) {
 				Image: user.AvatarURL(),
 			})
 			w.Header().Set("user", jwtString)
-			http.Redirect(w, r, "http://localhost:8080/", http.StatusOK)
-			//w = SetHeader(w, http.StatusAccepted)
+			//http.Redirect(w, r, "http://localhost:8080/", http.StatusOK)
+			w = SetHeader(w, http.StatusAccepted)
 		} else {
 			//signup
 			w = SetHeader(w, http.StatusFound)

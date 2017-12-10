@@ -57,10 +57,12 @@ func (s *Server) Route(addr string) {
 	r.HandleFunc("/signup", users.SignUpViewHandler).Methods("GET")
 	r.HandleFunc("/", Index)
 	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("public"))))
-
+	/*
+		Test
+		r.HandleFunc("/ping", Ex)
+	*/
 	//not found
 	r.NotFoundHandler = http.HandlerFunc(NotFoundHandler)
-
 	//need login
 	//subrouter
 	acctBase := mux.NewRouter()
