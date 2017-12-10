@@ -99,7 +99,7 @@ func (u *User) LoginHandler(w http.ResponseWriter, r *http.Request) {
 				Mail:  user.Email(),
 				Image: user.AvatarURL(),
 			})
-			w.Header().Set("user", jwtString)
+			w.Header().Set("Authorization", "Bearer "+jwtString)
 			//http.Redirect(w, r, "http://localhost:8080/", http.StatusOK)
 			w = SetHeader(w, http.StatusAccepted)
 		} else {
