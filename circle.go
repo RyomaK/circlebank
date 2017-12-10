@@ -4,6 +4,8 @@ import (
 	"database/sql"
 	"log"
 
+	jwtmiddleware "github.com/auth0/go-jwt-middleware"
+	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/stretchr/gomniauth"
 	"github.com/stretchr/gomniauth/providers/google"
 	"github.com/urfave/negroni"
@@ -35,6 +37,13 @@ func (s *Server) Route(addr string) {
 	gomniauth.WithProviders(
 		google.New("655485724445-iunu8tkefi5a8m8hlhhl7aflcrj6rdcq.apps.googleusercontent.com", "oXM3x_I4iiBH8MYRvlevaeQd", "http://localhost:8080/auth/callback/google"),
 	)
+	//jwt
+	jwtMiddleware := jwtmiddleware.New(jwtmiddleware.Options{
+		ValidationKeyGetter: func(token *jwt.Token) (interface{}, error) {
+			return []byte(controller.SecretKey()), nil
+		},
+		SigningMethod: jwt.SigningMethodHS256,
+	})
 
 	r := mux.NewRouter()
 
@@ -56,7 +65,7 @@ func (s *Server) Route(addr string) {
 	//subrouter
 	acctBase := mux.NewRouter()
 	r.PathPrefix("/api").Handler(negroni.New(
-		negroni.HandlerFunc(Login),
+		negroni.HandlerFunc(jwtMiddleware.HandlerWithNext),
 		negroni.Wrap(acctBase),
 	))
 	a := acctBase.PathPrefix("/api").Subrouter()
