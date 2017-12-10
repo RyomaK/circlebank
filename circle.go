@@ -46,7 +46,7 @@ func (s *Server) Route(addr string) {
 	r.HandleFunc("/logout", users.LogoutHandler) //.Methods("POST")
 	r.HandleFunc("/signup", users.SignUpHandler).Methods("POST")
 	r.HandleFunc("/signup", users.SignUpViewHandler).Methods("GET")
-	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) { http.ServeFile(w, r, "public/index.html") })
+	r.HandleFunc("/", Index)
 	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("public"))))
 
 	//not found
