@@ -2,6 +2,7 @@ import React, {Component} from "react"
 import {Grid,Button} from "react-bootstrap"
 import { connect } from 'react-redux'
 import { login } from '../actions/index'
+import { Link } from 'react-router-dom'
 
 
 
@@ -14,11 +15,7 @@ class TopPage extends Component {
   <Grid>
         <p>トップページ</p>
         <p><Button bsStyle="success" bsSize="large">Sign Up</Button>
-        <span></span>
-        <Button bsStyle="info"bsSize="large" onClick={e =>{
-          e.preventDefault()
-          this.props.onLogin()
-        }}>Log In</Button></p>
+        <a href="auth/login/google"><Button bsStyle="info"bsSize="large">Log In</Button></a></p>
   </Grid>
   </div>
   )
