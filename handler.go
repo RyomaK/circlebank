@@ -3,6 +3,7 @@ package circlebank
 import (
 	"net/http"
 
+	"github.com/RyomaK/circlebank/controller"
 	jwt "github.com/dgrijalva/jwt-go"
 )
 
@@ -31,4 +32,8 @@ func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNotFound)
 	str := "ないよ"
 	w.Write([]byte(str))
+}
+func Index(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "public/index.html")
+	w = controller.SetHeader(w, 200)
 }
