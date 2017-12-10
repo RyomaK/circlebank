@@ -1,30 +1,12 @@
-import axios from 'axios'
-
-const search = (state="なし", action) => {
-  const URL = `http://localhost:8080/api/doshisha/tag/${action.value}`
-  switch (action.type){
-    case 'SEARCH':
-      axios
-      .get(URL)
-      .then((results) => {
-        id: results.id;
-        name: results.name;
-        number: results.number;
-        introduction: results.introduction;
-        campup: results.campus;
-        return {
-          id, name, number, introduction,campus
-        }
-      })
-      .catch((error) => {
-        console.log("エラー")
-        return{state}
-      })
-      return {state}
-
+const search = (state={circles:[]}, action) => {
+  switch(action.type){
+    case 'CERCLE_SEARCH':
+      return{circles: action.circles}
     default:
-      return {state}
-  }
+      return(
+        state
+      )
+      break;
+    }
 }
-
 export default search
