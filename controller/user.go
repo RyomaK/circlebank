@@ -99,9 +99,14 @@ func (u *User) LoginHandler(w http.ResponseWriter, r *http.Request) {
 				Mail:  user.Email(),
 				Image: user.AvatarURL(),
 			})
-			w.Header().Set("Authorization", "Bearer "+jwtString)
-			//http.Redirect(w, r, "http://localhost:8080/", http.StatusOK)
-			w = SetHeader(w, http.StatusAccepted)
+			//cookieに保存
+			http.SetCookie(w, &http.Cookie{
+				Name:  "Authorization",
+				Value: jwtString,
+				Path:  "/",
+			})
+			w.Header().Set("location", "localhost:8080/")
+			w = SetHeader(w, http.StatusMovedPermanently)
 		} else {
 			//signup
 			w = SetHeader(w, http.StatusFound)
