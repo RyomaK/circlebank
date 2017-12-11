@@ -36,7 +36,7 @@ func (u *User) UserHandler(w http.ResponseWriter, r *http.Request) {
 
 func (u *User) UserUpdateHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("user update handler")
-	/*user, err := model.GetUser(u.DB, getUserEmail(r))
+	user, err := model.GetUser(u.DB, getUserEmail(r))
 	if err != nil {
 		log.Printf("err %v", err)
 	}
@@ -46,7 +46,6 @@ func (u *User) UserUpdateHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	w = SetHeader(w, http.StatusOK)
 	w.Write(a)
-	*/
 }
 
 // login handler
@@ -119,7 +118,11 @@ func (u *User) LoginHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func (u *User) LogoutHandler(w http.ResponseWriter, r *http.Request) {
-	//header delete
+	http.SetCookie(w, &http.Cookie{
+		Name:  "Autorization",
+		Value: "",
+		Path:  "/",
+	})
 	w = SetHeader(w, http.StatusAccepted)
 }
 
