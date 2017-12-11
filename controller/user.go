@@ -36,7 +36,7 @@ func (u *User) UserHandler(w http.ResponseWriter, r *http.Request) {
 
 func (u *User) UserUpdateHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("user update handler")
-	/*user, err := model.GetUser(u.DB, getUserEmail(r))
+	user, err := model.GetUser(u.DB, getUserEmail(r))
 	if err != nil {
 		log.Printf("err %v", err)
 	}
@@ -46,7 +46,6 @@ func (u *User) UserUpdateHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	w = SetHeader(w, http.StatusOK)
 	w.Write(a)
-	*/
 }
 
 // login handler
@@ -99,9 +98,14 @@ func (u *User) LoginHandler(w http.ResponseWriter, r *http.Request) {
 				Mail:  user.Email(),
 				Image: user.AvatarURL(),
 			})
-			w.Header().Set("Authorization", "Bearer "+jwtString)
-			//http.Redirect(w, r, "http://localhost:8080/", http.StatusOK)
-			w = SetHeader(w, http.StatusAccepted)
+			//cookieに保存
+			http.SetCookie(w, &http.Cookie{
+				Name:  "Authorization",
+				Value: jwtString,
+				Path:  "/",
+			})
+			w.Header().Set("location", "localhost:8080/")
+			w = SetHeader(w, http.StatusMovedPermanently)
 		} else {
 			//signup
 			w = SetHeader(w, http.StatusFound)
@@ -114,7 +118,11 @@ func (u *User) LoginHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func (u *User) LogoutHandler(w http.ResponseWriter, r *http.Request) {
-	//header delete
+	http.SetCookie(w, &http.Cookie{
+		Name:  "Autorization",
+		Value: "",
+		Path:  "/",
+	})
 	w = SetHeader(w, http.StatusAccepted)
 }
 
