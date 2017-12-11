@@ -15,8 +15,6 @@ class Header extends Component{
     this.state = {open: false};
   }
 handleToggle(){ this.setState({open: !this.state.open})}
-
-
   render(){
 
     return(
@@ -31,7 +29,7 @@ handleToggle(){ this.setState({open: !this.state.open})}
       </Drawer>
       <AppBar
       title="サークルバンク"
-      onLeftIconButtonClick={ () => this.handleToggle()}
+      onLeftIconButtonTouchTap={ () => this.handleToggle()}
       style={{backgroundColor:lightBlue900}}
       />
     </div>
