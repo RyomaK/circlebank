@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { circleSearchStart,login } from '../actions/index'
+import { circleSearchStart } from '../actions/index'
 
 class TagRow extends Component{
   render(){

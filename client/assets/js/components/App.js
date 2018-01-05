@@ -1,28 +1,29 @@
-import React from 'react'
+import React,{Component} from 'react'
 import Header from './Header'
-import TopPage from './TopPage'
+
+import Auth from './Auth'
 import SearchForm from '../containers/SearchForm'
-import TagMenu from '../containers/TagMenu'
-import { BrowserRouter, Route, Link } from 'react-router-dom';
+import LoginPage from './LoginPage'
+import { BrowserRouter, Route, Link, Switch} from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { connect } from 'react-redux'
 
 
 
-const App = () => {
+
+const App =() => {
   return(
         <BrowserRouter>
           <MuiThemeProvider>
             <div>
               <Header />
-              <Route exact path="/" component={TopPage}/>
-              <Route path="/circle" component={SearchForm} />
+                <Route exact path="/login" component={LoginPage}/>
+                <Auth>
+                  <Route path="/" component={SearchForm} />
+                </Auth>
             </div>
           </MuiThemeProvider>
         </BrowserRouter>
-
-
   )
-
 }
-
 export default App;

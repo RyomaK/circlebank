@@ -23,7 +23,6 @@ let input
     <Grid>
       <Row className="searchForm">
         <form onSubmit = { e => {
-
           input = ""
         }}>
           <Col md={5} mdOffset={2}><FormControl

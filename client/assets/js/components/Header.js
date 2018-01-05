@@ -2,12 +2,10 @@ import React,{Component} from 'react';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
+import {logout} from '../actions/index'
 import RaisedButton from 'material-ui/RaisedButton';
 import {lightBlue900} from 'material-ui/styles/colors';
-/**
- * A simple example of `AppBar` with an icon on the right.
- * By default, the left icon is a navigation-menu.
- */
+import { connect } from 'react-redux'
 
 class Header extends Component{
   constructor(props) {
@@ -26,6 +24,9 @@ handleToggle(){ this.setState({open: !this.state.open})}
       >
         <MenuItem>Menu Item</MenuItem>
         <MenuItem>Menu Item 2</MenuItem>
+        <MenuItem><div onClick={(child)=>{
+          child.preventDefault();
+          this.props.Logout()}}>Logout</div></MenuItem>
       </Drawer>
       <AppBar
       title="サークルバンク"
@@ -36,5 +37,20 @@ handleToggle(){ this.setState({open: !this.state.open})}
   )
   }
 }
+const mapStateToProps = state => {
+  return{
+    state
+  }
+}
+const mapDispatchToProps= dispatch => {
+  return{
+    Logout:() => {
+      dispatch(logout())
+    }
+  }
+}
 
-export default Header
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Header)
