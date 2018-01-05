@@ -22,6 +22,6 @@ migrate/seed:
 
 install:
 	go get -u github.com/tools/godep
-	godep restore
 	godep save
+	godep restore
 	godep get
