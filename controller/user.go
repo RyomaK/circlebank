@@ -104,7 +104,7 @@ func (u *User) LoginHandler(w http.ResponseWriter, r *http.Request) {
 				Value: jwtString,
 				Path:  "/",
 			})
-			w.Header().Set("location", "localhost:8080/")
+			w.Header().Set("location", "/")
 			w = SetHeader(w, http.StatusMovedPermanently)
 		} else {
 			//signup
@@ -119,7 +119,7 @@ func (u *User) LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 func (u *User) LogoutHandler(w http.ResponseWriter, r *http.Request) {
 	http.SetCookie(w, &http.Cookie{
-		Name:  "Autorization",
+		Name:  "Authorization",
 		Value: "",
 		Path:  "/",
 	})
