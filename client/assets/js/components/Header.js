@@ -1,8 +1,10 @@
 import React,{Component} from 'react';
+import Auth from './Auth'
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
-import {logout} from '../actions/index'
+import {logout,loginCheck} from '../actions/index'
+import {Redirect, Link} from 'react-router-dom'
 import RaisedButton from 'material-ui/RaisedButton';
 import {lightBlue900} from 'material-ui/styles/colors';
 import { connect } from 'react-redux'
@@ -24,9 +26,9 @@ handleToggle(){ this.setState({open: !this.state.open})}
       >
         <MenuItem>Menu Item</MenuItem>
         <MenuItem>Menu Item 2</MenuItem>
-        <MenuItem><div onClick={(child)=>{
+        <Auth><Link to="/login"><MenuItem><div onClick={(child)=>{
           child.preventDefault();
-          this.props.Logout()}}>Logout</div></MenuItem>
+          this.props.Logout()}}>Logut</div></MenuItem></Link></Auth>
       </Drawer>
       <AppBar
       title="サークルバンク"
