@@ -123,7 +123,8 @@ func (u *User) LogoutHandler(w http.ResponseWriter, r *http.Request) {
 		Value: "",
 		Path:  "/",
 	})
-	w = SetHeader(w, http.StatusAccepted)
+	w.Header().Set("Location", "/")
+	w = SetHeader(w, http.StatusTemporaryRedirect)
 }
 
 func (u *User) SignUpHandler(w http.ResponseWriter, r *http.Request) {
