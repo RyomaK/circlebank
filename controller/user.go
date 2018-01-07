@@ -19,13 +19,18 @@ func (u *User) UserHandler(w http.ResponseWriter, r *http.Request) {
 	user, err := model.GetUser(u.DB, getUserEmail(r))
 	if err != nil {
 		log.Printf("err %v", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "not found"}
+		a, _ := json.Marshal(status)
+		w.Write(a)
+	} else {
+		a, err := json.Marshal(user)
+		if err != nil {
+			log.Printf("err %v", err)
+		}
+		w = SetHeader(w, http.StatusOK)
+		w.Write(a)
 	}
-	a, err := json.Marshal(user)
-	if err != nil {
-		log.Printf("err %v", err)
-	}
-	w = SetHeader(w, http.StatusOK)
-	w.Write(a)
 }
 
 /*
@@ -62,15 +67,17 @@ func (u *User) UserUpdateHandler(w http.ResponseWriter, r *http.Request) {
 
 // login handler
 func (u *User) LoginHandler(w http.ResponseWriter, r *http.Request) {
-	email := r.FormValue("Email")
+	mail := r.FormValue("mail")
 	password := r.FormValue("password")
-	if model.IsLogin(u.DB, email, password) {
-		WriteJWT(w, email)
+	if model.IsLogin(u.DB, mail, password) {
+		WriteJWT(w, mail)
 		w.Header().Set("location", "/")
 		w = SetHeader(w, http.StatusMovedPermanently)
 	} else {
-		//signup
-		w = SetHeader(w, http.StatusFound)
+		status := StatusCode{Code: http.StatusNotAcceptable, Message: "error login"}
+		a, _ := json.Marshal(status)
+		w = SetHeader(w, http.StatusNotFound)
+		w.Write(a)
 	}
 
 }
@@ -90,7 +97,8 @@ func (u *User) SignUpHandler(w http.ResponseWriter, r *http.Request) {
 	b := model.UserExist(u.DB, r.FormValue("mail"))
 
 	if b {
-		a, _ := json.Marshal("{signup:already}")
+		status := StatusCode{Code: http.StatusConflict, Message: "already mail"}
+		a, _ := json.Marshal(status)
 		w = SetHeader(w, http.StatusConflict)
 		w.Write(a)
 	} else {
@@ -106,12 +114,14 @@ func (u *User) SignUpHandler(w http.ResponseWriter, r *http.Request) {
 
 		if err := model.Regist(u.DB, person); err != nil {
 			log.Printf("err in signHandler %v", err)
-			a, _ := json.Marshal("{signup:NG}")
+			status := StatusCode{Code: http.StatusNotAcceptable, Message: "NG"}
+			a, _ := json.Marshal(status)
 			w = SetHeader(w, http.StatusNotAcceptable)
 			w.Write(a)
 		} else {
 			WriteJWT(w, person.Mail)
-			a, _ := json.Marshal("{signup:OK}")
+			status := StatusCode{Code: http.StatusCreated, Message: "OK"}
+			a, _ := json.Marshal(status)
 			w = SetHeader(w, http.StatusCreated)
 			w.Write(a)
 		}

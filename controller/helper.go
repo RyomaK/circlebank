@@ -14,6 +14,11 @@ type AuthUser struct {
 	jwt.StandardClaims
 }
 
+type StatusCode struct {
+	Code    int    `json:"code"`
+	Message string `json:"message"`
+}
+
 const SecretKey = "75c92a074c341e9964329c0550c2673730ed8479c885c43122c90a2843177d5ef21cb50cfadcccb20aeb730487c11e09ee4dbbb02387242ef264e74cbee97213"
 
 func SetHeader(w http.ResponseWriter, status int) http.ResponseWriter {
