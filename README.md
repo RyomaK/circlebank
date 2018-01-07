@@ -93,7 +93,7 @@ user情報の表示
 {
     "id": 2,
     "university": "1",
-    "name": "津國健太",
+    "name": "つくに",
     "mail": "tsukuni1@gmail.com",
     "image": "",
     "sex": "1",
