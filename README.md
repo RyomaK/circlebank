@@ -133,5 +133,21 @@ ___成功した場合cookieに新しくJwtを付与するから，また"Bearer 
 ```json
 ```
 
+## POST /api/user/upload
+
+画像アップロードする
+- image
+
+
+### Response
+#### 成功
+```json
+
+```
+
+#### 失敗
+```json
+```
+
 ex...
 [api設計](https://hackmd.io/KYBg7AZgxgjDAmBaAnAFgEwUamBWGiARpAByIBsJJs6M5I6JAhkA?view)

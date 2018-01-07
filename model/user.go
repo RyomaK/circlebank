@@ -104,3 +104,11 @@ func UpdateProfile(db *sql.DB, id uint, name, mail, pass string) error {
 	}
 	return nil
 }
+
+func UpdatePicture(db *sql.DB, mail, image string) error {
+	_, err := db.Exec("UPDATE users SET image = ? WHERE  mail= ?", image, mail)
+	if err != nil {
+		return err
+	}
+	return nil
+}

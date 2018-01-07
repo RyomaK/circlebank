@@ -5,10 +5,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"log"
 
 	"github.com/RyomaK/circlebank/model"
+	"github.com/olahol/go-imageupload"
 )
 
 type User struct {
@@ -123,6 +125,50 @@ func (u *User) SignUpHandler(w http.ResponseWriter, r *http.Request) {
 			status := StatusCode{Code: http.StatusCreated, Message: "OK"}
 			a, _ := json.Marshal(status)
 			w = SetHeader(w, http.StatusCreated)
+			w.Write(a)
+		}
+
+	}
+
+}
+
+func (u *User) UploadPicture(w http.ResponseWriter, r *http.Request) {
+	img, err := imageupload.Process(r, "image")
+	if err != nil {
+		log.Printf("upload1:%v\n", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "not file"}
+		a, _ := json.Marshal(status)
+		w.Write(a)
+		return
+	}
+	thumb, err := imageupload.ThumbnailPNG(img, 300, 300)
+	if err != nil {
+		log.Printf("upload :%v\n", err)
+		return
+	}
+
+	user, err := model.GetUser(u.DB, getUserEmail(r))
+	if err != nil {
+		log.Printf("err %v", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "not found"}
+		a, _ := json.Marshal(status)
+		w.Write(a)
+	} else {
+		image := "public/img/users/" + strconv.FormatUint(uint64(user.ID), 10) + ".png"
+		err = model.UpdatePicture(u.DB, user.Mail, image)
+		if err != nil {
+			log.Printf("err %v", err)
+			w = SetHeader(w, http.StatusBadRequest)
+			status := StatusCode{Code: http.StatusBadRequest, Message: "cannot upload"}
+			a, _ := json.Marshal(status)
+			w.Write(a)
+		} else {
+			thumb.Save(image)
+			w = SetHeader(w, http.StatusCreated)
+			status := StatusCode{Code: http.StatusCreated, Message: "upload"}
+			a, _ := json.Marshal(status)
 			w.Write(a)
 		}
 

@@ -74,6 +74,8 @@ func (s *Server) Route(addr string) {
 	//user data
 	a.Path("/user").HandlerFunc(users.UserHandler).Methods("GET")
 	a.Path("/user").HandlerFunc(users.UserUpdateHandler).Methods("POST")
+	//画像アップロード
+	a.Path("/user/upload").HandlerFunc(users.UploadPicture).Methods("POST")
 
 	//all handler add middleware
 	n := negroni.New()
