@@ -6,8 +6,6 @@ import (
 
 	jwtmiddleware "github.com/auth0/go-jwt-middleware"
 	jwt "github.com/dgrijalva/jwt-go"
-	"github.com/stretchr/gomniauth"
-	"github.com/stretchr/gomniauth/providers/google"
 	"github.com/urfave/negroni"
 
 	"github.com/gorilla/mux"
@@ -32,15 +30,10 @@ func (s *Server) Run(dbconfig, addr string) {
 }
 
 func (s *Server) Route(addr string) {
-	//gomniauth　setup
-	gomniauth.SetSecurityKey("circlebankf")
-	gomniauth.WithProviders(
-		google.New("655485724445-iunu8tkefi5a8m8hlhhl7aflcrj6rdcq.apps.googleusercontent.com", "oXM3x_I4iiBH8MYRvlevaeQd", "http://localhost:8080/auth/callback/google"),
-	)
 	//jwt
 	jwtMiddleware := jwtmiddleware.New(jwtmiddleware.Options{
 		ValidationKeyGetter: func(token *jwt.Token) (interface{}, error) {
-			return []byte(controller.SecretKey()), nil
+			return []byte(controller.SecretKey), nil
 		},
 		SigningMethod: jwt.SigningMethodHS256,
 	})
@@ -51,10 +44,9 @@ func (s *Server) Route(addr string) {
 	users := &controller.User{DB: s.DB}
 	events := &controller.Event{DB: s.DB}
 	//nomal
-	r.HandleFunc("/auth/{action}/{provider}", users.LoginHandler)
-	r.HandleFunc("/logout", users.LogoutHandler) //.Methods("POST")
+	r.HandleFunc("/login", users.LoginHandler).Methods("POST")
+	r.HandleFunc("/logout", users.LogoutHandler).Methods("POST")
 	r.HandleFunc("/signup", users.SignUpHandler).Methods("POST")
-	r.HandleFunc("/signup", users.SignUpViewHandler).Methods("GET")
 	r.HandleFunc("/", Index)
 	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("public"))))
 	/*
@@ -81,7 +73,7 @@ func (s *Server) Route(addr string) {
 	a.Path("/{univ}/circle/{id}/{event}").HandlerFunc(events.EventHandler).Methods("GET")
 	//user data
 	a.Path("/user").HandlerFunc(users.UserHandler).Methods("GET")
-	a.Path("/user").HandlerFunc(users.UserHandler).Methods("POST")
+	a.Path("/user").HandlerFunc(users.UserUpdateHandler).Methods("POST")
 
 	//all handler add middleware
 	n := negroni.New()

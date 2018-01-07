@@ -51,4 +51,5 @@ type User struct {
 	Sex        string `db:"sex" json:"sex"`
 	Department string `db:"department" json:"department"`
 	Subject    string `db:"subject" json:"subject"`
+	Password   string `db:"password" json:"password"`
 }

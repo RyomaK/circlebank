@@ -164,6 +164,7 @@ func ScanUser(r *sql.Row) (User, error) {
 		&s.Sex,
 		&s.Department,
 		&s.Subject,
+		&s.Password,
 	); err != nil {
 		return User{}, err
 	}
