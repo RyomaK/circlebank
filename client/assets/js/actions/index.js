@@ -20,6 +20,26 @@ export const setEmail = email => dispatch => dispatch({type: 'SET_EMAIL',email})
 
 export const setPassword = password => dispatch => dispatch({type: 'SET_PASSWORD',password});
 
+export const signup = data => dispatch => {
+  console.log(data)
+  axios
+  .post(`${domain}/signup`,{
+    university: data.university,
+    name: data.name,
+    mail: data.email,
+    sex: data.sex,
+    department: data.department,
+    subject: data.subject,
+    password: data.password
+  }).then((response) => {
+    const code = response.code
+    const message = response.message
+    console.log(response)
+  }).catch(() => {
+    console.log("エラー")
+  });
+}
+
 
 export const circleSearchStart = URL => dispatch => {
     axios

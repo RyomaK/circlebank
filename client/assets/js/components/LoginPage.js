@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import LoginForm from './LoginForm';
+import LoginForm from '../containers/LoginForm';
 import {Grid,Button} from "react-bootstrap"
 import { Link } from 'react-router-dom'
 import FlatButton from 'material-ui/FlatButton';
