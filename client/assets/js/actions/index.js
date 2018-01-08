@@ -3,57 +3,27 @@ import Cookies from 'universal-cookie';
 
 
 const domain = 'http://localhost:8080'
-var auth = '';
-if(document.cookie.split('Authorization=')[1]){
-  const box = document.cookie.split('Authorization=')[1];
-  if(box.split(';')[0]){
-    auth = box.split(';'[0])
-  }else{
-    auth = box;
-  }
-}
 
 export const setErrorMessage = message => dispatch => dispatch({type: 'ZERO_RESULTS',message});
 
-export const setLogin = isLogin => dispatch => dispatch({type:'LOGIN_CHECK',isLogin});
+export const setUniversity = university => dispatch => dispatch({type: 'SET_UNIVERSITY',university});
 
-export const logout = () => dispatch => {
-  axios.post('http://localhost:8080/logout')
-}
+export const setName = name => dispatch => dispatch({type: 'SET_NAME',name});
 
-export const loginCheck = () => dispatch => {
+export const setSex= sex => dispatch => dispatch({type: 'SET_SEX',sex});
 
-  axios
-  .get('http://localhost:8080/api/doshisha/circle',{headers: { "Authorization": `Bearer ${auth}`}})
-  .then((results) => {
-    const status = results.status
+export const setDepartment = department => dispatch => dispatch({type: 'SET_DEPARTMENT',department});
 
-    return { status };
-  })
-  .then(({status})=> {
-    switch (status) {
-      case 200: {
-        dispatch(setLogin(1));
-        break;
-      }
-      case 401: {
-        dispatch(setLogin(-1));
-        break;
-      }
-      default: {
-        dispatch(setErrorMessage('エラーが発生しました'));
-        break;
-      }
-    }
-  })
-  .catch(() => {
-    dispatch(setErrorMessage('通信に失敗しました'));
-  });
-}
+export const setSubject = subject => dispatch => dispatch({type: 'SET_SUBJECT',subject});
+
+export const setEmail = email => dispatch => dispatch({type: 'SET_EMAIL',email});
+
+export const setPassword = password => dispatch => dispatch({type: 'SET_PASSWORD',password});
+
 
 export const circleSearchStart = URL => dispatch => {
     axios
-    .get(URL,{headers: { "Authorization": `Bearer ${auth}`}})
+    .get(URL)
     .then((results) => {
       const status = results.status
       const circles = results.data
@@ -70,7 +40,6 @@ export const circleSearchStart = URL => dispatch => {
           break;
         }
         case 401: {
-          dispatch(setLogin(-1));
           break;
         }
         default: {
@@ -86,7 +55,7 @@ export const circleSearchStart = URL => dispatch => {
 
 export const tagSearchStart = ()=> dispatch => {
     axios
-    .get(`${domain}/api/doshisha/tag/`,{headers: { "Authorization": `Bearer ${auth}`}})
+    .get(`${domain}/api/doshisha/tag/`)
     .then((results) => {
       const status = results.status
       const tags = results.data
@@ -102,7 +71,7 @@ export const tagSearchStart = ()=> dispatch => {
           break;
         }
         case 401: {
-          dispatch(setLogin(-1));
+
           break;
         }
         default: {
