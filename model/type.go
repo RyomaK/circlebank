@@ -46,10 +46,11 @@ type User struct {
 	ID         uint   `db:"id" json:"id"`
 	University string `db:"university" json:"university"`
 	Name       string `db:"name" json:"name"`
-	Mail       string `db:"mail" json:"mail"`
-	Image      string `db:"image" json:"image"`
 	Sex        string `db:"sex" json:"sex"`
+	Mail       string `db:"mail" json:"mail"`
+	Password   string `db:"password" json:"password"`
+	Image      string `db:"image" json:"image"`
+	Year       int    `db:"year" json:"year"`
 	Department string `db:"department" json:"department"`
 	Subject    string `db:"subject" json:"subject"`
-	Password   string `db:"password" json:"password"`
 }

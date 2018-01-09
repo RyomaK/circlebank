@@ -159,12 +159,13 @@ func ScanUser(r *sql.Row) (User, error) {
 		&s.ID,
 		&s.University,
 		&s.Name,
-		&s.Mail,
-		&s.Image,
 		&s.Sex,
+		&s.Mail,
+		&s.Password,
+		&s.Image,
+		&s.Year,
 		&s.Department,
 		&s.Subject,
-		&s.Password,
 	); err != nil {
 		return User{}, err
 	}

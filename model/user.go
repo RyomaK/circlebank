@@ -9,11 +9,12 @@ import (
 )
 
 func UserExist(db *sql.DB, mail string) bool {
-	row := db.QueryRow(`SELECT id from users where mail = ? `, mail)
-	if row != nil {
-		return true
+	var id int
+	row := db.QueryRow(`SELECT id from users where mail = ? `, mail).Scan(&id)
+	if row == sql.ErrNoRows {
+		return false
 	}
-	return false
+	return true
 }
 
 func GetUnivID(db *sql.DB, name string) uint {
@@ -53,12 +54,12 @@ func GetUser(db *sql.DB, mail string) (User, error) {
 
 func IsLogin(db *sql.DB, mail, pass string) bool {
 	row := db.QueryRow(`SELECT * from users where mail = ? `, mail)
-	if row == nil {
+	user, err := ScanUser(row)
+	if err == sql.ErrNoRows {
 		return false
 	}
-	user, _ := ScanUser(row)
 
-	if err := ComparePass(user.Password, pass); err == nil {
+	if err = ComparePass(user.Password, pass); err == nil {
 		return true
 	}
 	return false
@@ -77,7 +78,7 @@ func EncodePass(pass string) (string, error) {
 }
 
 func Regist(db *sql.DB, user User) error {
-	stmt, err := db.Prepare("INSERT users SET univ_id=?, name=?,mail=?,password=?,sex=?,department=?,subject=?,image=?")
+	stmt, err := db.Prepare("INSERT users SET univ_id=?, name=?,mail=?,password=?,sex=?,department=?,subject=?,image=?,year=?")
 	if err != nil {
 		return err
 	}
@@ -85,7 +86,7 @@ func Regist(db *sql.DB, user User) error {
 	if err != nil {
 		return err
 	}
-	_, err = stmt.Exec(GetUnivID(db, user.University), user.Name, user.Mail, user.Password, user.Sex, user.Department, user.Subject, user.Image)
+	_, err = stmt.Exec(GetUnivID(db, user.University), user.Name, user.Mail, user.Password, user.Sex, user.Department, user.Subject, user.Image, user.Year)
 	if err != nil {
 		return err
 	}

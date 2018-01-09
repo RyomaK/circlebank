@@ -104,7 +104,6 @@ func (u *User) SignUpHandler(w http.ResponseWriter, r *http.Request) {
 		w = SetHeader(w, http.StatusConflict)
 		w.Write(a)
 	} else {
-		//authUser := JwtToData(r.Header.Get("user"))
 		person := model.User{}
 		person.University = r.FormValue("university")
 		person.Name = r.FormValue("name")
@@ -113,6 +112,7 @@ func (u *User) SignUpHandler(w http.ResponseWriter, r *http.Request) {
 		person.Department = r.FormValue("department")
 		person.Subject = r.FormValue("subject")
 		person.Password = r.FormValue("password")
+		person.Year, _ = strconv.Atoi(r.FormValue("year"))
 
 		if err := model.Regist(u.DB, person); err != nil {
 			log.Printf("err in signHandler %v", err)
