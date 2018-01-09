@@ -18,8 +18,6 @@ class LoginPage extends Component{
   componentWillMount(){
 
   }
-
-
   render(){
         return(
           <div className="login">

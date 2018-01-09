@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { setUniversity,setName,setSex,setEmail,setDepartment,setSubject,setPassword,signup } from '../actions/index'
+import { setUniversity,setName,setSex,setEmail,setDepartment,setSubject,setYear,setPassword,signup } from '../actions/index'
 import { connect } from 'react-redux'
 import {Col,Form,FormGroup,FormControl,Button,Checkbox} from "react-bootstrap"
 
@@ -26,10 +26,12 @@ class SignupForm extends Component{
       case 'name':
         this.props.setName(e.target.value)
       break;
+      case 'year':
+        this.props.setYear(e.target.value)
+      break;
       case 'sex':
         this.setState({check:!this.state.check})
         this.props.setSex(this.state.check)
-
       break;
       case 'mail':
         this.props.setEmail(e.target.value)
@@ -69,6 +71,16 @@ class SignupForm extends Component{
   				<FormControl name = "name" type="text" placeholder="Name" onChange={this.handleChange.bind(this)}/>
   			</Col>
   		</FormGroup>
+
+      <FormGroup validationState="success">
+        <Col sm={2}>
+          入学年
+        </Col>
+        <Col sm={10}>
+          <FormControl name = "year" type="text" placeholder="Year" onChange={this.handleChange.bind(this)}/>
+      </Col>
+  		</FormGroup>
+
 
       <FormGroup validationState="success">
         <Col sm={2}>
@@ -137,6 +149,9 @@ const mapDispatchToProps = dispatch => {
       },
       setName: name => {
         dispatch(setName(name))
+      },
+      setYear: year => {
+        dispatch(setYear(year))
       },
       setSex: id => {
         dispatch(setSex(id))

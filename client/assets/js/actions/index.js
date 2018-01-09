@@ -20,12 +20,17 @@ export const setEmail = email => dispatch => dispatch({type: 'SET_EMAIL',email})
 
 export const setPassword = password => dispatch => dispatch({type: 'SET_PASSWORD',password});
 
+export const setYear = year => dispatch => dispatch({type: 'SET_YEAR',year});
+
+export const setLogin = number => dispatch => dispatch({type: 'LOGIN_CHECK',number});
+
 export const signup = data => dispatch => {
   console.log(data)
   axios
   .post('/signup',{
     university: data.university,
     name: data.name,
+    year: data.year,
     mail: data.email,
     sex: data.sex,
     department: data.department,
@@ -55,10 +60,67 @@ export const login = data => dispatch => {
   });
 }
 
+export const getUserInfo = () => dispatch => {
+  axios
+  .get('/api/user',{ Headers:{'Authorization':`Bearer ${Auth}`}})
+  .then((response) => {
+    const status = response.status
+    const user = rensponse.data
+    console.log(response)
+    if(typeof user === undefined){
+      return { status };
+    }
+    return { status, user };
+  })
+  .then(({ status,user }) => {
+    switch(status){
+      case 200:
+        dispatch({type:'SHOW_USER',user});
+        break;
+      case 401:
+        dispatch(setLogin(-1));
+        break;
+      default:
+        console.log("エラー")
+        break;
+    }
+  })
+  .catch(() => {
+    dispatch(setErrorMessage('通信に失敗しました'));
+  });
+}
+
+export const loginCheck = () => dispatch => {
+    axios
+    .get('/api/doshisha/tag',{ Headers:{'Authorization':`Bearer ${Auth}`}})
+    .then((results) => {
+      const status = results.status
+      return { status };
+    })
+    .then(({status})=> {
+      switch (status) {
+        case 200: {
+          dispatch(setLogin(1));
+          break;
+        }
+        case 401: {
+          dispatch(setLogin(-1));
+        }
+        default: {
+          dispatch(setErrorMessage('エラーが発生しました'));
+          break;
+        }
+      }
+    })
+    .catch(() => {
+      dispatch(setErrorMessage('通信に失敗しました'));
+    });
+}
+
 
 export const circleSearchStart = URL => dispatch => {
     axios
-    .get(URL)
+    .get(URL,{ Headers:{'Authorization':`Bearer ${Auth}`}})
     .then((results) => {
       const status = results.status
       const circles = results.data
@@ -74,6 +136,7 @@ export const circleSearchStart = URL => dispatch => {
           break;
         }
         case 401: {
+          dispatch(setLogin(-1));
           break;
         }
         default: {
@@ -87,9 +150,9 @@ export const circleSearchStart = URL => dispatch => {
     });
 }
 
-export const tagSearchStart = ()=> dispatch => {
+export const tagSearchStart = () => dispatch => {
     axios
-    .get(`${domain}/api/doshisha/tag/`)
+    .get('/api/doshisha/tag/',{ Headers:{'Authorization':`Bearer ${Auth}`}})
     .then((results) => {
       const status = results.status
       const tags = results.data
@@ -105,7 +168,7 @@ export const tagSearchStart = ()=> dispatch => {
           break;
         }
         case 401: {
-
+          dispatch(setLogin(-1));
           break;
         }
         default: {

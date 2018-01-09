@@ -22,8 +22,8 @@ handleToggle(){ this.setState({open: !this.state.open})}
       docked={false}
       onRequestChange={()=>this.handleToggle()}
       >
-        <MenuItem>Menu Item</MenuItem>
-        <MenuItem>Menu Item 2</MenuItem>
+        <MenuItem>マイページ</MenuItem>
+        <MenuItem>編集</MenuItem>
       </Drawer>
       <AppBar
       title="サークルバンク"

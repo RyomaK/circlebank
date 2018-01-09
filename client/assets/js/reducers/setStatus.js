@@ -3,6 +3,7 @@ const initialState = {
   university: "同志社",
   name: "",
   sex: "男",
+  year: "",
   email: "",
   department: "",
   subject: "",
@@ -22,6 +23,10 @@ const setStatus = (state=initialState,action) => {
       return Object.assign({}, state, {
         name: action.name
         })
+    case 'SET_YEAR':
+      return Object.assign({}, state, {
+        year: action.year
+        })
     case 'SET_SEX':
       if(action.sex){
         return Object.assign({}, state, {
@@ -32,7 +37,6 @@ const setStatus = (state=initialState,action) => {
             sex: "女"
           })
       }
-
     case 'SET_EMAIL':
       return Object.assign({}, state, {
         email: action.email
