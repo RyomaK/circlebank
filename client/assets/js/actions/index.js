@@ -23,13 +23,28 @@ export const setPassword = password => dispatch => dispatch({type: 'SET_PASSWORD
 export const signup = data => dispatch => {
   console.log(data)
   axios
-  .post(`${domain}/signup`,{
+  .post('/signup',{
     university: data.university,
     name: data.name,
     mail: data.email,
     sex: data.sex,
     department: data.department,
     subject: data.subject,
+    password: data.password
+  }).then((response) => {
+    const code = response.code
+    const message = response.message
+    console.log(response)
+  }).catch(() => {
+    console.log("エラー")
+  });
+}
+
+export const login = data => dispatch => {
+  console.log(data)
+  axios
+  .post('/login',{
+    mail: data.email,
     password: data.password
   }).then((response) => {
     const code = response.code
@@ -50,7 +65,6 @@ export const circleSearchStart = URL => dispatch => {
       if (typeof circles === undefined) {
         return { status };
       }
-
       return { status, circles };
     })
     .then(({status, circles})=> {
