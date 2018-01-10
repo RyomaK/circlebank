@@ -7,7 +7,7 @@
 #
 # ホスト: 127.0.0.1 (MySQL 5.7.19)
 # データベース: circle_bank
-# 作成時刻: 2018-01-07 04:07:45 +0000
+# 作成時刻: 2018-01-10 00:55:11 +0000
 # ************************************************************
 
 
@@ -45,7 +45,7 @@ LOCK TABLES `circles` WRITE;
 INSERT INTO `circles` (`id`, `univ_id`, `name`, `number`, `introduction`, `message_fresh`, `excite`, `fee`, `campus`, `img`)
 VALUES
 	(1,1,'hands up',30,'アットホームなバスケットボールサークルです','いつでもきてね',3,5000,'京田辺',NULL),
-	(2,1,'fly speck',100,'テニス','',9,3000,'京田辺',NULL);
+	(2,1,'fly speck',100,'テニス','いつでもきてねえええ',9,3000,'京田辺',NULL);
 
 /*!40000 ALTER TABLE `circles` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -173,7 +173,8 @@ LOCK TABLES `universities` WRITE;
 INSERT INTO `universities` (`id`, `url_name`, `name`)
 VALUES
 	(1,'doshisha','同志社大学'),
-	(2,'kanseigakuin','関西学院大学');
+	(2,'kanseigakuin','関西学院大学'),
+	(3,'doshisha','同志社女子大学');
 
 /*!40000 ALTER TABLE `universities` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -186,24 +187,26 @@ DROP TABLE IF EXISTS `users`;
 
 CREATE TABLE `users` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `univ_id` int(11) DEFAULT NULL,
+  `univ_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL DEFAULT '',
+  `sex` char(2) NOT NULL,
   `mail` varchar(255) NOT NULL DEFAULT '',
+  `password` varchar(255) NOT NULL,
   `image` varchar(255) DEFAULT '',
-  `sex` char(2) NOT NULL DEFAULT '',
+  `year` int(11) NOT NULL,
   `department` varchar(255) NOT NULL DEFAULT '',
   `subject` varchar(255) NOT NULL DEFAULT '',
-  `password` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 
-INSERT INTO `users` (`id`, `univ_id`, `name`, `mail`, `image`, `sex`, `department`, `subject`, `password`)
+INSERT INTO `users` (`id`, `univ_id`, `name`, `sex`, `mail`, `password`, `image`, `year`, `department`, `subject`)
 VALUES
-	(1,1,'栗栖','ryooomaaa0413@gmail.com','','1','理工学部','情報システムデザイン学科','$2a$10$3rCT9hO/RZu1Qxd.lhJA7.6EDUZ5SPTVcVlu4KKQZNPYin.rKNJ0S'),
-	(2,1,'津國健太','tsukuni1@gmail.com','','1','理工学部','機械システム学科','$2a$10$dg/iWh6zeFBEfuL.kDE3MO/xygMGyTYOypo9XsjV5BBHwv1kH9T0y');
+	(1,1,'栗栖','男','ryooomaaa0413@gmail.com','$2a$10$3rCT9hO/RZu1Qxd.lhJA7.6EDUZ5SPTVcVlu4KKQZNPYin.rKNJ0S','',2015,'理工学部','情報システムデザイン学科'),
+	(2,1,'津國健太','男','tsukuni1@gmail.com','$2a$10$dg/iWh6zeFBEfuL.kDE3MO/xygMGyTYOypo9XsjV5BBHwv1kH9T0y','public/img/users/2.png',2015,'理工学部','機械システム学科'),
+	(16,1,'櫻井','男','sakurai@gmail.com','$2a$10$Stqc3LpJYS7.yzvF3mFIku6ZO/9Apr7KN8BvtSOLqgI6sTfxdD4UC','',2015,'理工学部','情報システムデザイン学科');
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
