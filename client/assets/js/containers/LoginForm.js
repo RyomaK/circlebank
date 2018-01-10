@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { setEmail,setPassword,login} from '../actions/index'
 import { connect } from 'react-redux'
 import {Col,Form,FormGroup,FormControl,Button} from "react-bootstrap"
+import { Link } from 'react-router-dom'
+import FlatButton from 'material-ui/FlatButton';
 
 class LoginForm extends Component {
 
@@ -26,8 +28,14 @@ class LoginForm extends Component {
     }
   }
 
+
   render(){
+    const style={
+      color:"white"
+    }
+
     return(
+      <div>
       <Form horizontal onSubmit={this.handleSubmit.bind(this)}>
   		<FormGroup>
   			<Col sm={2}>
@@ -47,11 +55,17 @@ class LoginForm extends Component {
   			</Col>
   		</FormGroup>
   		<FormGroup>
-  			<Col smOffset={2} sm={10}>
-  				<Button type="submit">Sign in</Button>
-  			</Col>
+        <Col sm={12}>
+          <FlatButton label="Log In" fullWidth={true} backgroundColor="#8AA62F" hoverColor="#7CBD1E" style={style} type="submit"/>
+  		   </Col>
+        <Col sm={12}></Col>
+        <Col sm={12}>
+          <Link to="/signup"><FlatButton label="Sign Up" fullWidth={true} backgroundColor="#1160AA"  hoverColor="#3F52E3" style={style}/></Link>
+        </Col>
   		</FormGroup>
   	</Form>
+
+    </div>
     )
   }
 }

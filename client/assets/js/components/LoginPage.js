@@ -16,20 +16,16 @@ const style={
 
 class LoginPage extends Component{
   componentWillMount(){
+    this.props.LoginCheck()
 
   }
   render(){
+    console.log(this.props.isLogin)
         return(
           <div className="login">
             <div className="top">
                 <h3>ログインしてください</h3>
                 <LoginForm />
-                <div>
-                  <div className="button1">
-                    <a href="auth/login/google"><FlatButton label="Log In" fullWidth={true} backgroundColor="#8AA62F" hoverColor="#7CBD1E" style={style}/></a>
-                  </div>
-                  <Link to="/signup"><FlatButton label="Sign Up" fullWidth={true} backgroundColor="#1160AA"  hoverColor="#3F52E3" style={style}/></Link>
-                </div>
             </div>
           </div>
         )
@@ -37,12 +33,19 @@ class LoginPage extends Component{
   }
 const mapStateToProps = state => {
   return{
-    state
+    isLogin: state.loginCheck.isLogin
+  }
+}
+const mapDispatchToProps = dispatch => {
+  return{
+    LoginCheck: () => {
+      dispatch(loginCheck())
+    }
   }
 }
 
-
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 
 )(LoginPage)

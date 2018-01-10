@@ -4,6 +4,16 @@ import Cookies from 'universal-cookie';
 
 const domain = 'http://localhost:8080'
 
+const getAuth = () => {
+  let box1=""
+  const box = document.cookie.split('Authorization=');
+    if(box[1]){
+       box1 = box[1].split(';')[0];
+    }
+  return (box1)
+
+}
+
 export const setErrorMessage = message => dispatch => dispatch({type: 'ZERO_RESULTS',message});
 
 export const setUniversity = university => dispatch => dispatch({type: 'SET_UNIVERSITY',university});
@@ -61,8 +71,9 @@ export const login = data => dispatch => {
 }
 
 export const getUserInfo = () => dispatch => {
+
   axios
-  .get('/api/user',{ Headers:{'Authorization':`Bearer ${Auth}`}})
+  .get('/api/user',{ headers:{'Authorization':`Bearer ${Auth}`}})
   .then((response) => {
     const status = response.status
     const user = rensponse.data
@@ -91,8 +102,10 @@ export const getUserInfo = () => dispatch => {
 }
 
 export const loginCheck = () => dispatch => {
+    const Auth = getAuth();
+    console.log(Auth)
     axios
-    .get('/api/doshisha/tag',{ Headers:{'Authorization':`Bearer ${Auth}`}})
+    .get('/api/doshisha/circle',{headers: { "Authorization": `Bearer ${Auth}`}})
     .then((results) => {
       const status = results.status
       return { status };
@@ -119,6 +132,7 @@ export const loginCheck = () => dispatch => {
 
 
 export const circleSearchStart = URL => dispatch => {
+    const Auth = getAuth();
     axios
     .get(URL,{ Headers:{'Authorization':`Bearer ${Auth}`}})
     .then((results) => {
@@ -152,7 +166,7 @@ export const circleSearchStart = URL => dispatch => {
 
 export const tagSearchStart = () => dispatch => {
     axios
-    .get('/api/doshisha/tag/',{ Headers:{'Authorization':`Bearer ${Auth}`}})
+    .get('/api/doshisha/tag/',{ headers:{'Authorization':`Bearer ${Auth}`}})
     .then((results) => {
       const status = results.status
       const tags = results.data
