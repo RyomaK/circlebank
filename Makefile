@@ -1,7 +1,8 @@
 DBNAME:=circle_bank
 ENV:=development
 
-DBCONFIG:=root:Kenta71619@/circle_bank
+DBCONFIG:=root:@/circle_bank
+#DBCONFIG:=root:Kenta71619@/circle_bank
 
 build:
 	godep	go build -o ./cmd/circle/circle ./cmd/circle/circle.go
@@ -18,7 +19,7 @@ migrate/init:
 	mysql -u root -h localhost --protocol tcp -e "create database \`$(DBNAME)\`" -p
 
 migrate/seed:
-	mysql -u root -p $(DBNAME) < ./model/dump/dump1.sql
+	mysql -u root -p $(DBNAME) < ./model/dump/dump.sql
 
 install:
 	go get -u github.com/tools/godep

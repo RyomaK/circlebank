@@ -1,22 +1,25 @@
 package controller
 
 import (
+	"fmt"
 	"log"
 	"net/http"
+	"strings"
 
 	jwt "github.com/dgrijalva/jwt-go"
 )
 
 type AuthUser struct {
-	Name  string `json:"name"`
-	Mail  string `json:"mail"`
-	Image string `json:"Image"`
+	Mail string `json:"mail"`
 	jwt.StandardClaims
 }
 
-func SecretKey() string {
-	return "75c92a074c341e9964329c0550c2673730ed8479c885c43122c90a2843177d5ef21cb50cfadcccb20aeb730487c11e09ee4dbbb02387242ef264e74cbee97213"
+type StatusCode struct {
+	Code    int    `json:"code"`
+	Message string `json:"message"`
 }
+
+const SecretKey = "75c92a074c341e9964329c0550c2673730ed8479c885c43122c90a2843177d5ef21cb50cfadcccb20aeb730487c11e09ee4dbbb02387242ef264e74cbee97213"
 
 func SetHeader(w http.ResponseWriter, status int) http.ResponseWriter {
 	w.Header().Set("Content-Type", "application/json")
@@ -30,35 +33,50 @@ func CreateJWT(user *AuthUser) string {
 	token := jwt.New(jwt.GetSigningMethod("HS256"))
 
 	token.Claims = jwt.MapClaims{
-		"Name":  user.Name,
-		"Mail":  user.Mail,
-		"Image": user.Image,
+		"Mail": user.Mail,
 	}
 	/*
 	 トークンに対して署名の付与
 	*/
-	tokenString, err := token.SignedString([]byte(SecretKey()))
+	tokenString, err := token.SignedString([]byte(SecretKey))
 	if err != nil {
 		log.Printf("%v", err)
-		return "error"
+		return "error token"
 	}
 	return tokenString
 
 }
-
-func JwtToData(str string) AuthUser {
+func JwtToData(str string) (AuthUser, error) {
 	user := AuthUser{}
 	_, err := jwt.ParseWithClaims(str, &user, func(token *jwt.Token) (interface{}, error) {
-		return []byte(SecretKey()), nil
+		return []byte(SecretKey), nil
 	})
+
 	if err != nil {
-		log.Printf("err jwt to data %v", err)
+		return user, err
 	}
-	return user
+	return user, nil
 }
 
 func getUserEmail(r *http.Request) string {
-	jwtString := r.Header.Get("user")
-	user := JwtToData(jwtString)
+	jwtString := r.Header.Get("Authorization")
+	jwtString = strings.Replace(jwtString, "Bearer ", "", 1)
+	user, err := JwtToData(jwtString)
+	if err != nil {
+		fmt.Printf("err getUser Email %v\n", err)
+		return ""
+	}
 	return user.Mail
+}
+
+func WriteJWT(w http.ResponseWriter, mail string) {
+	jwtString := CreateJWT(&AuthUser{
+		Mail: mail,
+	})
+	//cookieに保存
+	http.SetCookie(w, &http.Cookie{
+		Name:  "Authorization",
+		Value: jwtString,
+		Path:  "/",
+	})
 }

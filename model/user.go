@@ -4,16 +4,17 @@ import (
 	"database/sql"
 	"log"
 	"strconv"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 func UserExist(db *sql.DB, mail string) bool {
-	row := db.QueryRow(`SELECT id from users where mail = ?`, mail)
-	var id string
-	row.Scan(&id)
-	if id != "" {
-		return true
+	var id int
+	row := db.QueryRow(`SELECT id from users where mail = ? `, mail).Scan(&id)
+	if row == sql.ErrNoRows {
+		return false
 	}
-	return false
+	return true
 }
 
 func GetUnivID(db *sql.DB, name string) uint {
@@ -34,19 +35,6 @@ func GetUnivName(db *sql.DB, id string) string {
 	return univ
 }
 
-func Regist(db *sql.DB, user User) error {
-	stmt, err := db.Prepare("INSERT users SET univ_id=?, name=?,mail=?,password=?,sex=?,department=?,subject=?")
-	if err != nil {
-		return err
-	}
-	_, err = stmt.Exec(GetUnivID(db, user.University), user.Name, user.Mail, user.Image, user.Sex, user.Department, user.Subject)
-	if err != nil {
-		return err
-	}
-	stmt.Close()
-	return nil
-}
-
 func GetUserPass(db *sql.DB, mail string) string {
 	row := db.QueryRow(`SELECT password from users where mail = ?`, mail)
 	var pass string
@@ -62,4 +50,66 @@ func GetUser(db *sql.DB, mail string) (User, error) {
 		return User{}, err
 	}
 	return user, nil
+}
+
+func IsLogin(db *sql.DB, mail, pass string) bool {
+	row := db.QueryRow(`SELECT * from users where mail = ? `, mail)
+	user, err := ScanUser(row)
+	if err == sql.ErrNoRows {
+		return false
+	}
+
+	if err = ComparePass(user.Password, pass); err == nil {
+		return true
+	}
+	return false
+}
+
+func ComparePass(hash, pass string) error {
+	return bcrypt.CompareHashAndPassword([]byte(hash), []byte(pass))
+}
+
+func EncodePass(pass string) (string, error) {
+	hash, err := bcrypt.GenerateFromPassword([]byte(pass), bcrypt.DefaultCost)
+	if err != nil {
+		return "", err
+	}
+	return string(hash), nil
+}
+
+func Regist(db *sql.DB, user User) error {
+	stmt, err := db.Prepare("INSERT users SET univ_id=?, name=?,mail=?,password=?,sex=?,department=?,subject=?,image=?,year=?")
+	if err != nil {
+		return err
+	}
+	user.Password, err = EncodePass(user.Password)
+	if err != nil {
+		return err
+	}
+	_, err = stmt.Exec(GetUnivID(db, user.University), user.Name, user.Mail, user.Password, user.Sex, user.Department, user.Subject, user.Image, user.Year)
+	if err != nil {
+		return err
+	}
+	stmt.Close()
+	return nil
+}
+
+func UpdateProfile(db *sql.DB, id uint, name, mail, pass string) error {
+	pass, err := EncodePass(pass)
+	if err != nil {
+		return err
+	}
+	_, err = db.Exec("UPDATE users SET name = ?,mail = ?,password = ? WHERE  id= ?", name, mail, pass, id)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func UpdatePicture(db *sql.DB, mail, image string) error {
+	_, err := db.Exec("UPDATE users SET image = ? WHERE  mail= ?", image, mail)
+	if err != nil {
+		return err
+	}
+	return nil
 }
