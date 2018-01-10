@@ -9,12 +9,11 @@ class LoginForm extends Component {
 
   handleSubmit(e){
     e.preventDefault();
-    console.log(this.props.info)
     this.props.login(this.props.info)
   }
 
   handleChange(e){
-    console.log(this.props.info)
+
     e.preventDefault();
     switch(e.target.name){
       case 'mail':
@@ -36,36 +35,35 @@ class LoginForm extends Component {
 
     return(
       <div>
-      <Form horizontal onSubmit={this.handleSubmit.bind(this)}>
-  		<FormGroup>
-  			<Col sm={2}>
-  				Email
-  			</Col>
-  			<Col sm={10}>
-  				<FormControl name = "mail" type="email" placeholder="Email" onChange={this.handleChange.bind(this)}/>
-  			</Col>
-  		</FormGroup>
+        <Form horizontal onSubmit={this.handleSubmit.bind(this)}>
+    		<FormGroup>
+    			<Col sm={2}>
+    				Email
+    			</Col>
+    			<Col sm={10}>
+    				<FormControl name = "mail" type="email" placeholder="Email" onChange={this.handleChange.bind(this)}/>
+    			</Col>
+    		</FormGroup>
 
-  		<FormGroup>
-  			<Col sm={2}>
-  				Password
-  			</Col>
-  			<Col sm={10}>
-  				<FormControl name = "password" type="password" placeholder="Password" onChange={this.handleChange.bind(this)}/>
-  			</Col>
-  		</FormGroup>
-  		<FormGroup>
-        <Col sm={12}>
-          <FlatButton label="Log In" fullWidth={true} backgroundColor="#8AA62F" hoverColor="#7CBD1E" style={style} type="submit"/>
-  		   </Col>
-        <Col sm={12}></Col>
-        <Col sm={12}>
-          <Link to="/signup"><FlatButton label="Sign Up" fullWidth={true} backgroundColor="#1160AA"  hoverColor="#3F52E3" style={style}/></Link>
-        </Col>
-  		</FormGroup>
-  	</Form>
-
-    </div>
+    		<FormGroup>
+    			<Col sm={2}>
+    				Password
+    			</Col>
+    			<Col sm={10}>
+    				<FormControl name = "password" type="password" placeholder="Password" onChange={this.handleChange.bind(this)}/>
+    			</Col>
+    		</FormGroup>
+    		<FormGroup>
+          <Col sm={12}>
+            <FlatButton label="Log In" fullWidth={true} backgroundColor="#8AA62F" hoverColor="#7CBD1E" style={style} type="submit"/>
+    		   </Col>
+          <Col sm={12}></Col>
+          <Col sm={12}>
+            <Link to="/signup"><FlatButton label="Sign Up" fullWidth={true} backgroundColor="#1160AA"  hoverColor="#3F52E3" style={style}/></Link>
+          </Col>
+    		</FormGroup>
+    	   </Form>
+       </div>
     )
   }
 }
