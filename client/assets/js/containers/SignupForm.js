@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { setUniversity,setName,setSex,setEmail,setDepartment,setSubject,setYear,setPassword,signup } from '../actions/index'
+import { setUniversity,setName,setSex,setEmail,setDepartment,setSubject,settYear,setPassword,signup } from '../actions/index'
 import { connect } from 'react-redux'
 import {Col,Form,FormGroup,FormControl,Button,Checkbox} from "react-bootstrap"
 
@@ -11,14 +11,13 @@ class SignupForm extends Component{
   }
 
   handleSubmit(e){
-    e.preventDefault();
-    console.log(this.props.info)
+
     this.props.signup(this.props.info)
   }
 
+
   handleChange(e){
-    console.log(this.props.info)
-    e.preventDefault();
+
     switch(e.target.name){
       case 'university':
         this.props.setUniversity(e.target.value)
@@ -27,7 +26,7 @@ class SignupForm extends Component{
         this.props.setName(e.target.value)
       break;
       case 'year':
-        this.props.setYear(e.target.value)
+        this.props.settYear(e.target.value)
       break;
       case 'sex':
         this.setState({check:!this.state.check})
@@ -150,8 +149,8 @@ const mapDispatchToProps = dispatch => {
       setName: name => {
         dispatch(setName(name))
       },
-      setYear: year => {
-        dispatch(setYear(year))
+      settYear: year => {
+        dispatch(settYear(year))
       },
       setSex: id => {
         dispatch(setSex(id))

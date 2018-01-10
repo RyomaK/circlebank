@@ -30,7 +30,7 @@ export const setEmail = email => dispatch => dispatch({type: 'SET_EMAIL',email})
 
 export const setPassword = password => dispatch => dispatch({type: 'SET_PASSWORD',password});
 
-export const setYear = year => dispatch => dispatch({type: 'SET_YEAR',year});
+export const settYear = year => dispatch => dispatch({type: 'SET_YEAR',year});
 
 export const setLogin = number => dispatch => dispatch({type: 'LOGIN_CHECK',number});
 
@@ -56,7 +56,6 @@ export const signup = data => dispatch => {
 }
 
 export const login = data => dispatch => {
-  console.log(data)
   axios
   .post('/login',{
     mail: data.email,
@@ -71,7 +70,7 @@ export const login = data => dispatch => {
 }
 
 export const getUserInfo = () => dispatch => {
-
+const Auth = getAuth();
   axios
   .get('/api/user',{ headers:{'Authorization':`Bearer ${Auth}`}})
   .then((response) => {
@@ -134,7 +133,7 @@ export const loginCheck = () => dispatch => {
 export const circleSearchStart = URL => dispatch => {
     const Auth = getAuth();
     axios
-    .get(URL,{ Headers:{'Authorization':`Bearer ${Auth}`}})
+    .get(URL,{ headers:{'Authorization':`Bearer ${Auth}`}})
     .then((results) => {
       const status = results.status
       const circles = results.data
@@ -165,6 +164,7 @@ export const circleSearchStart = URL => dispatch => {
 }
 
 export const tagSearchStart = () => dispatch => {
+  const Auth = getAuth();
     axios
     .get('/api/doshisha/tag/',{ headers:{'Authorization':`Bearer ${Auth}`}})
     .then((results) => {

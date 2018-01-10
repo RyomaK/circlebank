@@ -1,7 +1,7 @@
 import React, {Component} from "react"
 import LoginForm from '../containers/LoginForm';
 import {Grid,Button} from "react-bootstrap"
-import { Link } from 'react-router-dom'
+import { Link,Redirect} from 'react-router-dom'
 import FlatButton from 'material-ui/FlatButton';
 import { connect } from 'react-redux'
 import {loginCheck} from '../actions/index'
@@ -15,12 +15,14 @@ const style={
 }
 
 class LoginPage extends Component{
-  componentWillMount(){
-    this.props.LoginCheck()
 
-  }
   render(){
-    console.log(this.props.isLogin)
+    const isLogin = this.props.isLogin
+      if(isLogin == "true"){
+        return(
+            <Redirect to="/"/>
+        )
+      }else{
         return(
           <div className="login">
             <div className="top">
@@ -29,6 +31,7 @@ class LoginPage extends Component{
             </div>
           </div>
         )
+      }
     }
   }
 const mapStateToProps = state => {
