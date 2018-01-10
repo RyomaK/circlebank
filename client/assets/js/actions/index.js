@@ -3,47 +3,97 @@ import Cookies from 'universal-cookie';
 
 
 const domain = 'http://localhost:8080'
-var auth = '';
-if(document.cookie.split('Authorization=')[1]){
-  const box = document.cookie.split('Authorization=')[1];
-  if(box.split(';')[0]){
-    auth = box.split(';'[0])
-  }else{
-    auth = box;
-  }
+
+const getAuth = () => {
+  let box1=""
+  const box = document.cookie.split('Authorization=');
+    if(box[1]){
+       box1 = box[1].split(';')[0];
+    }
+  return (box1)
+
 }
 
 export const setErrorMessage = message => dispatch => dispatch({type: 'ZERO_RESULTS',message});
 
-export const setLogin = isLogin => dispatch => dispatch({type:'LOGIN_CHECK',isLogin});
+export const setUniversity = university => dispatch => dispatch({type: 'SET_UNIVERSITY',university});
 
-export const logout = () => dispatch => {
-  axios.post('http://localhost:8080/logout')
+export const setName = name => dispatch => dispatch({type: 'SET_NAME',name});
+
+export const setSex= sex => dispatch => dispatch({type: 'SET_SEX',sex});
+
+export const setDepartment = department => dispatch => dispatch({type: 'SET_DEPARTMENT',department});
+
+export const setSubject = subject => dispatch => dispatch({type: 'SET_SUBJECT',subject});
+
+export const setEmail = email => dispatch => dispatch({type: 'SET_EMAIL',email});
+
+export const setPassword = password => dispatch => dispatch({type: 'SET_PASSWORD',password});
+
+export const setYear = year => dispatch => dispatch({type: 'SET_YEAR',year});
+
+export const setLogin = number => dispatch => dispatch({type: 'LOGIN_CHECK',number});
+
+export const signup = data => dispatch => {
+  console.log(data)
+  axios
+  .post('/signup',{
+    university: data.university,
+    name: data.name,
+    year: data.year,
+    mail: data.email,
+    sex: data.sex,
+    department: data.department,
+    subject: data.subject,
+    password: data.password
+  }).then((response) => {
+    const code = response.code
+    const message = response.message
+    console.log(response)
+  }).catch(() => {
+    console.log("エラー")
+  });
 }
 
-export const loginCheck = () => dispatch => {
+export const login = data => dispatch => {
+  console.log(data)
+  axios
+  .post('/login',{
+    mail: data.email,
+    password: data.password
+  }).then((response) => {
+    const code = response.code
+    const message = response.message
+    console.log(response)
+  }).catch(() => {
+    console.log("エラー")
+  });
+}
+
+export const getUserInfo = () => dispatch => {
 
   axios
-  .get('http://localhost:8080/api/doshisha/circle',{headers: { "Authorization": `Bearer ${auth}`}})
-  .then((results) => {
-    const status = results.status
-
-    return { status };
+  .get('/api/user',{ headers:{'Authorization':`Bearer ${Auth}`}})
+  .then((response) => {
+    const status = response.status
+    const user = rensponse.data
+    console.log(response)
+    if(typeof user === undefined){
+      return { status };
+    }
+    return { status, user };
   })
-  .then(({status})=> {
-    switch (status) {
-      case 200: {
-        dispatch(setLogin(1));
+  .then(({ status,user }) => {
+    switch(status){
+      case 200:
+        dispatch({type:'SHOW_USER',user});
         break;
-      }
-      case 401: {
+      case 401:
         dispatch(setLogin(-1));
         break;
-      }
-      default: {
-        dispatch(setErrorMessage('エラーが発生しました'));
+      default:
+        console.log("エラー")
         break;
-      }
     }
   })
   .catch(() => {
@@ -51,16 +101,46 @@ export const loginCheck = () => dispatch => {
   });
 }
 
-export const circleSearchStart = URL => dispatch => {
+export const loginCheck = () => dispatch => {
+    const Auth = getAuth();
+    console.log(Auth)
     axios
-    .get(URL,{headers: { "Authorization": `Bearer ${auth}`}})
+    .get('/api/doshisha/circle',{headers: { "Authorization": `Bearer ${Auth}`}})
+    .then((results) => {
+      const status = results.status
+      return { status };
+    })
+    .then(({status})=> {
+      switch (status) {
+        case 200: {
+          dispatch(setLogin(1));
+          break;
+        }
+        case 401: {
+          dispatch(setLogin(-1));
+        }
+        default: {
+          dispatch(setErrorMessage('エラーが発生しました'));
+          break;
+        }
+      }
+    })
+    .catch(() => {
+      dispatch(setErrorMessage('通信に失敗しました'));
+    });
+}
+
+
+export const circleSearchStart = URL => dispatch => {
+    const Auth = getAuth();
+    axios
+    .get(URL,{ Headers:{'Authorization':`Bearer ${Auth}`}})
     .then((results) => {
       const status = results.status
       const circles = results.data
       if (typeof circles === undefined) {
         return { status };
       }
-
       return { status, circles };
     })
     .then(({status, circles})=> {
@@ -84,9 +164,9 @@ export const circleSearchStart = URL => dispatch => {
     });
 }
 
-export const tagSearchStart = ()=> dispatch => {
+export const tagSearchStart = () => dispatch => {
     axios
-    .get(`${domain}/api/doshisha/tag/`,{headers: { "Authorization": `Bearer ${auth}`}})
+    .get('/api/doshisha/tag/',{ headers:{'Authorization':`Bearer ${Auth}`}})
     .then((results) => {
       const status = results.status
       const tags = results.data

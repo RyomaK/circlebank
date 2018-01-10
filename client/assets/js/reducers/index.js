@@ -1,13 +1,17 @@
 import { combineReducers } from 'redux'
 import search  from './search'
-import login from'./login'
 import allTagSearch from './allTagSearch'
+import setStatus from './setStatus'
+import loginCheck from './loginCheck'
+import user from './user'
 
 
 const reducer = combineReducers({
   search,
   allTagSearch,
-  login
+  setStatus,
+  user,
+  loginCheck
 })
 
 export default reducer

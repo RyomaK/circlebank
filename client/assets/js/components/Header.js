@@ -1,9 +1,7 @@
 import React,{Component} from 'react';
-import Auth from './Auth'
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
-import {logout,loginCheck} from '../actions/index'
 import {Redirect, Link} from 'react-router-dom'
 import RaisedButton from 'material-ui/RaisedButton';
 import {lightBlue900} from 'material-ui/styles/colors';
@@ -24,11 +22,8 @@ handleToggle(){ this.setState({open: !this.state.open})}
       docked={false}
       onRequestChange={()=>this.handleToggle()}
       >
-        <MenuItem>Menu Item</MenuItem>
-        <MenuItem>Menu Item 2</MenuItem>
-        <Auth><Link to="/login"><MenuItem><div onClick={(child)=>{
-          child.preventDefault();
-          this.props.Logout()}}>Logut</div></MenuItem></Link></Auth>
+        <MenuItem>マイページ</MenuItem>
+        <MenuItem>編集</MenuItem>
       </Drawer>
       <AppBar
       title="サークルバンク"
@@ -44,15 +39,7 @@ const mapStateToProps = state => {
     state
   }
 }
-const mapDispatchToProps= dispatch => {
-  return{
-    Logout:() => {
-      dispatch(logout())
-    }
-  }
-}
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(Header)
