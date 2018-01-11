@@ -98,6 +98,17 @@ const Auth = getAuth();
   });
 }
 
+
+export const logout = () => dispatch => {
+  axios
+  .post('/logout')
+  .then((results)=>{
+    console.log(results)
+  }).catch(() => {
+    console.log("エラー")
+  });
+}
+
 export const loginCheck = () => dispatch => {
     const Auth = getAuth();
     console.log(Auth)
