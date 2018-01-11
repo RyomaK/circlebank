@@ -40,7 +40,7 @@ export const signup = data => dispatch => {
   var params = new URLSearchParams();
   params.append('mail',data.email);
   params.append('name',data.name);
-  params.append('passwrod',data.password);
+  params.append('password',data.password);
   params.append('university',data.university);
   params.append('sex',data.sex);
   params.append('department',data.department);
@@ -50,23 +50,38 @@ export const signup = data => dispatch => {
   axios
   .post('/signup',params).then((results) => {
     const status = results.status
-  }).catch(() => {
+    console.log(results)
+    return { status }
+  }).then(({status}) => {
+    switch(status){
+      case 201:
+      dispatch(setLogin(1))
+        break;
+      default:
+        break;
+    }
+  })
+  .catch(() => {
     console.log("エラー")
   });
 }
 
 export const login = data => dispatch => {
+
+  var params = new URLSearchParams();
+  params.append('mail',data.email);
+  params.append('password',data.password);
+
   axios
-  .post('/login',{
-    mail: data.email,
-    password: data.password
-  }).then((results) => {
+  .post('/login',params)
+  .then((results) => {
+    console.log(results)
     const status = results.status
     return{ status }
   }).then(({status}) => {
       switch(status){
         case 200:
-          dispatch(setLogin(1));
+        dispatch(setLogin(1))
           break;
         default:
           break;
@@ -82,17 +97,18 @@ const Auth = getAuth();
   .get('/api/user',{ headers:{'Authorization':`Bearer ${Auth}`}})
   .then((results) => {
     const status = results.status
-    const user = results.data
-    console.log(results)
-    if(typeof user === undefined){
-      return { status };
-    }
-    return { status, user };
-  })
-  .then(({ status,user }) => {
+    const mail = results.data.mail
+    const name = results.data.name
+    const department = results.data.department
+    const subject = results.data.subject
+    const year = results.data.year
+
+
+    return { status, mail ,name,department,subject,year}})
+  .then(({ status,mail,name,department,subject,year }) => {
     switch(status){
       case 200:
-        dispatch({type:'SHOW_USER',user});
+        dispatch({type:'SHOW_USER',mail,name,department,subject,year});
         break;
       case 401:
         dispatch(setLogin(-1));
@@ -113,10 +129,11 @@ export const logout = () => dispatch => {
   .post('/logout')
   .then((results)=>{
     const status = results.status
+    console.log(status)
     return { status };
   }).then(({status}) => {
       switch (status){
-        case 200:{
+        case 202:{
           dispatch(setLogin(-1));
           break;
         }
@@ -134,6 +151,7 @@ export const loginCheck = () => dispatch => {
     axios
     .get('/api/doshisha/circle',{headers: { "Authorization": `Bearer ${Auth}`}})
     .then((results) => {
+      console.log("results")
       const status = results.status
       return { status };
     })

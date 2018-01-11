@@ -1,4 +1,6 @@
 const loginCheck = (state={isLogin:'false'},action) => {
+  console.log("loginCheck")
+
 
   switch(action.type){
     case 'LOGIN_CHECK':

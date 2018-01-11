@@ -2,19 +2,21 @@ import React, { Component } from 'react'
 import { setEmail,setPassword,login} from '../actions/index'
 import { connect } from 'react-redux'
 import {Col,Form,FormGroup,FormControl,Button} from "react-bootstrap"
-import { Link } from 'react-router-dom'
+import { Link, withRouter} from 'react-router-dom'
 import FlatButton from 'material-ui/FlatButton';
 
 class LoginForm extends Component {
 
   handleSubmit(e){
-    e.preventDefault();
-    this.props.login(this.props.info)
+    e.preventDefault()
+
+    this.props.login(this.props.info);
+    this.props.history.push('/');
+
   }
 
   handleChange(e){
 
-    e.preventDefault();
     switch(e.target.name){
       case 'mail':
         this.props.setEmail(e.target.value)
@@ -55,7 +57,7 @@ class LoginForm extends Component {
     		</FormGroup>
     		<FormGroup>
           <Col sm={12}>
-            <FlatButton label="Log In" fullWidth={true} backgroundColor="#8AA62F" hoverColor="#7CBD1E" style={style} type="submit"/>
+            <FlatButton label="Log In" fullWidth={true} backgroundColor="#8AA62F" hoverColor="#7CBD1E" style={style} type="submit" />
     		   </Col>
           <Col sm={12}></Col>
           <Col sm={12}>
@@ -89,7 +91,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(LoginForm)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(LoginForm))

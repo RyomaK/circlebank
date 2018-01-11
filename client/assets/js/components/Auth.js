@@ -5,13 +5,14 @@ import { connect } from 'react-redux'
 
 class Auth extends Component{
   componentWillMount(){
-    console.log("a")
+
     this.props.LoginCheck();
   }
-  componentWillReceiveProps(){
-    console.log("i")
+
+  componentWillUpdate(){
     this.props.LoginCheck();
   }
+
 
   render(){
 
