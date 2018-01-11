@@ -49,8 +49,7 @@ export const signup = data => dispatch => {
 
   axios
   .post('/signup',params).then((results) => {
-    const code = results.code
-    const message = redults.message
+    const status = results.status
   }).catch(() => {
     console.log("エラー")
   });
@@ -62,10 +61,18 @@ export const login = data => dispatch => {
     mail: data.email,
     password: data.password
   }).then((results) => {
-    const code = results.code
-    const message = results.message
+    const status = results.status
+    return{ status }
+  }).then(({status}) => {
+      switch(status){
+        case 200:
+          dispatch(setLogin(1));
+          break;
+        default:
+          break;
+      }
   }).catch(() => {
-    console.log("エラー")
+    console.log("エラーログイン")
   });
 }
 
@@ -91,7 +98,7 @@ const Auth = getAuth();
         dispatch(setLogin(-1));
         break;
       default:
-        console.log("エラー")
+        console.log("エラーgetuerinfo")
         break;
     }
   })
@@ -105,15 +112,25 @@ export const logout = () => dispatch => {
   axios
   .post('/logout')
   .then((results)=>{
-    console.log(results)
+    const status = results.status
+    return { status };
+  }).then(({status}) => {
+      switch (status){
+        case 200:{
+          dispatch(setLogin(-1));
+          break;
+        }
+        default: {
+          break;
+        }
+      }
   }).catch(() => {
-    console.log("エラー")
+    console.log("エラーログアウト")
   });
 }
 
 export const loginCheck = () => dispatch => {
     const Auth = getAuth();
-    console.log(Auth)
     axios
     .get('/api/doshisha/circle',{headers: { "Authorization": `Bearer ${Auth}`}})
     .then((results) => {
@@ -136,7 +153,7 @@ export const loginCheck = () => dispatch => {
       }
     })
     .catch(() => {
-      dispatch(setErrorMessage('通信に失敗しました'));
+      console.log("えらーloginCheck")
     });
 }
 
@@ -170,7 +187,7 @@ export const circleSearchStart = URL => dispatch => {
       }
     })
     .catch(() => {
-      dispatch(setErrorMessage('通信に失敗しました'));
+      console.log("circleStart");
     });
 }
 
@@ -203,6 +220,6 @@ export const tagSearchStart = () => dispatch => {
       }
     })
     .catch(() => {
-      dispatch(setErrorMessage('通信に失敗しました'));
+      console.log("エラーtagSearchStart")
     });
 }
