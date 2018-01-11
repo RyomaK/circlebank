@@ -11,7 +11,7 @@ class SignupForm extends Component{
   }
 
   handleSubmit(e){
-
+		e.preventDefault();
     this.props.signup(this.props.info)
   }
 

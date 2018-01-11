@@ -97,7 +97,6 @@ func (u *User) LogoutHandler(w http.ResponseWriter, r *http.Request) {
 func (u *User) SignUpHandler(w http.ResponseWriter, r *http.Request) {
 
 	b := model.UserExist(u.DB, r.FormValue("mail"))
-
 	if b {
 		status := StatusCode{Code: http.StatusConflict, Message: "already mail"}
 		a, _ := json.Marshal(status)
@@ -113,7 +112,6 @@ func (u *User) SignUpHandler(w http.ResponseWriter, r *http.Request) {
 		person.Subject = r.FormValue("subject")
 		person.Password = r.FormValue("password")
 		person.Year, _ = strconv.Atoi(r.FormValue("year"))
-
 		if err := model.Regist(u.DB, person); err != nil {
 			log.Printf("err in signHandler %v", err)
 			status := StatusCode{Code: http.StatusNotAcceptable, Message: "NG"}
