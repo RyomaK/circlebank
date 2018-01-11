@@ -34,19 +34,21 @@ export const settYear = year => dispatch => dispatch({type: 'SET_YEAR',year});
 
 export const setLogin = number => dispatch => dispatch({type: 'LOGIN_CHECK',number});
 
+
+
 export const signup = data => dispatch => {
-  console.log(data)
+  var params = new URLSearchParams();
+  params.append('mail',data.email);
+  params.append('name',data.name);
+  params.append('passwrod',data.password);
+  params.append('university',data.university);
+  params.append('sex',data.sex);
+  params.append('department',data.department);
+  params.append('subject',data.subject);
+  params.append('year',data.year);
+
   axios
-  .post('/signup',{
-    university: data.university,
-    name: data.name,
-    year: data.year,
-    mail: data.email,
-    sex: data.sex,
-    department: data.department,
-    subject: data.subject,
-    password: data.password
-  }).then((results) => {
+  .post('/signup',params).then((results) => {
     const code = results.code
     const message = redults.message
   }).catch(() => {

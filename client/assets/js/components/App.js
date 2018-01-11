@@ -21,7 +21,7 @@ const App =() => {
               <Header />
                 <Switch>
                   <Route path="/login" component={LoginPage}/>
-                  <Route path="/signup" component={SignupPage}/>
+                  <Route path="/signin" component={SignupPage}/>
                   <Auth>
                     <Switch>
                       <Route exact path="/" component={SearchForm}/>

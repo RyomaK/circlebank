@@ -11,7 +11,7 @@ class SignupForm extends Component{
   }
 
   handleSubmit(e){
-
+    e.preventDefault();
     this.props.signup(this.props.info)
   }
 
@@ -79,16 +79,16 @@ class SignupForm extends Component{
           <FormControl name = "year" type="text" placeholder="Year" onChange={this.handleChange.bind(this)}/>
       </Col>
   		</FormGroup>
-
-
       <FormGroup validationState="success">
-        <Col sm={2}>
-          性別
-        </Col>
-        <Col sm={10}>
-        <Checkbox inline name="sex" checked={this.state.check} onChange={this.handleChange.bind(this)}>男</Checkbox> <Checkbox inline  name ="sex" checked={!this.state.check} onChange={this.handleChange.bind(this)}>女</Checkbox>
+      <Col sm={2}>
+        性別
       </Col>
-  		</FormGroup>
+      <Col sm={10}>
+      <Checkbox inline name="sex" checked={this.state.check} onChange={this.handleChange.bind(this)}>男</Checkbox> <Checkbox inline  name ="sex" checked={!this.state.check} onChange={this.handleChange.bind(this)}>女</Checkbox>
+    </Col>
+    </FormGroup>
+
+
 
       <FormGroup>
   			<Col sm={2}>
