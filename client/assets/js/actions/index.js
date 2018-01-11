@@ -40,7 +40,7 @@ export const signup = data => dispatch => {
   var params = new URLSearchParams();
   params.append('mail',data.email);
   params.append('name',data.name);
-  params.append('passwrod',data.password);
+  params.append('password',data.password);
   params.append('university',data.university);
   params.append('sex',data.sex);
   params.append('department',data.department);
