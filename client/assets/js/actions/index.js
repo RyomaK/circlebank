@@ -34,21 +34,22 @@ export const settYear = year => dispatch => dispatch({type: 'SET_YEAR',year});
 
 export const setLogin = number => dispatch => dispatch({type: 'LOGIN_CHECK',number});
 
+
+
 export const signup = data => dispatch => {
-  console.log(data)
+  var params = new URLSearchParams();
+  params.append('mail',data.email);
+  params.append('name',data.name);
+  params.append('passwrod',data.password);
+  params.append('university',data.university);
+  params.append('sex',data.sex);
+  params.append('department',data.department);
+  params.append('subject',data.subject);
+  params.append('year',data.year);
+
   axios
-  .post('/signup',{
-    university: data.university,
-    name: data.name,
-    year: data.year,
-    mail: data.email,
-    sex: data.sex,
-    department: data.department,
-    subject: data.subject,
-    password: data.password
-  }).then((results) => {
-    const code = results.code
-    const message = redults.message
+  .post('/signup',params).then((results) => {
+    const status = results.status
   }).catch(() => {
     console.log("エラー")
   });
@@ -60,10 +61,18 @@ export const login = data => dispatch => {
     mail: data.email,
     password: data.password
   }).then((results) => {
-    const code = results.code
-    const message = results.message
+    const status = results.status
+    return{ status }
+  }).then(({status}) => {
+      switch(status){
+        case 200:
+          dispatch(setLogin(1));
+          break;
+        default:
+          break;
+      }
   }).catch(() => {
-    console.log("エラー")
+    console.log("エラーログイン")
   });
 }
 
@@ -89,7 +98,7 @@ const Auth = getAuth();
         dispatch(setLogin(-1));
         break;
       default:
-        console.log("エラー")
+        console.log("エラーgetuerinfo")
         break;
     }
   })
@@ -103,15 +112,25 @@ export const logout = () => dispatch => {
   axios
   .post('/logout')
   .then((results)=>{
-    console.log(results)
+    const status = results.status
+    return { status };
+  }).then(({status}) => {
+      switch (status){
+        case 200:{
+          dispatch(setLogin(-1));
+          break;
+        }
+        default: {
+          break;
+        }
+      }
   }).catch(() => {
-    console.log("エラー")
+    console.log("エラーログアウト")
   });
 }
 
 export const loginCheck = () => dispatch => {
     const Auth = getAuth();
-    console.log(Auth)
     axios
     .get('/api/doshisha/circle',{headers: { "Authorization": `Bearer ${Auth}`}})
     .then((results) => {
@@ -134,7 +153,7 @@ export const loginCheck = () => dispatch => {
       }
     })
     .catch(() => {
-      dispatch(setErrorMessage('通信に失敗しました'));
+      console.log("えらーloginCheck")
     });
 }
 
@@ -168,7 +187,7 @@ export const circleSearchStart = URL => dispatch => {
       }
     })
     .catch(() => {
-      dispatch(setErrorMessage('通信に失敗しました'));
+      console.log("circleStart");
     });
 }
 
@@ -201,6 +220,6 @@ export const tagSearchStart = () => dispatch => {
       }
     })
     .catch(() => {
-      dispatch(setErrorMessage('通信に失敗しました'));
+      console.log("エラーtagSearchStart")
     });
 }
