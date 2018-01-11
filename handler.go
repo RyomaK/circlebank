@@ -7,10 +7,8 @@ import (
 )
 
 func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusNotFound)
-	str := "ないよ"
-	w.Write([]byte(str))
-
+	w.Header().Set("location", "/")
+	w.WriteHeader(http.StatusPermanentRedirect)
 }
 func Index(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "public/index.html")

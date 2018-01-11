@@ -1,8 +1,8 @@
 DBNAME:=circle_bank
 ENV:=development
 
-#DBCONFIG:=root:@/circle_bank
-DBCONFIG:=root:Kenta71619@/circle_bank
+DBCONFIG:=root:@/circle_bank
+#DBCONFIG:=root:Kenta71619@/circle_bank
 
 build:
 	godep	go build -o ./cmd/circle/circle ./cmd/circle/circle.go
