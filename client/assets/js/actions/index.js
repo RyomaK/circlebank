@@ -46,10 +46,9 @@ export const signup = data => dispatch => {
     department: data.department,
     subject: data.subject,
     password: data.password
-  }).then((response) => {
-    const code = response.code
-    const message = response.message
-    console.log(response)
+  }).then((results) => {
+    const code = results.code
+    const message = redults.message
   }).catch(() => {
     console.log("エラー")
   });
@@ -60,10 +59,9 @@ export const login = data => dispatch => {
   .post('/login',{
     mail: data.email,
     password: data.password
-  }).then((response) => {
-    const code = response.code
-    const message = response.message
-    console.log(response)
+  }).then((results) => {
+    const code = results.code
+    const message = results.message
   }).catch(() => {
     console.log("エラー")
   });
@@ -73,10 +71,10 @@ export const getUserInfo = () => dispatch => {
 const Auth = getAuth();
   axios
   .get('/api/user',{ headers:{'Authorization':`Bearer ${Auth}`}})
-  .then((response) => {
-    const status = response.status
-    const user = rensponse.data
-    console.log(response)
+  .then((results) => {
+    const status = results.status
+    const user = results.data
+    console.log(results)
     if(typeof user === undefined){
       return { status };
     }
