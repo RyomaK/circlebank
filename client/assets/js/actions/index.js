@@ -40,7 +40,7 @@ export const signup = data => dispatch => {
   var params = new URLSearchParams();
   params.append('mail',data.email);
   params.append('name',data.name);
-  params.append('passwrod',data.password);
+  params.append('password',data.password);
   params.append('university',data.university);
   params.append('sex',data.sex);
   params.append('department',data.department);
@@ -56,17 +56,20 @@ export const signup = data => dispatch => {
 }
 
 export const login = data => dispatch => {
+  var params = new URLSearchParams();
+  params.append('mail',data.email);
+  params.append('password',data.password);
+  console.log("a")
   axios
-  .post('/login',{
-    mail: data.email,
-    password: data.password
-  }).then((results) => {
+  .post('/login',params)
+  .then((results) => {
+
     const status = results.status
     return{ status }
   }).then(({status}) => {
       switch(status){
         case 200:
-          dispatch(setLogin(1));
+
           break;
         default:
           break;
@@ -84,9 +87,11 @@ const Auth = getAuth();
     const status = results.status
     const user = results.data
     console.log(results)
+
     if(typeof user === undefined){
       return { status };
     }
+
     return { status, user };
   })
   .then(({ status,user }) => {

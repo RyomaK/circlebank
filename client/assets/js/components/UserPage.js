@@ -4,19 +4,22 @@ import { getUserInfo } from '../actions/index'
 import { connect } from 'react-redux'
 
 class UserPage extends Component{
-  componentDidMount(){
+  componentWillMount(){
     this.props.getUser();
   }
+
   render(){
+
     return(
       <div>
-        <UserBox data={this.props.user}/>
+        <UserBox/>
       </div>
     )
   }
 }
 
 const mapStateToProps = state => {
+  console.log(state)
   return{
     user: state.user
   }
