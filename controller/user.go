@@ -73,8 +73,7 @@ func (u *User) LoginHandler(w http.ResponseWriter, r *http.Request) {
 	password := r.FormValue("password")
 	if model.IsLogin(u.DB, mail, password) {
 		WriteJWT(w, mail)
-		w.Header().Set("location", "/fdsafdasfaf")
-		w = SetHeader(w, http.StatusMovedPermanently)
+		w = SetHeader(w, http.StatusOK)
 	} else {
 		status := StatusCode{Code: http.StatusNotAcceptable, Message: "error login"}
 		a, _ := json.Marshal(status)
@@ -90,8 +89,7 @@ func (u *User) LogoutHandler(w http.ResponseWriter, r *http.Request) {
 		Value: "",
 		Path:  "/",
 	})
-	w.Header().Set("Location", "/")
-	w = SetHeader(w, http.StatusTemporaryRedirect)
+	w = SetHeader(w, http.StatusAccepted)
 }
 
 func (u *User) SignUpHandler(w http.ResponseWriter, r *http.Request) {
