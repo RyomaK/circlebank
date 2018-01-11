@@ -1,38 +1,19 @@
-import React ,{ Component }from 'react'
-import { getUserInfo } from '../actions/index'
+import React from 'react'
 import {connect} from 'react-redux'
 
-class UserBox extends Component{
-  componentWillMount(){
-    this.props.getUser()
-  }
-  render(){
+const UserBox = ({data}) => {
+  console.log(data)
   return(
     <div>
       <ul>
-        <li>名前:</li>
-        <li>学部:</li>
-        <li>学科:</li>
+        <li>名前:{data.name}</li>
+        <li>入学年:{data.year}</li>
+        <li>学部:{data.department}</li>
+        <li>学科:{data.subject}</li>
+        <li>メールアドレス:{data.email}</li>
       </ul>
     </div>
   )
 }
-}
 
-const mapStateToProps = state => {
-  return{
-    user: state.user
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return{
-    getUser: () => {
-      dispatch(getUserInfo())
-    }
-  }
-}
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(UserBox)
+export default UserBox

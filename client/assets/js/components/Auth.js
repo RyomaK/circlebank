@@ -8,10 +8,7 @@ class Auth extends Component{
 
     this.props.LoginCheck();
   }
-  componentWillReceiveProps(){
   
-    this.props.LoginCheck();
-  }
 
   render(){
 

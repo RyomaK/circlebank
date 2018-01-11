@@ -18,17 +18,22 @@ const App =() => {
         <BrowserRouter>
           <MuiThemeProvider>
             <div>
+
               <Header />
-                <Switch>
-                  <Route path="/login" component={LoginPage}/>
-                  <Route path="/signup" component={SignupPage}/>
-                  <Auth>
-                    <Switch>
-                      <Route exact path="/" component={SearchForm}/>
-                      <Route path="/user" component={UserPage}/>
-                    </Switch>
-                  </Auth>
+
+
+              <Switch>
+                <Route path="/login" component={LoginPage}/>
+                <Route path="/signup" component={SignupPage}/>
+                <Auth>
+                  <Switch>
+                    <Route exact path="/" component={SearchForm}/>
+                    <Route path="/user" component={UserPage}/>
+
+                  </Switch>
+                </Auth>
                 </Switch>
+
 
             </div>
           </MuiThemeProvider>

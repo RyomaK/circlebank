@@ -12,6 +12,7 @@ const initialState = {
 }
 
 const setStatus = (state=initialState,action) => {
+  console.log("setState")
 
   switch(action.type){
     case 'SET_UNIVERSITY':

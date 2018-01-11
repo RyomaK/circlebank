@@ -8,13 +8,13 @@ import FlatButton from 'material-ui/FlatButton';
 class LoginForm extends Component {
 
   handleSubmit(e){
-    e.preventDefault();
+    e.preventDefault()
     this.props.history.push('/')
     this.props.login(this.props.info)
+
   }
 
   handleChange(e){
-    e.preventDefault()
 
     switch(e.target.name){
       case 'mail':

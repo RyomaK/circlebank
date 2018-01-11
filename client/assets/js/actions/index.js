@@ -56,14 +56,15 @@ export const signup = data => dispatch => {
 }
 
 export const login = data => dispatch => {
+
   var params = new URLSearchParams();
   params.append('mail',data.email);
   params.append('password',data.password);
-  console.log("a")
+
   axios
   .post('/login',params)
   .then((results) => {
-
+    console.log(results)
     const status = results.status
     return{ status }
   }).then(({status}) => {
@@ -85,19 +86,18 @@ const Auth = getAuth();
   .get('/api/user',{ headers:{'Authorization':`Bearer ${Auth}`}})
   .then((results) => {
     const status = results.status
-    const user = results.data
-    console.log(results)
+    const mail = results.data.mail
+    const name = results.data.name
+    const department = results.data.department
+    const subject = results.data.subject
+    const year = results.data.year
 
-    if(typeof user === undefined){
-      return { status };
-    }
 
-    return { status, user };
-  })
-  .then(({ status,user }) => {
+    return { status, mail ,name,department,subject,year}})
+  .then(({ status,mail,name,department,subject,year }) => {
     switch(status){
       case 200:
-        dispatch({type:'SHOW_USER',user});
+        dispatch({type:'SHOW_USER',mail,name,department,subject,year});
         break;
       case 401:
         dispatch(setLogin(-1));

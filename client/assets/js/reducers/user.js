@@ -10,20 +10,19 @@ const initialState = {
 }
 
 const user = (state=initialState,action) => {
+  console.log("user")
   switch(action.type){
+
     case 'SHOW_USER':
-    console.log("a")
     return{
-      university: action.user.university,
-      name: action.user.data.name,
-      sex: action.user.data.sex,
-      year: action.user.data.year,
-      email: action.user.data.mail,
-      department: action.user.data.department,
-      subject: action.user.data.subject,
-      password: action.user.data.password
+      name: action.name,
+      mail: action.mail,
+      year: action.year,
+      department: action.department,
+      subject: action.subject
     }
     default:
+
     return(
       state
     )
