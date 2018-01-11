@@ -22,8 +22,9 @@ handleToggle(){ this.setState({open: !this.state.open})}
       docked={false}
       onRequestChange={()=>this.handleToggle()}
       >
-        <MenuItem>マイページ</MenuItem>
-        <MenuItem>編集</MenuItem>
+        <Link to="/"><MenuItem>ホーム</MenuItem></Link>
+        <Link to="/user"><MenuItem>マイページ</MenuItem></Link>
+
       </Drawer>
       <AppBar
       title="サークルバンク"
