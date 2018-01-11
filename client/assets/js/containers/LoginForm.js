@@ -9,8 +9,9 @@ class LoginForm extends Component {
 
   handleSubmit(e){
     e.preventDefault()
-    this.props.history.push('/')
-    this.props.login(this.props.info)
+
+    this.props.login(this.props.info);
+    this.props.history.push('/');
 
   }
 

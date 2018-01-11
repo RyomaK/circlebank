@@ -30,7 +30,7 @@ handleToggle(){ this.setState({open: !this.state.open})}
             e.preventDefault(); this.props.history.push("/user");
           }}>マイページ</MenuItem>
           <MenuItem onClick={ e =>{
-            e.preventDefault();this.props.Logout()}}>ログアウト</MenuItem>
+            e.preventDefault();this.props.Logout();this.props.history.push('/');}}>ログアウト</MenuItem>
 
 
       </Drawer>

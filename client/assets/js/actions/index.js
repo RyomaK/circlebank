@@ -50,7 +50,18 @@ export const signup = data => dispatch => {
   axios
   .post('/signup',params).then((results) => {
     const status = results.status
-  }).catch(() => {
+    console.log(results)
+    return { status }
+  }).then(({status}) => {
+    switch(status){
+      case 201:
+      dispatch(setLogin(1))
+        break;
+      default:
+        break;
+    }
+  })
+  .catch(() => {
     console.log("エラー")
   });
 }
@@ -70,7 +81,7 @@ export const login = data => dispatch => {
   }).then(({status}) => {
       switch(status){
         case 200:
-
+        dispatch(setLogin(1))
           break;
         default:
           break;
@@ -118,10 +129,11 @@ export const logout = () => dispatch => {
   .post('/logout')
   .then((results)=>{
     const status = results.status
+    console.log(status)
     return { status };
   }).then(({status}) => {
       switch (status){
-        case 200:{
+        case 202:{
           dispatch(setLogin(-1));
           break;
         }
@@ -139,6 +151,7 @@ export const loginCheck = () => dispatch => {
     axios
     .get('/api/doshisha/circle',{headers: { "Authorization": `Bearer ${Auth}`}})
     .then((results) => {
+      console.log("results")
       const status = results.status
       return { status };
     })

@@ -29,7 +29,6 @@ const App =() => {
                   <Switch>
                     <Route exact path="/" component={SearchForm}/>
                     <Route path="/user" component={UserPage}/>
-
                   </Switch>
                 </Auth>
                 </Switch>

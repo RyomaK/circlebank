@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { setUniversity,setName,setSex,setEmail,setDepartment,setSubject,settYear,setPassword,signup } from '../actions/index'
 import { connect } from 'react-redux'
+import { Link, withRouter} from 'react-router-dom'
 import {Col,Form,FormGroup,FormControl,Button,Checkbox} from "react-bootstrap"
 
 class SignupForm extends Component{
@@ -12,7 +13,9 @@ class SignupForm extends Component{
 
   handleSubmit(e){
     e.preventDefault();
+
     this.props.signup(this.props.info)
+    this.props.history.push('/');
   }
 
 
@@ -174,8 +177,4 @@ const mapDispatchToProps = dispatch => {
     }
   }
 
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SignupForm)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SignupForm))
