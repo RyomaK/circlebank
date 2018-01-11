@@ -73,7 +73,7 @@ func (u *User) LoginHandler(w http.ResponseWriter, r *http.Request) {
 	password := r.FormValue("password")
 	if model.IsLogin(u.DB, mail, password) {
 		WriteJWT(w, mail)
-		w.Header().Set("location", "/")
+		w.Header().Set("location", "/fdsafdasfaf")
 		w = SetHeader(w, http.StatusMovedPermanently)
 	} else {
 		status := StatusCode{Code: http.StatusNotAcceptable, Message: "error login"}
