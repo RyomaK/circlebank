@@ -55,7 +55,7 @@ export const signup = data => dispatch => {
   }).then(({status}) => {
     switch(status){
       case 201:
-      dispatch(setLogin(1))
+      dispatch({type:'LOGIN'})
         break;
       default:
         break;
@@ -81,7 +81,7 @@ export const login = data => dispatch => {
   }).then(({status}) => {
       switch(status){
         case 200:
-        dispatch(setLogin(1))
+        dispatch({type:'LOGIN'})
           break;
         default:
           break;
@@ -134,7 +134,7 @@ export const logout = () => dispatch => {
   }).then(({status}) => {
       switch (status){
         case 202:{
-          dispatch(setLogin(-1));
+          dispatch({type:'LOGOUT'});
           break;
         }
         default: {
