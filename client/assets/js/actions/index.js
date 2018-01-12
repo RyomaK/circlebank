@@ -12,6 +12,7 @@ const getAuth = () => {
     }
   return (box1)
 
+
 }
 
 export const setErrorMessage = message => dispatch => dispatch({type: 'ZERO_RESULTS',message});
@@ -49,7 +50,7 @@ export const signup = data => dispatch => {
 
   axios
   .post('/signup',params).then((results) => {
-    const status = results.status
+    const status = results.staus
     console.log(results)
     return { status }
   }).then(({status}) => {
@@ -147,11 +148,12 @@ export const logout = () => dispatch => {
 }
 
 export const loginCheck = () => dispatch => {
+
     const Auth = getAuth();
     axios
     .get('/api/doshisha/circle',{headers: { "Authorization": `Bearer ${Auth}`}})
     .then((results) => {
-      console.log("results")
+      console.log(results)
       const status = results.status
       return { status };
     })
@@ -170,8 +172,8 @@ export const loginCheck = () => dispatch => {
         }
       }
     })
-    .catch(() => {
-      console.log("えらーloginCheck")
+    .catch((e) => {
+      console.log(loginCheckerror)
     });
 }
 
