@@ -16,7 +16,7 @@ const user = (state=initialState,action) => {
     case 'SHOW_USER':
     return{
       name: action.name,
-      mail: action.email,
+      mail: action.mail,
       year: action.year,
       department: action.department,
       subject: action.subject

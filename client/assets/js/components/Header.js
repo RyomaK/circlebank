@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import Auth from './Auth'
+import Filter from './Filter'
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
@@ -19,6 +20,7 @@ handleToggle(){ this.setState({open: !this.state.open})}
 
     return(
     <div className="header">
+      <Filter>
       <Drawer
       open={this.state.open}
       docked={false}
@@ -34,6 +36,7 @@ handleToggle(){ this.setState({open: !this.state.open})}
 
 
       </Drawer>
+      </Filter>
       <AppBar
       title="サークルバンク"
       onLeftIconButtonTouchTap={ () => this.handleToggle()}

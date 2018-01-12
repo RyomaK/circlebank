@@ -97,6 +97,7 @@ const Auth = getAuth();
   axios
   .get('/api/user',{ headers:{'Authorization':`Bearer ${Auth}`}})
   .then((results) => {
+  
     const status = results.status
     const mail = results.data.mail
     const name = results.data.name
@@ -173,7 +174,7 @@ export const loginCheck = () => dispatch => {
       }
     })
     .catch((e) => {
-      console.log(loginCheckerror)
+      console.log("loginCheckerror")
     });
 }
 
