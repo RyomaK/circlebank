@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import TextField from 'material-ui/TextField';
 import { setEmail,setPassword,login} from '../actions/index'
 import { connect } from 'react-redux'
 import {Col,Form,FormGroup,FormControl,Button} from "react-bootstrap"
@@ -31,37 +32,46 @@ class LoginForm extends Component {
 
 
   render(){
-    const style={
-      color:"white"
-    }
-
+    const styles = {
+      customWidth: {
+        width: 150,
+      },
+      customColor:{
+        color: "white",
+      },
+    };
     return(
       <div>
         <Form horizontal onSubmit={this.handleSubmit.bind(this)}>
-    		<FormGroup>
-    			<Col sm={2}>
-    				Email
-    			</Col>
+        <FormGroup>
     			<Col sm={10}>
-    				<FormControl name = "mail" type="email" placeholder="Email" onChange={this.handleChange.bind(this)}/>
+            <TextField
+            name = "mail"
+            type = "mail"
+            floatingLabelText="メールアドレス"
+            floatingLabelFixed={true}
+            onChange={this.handleChange.bind(this)}
+            />
     			</Col>
     		</FormGroup>
-
     		<FormGroup>
-    			<Col sm={2}>
-    				Password
-    			</Col>
     			<Col sm={10}>
-    				<FormControl name = "password" type="password" placeholder="Password" onChange={this.handleChange.bind(this)}/>
+            <TextField
+            name = "password"
+            type = "password"
+            floatingLabelText="パスワード"
+            floatingLabelFixed={true}
+            onChange={this.handleChange.bind(this)}
+            />
     			</Col>
     		</FormGroup>
     		<FormGroup>
           <Col sm={12}>
-            <FlatButton label="Log In" fullWidth={true} backgroundColor="#8AA62F" hoverColor="#7CBD1E" style={style} type="submit" />
+            <FlatButton label="Log In" fullWidth={true} backgroundColor="#8AA62F" hoverColor="#7CBD1E" style={styles.customColor} type="submit" />
     		   </Col>
           <Col sm={12}></Col>
           <Col sm={12}>
-            <Link to="/signup"><FlatButton label="Sign Up" fullWidth={true} backgroundColor="#1160AA"  hoverColor="#3F52E3" style={style}/></Link>
+            <Link to="/signup"><FlatButton label="Sign Up" fullWidth={true} backgroundColor="#1160AA"  hoverColor="#3F52E3" style={styles.customColor}/></Link>
           </Col>
     		</FormGroup>
     	   </Form>
