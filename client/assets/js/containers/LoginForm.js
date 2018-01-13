@@ -1,5 +1,10 @@
 import React, { Component } from 'react'
 import TextField from 'material-ui/TextField';
+import Checkbox from 'material-ui/Checkbox';
+import ActionFavorite from 'material-ui/svg-icons/action/favorite';
+import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
+import Visibility from 'material-ui/svg-icons/action/visibility';
+import VisibilityOff from 'material-ui/svg-icons/action/visibility-off';
 import { setEmail,setPassword,login} from '../actions/index'
 import { connect } from 'react-redux'
 import {Col,Form,FormGroup,FormControl,Button} from "react-bootstrap"
@@ -54,6 +59,7 @@ class LoginForm extends Component {
             />
     			</Col>
     		</FormGroup>
+      
     		<FormGroup>
     			<Col sm={10}>
             <TextField

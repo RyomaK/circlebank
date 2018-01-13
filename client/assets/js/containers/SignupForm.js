@@ -3,10 +3,13 @@ import PropTypes from 'prop-types'
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import TextField from 'material-ui/TextField';
+import Checkbox from 'material-ui/Checkbox';
+import Visibility from 'material-ui/svg-icons/action/visibility';
+import VisibilityOff from 'material-ui/svg-icons/action/visibility-off';
 import { setUniversity,setName,setSex,setEmail,setDepartment,setSubject,settYear,setPassword,signup,selectUniversity } from '../actions/index'
 import { connect } from 'react-redux'
 import { Link, withRouter} from 'react-router-dom'
-import {Col,Form,FormGroup,FormControl,Button,Checkbox,DropdownButton} from "react-bootstrap"
+import {Col,Form,FormGroup,FormControl,Button,DropdownButton} from "react-bootstrap"
 import FlatButton from 'material-ui/FlatButton';
 
 const univerBox = [{tag:0,name:"同志社大学"},{tag:1,name:"同志社女子大学"}]
@@ -39,6 +42,7 @@ const subjectBox = [[[{tag:0,name:"神学科"}],
   [{tag:0,name:"植物栄養科学科"}],
   [{tag:0,name:"看護学科"}]]]
 const year = [{tag:0,year:"2018"},{tag:1,year:"2017"},{tag:2,year:"2016"}]
+const sexBox = [{tag:0,sex:"男"},{tag:1,sex:"女"}]
 
 
 
@@ -47,7 +51,7 @@ class SignupForm extends Component{
 
   constructor(props) {
     super(props);
-    this.state = {check: "true",value1:0,value2:0,value3:0,value4:0};
+    this.state = {checked: true,value1:0,value2:0,value3:0,value4:0,value5:0};
   }
 
   componentDidMount(){
@@ -84,6 +88,11 @@ class SignupForm extends Component{
     this.setState({value4:value});
     this.props.settYear(year[this.state.value4].year)
   }
+  handleChange5(event, index, value){
+    event.preventDefault();
+    this.setState({value5:value});
+    this.props.setSex(sexBox[this.state.value5].sex)
+  }
 
 
   handleChange(e){
@@ -91,11 +100,6 @@ class SignupForm extends Component{
 
       case 'name':
         this.props.setName(e.target.value)
-      break;
-
-      case 'sex':
-        this.setState({check:!this.state.check})
-        this.props.setSex(this.state.check)
       break;
       case 'mail':
         this.props.setEmail(e.target.value)
@@ -113,6 +117,9 @@ class SignupForm extends Component{
     const styles = {
       customWidth: {
         width: 300,
+      },
+      customWidth1: {
+        width: 100,
       },
       customColor:{
         color: "white",
@@ -193,7 +200,7 @@ class SignupForm extends Component{
           floatingLabelText="入学年"
           value={this.state.value4}
           onChange={this.handleChange4.bind(this)}
-          style={styles.customWidth}
+          style={styles.customWidth1}
         >
         {year.map(year => (
 
@@ -205,8 +212,19 @@ class SignupForm extends Component{
   		</FormGroup>
 
       <FormGroup validationState="success">
-      <Col sm={10}>
-        <Checkbox inline name="sex" checked={this.state.check} onChange={this.handleChange.bind(this)}>男</Checkbox> <Checkbox inline  name ="sex" checked={!this.state.check} onChange={this.handleChange.bind(this)}>女</Checkbox>
+        <Col sm={10}>
+        <SelectField
+          floatingLabelText="性別"
+          value={this.state.value5}
+          onChange={this.handleChange5.bind(this)}
+          style={styles.customWidth1}
+        >
+        {sexBox.map(sex => (
+
+          <MenuItem key={sex.tag} value={sex.tag} primaryText={sex.sex}/>
+        ))}
+
+        </SelectField>
       </Col>
       </FormGroup>
 

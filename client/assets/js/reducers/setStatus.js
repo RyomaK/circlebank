@@ -28,15 +28,9 @@ const setStatus = (state=initialState,action) => {
         year: action.year
         })
     case 'SET_SEX':
-      if(action.sex){
-        return Object.assign({}, state, {
-            sex: "男"
-            })
-      }else{
-        return Object.assign({}, state, {
-            sex: "女"
-          })
-      }
+      return Object.assign({}, state, {
+        sex: action.sex
+        })
     case 'SET_EMAIL':
       return Object.assign({}, state, {
         email: action.email
