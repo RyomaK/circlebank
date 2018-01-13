@@ -39,45 +39,48 @@ class LoginForm extends Component {
   render(){
     const styles = {
       customWidth: {
-        width: 150,
+        width: '100%',
       },
       customColor:{
         color: "white",
+        width: "100%",
       },
     };
     return(
       <div>
         <Form horizontal onSubmit={this.handleSubmit.bind(this)}>
         <FormGroup>
-    			<Col sm={10}>
+    			<Col smOffset={2} sm={8}>
             <TextField
             name = "mail"
             type = "mail"
             floatingLabelText="メールアドレス"
             floatingLabelFixed={true}
+            fullWidth={true}
             onChange={this.handleChange.bind(this)}
             />
     			</Col>
     		</FormGroup>
-      
+
     		<FormGroup>
-    			<Col sm={10}>
+    			<Col smOffset={2} sm={8}>
             <TextField
             name = "password"
             type = "password"
             floatingLabelText="パスワード"
             floatingLabelFixed={true}
+            fullWidth={true}
             onChange={this.handleChange.bind(this)}
             />
     			</Col>
     		</FormGroup>
     		<FormGroup>
-          <Col sm={12}>
-            <FlatButton label="Log In" fullWidth={true} backgroundColor="#8AA62F" hoverColor="#7CBD1E" style={styles.customColor} type="submit" />
+          <Col smOffset={2} sm={8}>
+            <FlatButton label="Log In"  backgroundColor="#8AA62F" hoverColor="#7CBD1E" style={styles.customColor} type="submit" />
     		   </Col>
-          <Col sm={12}></Col>
-          <Col sm={12}>
-            <Link to="/signup"><FlatButton label="Sign Up" fullWidth={true} backgroundColor="#1160AA"  hoverColor="#3F52E3" style={styles.customColor}/></Link>
+           
+          <Col smOffset={2}sm={8}>
+            <Link to="/signup"><p className="right">アカウント作成はコチラ</p></Link>
           </Col>
     		</FormGroup>
     	   </Form>
