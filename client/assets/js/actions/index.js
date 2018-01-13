@@ -35,6 +35,8 @@ export const settYear = year => dispatch => dispatch({type: 'SET_YEAR',year});
 
 export const setLogin = number => dispatch => dispatch({type: 'LOGIN_CHECK',number});
 
+export const selectUniversity = university => dispatch => dispatch({type: 'SELECT_UNIVER',university});
+
 
 
 export const signup = data => dispatch => {
@@ -50,12 +52,13 @@ export const signup = data => dispatch => {
 
   axios
   .post('/signup',params).then((results) => {
-    const status = results.staus
+    const status = results.status
     console.log(results)
     return { status }
   }).then(({status}) => {
     switch(status){
       case 201:
+
       dispatch({type:'LOGIN'})
         break;
       default:
@@ -97,6 +100,7 @@ const Auth = getAuth();
   axios
   .get('/api/user',{ headers:{'Authorization':`Bearer ${Auth}`}})
   .then((results) => {
+
     const status = results.status
     const mail = results.data.mail
     const name = results.data.name
@@ -123,7 +127,6 @@ const Auth = getAuth();
     dispatch(setErrorMessage('通信に失敗しました'));
   });
 }
-
 
 export const logout = () => dispatch => {
   axios
@@ -173,7 +176,7 @@ export const loginCheck = () => dispatch => {
       }
     })
     .catch((e) => {
-      console.log(loginCheckerror)
+      console.log("loginCheckerror")
     });
 }
 
