@@ -22,7 +22,6 @@ class LoginPage extends Component{
       width: '100%',
       padding: 30,
       marginTop:150,
-      textAlign: 'center',
       position: 'absolute',
       display: 'inline-block',
     };
@@ -35,7 +34,7 @@ class LoginPage extends Component{
         return(
           <div className="log">
             <Grid>
-            <Col smOffset={3} sm={6}>
+            <Col smOffset={2} sm={6}>
             <Paper style = {style} className="paper" zDepth={1}>
 
                 <h3>サークルバンクにログイン</h3>
