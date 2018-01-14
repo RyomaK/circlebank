@@ -7,7 +7,7 @@
 #
 # ホスト: 127.0.0.1 (MySQL 5.7.19)
 # データベース: circle_bank
-# 作成時刻: 2018-01-14 04:42:28 +0000
+# 作成時刻: 2018-01-14 08:02:05 +0000
 # ************************************************************
 
 
@@ -148,6 +148,19 @@ CREATE TABLE `events_schedules` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+LOCK TABLES `events_schedules` WRITE;
+/*!40000 ALTER TABLE `events_schedules` DISABLE KEYS */;
+
+INSERT INTO `events_schedules` (`id`, `user_id`, `event_id`)
+VALUES
+	(1,1,1),
+	(2,2,1),
+	(3,1,3),
+	(4,3,2),
+	(6,2,3);
+
+/*!40000 ALTER TABLE `events_schedules` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # テーブルのダンプ tags
@@ -226,8 +239,8 @@ INSERT INTO `users` (`id`, `univ_id`, `name`, `gender`, `mail`, `password`, `ima
 VALUES
 	(1,1,'栗栖','男','ryooomaaa0413@gmail.com','$2a$10$3rCT9hO/RZu1Qxd.lhJA7.6EDUZ5SPTVcVlu4KKQZNPYin.rKNJ0S','img/users/default.png',2015,'理工学部','情報システムデザイン学科'),
 	(2,1,'津國健太','男','tsukuni1@gmail.com','$2a$10$dg/iWh6zeFBEfuL.kDE3MO/xygMGyTYOypo9XsjV5BBHwv1kH9T0y','img/users/2.png',2015,'理工学部','機械システム学科'),
-	(16,1,'櫻井','男','sakurai@gmail.com','$2a$10$Stqc3LpJYS7.yzvF3mFIku6ZO/9Apr7KN8BvtSOLqgI6sTfxdD4UC','img/users/default.png',2015,'理工学部','情報システムデザイン学科'),
-	(17,1,'相田','男','aida@gmail.com','$2a$10$XMGMyBAaoRYHWdrzY7HfKu3Wcla6S9w3BThdYKd8NehrgYnU81aRO','img/users/default.png',2015,'理工学部','情報システムデザイン学科');
+	(3,1,'櫻井','男','sakurai@gmail.com','$2a$10$Stqc3LpJYS7.yzvF3mFIku6ZO/9Apr7KN8BvtSOLqgI6sTfxdD4UC','img/users/default.png',2015,'理工学部','情報システムデザイン学科'),
+	(4,1,'相田','男','aida@gmail.com','$2a$10$XMGMyBAaoRYHWdrzY7HfKu3Wcla6S9w3BThdYKd8NehrgYnU81aRO','img/users/default.png',2015,'理工学部','情報システムデザイン学科');
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;

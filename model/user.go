@@ -17,6 +17,17 @@ func UserExist(db *sql.DB, mail string) bool {
 	return true
 }
 
+func GetUserID(db *sql.DB, mail string) uint {
+	row := db.QueryRow(`SELECT id from users where mail = ?`, mail)
+	var user_id string
+	row.Scan(&user_id)
+	id, err := strconv.ParseUint(user_id, 10, 32)
+	if err != nil {
+		log.Printf("err GetuserID: %v", err)
+	}
+	return uint(id)
+}
+
 func GetUnivID(db *sql.DB, name string) uint {
 	row := db.QueryRow(`SELECT id from universities where name = ?`, name)
 	var univ_id string
@@ -42,14 +53,32 @@ func GetUserPass(db *sql.DB, mail string) string {
 	return pass
 }
 
-func GetUser(db *sql.DB, mail string) (User, error) {
-	row := db.QueryRow(`SELECT * from users where mail = ?`, mail)
+func GetUser(db *sql.DB, mail string) (Userschedule, error) {
+	row := db.QueryRow(`
+		SELECT users.id,universities.name as university ,users.name,users.mail,users.image,users.gender,users.department,users.year,users.subject,users.password
+		from users
+		inner join universities on universities.id = users.univ_id 
+		where mail = ?
+		`, mail)
 	user, err := ScanUser(row)
 	if err != nil {
 		log.Printf("mail:%v,err:%v", mail, err)
-		return User{}, err
+		return Userschedule{}, err
 	}
-	return user, nil
+	rows, _ := db.Query(`SELECT events.id ,events.name,events.image,events.agenda,events.place,events.detail,events.capacity,events.fee
+		from users
+		inner join events_schedules on events_schedules.user_id = users.id
+		inner join events on events.id = events_schedules.event_id 
+		where users.mail = ?`, mail)
+	events, err := ScanEvents(rows)
+	if err != nil {
+		log.Printf("mail:%v,err:%v", mail, err)
+		return Userschedule{}, err
+	}
+	return Userschedule{
+		User:   user,
+		Events: events,
+	}, nil
 }
 
 func IsLogin(db *sql.DB, mail, pass string) bool {

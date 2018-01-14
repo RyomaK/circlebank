@@ -35,19 +35,18 @@ func (u *User) UserHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-/*
-pass 二回
-新しいやつ
-*/
-
 func (u *User) UserUpdateHandler(w http.ResponseWriter, r *http.Request) {
 	user, err := model.GetUser(u.DB, getUserEmail(r))
 	name := r.FormValue("name")
 	mail := r.FormValue("mail")
 	pass := r.FormValue("password")
 	newPass := r.FormValue("newpassword")
-	if err = model.ComparePass(user.Password, pass); err == nil {
-		err = model.UpdateProfile(u.DB, user.ID, name, mail, newPass)
+	if err = model.ComparePass(user.User.Password, pass); err == nil {
+		if newPass != "" {
+			err = model.UpdateProfile(u.DB, user.User.ID, name, mail, newPass)
+		} else {
+			err = model.UpdateProfile(u.DB, user.User.ID, name, mail, pass)
+		}
 		if err != nil {
 			fmt.Printf("update err : %v\n", err)
 			a, _ := json.Marshal("{update: NG}")
@@ -65,6 +64,43 @@ func (u *User) UserUpdateHandler(w http.ResponseWriter, r *http.Request) {
 		w = SetHeader(w, http.StatusNotAcceptable)
 		w.Write(a)
 	}
+}
+
+func (u *User) PostEvent(w http.ResponseWriter, r *http.Request) {
+	//イベントを追加
+	event_id := r.FormValue("event_id")
+	mail := getUserEmail(r)
+	err := model.PostEvent(u.DB, mail, event_id)
+	if err != nil {
+		fmt.Println(err)
+		status := StatusCode{Code: http.StatusNotAcceptable, Message: "cannnot post events"}
+		a, _ := json.Marshal(status)
+		w = SetHeader(w, http.StatusNotAcceptable)
+		w.Write(a)
+		return
+	}
+	status := StatusCode{Code: http.StatusOK, Message: "regist events"}
+	a, _ := json.Marshal(status)
+	w = SetHeader(w, http.StatusOK)
+	w.Write(a)
+}
+
+func (u *User) DeleteEvent(w http.ResponseWriter, r *http.Request) {
+	//イベントを削除
+	event_id := r.FormValue("event_id")
+	mail := getUserEmail(r)
+	err := model.DeleteEvent(u.DB, mail, event_id)
+	if err != nil {
+		status := StatusCode{Code: http.StatusNotAcceptable, Message: "cannnot delete events"}
+		a, _ := json.Marshal(status)
+		w = SetHeader(w, http.StatusNotAcceptable)
+		w.Write(a)
+		return
+	}
+	status := StatusCode{Code: http.StatusOK, Message: "delete events"}
+	a, _ := json.Marshal(status)
+	w = SetHeader(w, http.StatusOK)
+	w.Write(a)
 }
 
 // login handler
@@ -152,8 +188,8 @@ func (u *User) UploadPicture(w http.ResponseWriter, r *http.Request) {
 		a, _ := json.Marshal(status)
 		w.Write(a)
 	} else {
-		image := "img/users/" + strconv.FormatUint(uint64(user.ID), 10) + ".png"
-		err = model.UpdatePicture(u.DB, user.Mail, image)
+		image := "img/users/" + strconv.FormatUint(uint64(user.User.ID), 10) + ".png"
+		err = model.UpdatePicture(u.DB, user.User.Mail, image)
 		if err != nil {
 			log.Printf("err %v", err)
 			w = SetHeader(w, http.StatusBadRequest)
