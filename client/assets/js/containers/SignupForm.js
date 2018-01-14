@@ -248,7 +248,11 @@ class SignupForm extends Component{
   			<Col sm={12}>
           <FlatButton label="Sign Up" fullWidth={true} backgroundColor="#1160AA"  hoverColor="#3F52E3" style={styles.customColor} type ="submit" />
   			</Col>
+        <Col sm={12}>
+          <Link to="/login"><p className="right">ログイン画面はこちら</p></Link>
+        </Col>
   		</FormGroup>
+
   	</Form>
     )
   }
