@@ -5,10 +5,10 @@ DBCONFIG:=root:@/circle_bank?parseTime=true
 #DBCONFIG:=root:Kenta71619@/circle_bank?parseTime=true
 
 build:
-	godep	go build -o ./cmd/circle/circle ./cmd/circle/circle.go
+	go build -o ./cmd/circle/circle ./cmd/circle/circle.go
 
 run:
-	godep go build -o ./cmd/circle/circle ./cmd/circle/circle.go
+	go build -o ./cmd/circle/circle ./cmd/circle/circle.go
 	./cmd/circle/circle $(DBCONFIG)
 
 test:
@@ -23,7 +23,7 @@ migrate/seed:
 	mysql -u root -p $(DBNAME) < ./model/dump/dump.sql
 
 install:
+	go get -u github.com/golang/dep/cmd/dep
 	go get -u github.com/tools/godep
-	godep save
-	godep restore
-	godep get
+	dep init 
+	dep status
