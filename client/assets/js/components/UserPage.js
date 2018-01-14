@@ -20,7 +20,6 @@ componentWillMount(){
 }
 
 const mapStateToProps = state => {
-
   return{
     user: state.user
   }

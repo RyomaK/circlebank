@@ -5,7 +5,10 @@ import { connect } from 'react-redux'
 import { FormControl, Button, Grid, Row, Col } from 'react-bootstrap'
 import { setSearchWord,circleSearch } from '../actions/index'
 import TagMenu from './TagMenu'
+import IconButton from 'material-ui/IconButton';
 
+
+import ActionSearch from 'material-ui/svg-icons/action/search';
 class SearchForm  extends Component{
 
 
@@ -23,22 +26,24 @@ class SearchForm  extends Component{
 
   render(){
 
+
+
+
   return(
-  <div>
-    <Grid>
-      <Row className="searchForm">
+  <div className="searchForm">
+      <Row>
         <form onSubmit = {this.handleSubmit.bind(this)}>
-          <Col md={4} mdOffset={2}>
+          <Col sm={7} smOffset={1}>
           <FormControl
             type="text"
-            placeholder=""
+            placeholder="サークルを検索"
             onChange = {this.handleChange.bind(this)}
+            className="search1"
             />
             </Col>
-          <Col md={1}><Button type="submit" bsStyle ="default">検索</Button></Col>
+          <IconButton type ="submit"><ActionSearch  className="search"/></IconButton>
         </form>
       </Row>
-    </Grid>
   </div>
 
     )

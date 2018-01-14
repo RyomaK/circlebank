@@ -12,7 +12,7 @@ const initialState = {
 
 const user = (state=initialState,action) => {
   switch(action.type){
-
+  
     case 'SHOW_USER':
     return{
       name: action.name,

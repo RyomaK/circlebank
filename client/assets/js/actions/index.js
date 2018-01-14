@@ -107,12 +107,12 @@ const Auth = getAuth();
   .then((results) => {
     console.log(results)
     const status = results.status
-    const mail = results.data.mail
-    const name = results.data.name
-    const department = results.data.department
-    const subject = results.data.subject
-    const year = results.data.year
-    const image = results.data.image
+    const mail = results.data.User.mail
+    const name = results.data.User.name
+    const department = results.data.User.department
+    const subject = results.data.User.subject
+    const year = results.data.User.year
+    const image = results.data.User.image
 
 
     return { status, mail ,name,department,subject,year,image}})
