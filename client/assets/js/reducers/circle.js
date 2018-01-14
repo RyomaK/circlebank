@@ -20,7 +20,7 @@ const initialState = {
 }
 
 
-const circle = (state="",action) => {
+const circle = (state=initialState,action) => {
 
   switch(action.type){
     case 'CIRCLE':
