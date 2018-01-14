@@ -19,6 +19,7 @@ migrate/init:
 	mysql -u root -h localhost --protocol tcp -e "create database \`$(DBNAME)\`" -p
 
 migrate/seed:
+	mysql.server start
 	mysql -u root -p $(DBNAME) < ./model/dump/dump.sql
 
 install:
