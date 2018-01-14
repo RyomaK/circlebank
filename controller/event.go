@@ -5,10 +5,10 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"log"
 
 	"github.com/RyomaK/circlebank/model"
 	"github.com/gorilla/mux"
-	"log"
 )
 
 type Event struct {
@@ -17,8 +17,7 @@ type Event struct {
 
 func (e *Event) EventHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	//event_idはそのサークルの
-	events, err := model.GetCircleEventDetail(e.DB, vars["univ"],vars["id"], vars["event_id"])
+	events, err := model.GetCircleEventDetail(e.DB, vars["univ"], vars["name"], vars["event"])
 	if err != nil {
 		log.Printf("event err %v", err)
 	}

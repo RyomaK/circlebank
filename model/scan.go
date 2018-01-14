@@ -4,13 +4,23 @@ import (
 	"database/sql"
 )
 
-func ScanCircleDetail(r *sql.Row) (CircleDetail, error) {
-	var s CircleDetail
+//いらないカラムはスキャンしない
+type TrashScanner struct{}
+
+func (TrashScanner) Scan(interface{}) error {
+	return nil
+}
+
+func ScanCircle(r *sql.Row) (Circle, error) {
+	var s Circle
 	if err := r.Scan(
 		&s.ID,
 		&s.Name,
+		&s.URLName,
 		&s.Number,
-		&s.Introduce,
+		&s.GenderRatio,
+		&s.Image,
+		&s.Introduction,
 		&s.MessageForFresh,
 		&s.DelegeteName,
 		&s.DelegeteContact,
@@ -19,21 +29,23 @@ func ScanCircleDetail(r *sql.Row) (CircleDetail, error) {
 		&s.Fee,
 		&s.University,
 	); err != nil {
-		return CircleDetail{}, err
+		return Circle{}, err
 	}
 	return s, nil
 }
 
-func ScanCircleDetails(rs *sql.Rows) ([]CircleDetail, error) {
-	structs := []CircleDetail{}
-	var err error
+func ScanCircles(rs *sql.Rows) ([]Circle, error) {
+	structs := []Circle{}
 	for rs.Next() {
-		var s CircleDetail
-		if err = rs.Scan(
+		var s = Circle{}
+		if err := rs.Scan(
 			&s.ID,
 			&s.Name,
+			&s.URLName,
 			&s.Number,
-			&s.Introduce,
+			&s.GenderRatio,
+			&s.Image,
+			&s.Introduction,
 			&s.MessageForFresh,
 			&s.DelegeteName,
 			&s.DelegeteContact,
@@ -46,47 +58,7 @@ func ScanCircleDetails(rs *sql.Rows) ([]CircleDetail, error) {
 		}
 		structs = append(structs, s)
 	}
-	if err = rs.Err(); err != nil {
-		return []CircleDetail{}, err
-	}
-	return structs, nil
-}
-
-func ScanCircle(r *sql.Row) (Circle, error) {
-	var s Circle
-	if err := r.Scan(
-		&s.ID,
-		&s.Name,
-		&s.Number,
-		&s.Introduce,
-		&s.Campus,
-		&s.Excite,
-		&s.Fee,
-	); err != nil {
-		return Circle{}, err
-	}
-	return s, nil
-}
-
-func ScanCircles(rs *sql.Rows) ([]Circle, error) {
-	structs := []Circle{}
-	var err error
-	for rs.Next() {
-		var s = Circle{}
-		if err = rs.Scan(
-			&s.ID,
-			&s.Name,
-			&s.Number,
-			&s.Introduce,
-			&s.Campus,
-			&s.Excite,
-			&s.Fee,
-		); err != nil {
-			return nil, err
-		}
-		structs = append(structs, s)
-	}
-	if err = rs.Err(); err != nil {
+	if err := rs.Err(); err != nil {
 		return []Circle{}, err
 	}
 	return structs, nil
@@ -97,12 +69,12 @@ func ScanEvent(r *sql.Row) (Event, error) {
 	if err := r.Scan(
 		&s.ID,
 		&s.Name,
-		&s.Content,
+		&s.Image,
 		&s.Agenda,
+		&s.Place,
 		&s.Detail,
 		&s.Capacity,
 		&s.Fee,
-		&s.University,
 	); err != nil {
 		return Event{}, err
 	}
@@ -111,24 +83,23 @@ func ScanEvent(r *sql.Row) (Event, error) {
 
 func ScanEvents(rs *sql.Rows) ([]Event, error) {
 	structs := []Event{}
-	var err error
 	for rs.Next() {
 		var s Event
-		if err = rs.Scan(
+		if err := rs.Scan(
 			&s.ID,
 			&s.Name,
-			&s.Content,
+			&s.Image,
 			&s.Agenda,
+			&s.Place,
 			&s.Detail,
 			&s.Capacity,
 			&s.Fee,
-			&s.University,
 		); err != nil {
 			return []Event{}, err
 		}
 		structs = append(structs, s)
 	}
-	if err = rs.Err(); err != nil {
+	if err := rs.Err(); err != nil {
 		return []Event{}, err
 	}
 	return structs, nil
@@ -159,7 +130,7 @@ func ScanUser(r *sql.Row) (User, error) {
 		&s.ID,
 		&s.University,
 		&s.Name,
-		&s.Sex,
+		&s.Gender,
 		&s.Mail,
 		&s.Password,
 		&s.Image,

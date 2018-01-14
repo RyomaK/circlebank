@@ -8,7 +8,59 @@
 
 ## WebApi
 ## loginしている時
-### GET```/api/{大学}/circle/{id}```  
+### GET```/api/{大学}/circle/{circle_name}```
+```json
+{
+    "Circle": {
+        "id": 2,
+        "name": "fly speck",
+        "url_name": "flyspeck",
+        "number": 100,
+        "gender_ratio": "1:1",
+        "image": "1",
+        "introduction": "テニス",
+        "message_for_fresh": "いつでもきてねえええ",
+        "delegete_name": "大野",
+        "delegete_contact": "arashi@mail.com",
+        "campus": "京田辺/今出川",
+        "excite": 9,
+        "fee": 3000,
+        "university": "同志社大学"
+    },
+    "events": [
+        {
+            "id": 1,
+            "name": "ほわ音でー",
+            "image": "img/users/default.png",
+            "agenda": "2017-02-14T00:00:00Z",
+            "place": "a",
+            "detail": "f",
+            "capacity": 10,
+            "fee": 10
+        },
+        {
+            "id": 2,
+            "name": "fsa",
+            "image": "img/users/default.png",
+            "agenda": "2017-02-14T00:00:00Z",
+            "place": "fsa",
+            "detail": "fdsa",
+            "capacity": 1,
+            "fee": 1
+        }
+    ],
+    "tags": [
+        {
+            "id": 3,
+            "name": "京田辺"
+        },
+        {
+            "id": 4,
+            "name": "今出川"
+        }
+    ]
+}
+```  
 ### GET```/api/{大学}/tag```  
 大学毎のtag一覧  
 ### GET```/api/{大学}/tag/{id}```  
