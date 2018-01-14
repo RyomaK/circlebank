@@ -39,6 +39,8 @@ export const selectUniversity = university => dispatch => dispatch({type: 'SELEC
 
 export const setImage = image => dispatch => dispatch({type: 'IMAGE_SET',image});
 
+export const setSearchWord = word => dispatch => dispatch({type: 'SET_WORD',word});
+
 
 
 export const signup = data => dispatch => {
@@ -96,12 +98,14 @@ export const login = data => dispatch => {
   });
 }
 
+
+
 export const getUserInfo = () => dispatch => {
 const Auth = getAuth();
   axios
   .get('/api/user',{ headers:{'Authorization':`Bearer ${Auth}`}})
   .then((results) => {
-
+    console.log(results)
     const status = results.status
     const mail = results.data.mail
     const name = results.data.name
@@ -125,8 +129,8 @@ const Auth = getAuth();
         break;
     }
   })
-  .catch(() => {
-    dispatch(setErrorMessage('通信に失敗しました'));
+  .catch((e) => {
+    console.log(e)
   });
 }
 
@@ -181,11 +185,44 @@ export const loginCheck = () => dispatch => {
     });
 }
 
+export const circleSearch = name => dispatch => {
+  const Auth = getAuth();
+  axios
+  .get(`/api/doshisha/circle/${name}`,{ headers:{'Authorization':`Bearer ${Auth}`}})
+  .then((results) => {
+    const status = results.status
+    const circle = results.data
+    return { status, circle };
+    if (typeof circle === undefined) {
+      return { status };
+    }
+  })
+  .then(({status, circle})=> {
+    switch (status) {
+      case 200: {
+        dispatch({type:'CIRCLE',circle})
+        break;
+      }
+      case 401: {
+        dispatch(setLogin(-1));
+        break;
+      }
+      default: {
+        dispatch(setErrorMessage('エラーが発生しました'));
+        break;
+      }
+    }
+  })
+  .catch(() => {
+    console.log("circleStart");
+  });
+}
 
-export const circleSearchStart = URL => dispatch => {
+
+export const circleSearchAll = ()=> dispatch => {
     const Auth = getAuth();
     axios
-    .get(URL,{ headers:{'Authorization':`Bearer ${Auth}`}})
+    .get('/api/doshisha/circle',{ headers:{'Authorization':`Bearer ${Auth}`}})
     .then((results) => {
       const status = results.status
       const circles = results.data

@@ -1,7 +1,4 @@
 const loginCheck = (state={isLogin:'false',permit:'true'},action) => {
-  console.log("loginCheck")
-
-
   switch(action.type){
 
     case 'LOGIN_CHECK':
@@ -11,7 +8,7 @@ const loginCheck = (state={isLogin:'false',permit:'true'},action) => {
           isLogin: 'true',permit: 'true'
         }
       }else{
-        console.log("a")
+        
         return{
 
           isLogin: 'false',permit: 'true'

@@ -6,7 +6,6 @@ const search = (state={circles:[]}, action) => {
       return(
         state
       )
-      break;
     }
 }
 export default search

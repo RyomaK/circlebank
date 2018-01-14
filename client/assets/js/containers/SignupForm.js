@@ -61,7 +61,6 @@ class SignupForm extends Component{
 
     this.props.signup(this.props.info)
     this.props.history.push('/');
-    console.log(this.props.info)
 
   }
 

@@ -1,12 +1,12 @@
 const initialState = {
 
-  university: "同志社",
+  university: "同志社大学",
   name: "",
   sex: "男",
-  year: "",
+  year: "2018",
   email: "",
-  department: "",
-  subject: "",
+  department: "神学部",
+  subject: "神学科",
   password: ""
 
 }

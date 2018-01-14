@@ -1,43 +1,42 @@
 import React,{Component}from 'react'
 import PropTypes from 'prop-types'
+import { Link, withRouter} from 'react-router-dom'
 import { connect } from 'react-redux'
 import { FormControl, Button, Grid, Row, Col } from 'react-bootstrap'
-import { tagSearchStart,circleSearchStart } from '../actions/index'
-import ResultPage from '../components/ResultPage'
+import { setSearchWord,circleSearch } from '../actions/index'
 import TagMenu from './TagMenu'
 
 class SearchForm  extends Component{
 
 
-  componentDidMount(){
-    this.props.onCircleSearch(`http://localhost:8080/api/doshisha/circle`),
-    this.props.onTagSearch()
+  handleSubmit(e){
+    e.preventDefault()
+    this.props.circleSearch(this.props.searchWord),
+    this.props.history.push('/circle');
+
   }
+  handleChange(e){
+    e.preventDefault();
+    this.props.setWord(e.target.value)
+  }
+
 
   render(){
 
-
-let input
   return(
   <div>
     <Grid>
       <Row className="searchForm">
-        <form onSubmit = { e => {
-          input = ""
-        }}>
-          <Col md={5} mdOffset={2}><FormControl
-                        type="text"
-                        placeholder="入力してください"
-                        onChange = {e=>{
-                          input = e.target.value
-                        }}
-                        /></Col>
+        <form onSubmit = {this.handleSubmit.bind(this)}>
+          <Col md={4} mdOffset={2}>
+          <FormControl
+            type="text"
+            placeholder=""
+            onChange = {this.handleChange.bind(this)}
+            />
+            </Col>
           <Col md={1}><Button type="submit" bsStyle ="default">検索</Button></Col>
-          <Col md={2}><TagMenu /></Col>
         </form>
-      </Row>
-      <Row>
-      {this.props.circles.map(circle => (<ResultPage key={circle.id} circle={circle}/>))}
       </Row>
     </Grid>
   </div>
@@ -47,28 +46,20 @@ let input
 }
 const mapStateToProps = state => {
   return{
-    circles: state.search.circles
+    searchWord: state.searchWord.word
   }
 }
 
 const mapDispatchToProps= dispatch => {
   return{
-    onTagSearch: () => {
-      dispatch(tagSearchStart())
+    setWord: word => {
+      dispatch(setSearchWord(word))
     },
-    onCircleSearch: (value) => {
-      dispatch(circleSearchStart(value))
+    circleSearch: word => {
+      dispatch(circleSearch(word))
     }
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SearchForm)
 
-SearchForm.propTypes = {
-  onCircleSearch: PropTypes.func.isRequired,
-  circles: PropTypes.arrayOf(PropTypes.any)
-
-}
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SearchForm))
