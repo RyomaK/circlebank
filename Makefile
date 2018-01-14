@@ -1,8 +1,8 @@
 DBNAME:=circle_bank
 ENV:=development
 
-#DBCONFIG:=root:@/circle_bank
-DBCONFIG:=root:Kenta71619@/circle_bank
+DBCONFIG:=root:@/circle_bank?parseTime=true
+#DBCONFIG:=root:Kenta71619@/circle_bank?parseTime=true
 
 build:
 	godep	go build -o ./cmd/circle/circle ./cmd/circle/circle.go
@@ -19,6 +19,7 @@ migrate/init:
 	mysql -u root -h localhost --protocol tcp -e "create database \`$(DBNAME)\`" -p
 
 migrate/seed:
+	mysql.server start
 	mysql -u root -p $(DBNAME) < ./model/dump/dump.sql
 
 install:

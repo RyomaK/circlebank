@@ -78,7 +78,7 @@ func EncodePass(pass string) (string, error) {
 }
 
 func Regist(db *sql.DB, user User) error {
-	stmt, err := db.Prepare("INSERT users SET univ_id=?, name=?,mail=?,password=?,sex=?,department=?,subject=?,image=?,year=?")
+	stmt, err := db.Prepare("INSERT users SET univ_id=?, name=?,mail=?,password=?,gender=?,department=?,subject=?,image=?,year=?")
 	if err != nil {
 		return err
 	}
@@ -86,7 +86,7 @@ func Regist(db *sql.DB, user User) error {
 	if err != nil {
 		return err
 	}
-	_, err = stmt.Exec(GetUnivID(db, user.University), user.Name, user.Mail, user.Password, user.Sex, user.Department, user.Subject, user.Image, user.Year)
+	_, err = stmt.Exec(GetUnivID(db, user.University), user.Name, user.Mail, user.Password, user.Gender, user.Department, user.Subject, user.Image, user.Year)
 	if err != nil {
 		return err
 	}

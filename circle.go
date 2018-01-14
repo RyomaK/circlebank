@@ -64,13 +64,13 @@ func (s *Server) Route(addr string) {
 	))
 	a := acctBase.PathPrefix("/api").Subrouter()
 	//circle
-	a.Path("/{univ}/circle/{id}").HandlerFunc(circles.CircleHandler).Methods("GET")
+	a.Path("/{univ}/circle/{name}").HandlerFunc(circles.CircleHandler).Methods("GET")
 	a.Path("/{univ}/circle").HandlerFunc(circles.UnivCircleHandler).Methods("GET")
 	//tag
-	a.Path("/{univ}/tag/").HandlerFunc(circles.SearchHandler)
+	a.Path("/{univ}/tag").HandlerFunc(circles.SearchHandler)
 	a.Path("/{univ}/tag/{id}").HandlerFunc(circles.TagCirclesHandler)
 	//event
-	a.Path("/{univ}/circle/{id}/{event}").HandlerFunc(events.EventHandler).Methods("GET")
+	a.Path("/{univ}/circle/{name}/{event}").HandlerFunc(events.EventHandler).Methods("GET")
 	//user data
 	a.Path("/user").HandlerFunc(users.UserHandler).Methods("GET")
 	a.Path("/user").HandlerFunc(users.UserUpdateHandler).Methods("POST")

@@ -105,7 +105,7 @@ func (u *User) SignUpHandler(w http.ResponseWriter, r *http.Request) {
 		person.University = r.FormValue("university")
 		person.Name = r.FormValue("name")
 		person.Mail = r.FormValue("mail")
-		person.Sex = r.FormValue("sex")
+		person.Gender = r.FormValue("sex")
 		person.Department = r.FormValue("department")
 		person.Subject = r.FormValue("subject")
 		person.Password = r.FormValue("password")
@@ -152,7 +152,7 @@ func (u *User) UploadPicture(w http.ResponseWriter, r *http.Request) {
 		a, _ := json.Marshal(status)
 		w.Write(a)
 	} else {
-		image := "public/img/users/" + strconv.FormatUint(uint64(user.ID), 10) + ".png"
+		image := "img/users/" + strconv.FormatUint(uint64(user.ID), 10) + ".png"
 		err = model.UpdatePicture(u.DB, user.Mail, image)
 		if err != nil {
 			log.Printf("err %v", err)
@@ -161,7 +161,7 @@ func (u *User) UploadPicture(w http.ResponseWriter, r *http.Request) {
 			a, _ := json.Marshal(status)
 			w.Write(a)
 		} else {
-			thumb.Save(image)
+			thumb.Save("public/" + image)
 			w = SetHeader(w, http.StatusCreated)
 			status := StatusCode{Code: http.StatusCreated, Message: "upload"}
 			a, _ := json.Marshal(status)
