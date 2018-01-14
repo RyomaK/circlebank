@@ -63,7 +63,7 @@ func GetTagCircles(db *sql.DB, univ_name, tag_id string) ([]Circle, error) {
 }
 
 func GetTags(db *sql.DB, univ_name string) ([]Tag, error) {
-	query := `select tags.id, tags.name
+	query := `select distinct tags.id, tags.name
 			  from (circles inner join universities on circles.univ_id = universities.id)
 			  inner join circles_tags on circles.id = circles_tags.circle_id
 			  inner join tags on circles_tags.tag_id = tags.id
@@ -117,7 +117,7 @@ func GetCircleEvents(db *sql.DB, univ, circle_name string) ([]Event, error) {
 }
 
 func DeleteEvent(db *sql.DB, mail, event_id string) error {
-	id := GetUserID(db, mail)q
+	id := GetUserID(db, mail)
 	query := `delete
 	from events_schedules 
 	where events_schedules.user_id = ?  and events_schedules.event_id = ?`
