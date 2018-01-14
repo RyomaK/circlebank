@@ -9,7 +9,7 @@ import VisibilityOff from 'material-ui/svg-icons/action/visibility-off';
 import { setUniversity,setName,setSex,setEmail,setDepartment,setSubject,settYear,setPassword,signup,selectUniversity } from '../actions/index'
 import { connect } from 'react-redux'
 import { Link, withRouter} from 'react-router-dom'
-import {Col,Form,FormGroup,FormControl,Button,DropdownButton} from "react-bootstrap"
+import {Row,Col,Form,FormGroup,FormControl,DropdownButton} from "react-bootstrap"
 import FlatButton from 'material-ui/FlatButton';
 
 const univerBox = [{tag:0,name:"同志社大学"},{tag:1,name:"同志社女子大学"}]
@@ -116,7 +116,7 @@ class SignupForm extends Component{
   render(){
     const styles = {
       customWidth: {
-        width: 300,
+        width: 250,
       },
       customWidth1: {
         width: 100,
@@ -129,12 +129,13 @@ class SignupForm extends Component{
 
       <Form horizontal onSubmit={this.handleSubmit.bind(this)}>
   		<FormGroup>
-  			<Col sm={10}>
+
+  			<Col sm={6}>
         <SelectField
           floatingLabelText="大学"
           value={this.state.value1}
           onChange={this.handleChange1.bind(this)}
-          style={styles.customWidth}
+          fullWidth={true}
         >
         {univerBox.map(univer => (
 
@@ -143,59 +144,7 @@ class SignupForm extends Component{
 
         </SelectField>
         </Col>
-  		</FormGroup>
-
-      <FormGroup>
-  			<Col sm={10}>
-
-        <SelectField
-          floatingLabelText="学部"
-          value={this.state.value2}
-          onChange={this.handleChange2.bind(this)}
-          style={styles.customWidth}
-        >
-        {departmentBox[this.state.value1].map(department => (
-
-          <MenuItem key={department.tag} value={department.tag} primaryText={department.name}/>
-        ))}
-
-        </SelectField>
-  			</Col>
-  		</FormGroup>
-
-
-      <FormGroup>
-  			<Col sm={10}>
-        <SelectField
-          floatingLabelText="学科"
-          value={this.state.value3}
-          onChange={this.handleChange3.bind(this)}
-          style={styles.customWidth}
-        >
-        {subjectBox[this.state.value1][this.state.value2].map(subject => (
-
-          <MenuItem key={subject.tag} value={subject.tag} primaryText={subject.name}/>
-        ))}
-
-        </SelectField>
-  			</Col>
-  		</FormGroup>
-
-
-
-      <FormGroup>
-  			<Col sm={10}>
-        <TextField
-        name = "name"
-        floatingLabelText="名前"
-        floatingLabelFixed={true}
-        onChange={this.handleChange.bind(this)}
-        />
-  			</Col>
-  		</FormGroup>
-
-      <FormGroup validationState="success">
-        <Col sm={10}>
+        <Col sm={6}>
         <SelectField
           floatingLabelText="入学年"
           value={this.state.value4}
@@ -211,8 +160,52 @@ class SignupForm extends Component{
       </Col>
   		</FormGroup>
 
-      <FormGroup validationState="success">
-        <Col sm={10}>
+      <FormGroup>
+  			<Col sm={6}>
+        <SelectField
+          floatingLabelText="学部"
+          value={this.state.value2}
+          onChange={this.handleChange2.bind(this)}
+          fullWidth={true}
+          maxHeight={200}
+        >
+        {departmentBox[this.state.value1].map(department => (
+
+          <MenuItem key={department.tag} value={department.tag} primaryText={department.name}/>
+        ))}
+
+        </SelectField>
+  			</Col>
+
+  			<Col sm={6}>
+        <SelectField
+          floatingLabelText="学科"
+          value={this.state.value3}
+          onChange={this.handleChange3.bind(this)}
+          fullWidth={true}
+          maxHeight={200}
+        >
+        {subjectBox[this.state.value1][this.state.value2].map(subject => (
+
+          <MenuItem key={subject.tag} value={subject.tag} primaryText={subject.name}/>
+        ))}
+
+        </SelectField>
+  			</Col>
+  		</FormGroup>
+
+      <FormGroup>
+  			<Col sm={6}>
+        <TextField
+        name = "name"
+        floatingLabelText="名前"
+        floatingLabelFixed={true}
+        onChange={this.handleChange.bind(this)}
+        fullWidth={true}
+        />
+  			</Col>
+
+        <Col sm={6}>
         <SelectField
           floatingLabelText="性別"
           value={this.state.value5}
@@ -229,29 +222,30 @@ class SignupForm extends Component{
       </FormGroup>
 
       <FormGroup>
-  			<Col sm={10}>
+  			<Col sm={6}>
           <TextField
           name = "mail"
           type = "mail"
           floatingLabelText="メールアドレス"
           floatingLabelFixed={true}
+          fullWidth={true}
           onChange={this.handleChange.bind(this)}
           />
   			</Col>
-  		</FormGroup>
-  		<FormGroup>
-  			<Col sm={10}>
+
+  			<Col sm={6}>
           <TextField
           name = "password"
           type = "password"
           floatingLabelText="パスワード"
           floatingLabelFixed={true}
+          fullWidth={true}
           onChange={this.handleChange.bind(this)}
           />
   			</Col>
   		</FormGroup>
   		<FormGroup>
-  			<Col sm={10}>
+  			<Col sm={12}>
           <FlatButton label="Sign Up" fullWidth={true} backgroundColor="#1160AA"  hoverColor="#3F52E3" style={styles.customColor} type ="submit" />
   			</Col>
   		</FormGroup>
