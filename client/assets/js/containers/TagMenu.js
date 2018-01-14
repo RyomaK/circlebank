@@ -1,7 +1,7 @@
 import React,{Component}from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { tagSearchStart,circleSearchStart } from '../actions/index'
+import { tagSearchStart } from '../actions/index'
 import { NavDropdown,MenuItem,Nav } from 'react-bootstrap'
 
 
@@ -32,17 +32,9 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps= dispatch => {
-  return{
-    onHandleSearch: (id) => {
-      dispatch(circleSearchStart(`http://localhost:8080/api/doshisha/tag/${id}`))
-    }
-  }
-}
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+
 )(TagMenu)
 
 TagMenu.propTypes = {

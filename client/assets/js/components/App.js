@@ -4,6 +4,8 @@ import Header from './Header'
 import SearchForm from '../containers/SearchForm'
 import LoginPage from './LoginPage'
 import SignupPage from './SignupPage'
+import CirclePage from '../containers/CirclePage'
+import MainPage from './MainPage'
 import Auth from './Auth'
 import UserPage from './UserPage'
 import { BrowserRouter, Route, Link, Switch} from 'react-router-dom';
@@ -19,13 +21,17 @@ const App =() => {
           <MuiThemeProvider>
             <div>
               <Header />
+              <Auth>
+                <SearchForm/>
+              </Auth>
               <Switch>
                 <Route path="/login" component={LoginPage}/>
                 <Route path="/signup" component={SignupPage}/>
                 <Auth>
                   <Switch>
-                    <Route exact path="/" component={SearchForm}/>
+                    <Route exact path="/" component={MainPage}/>
                     <Route path="/user" component={UserPage}/>
+                    <Route path ="/circle" component={CirclePage}/>
                   </Switch>
                 </Auth>
                 </Switch>

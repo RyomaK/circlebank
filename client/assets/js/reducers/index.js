@@ -4,6 +4,9 @@ import allTagSearch from './allTagSearch'
 import setStatus from './setStatus'
 import loginCheck from './loginCheck'
 import user from './user'
+import image from './image'
+import searchWord from './searchWord'
+import circle from './circle'
 
 
 const reducer = combineReducers({
@@ -11,7 +14,11 @@ const reducer = combineReducers({
   allTagSearch,
   setStatus,
   user,
-  loginCheck
+  loginCheck,
+  image,
+  searchWord,
+  circle
+
 })
 
 export default reducer
