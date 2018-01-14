@@ -55,7 +55,7 @@ func GetUserPass(db *sql.DB, mail string) string {
 
 func GetUser(db *sql.DB, mail string) (Userschedule, error) {
 	row := db.QueryRow(`
-		SELECT users.id,universities.name as university ,users.name,users.mail,users.image,users.gender,users.department,users.year,users.subject,users.password
+		SELECT users.id,universities.name as university ,users.name,users.gender,users.mail,users.password,users.image,users.year,users.department,users.subject
 		from users
 		inner join universities on universities.id = users.univ_id 
 		where mail = ?
