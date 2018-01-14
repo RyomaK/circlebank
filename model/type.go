@@ -53,3 +53,8 @@ type User struct {
 	Department string `db:"department" json:"department"`
 	Subject    string `db:"subject" json:"subject"`
 }
+
+type Userschedule struct {
+	User   User
+	Events []Event `db:"events" json:"events"`
+}

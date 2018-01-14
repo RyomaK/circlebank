@@ -91,12 +91,10 @@ func GetCircleTags(db *sql.DB, univ_name, circle_name string) ([]Tag, error) {
 }
 
 func GetCircleEventDetail(db *sql.DB, univ, circle_name, id string) (Event, error) {
-	query := `select *
-	from (select @a:=@a+1 as id ,events.name,events.image,events.agenda,events.place,events.detail,events.capacity,events.fee
-		from (select @a:=0)as a,(circles left outer join universities on univ_id = universities.id)
+	query := `select events.id ,events.name,events.image,events.agenda,events.place,events.detail,events.capacity,events.fee
+		from (circles left outer join universities on univ_id = universities.id)
 		left outer join events on events.circle_id = circles.id
-		where universities.url_name = ? and circles.url_name = ? ) as eve
-	where eve.id = ?`
+		where universities.url_name = ? and circles.url_name = ? and events.id = ?`
 	row := db.QueryRow(query, univ, circle_name, id)
 	event, err := ScanEvent(row)
 	if err != nil {
@@ -106,9 +104,9 @@ func GetCircleEventDetail(db *sql.DB, univ, circle_name, id string) (Event, erro
 }
 
 func GetCircleEvents(db *sql.DB, univ, circle_name string) ([]Event, error) {
-	query := `select @a:=@a+1 as id ,events.name,events.image,events.agenda,events.place,events.detail,events.capacity,events.fee
-		from (select @a:=0)as a,(circles left outer join universities on univ_id = universities.id)
-		left outer join events on events.circle_id = circles.id
+	query := `select events.id ,events.name,events.image,events.agenda,events.place,events.detail,events.capacity,events.fee
+		from (circles left outer join universities on univ_id = universities.id)
+		inner join events on events.circle_id = circles.id
 		where universities.url_name = ? and circles.url_name = ?;`
 	rows, _ := db.Query(query, univ, circle_name)
 	events, err := ScanEvents(rows)
@@ -116,4 +114,35 @@ func GetCircleEvents(db *sql.DB, univ, circle_name string) ([]Event, error) {
 		return []Event{}, err
 	}
 	return events, nil
+}
+
+func DeleteEvent(db *sql.DB, mail, event_id string) error {
+	id := GetUserID(db, mail)q
+	query := `delete
+	from events_schedules 
+	where events_schedules.user_id = ?  and events_schedules.event_id = ?`
+	stmt, err := db.Prepare(query)
+	if err != nil {
+		return err
+	}
+	_, err = stmt.Exec(id, event_id)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func PostEvent(db *sql.DB, mail, event_id string) error {
+	id := GetUserID(db, mail)
+	query := `insert  into events_schedules
+	(user_id,event_id) values(?,?) `
+	stmt, err := db.Prepare(query)
+	if err != nil {
+		return err
+	}
+	_, err = stmt.Exec(id, event_id)
+	if err != nil {
+		return err
+	}
+	return nil
 }

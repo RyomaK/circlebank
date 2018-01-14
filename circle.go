@@ -43,20 +43,23 @@ func (s *Server) Route(addr string) {
 	circles := &controller.Circle{DB: s.DB}
 	users := &controller.User{DB: s.DB}
 	events := &controller.Event{DB: s.DB}
-	//nomal
+	//nomal(user)
 	r.HandleFunc("/login", users.LoginHandler).Methods("POST")
 	r.HandleFunc("/logout", users.LogoutHandler).Methods("POST")
 	r.HandleFunc("/signup", users.SignUpHandler).Methods("POST")
 	r.HandleFunc("/", Index)
+
+	//admin
+	//r.HandleFunc("/login", users.LoginHandler)
+
+	//static
 	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("public"))))
-	/*
-		Test
-		r.HandleFunc("/ping", Ex)
-	*/
+
 	//not found
 	r.NotFoundHandler = http.HandlerFunc(NotFoundHandler)
 	//need login
-	//subrouter
+
+	//subrouter-User
 	acctBase := mux.NewRouter()
 	r.PathPrefix("/api").Handler(negroni.New(
 		negroni.HandlerFunc(jwtMiddleware.HandlerWithNext),
@@ -74,8 +77,21 @@ func (s *Server) Route(addr string) {
 	//user data
 	a.Path("/user").HandlerFunc(users.UserHandler).Methods("GET")
 	a.Path("/user").HandlerFunc(users.UserUpdateHandler).Methods("POST")
+	a.Path("/user/event").HandlerFunc(users.PostEvent).Methods("POST")
+	a.Path("/user/event").HandlerFunc(users.DeleteEvent).Methods("DELETE")
 	//画像アップロード
 	a.Path("/user/upload").HandlerFunc(users.UploadPicture).Methods("POST")
+
+	//subrouter-Admin
+	/*
+		admin := mux.NewRouter()
+		r.PathPrefix("/admin").Handler(negroni.New(
+			negroni.HandlerFunc(jwtMiddleware.HandlerWithNext),
+			negroni.Wrap(admin),
+		))
+		b := admin.PathPrefix("/admin").Subrouter()
+
+	*/
 
 	//all handler add middleware
 	n := negroni.New()

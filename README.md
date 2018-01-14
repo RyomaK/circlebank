@@ -140,11 +140,18 @@ idを持っているサークル一覧
 }
 ```
 
+### POST```/api/event```
+- event_id
+userにイベントを追加
+### DELETE```/api/event```
+- event_id
+userのイベント消去
+
 ## loginしていない
 401　と not authorized
 
 ## そのた
-### GET```/auth/login/{provider}```
+### GET```/login```
 Oauthログイン
 ### POST```/logout```
 ログアウト
@@ -215,15 +222,30 @@ user情報の表示
 #### 成功
 ```json
 {
-    "id": 2,
-    "university": "1",
-    "name": "つくに",
-    "mail": "tsukuni1@gmail.com",
-    "image": "",
-    "sex": "1",
-    "department": "理工学部",
-    "subject": "機械システム学科",
-    "password": "$2a$10$dg/iWh6zeFBEfuL.kDE3MO/xygMGyTYOypo9XsjV5BBHwv1kH9T0y"
+    "User": {
+        "id": 2,
+        "university": "同志社大学",
+        "name": "ケンタ",
+        "gender": "tsukuni1@gmail.com",
+        "mail": "img/users/2.png",
+        "password": "男",
+        "image": "理工学部",
+        "year": 2015,
+        "department": "機械システム学科",
+        "subject": "$2a$10$dg/iWh6zeFBEfuL.kDE3MO/xygMGyTYOypo9XsjV5BBHwv1kH9T0y"
+    },
+    "events": [
+        {
+            "id": 1,
+            "name": "ほわ音でー",
+            "image": "img/users/default.png",
+            "agenda": "2017-02-14T00:00:00Z",
+            "place": "a",
+            "detail": "f",
+            "capacity": 10,
+            "fee": 10
+        }
+    ]
 }
 ```
 
