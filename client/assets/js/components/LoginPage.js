@@ -37,7 +37,7 @@ class LoginPage extends Component{
             <Col smOffset={4} sm={4}>
             <Paper style = {style} className="paper" zDepth={3}>
 
-                <h4>サークルバンクにログイン</h4>
+                <h4>Circle Bankにログイン</h4>
                 <LoginForm />
 
             </Paper>

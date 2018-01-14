@@ -12,7 +12,6 @@ const initialState = {
 }
 
 const setStatus = (state=initialState,action) => {
-
   switch(action.type){
     case 'SET_UNIVERSITY':
       return Object.assign({},state,{
@@ -28,6 +27,7 @@ const setStatus = (state=initialState,action) => {
         year: action.year
         })
     case 'SET_SEX':
+    console.log("a")
       return Object.assign({}, state, {
         sex: action.sex
         })

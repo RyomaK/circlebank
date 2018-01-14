@@ -54,44 +54,87 @@ class SignupForm extends Component{
     this.state = {checked: true,value1:0,value2:0,value3:0,value4:0,value5:0};
   }
 
-  componentDidMount(){
-    this.props.setUniversity(univerBox[this.state.value1].name);
-    this.props.setDepartment(departmentBox[this.state.value1][this.state.value2].name);
-    this.props.setSubject(subjectBox[this.state.value1][this.state.value2][this.state.value3].name);
-    this.props.settYear(year[this.state.value4].year);
-  }
+
 
   handleSubmit(e){
     e.preventDefault();
 
     this.props.signup(this.props.info)
     this.props.history.push('/');
+    console.log(this.props.info)
+
   }
 
   handleChange1(event, index, value){
-    event.preventDefault();
-    this.setState({value1:index,value2:0,value3:0});
-    this.props.setUniversity(univerBox[this.state.value1].name)
+    const value1 = value
+    const value2 = 0
+    const value3 = 0
+    const value4 = this.state.value4
+    const value5 = this.state.value5
+    this.setState({value1:value,value2:0,value3:0});
+    this.props.setUniversity(univerBox[value1].name);
+    this.props.setDepartment(departmentBox[value1][value2].name);
+    this.props.setSubject(subjectBox[value1][value2][value3].name);
+    this.props.settYear(year[value4].year);
+    this.props.setSex(sexBox[value5].sex);
   }
   handleChange2(event, index, value){
-    event.preventDefault();
+    const value1 = this.state.value1
+    const value2 = value
+    const value3 = 0
+    const value4 = this.state.value4
+    const value5 = this.state.value5
     this.setState({value2:value,value3:0});
-    this.props.setDepartment(departmentBox[this.state.value1][this.state.value2].name)
+    this.props.setUniversity(univerBox[value1].name);
+    this.props.setDepartment(departmentBox[value1][value2].name);
+    this.props.setSubject(subjectBox[value1][value2][value3].name);
+    this.props.settYear(year[value4].year);
+    this.props.setSex(sexBox[value5].sex);
+
+
   }
   handleChange3(event, index, value){
-    event.preventDefault();
+    const value1 = this.state.value1
+    const value2 = this.state.value2
+    const value3 = value
+    const value4 = this.state.value4
+    const value5 = this.state.value5
+
     this.setState({value3:value});
-    this.props.setSubject(subjectBox[this.state.value1][this.state.value2][this.state.value3].name)
+    this.props.setUniversity(univerBox[value1].name);
+    this.props.setDepartment(departmentBox[value1][value2].name);
+    this.props.setSubject(subjectBox[value1][value2][value3].name);
+    this.props.settYear(year[value4].year);
+    this.props.setSex(sexBox[value5].sex);
+
   }
+
   handleChange4(event, index, value){
-    event.preventDefault();
+    const value1 = this.state.value1
+    const value2 = this.state.value2
+    const value3 = this.state.value3
+    const value4 = value
+    const value5 = this.state.value5
     this.setState({value4:value});
-    this.props.settYear(year[this.state.value4].year)
+    this.props.setUniversity(univerBox[value1].name);
+    this.props.setDepartment(departmentBox[value1][value2].name);
+    this.props.setSubject(subjectBox[value1][value2][value3].name);
+    this.props.settYear(year[value4].year);
+    this.props.setSex(sexBox[value5].sex);
+
   }
   handleChange5(event, index, value){
-    event.preventDefault();
+    const value1 = this.state.value1
+    const value2 = this.state.value2
+    const value3 = this.state.value3
+    const value4 = this.state.value4
+    const value5 = value
     this.setState({value5:value});
-    this.props.setSex(sexBox[this.state.value5].sex)
+    this.props.setUniversity(univerBox[value1].name);
+    this.props.setDepartment(departmentBox[value1][value2].name);
+    this.props.setSubject(subjectBox[value1][value2][value3].name);
+    this.props.settYear(year[value4].year);
+    this.props.setSex(sexBox[value5].sex);
   }
 
 

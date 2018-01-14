@@ -4,6 +4,7 @@ import allTagSearch from './allTagSearch'
 import setStatus from './setStatus'
 import loginCheck from './loginCheck'
 import user from './user'
+import image from './image'
 
 
 const reducer = combineReducers({
@@ -11,7 +12,8 @@ const reducer = combineReducers({
   allTagSearch,
   setStatus,
   user,
-  loginCheck
+  loginCheck,
+  image
 })
 
 export default reducer

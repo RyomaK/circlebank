@@ -1,7 +1,6 @@
 const loginCheck = (state={isLogin:'false',permit:'true'},action) => {
   console.log("loginCheck")
-console.log(state)
-console.log(action)
+
 
   switch(action.type){
 

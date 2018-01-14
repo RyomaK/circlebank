@@ -37,6 +37,8 @@ export const setLogin = number => dispatch => dispatch({type: 'LOGIN_CHECK',numb
 
 export const selectUniversity = university => dispatch => dispatch({type: 'SELECT_UNIVER',university});
 
+export const setImage = image => dispatch => dispatch({type: 'IMAGE_SET',image});
+
 
 
 export const signup = data => dispatch => {
@@ -79,7 +81,6 @@ export const login = data => dispatch => {
   axios
   .post('/login',params)
   .then((results) => {
-    console.log(results)
     const status = results.status
     return{ status }
   }).then(({status}) => {
@@ -107,13 +108,14 @@ const Auth = getAuth();
     const department = results.data.department
     const subject = results.data.subject
     const year = results.data.year
+    const image = results.data.image
 
 
-    return { status, mail ,name,department,subject,year}})
-  .then(({ status,mail,name,department,subject,year }) => {
+    return { status, mail ,name,department,subject,year,image}})
+  .then(({ status,mail,name,department,subject,year,image}) => {
     switch(status){
       case 200:
-        dispatch({type:'SHOW_USER',mail,name,department,subject,year});
+        dispatch({type:'SHOW_USER',mail,name,department,subject,year,image});
         break;
       case 401:
         dispatch(setLogin(-1));
@@ -133,7 +135,7 @@ export const logout = () => dispatch => {
   .post('/logout')
   .then((results)=>{
     const status = results.status
-    console.log(status)
+
     return { status };
   }).then(({status}) => {
       switch (status){
@@ -156,7 +158,6 @@ export const loginCheck = () => dispatch => {
     axios
     .get('/api/doshisha/circle',{headers: { "Authorization": `Bearer ${Auth}`}})
     .then((results) => {
-      console.log(results)
       const status = results.status
       return { status };
     })
@@ -217,7 +218,7 @@ export const circleSearchStart = URL => dispatch => {
 export const tagSearchStart = () => dispatch => {
   const Auth = getAuth();
     axios
-    .get('/api/doshisha/tag/',{ headers:{'Authorization':`Bearer ${Auth}`}})
+    .get('/api/doshisha/tag',{ headers:{'Authorization':`Bearer ${Auth}`}})
     .then((results) => {
       const status = results.status
       const tags = results.data
@@ -244,5 +245,20 @@ export const tagSearchStart = () => dispatch => {
     })
     .catch(() => {
       console.log("エラーtagSearchStart")
+    });
+}
+
+export const ImageUpload = image => dispatch => {
+    const Auth = getAuth();
+    var params = new FormData();
+    params.append('image',image);
+    axios
+    .post('/api/user/upload',params,{headers:{'Authorization':`Bearer ${Auth}`}})
+    .then((results) => {
+      console.log(results)
+      const status = results.status
+    })
+    .catch((e) => {
+      console.log(e);
     });
 }

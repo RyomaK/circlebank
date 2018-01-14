@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import UserBox from './UserBox'
+import ImageUp from './ImageUp'
 import { getUserInfo } from '../actions/index'
 import { connect } from 'react-redux'
 
@@ -12,6 +13,7 @@ componentWillMount(){
     return(
       <div>
         <UserBox data={this.props.user}/>
+        <ImageUp/>
       </div>
     )
   }
