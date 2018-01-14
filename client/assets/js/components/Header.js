@@ -38,7 +38,7 @@ handleToggle(){ this.setState({open: !this.state.open})}
       </Drawer>
       </Filter>
       <AppBar
-      title="サークルバンク"
+      title="Circle Bank"
       onLeftIconButtonTouchTap={ () => this.handleToggle()}
       style={{backgroundColor:lightBlue900}}
       />
