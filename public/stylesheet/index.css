@@ -7,7 +7,24 @@ body{
 
 }
 .circlePicture{
-  
+  background-image: url("./default.png");
+  width:100vw;
+  height:50vh;
+}
+.picture1{
+  background-image: url("./sozai1.png");
+  width:100vw;
+  height:500px;
+}
+.picture2{
+  background-image: url("./sozai2.png");
+  width:100vw;
+  height:500px;
+}
+.picture3{
+  background-image: url("./sozai3.png");
+  width:100vw;
+  height:500px;
 }
 .log{
   background-image: url("./doshisha.jpg");
@@ -30,7 +47,7 @@ body{
 	content: ' ';
 }
 
-.right{
+.rightside{
   text-align: right;
   margin-top:10px;
 }
@@ -59,4 +76,8 @@ body{
 .card{
   padding: 20px 20px;
   margin-bottom:20px;
+}
+
+.leftside{
+  margin-left:20%
 }
