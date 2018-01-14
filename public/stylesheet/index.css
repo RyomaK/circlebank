@@ -6,7 +6,9 @@ body{
 .paper{
 
 }
-
+.circlePicture{
+  
+}
 .log{
   background-image: url("./doshisha.jpg");
   background-size: cover;
@@ -42,7 +44,7 @@ body{
 }
 
 .search{
-  margin-bottom:10px;
+
 }
 
 .search1{
