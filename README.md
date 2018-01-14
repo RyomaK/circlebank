@@ -63,10 +63,82 @@
 ```  
 ### GET```/api/{大学}/tag```  
 大学毎のtag一覧  
+```json
+[
+    {
+        "id": 1,
+        "name": "バスケットボール"
+    },
+    {
+        "id": 2,
+        "name": "アットホーム"
+    },
+    {
+        "id": 3,
+        "name": "京田辺"
+    },
+    {
+        "id": 3,
+        "name": "京田辺"
+    },
+    {
+        "id": 4,
+        "name": "今出川"
+    }
+]
+```
 ### GET```/api/{大学}/tag/{id}```  
 idを持っているサークル一覧
+```json
+[
+    {
+        "id": 1,
+        "name": "hands up",
+        "url_name": "handsup",
+        "number": 30,
+        "gender_ratio": "1:1",
+        "image": "1",
+        "introduction": "アットホームなバスケットボールサークルです",
+        "message_for_fresh": "いつでもきてね",
+        "delegete_name": "田中",
+        "delegete_contact": "tanaka@mail.com",
+        "campus": "京田辺",
+        "excite": 3,
+        "fee": 5000,
+        "university": "同志社大学"
+    },
+    {
+        "id": 2,
+        "name": "fly speck",
+        "url_name": "flyspeck",
+        "number": 100,
+        "gender_ratio": "1:1",
+        "image": "1",
+        "introduction": "テニス",
+        "message_for_fresh": "いつでもきてねえええ",
+        "delegete_name": "大野",
+        "delegete_contact": "arashi@mail.com",
+        "campus": "京田辺/今出川",
+        "excite": 9,
+        "fee": 3000,
+        "university": "同志社大学"
+    }
+]
+```
 ### GET```/api/{univ}/circle/{id}/{event_id}```
-イベント詳細（未実装）
+イベント詳細
+```json
+{
+    "id": 1,
+    "name": "ほわ音でー",
+    "image": "img/users/default.png",
+    "agenda": "2017-02-14T00:00:00Z",
+    "place": "a",
+    "detail": "f",
+    "capacity": 10,
+    "fee": 10
+}
+```
 
 ## loginしていない
 401　と not authorized
