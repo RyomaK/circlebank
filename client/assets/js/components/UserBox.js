@@ -2,7 +2,6 @@ import React from 'react'
 import {connect} from 'react-redux'
 
 const UserBox = ({data}) => {
-  console.log(data)
   return(
     <div>
       <ul>
