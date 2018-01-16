@@ -54,7 +54,38 @@ type User struct {
 	Subject    string `db:"subject" json:"subject"`
 }
 
+type Comment struct {
+	ID        uint      `db:"id" json:"id"`
+	Name      string    `db:"name" json:"name"`
+	Gender    string    `db:"gender" json:"gender"`
+	Point     int       `db:"point" json:"point"`
+	Text      string    `db:"university" json:"university"`
+	CreatedAt time.Time `db:"created_at" json:"created_at"`
+}
+
 type Userschedule struct {
 	User   User
 	Events []Event `db:"events" json:"events"`
+}
+
+type UserCircleLikes struct {
+	Circle []Circle `db:"circle" json:"circle"`
+}
+
+type CircleComments struct {
+	Circle   Circle
+	Comments []Comment `db:"comment" json:"comment"`
+}
+
+type AdminCircleEvents struct {
+	ID         uint      `db:"id" json:"id"`
+	Name       string    `db:"name" json:"name"`
+	Image      string    `db:"image" json:"image"`
+	Agenda     time.Time `db:"agenda" json:"agenda"`
+	Place      string    `db:"place" json:"place"`
+	Detail     string    `db:"detail" json:"detail"`
+	Capacity   int       `db:"capacity" json:"capacity"`
+	Fee        int       `db:"fee" json:"fee"`
+	CircleID   int       `db:"circle_id" json:"circle_id"`
+	CircleName string    `db:"circle_name" json:"circle_name"`
 }

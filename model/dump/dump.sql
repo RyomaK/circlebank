@@ -7,7 +7,7 @@
 #
 # ホスト: 127.0.0.1 (MySQL 5.7.19)
 # データベース: circle_bank
-# 作成時刻: 2018-01-14 08:02:05 +0000
+# 作成時刻: 2018-01-16 14:56:52 +0000
 # ************************************************************
 
 
@@ -80,6 +80,32 @@ VALUES
 UNLOCK TABLES;
 
 
+# テーブルのダンプ comments
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `comments`;
+
+CREATE TABLE `comments` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `circle_id` int(11) DEFAULT NULL,
+  `point` int(11) NOT NULL,
+  `text` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `comments` WRITE;
+/*!40000 ALTER TABLE `comments` DISABLE KEYS */;
+
+INSERT INTO `comments` (`id`, `user_id`, `circle_id`, `point`, `text`, `created_at`)
+VALUES
+	(1,1,2,4,'良い','2017-02-14 00:00:00');
+
+/*!40000 ALTER TABLE `comments` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
 # テーブルのダンプ delegetes
 # ------------------------------------------------------------
 
@@ -115,7 +141,7 @@ CREATE TABLE `events` (
   `circle_id` int(11) unsigned NOT NULL,
   `name` varchar(255) NOT NULL,
   `image` varchar(255) NOT NULL DEFAULT 'img/users/default.png',
-  `agenda` date NOT NULL,
+  `agenda` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `place` varchar(255) NOT NULL DEFAULT '',
   `detail` varchar(255) NOT NULL DEFAULT '',
   `capacity` int(11) NOT NULL,
@@ -128,9 +154,9 @@ LOCK TABLES `events` WRITE;
 
 INSERT INTO `events` (`id`, `circle_id`, `name`, `image`, `agenda`, `place`, `detail`, `capacity`, `fee`)
 VALUES
-	(1,2,'ほわ音でー','img/users/default.png','2017-02-14','a','f',10,10),
-	(2,1,'ホワイトデー','img/users/default.png','2017-02-15','fsad','fds',0,0),
-	(3,2,'fsa','img/users/default.png','2017-02-14','fsa','fdsa',1,1);
+	(1,2,'ほわ音でー','img/users/default.png','2017-02-14 15:41:30','a','f',10,10),
+	(2,1,'ホワイトデー','img/users/default.png','2017-02-15 00:00:00','fsad','fds',0,0),
+	(3,2,'fsa','img/users/default.png','2017-02-14 00:00:00','fsa','fdsa',1,1);
 
 /*!40000 ALTER TABLE `events` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -160,6 +186,33 @@ VALUES
 	(6,2,3);
 
 /*!40000 ALTER TABLE `events_schedules` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# テーブルのダンプ likes
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `likes`;
+
+CREATE TABLE `likes` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `circle_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `likes` WRITE;
+/*!40000 ALTER TABLE `likes` DISABLE KEYS */;
+
+INSERT INTO `likes` (`id`, `user_id`, `circle_id`)
+VALUES
+	(1,1,1),
+	(2,2,1),
+	(3,1,2),
+	(4,1,3),
+	(5,4,1);
+
+/*!40000 ALTER TABLE `likes` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
@@ -237,7 +290,7 @@ LOCK TABLES `users` WRITE;
 
 INSERT INTO `users` (`id`, `univ_id`, `name`, `gender`, `mail`, `password`, `image`, `year`, `department`, `subject`)
 VALUES
-	(1,1,'栗栖','男','ryooomaaa0413@gmail.com','$2a$10$3rCT9hO/RZu1Qxd.lhJA7.6EDUZ5SPTVcVlu4KKQZNPYin.rKNJ0S','img/users/default.png',2015,'理工学部','情報システムデザイン学科'),
+	(1,1,'栗栖','男','ryooomaaa0413@gmail.com','$2a$10$3rCT9hO/RZu1Qxd.lhJA7.6EDUZ5SPTVcVlu4KKQZNPYin.rKNJ0S','img/users/1.png',2015,'理工学部','情報システムデザイン学科'),
 	(2,1,'津國健太','男','tsukuni1@gmail.com','$2a$10$dg/iWh6zeFBEfuL.kDE3MO/xygMGyTYOypo9XsjV5BBHwv1kH9T0y','img/users/2.png',2015,'理工学部','機械システム学科'),
 	(3,1,'櫻井','男','sakurai@gmail.com','$2a$10$Stqc3LpJYS7.yzvF3mFIku6ZO/9Apr7KN8BvtSOLqgI6sTfxdD4UC','img/users/default.png',2015,'理工学部','情報システムデザイン学科'),
 	(4,1,'相田','男','aida@gmail.com','$2a$10$XMGMyBAaoRYHWdrzY7HfKu3Wcla6S9w3BThdYKd8NehrgYnU81aRO','img/users/default.png',2015,'理工学部','情報システムデザイン学科');

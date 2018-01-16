@@ -207,3 +207,57 @@ func (u *User) UploadPicture(w http.ResponseWriter, r *http.Request) {
 	}
 
 }
+
+func (u *User) GetLikeCircleHandler(w http.ResponseWriter, r *http.Request) {
+	circles, err := model.GetUserLikeCircles(u.DB, getUserEmail(r))
+	if err != nil {
+		log.Printf("err %v", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "not found"}
+		a, _ := json.Marshal(status)
+		w.Write(a)
+	} else {
+		a, err := json.Marshal(circles)
+		if err != nil {
+			log.Printf("err %v", err)
+		}
+		w = SetHeader(w, http.StatusOK)
+		w.Write(a)
+	}
+}
+
+func (u *User) PostLikeCircleHandler(w http.ResponseWriter, r *http.Request) {
+	mail := getUserEmail(r)
+	circle_id := r.PostFormValue("circle_id")
+	err := model.PostUserLikesCircles(u.DB, mail, circle_id)
+	if err != nil {
+		log.Printf("err %v", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot regist like"}
+		a, _ := json.Marshal(status)
+		w.Write(a)
+		return
+	}
+	w = SetHeader(w, http.StatusOK)
+	status := StatusCode{Code: http.StatusOK, Message: "regist like"}
+	a, _ := json.Marshal(status)
+	w.Write(a)
+}
+
+func (u *User) DeleteLikeCircleHandler(w http.ResponseWriter, r *http.Request) {
+	mail := getUserEmail(r)
+	circle_id := r.PostFormValue("circle_id")
+	err := model.DeleteUserLikesCircles(u.DB, mail, circle_id)
+	if err != nil {
+		log.Printf("err %v", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot delete like"}
+		a, _ := json.Marshal(status)
+		w.Write(a)
+		return
+	}
+	w = SetHeader(w, http.StatusOK)
+	status := StatusCode{Code: http.StatusOK, Message: "delete like"}
+	a, _ := json.Marshal(status)
+	w.Write(a)
+}
