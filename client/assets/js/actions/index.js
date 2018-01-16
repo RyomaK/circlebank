@@ -1,9 +1,6 @@
 import axios from'axios'
 import Cookies from 'universal-cookie';
 
-
-const domain = 'http://localhost:8080'
-
 const getAuth = () => {
   let box1=""
   const box = document.cookie.split('Authorization=');
@@ -11,8 +8,6 @@ const getAuth = () => {
        box1 = box[1].split(';')[0];
     }
   return (box1)
-
-
 }
 
 export const setErrorMessage = message => dispatch => dispatch({type: 'ZERO_RESULTS',message});
@@ -46,7 +41,6 @@ export const setProIma = image => dispatch => dispatch({type: 'PRO_IMAGE',image}
 export const image = () => dispatch => {
   axios
   .get('/static/img/users/2.png').then((results) => {
-    console.log(results)
     const status = results.status
     const data = results.data
     return { status, data }
@@ -78,7 +72,6 @@ export const signup = data => dispatch => {
   axios
   .post('/signup',params).then((results) => {
     const status = results.status
-    console.log(results)
     return { status }
   }).then(({status}) => {
     switch(status){
@@ -122,11 +115,10 @@ export const login = data => dispatch => {
 
 
 export const getUserInfo = () => dispatch => {
-const Auth = getAuth();
+  const Auth = getAuth();
   axios
   .get('/api/user',{ headers:{'Authorization':`Bearer ${Auth}`}})
   .then((results) => {
-    console.log(results)
     const status = results.status
     const mail = results.data.User.mail
     const name = results.data.User.name
@@ -305,6 +297,40 @@ export const tagSearchStart = () => dispatch => {
       console.log("エラーtagSearchStart")
     });
 }
+
+export const tagSearch = id => dispatch => {
+  const Auth = getAuth();
+    axios
+    .get(`/api/doshisha/tag/${id}`,{ headers:{'Authorization':`Bearer ${Auth}`}})
+    .then((results) => {
+      const status = results.status
+      const data = results.data
+      if (typeof tags === undefined) {
+        return { status };
+      }
+      return { status, data };
+    })
+  .then(({status, data})=> {
+      switch (status) {
+        case 200: {
+          dispatch({type:'TAG_SEARCH',data});
+          break;
+        }
+        case 401: {
+          dispatch(setLogin(-1));
+          break;
+        }
+        default: {
+          dispatch(setErrorMessage('エラーが発生しました'));
+          break;
+        }
+      }
+    })
+    .catch(() => {
+      console.log("エラーtagSearchStart")
+    });
+}
+
 
 export const ImageUpload = image => dispatch => {
     const Auth = getAuth();

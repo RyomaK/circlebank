@@ -5,7 +5,7 @@ const Circle = ({circle}) => {
   return(
     <div>
       <div className="centerPosition">
-        <img src={`/static/${circle.image}`} alt={circle.image}/>
+        
         <h1>{circle.name}</h1>
         <h3>新入生へ</h3>
         <p>{circle.message_for_fresh}</p>

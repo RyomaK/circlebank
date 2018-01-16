@@ -16,10 +16,10 @@ componentWillMount(){
 render(){
     return(
       <div>
-      <Row>
-        <Menu/>
-        <UserBox data={this.props.user} />
-      </Row>
+        <Row>
+          <Menu/>
+          <UserBox data={this.props.user} />
+        </Row>
       </div>
     )
   }
@@ -42,6 +42,7 @@ const mapDispatchToProps = dispatch => {
     }
   }
 }
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps

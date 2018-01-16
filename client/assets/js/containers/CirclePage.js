@@ -5,9 +5,15 @@ import Menu from '../components/Menu'
 import Paper from 'material-ui/Paper';
 import { connect } from 'react-redux'
 import { Link, withRouter} from 'react-router-dom'
+import {circleSearch} from '../actions/index'
 import {Grid,Col,Row} from "react-bootstrap"
 
 class CirclePage extends Component {
+
+  componentDidMount(){
+    const name = this.props.match.params.name;
+    this.props.circleSearch(name)
+  }
 
 
   render(){
@@ -38,6 +44,17 @@ const mapStateToProps = state => {
     events: state.circle.events
   }
 }
+const mapDispatchToProps= dispatch => {
+  return{
+    circleSearch: word => {
+      dispatch(circleSearch(word))
+    }
+  }
+}
 
 
-export default withRouter(connect(mapStateToProps)(CirclePage))
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CirclePage)
