@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Link, withRouter} from 'react-router-dom'
 import { connect } from 'react-redux'
 import { FormControl, Button, Grid, Row, Col } from 'react-bootstrap'
-import { setSearchWord } from '../actions/index'
+import { setSearchWord,circleSearch} from '../actions/index'
 import IconButton from 'material-ui/IconButton';
 
 
@@ -12,7 +12,8 @@ class SearchForm  extends Component{
 
 
   handleSubmit(e){
-    e.preventDefault()
+    e.preventDefault();
+    this.props.circleSearch(this.props.searchWord);
     this.props.history.push(`/circle/${this.props.searchWord}`);
 
   }
@@ -57,6 +58,9 @@ const mapDispatchToProps= dispatch => {
   return{
     setWord: word => {
       dispatch(setSearchWord(word))
+    },
+    circleSearch: word => {
+      dispatch(circleSearch(word))
     }
   }
 }

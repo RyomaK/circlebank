@@ -27,7 +27,7 @@ class CirclePage extends Component {
       <div>
         <Row>
           <Menu/>
-        <Col sm={9}>
+        <Col sm={9} className="paper">
           <div className="circlePage">
             <Circle circle={this.props.circle}/>
           </div>

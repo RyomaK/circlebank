@@ -1,7 +1,6 @@
 import React,{Component} from 'react'
 import Header from './Header'
-import Menu from './Menu'
-
+import NotFound from './NotFound'
 import SearchForm from '../containers/SearchForm'
 import LoginPage from './LoginPage'
 import SignupPage from './SignupPage'
@@ -35,11 +34,10 @@ const App =() => {
                     <Route path='/user' component={UserPage}/>
                     <Route path='/circle/:name' component={CirclePage}/>
                     <Route path='/tag/:id' component={TagPage}/>
+                    <Route component={ NotFound }/>
                   </Switch>
                 </Auth>
                 </Switch>
-
-
             </div>
           </MuiThemeProvider>
         </BrowserRouter>

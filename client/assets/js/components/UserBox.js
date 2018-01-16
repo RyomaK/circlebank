@@ -5,7 +5,7 @@ import {connect} from 'react-redux'
 const UserBox = ({data}) => {
   return(
     <div>
-      <Col sm={9}>
+      <Col sm={9} className="paper">
         <ul>
           <li>名前:{data.name}</li>
           <li>入学年:{data.year}</li>

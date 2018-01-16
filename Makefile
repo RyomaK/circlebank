@@ -1,8 +1,8 @@
 DBNAME:=circle_bank
 ENV:=development
 
-DBCONFIG:=root:@/circle_bank?parseTime=true
-#DBCONFIG:=root:Kenta71619@/circle_bank?parseTime=true
+#DBCONFIG:=root:@/circle_bank?parseTime=true
+DBCONFIG:=root:Kenta71619@/circle_bank?parseTime=true
 
 build:
 	go build -o ./cmd/circle/circle ./cmd/circle/circle.go
@@ -25,5 +25,5 @@ migrate/seed:
 install:
 	go get -u github.com/golang/dep/cmd/dep
 	go get -u github.com/tools/godep
-	dep init 
+	dep init
 	dep status

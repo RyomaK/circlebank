@@ -47,6 +47,13 @@ body{
 
 .menucolor{
   background-color: white;
+  border-radius: 10px;
+  height:100vh;
+}
+.paper{
+  background-color: #e4f0fc;
+  border-radius: 10px;
+  margin-left: -13px;
   height:100vh;
 }
 .rightside{
