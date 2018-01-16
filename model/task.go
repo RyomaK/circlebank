@@ -247,7 +247,7 @@ func GetCircleComments(db *sql.DB, univ, circle_url_name string) (CircleComments
 		return CircleComments{}, err
 	}
 
-	query = `select comments.id,users.name,users.gender,comments.point,comments.text comments.created_at
+	query = `select comments.id,users.name,users.gender,comments.point,comments.text ,comments.created_at
 	from circles 
 	inner join comments on circles.id = comments.circle_id
 	inner join users on comments.user_id = users.id
@@ -258,4 +258,5 @@ func GetCircleComments(db *sql.DB, univ, circle_url_name string) (CircleComments
 		return CircleComments{}, err
 	}
 	return CircleComments{Circle: circle, Comments: comments}, nil
+
 }

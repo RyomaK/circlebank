@@ -20,12 +20,7 @@ func (a *Admin) AdminCircleHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	page, err := strconv.Atoi(q.Get("page"))
 	if err != nil {
-		log.Printf("adminCircleDetail err %v", err)
-		w = SetHeader(w, http.StatusBadRequest)
-		status := StatusCode{Code: http.StatusBadRequest, Message: "query is not number"}
-		a, _ := json.Marshal(status)
-		w.Write(a)
-		return
+		page = 1
 	}
 	circles, err := model.GetCircles(a.DB, vars["univ"], page)
 
@@ -50,12 +45,7 @@ func (a *Admin) AdminEventHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	page, err := strconv.Atoi(q.Get("page"))
 	if err != nil {
-		log.Printf("adminCircleDetail err %v", err)
-		w = SetHeader(w, http.StatusBadRequest)
-		status := StatusCode{Code: http.StatusBadRequest, Message: "query is not number"}
-		a, _ := json.Marshal(status)
-		w.Write(a)
-		return
+		page = 1
 	}
 	events, err := model.GetEvents(a.DB, vars["univ"], page)
 	if err != nil {

@@ -55,12 +55,12 @@ type User struct {
 }
 
 type Comment struct {
-	ID       uint      `db:"id" json:"id"`
-	Name     string    `db:"name" json:"name"`
-	Gender   string    `db:"gender" json:"gender"`
-	Point    int       `db:"point" json:"point"`
-	Text     string    `db:"university" json:"university"`
-	CreateAt time.Time `db:"created_at" json:"created_at"`
+	ID        uint      `db:"id" json:"id"`
+	Name      string    `db:"name" json:"name"`
+	Gender    string    `db:"gender" json:"gender"`
+	Point     int       `db:"point" json:"point"`
+	Text      string    `db:"university" json:"university"`
+	CreatedAt time.Time `db:"created_at" json:"created_at"`
 }
 
 type Userschedule struct {

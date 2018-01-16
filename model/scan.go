@@ -154,7 +154,7 @@ func ScanComments(rs *sql.Rows) ([]Comment, error) {
 			&s.Gender,
 			&s.Point,
 			&s.Text,
-			&s.CreateAt,
+			&s.CreatedAt,
 		); err != nil {
 			return []Comment{}, err
 		}
