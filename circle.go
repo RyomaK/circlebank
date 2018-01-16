@@ -43,6 +43,8 @@ func (s *Server) Route(addr string) {
 	circles := &controller.Circle{DB: s.DB}
 	users := &controller.User{DB: s.DB}
 	events := &controller.Event{DB: s.DB}
+	admins := &controller.Admin{DB: s.DB}
+
 	//nomal(user)
 	r.HandleFunc("/login", users.LoginHandler).Methods("POST")
 	r.HandleFunc("/logout", users.LogoutHandler).Methods("POST")
@@ -67,31 +69,37 @@ func (s *Server) Route(addr string) {
 	))
 	a := acctBase.PathPrefix("/api").Subrouter()
 	//circle
-	a.Path("/{univ}/circle/{name}").HandlerFunc(circles.CircleHandler).Methods("GET")
+	a.Path("/{univ}/circle/{circle_name}").HandlerFunc(circles.CircleHandler).Methods("GET")
 	a.Path("/{univ}/circle").HandlerFunc(circles.UnivCircleHandler).Methods("GET")
+	a.Path("/{univ}/circle/{circle_name}/comment").HandlerFunc(circles.GetCircleCommentHandler).Methods("GET")
+	a.Path("/{univ}/circle/{circle_name}/comment").HandlerFunc(circles.PostCircleCommentHandler).Methods("POST")
+	a.Path("/{univ}/circle/{circle_name}/comment").HandlerFunc(circles.DeleteCircleCommentHandler).Methods("DELETE")
 	//tag
 	a.Path("/{univ}/tag").HandlerFunc(circles.SearchHandler)
 	a.Path("/{univ}/tag/{id}").HandlerFunc(circles.TagCirclesHandler)
 	//event
-	a.Path("/{univ}/circle/{name}/{event}").HandlerFunc(events.EventHandler).Methods("GET")
+	a.Path("/{univ}/circle/{circle_name}/{event}").HandlerFunc(events.EventHandler).Methods("GET")
 	//user data
 	a.Path("/user").HandlerFunc(users.UserHandler).Methods("GET")
 	a.Path("/user").HandlerFunc(users.UserUpdateHandler).Methods("POST")
+	a.Path("/user/like").HandlerFunc(users.GetLikeCircleHandler).Methods("GET")
+	a.Path("/user/like").HandlerFunc(users.PostLikeCircleHandler).Methods("POST")
+	a.Path("/user/like").HandlerFunc(users.DeleteLikeCircleHandler).Methods("DELETE")
 	a.Path("/user/event").HandlerFunc(users.PostEvent).Methods("POST")
 	a.Path("/user/event").HandlerFunc(users.DeleteEvent).Methods("DELETE")
 	//画像アップロード
 	a.Path("/user/upload").HandlerFunc(users.UploadPicture).Methods("POST")
 
 	//subrouter-Admin
-	/*
-		admin := mux.NewRouter()
-		r.PathPrefix("/admin").Handler(negroni.New(
-			negroni.HandlerFunc(jwtMiddleware.HandlerWithNext),
-			negroni.Wrap(admin),
-		))
-		b := admin.PathPrefix("/admin").Subrouter()
-
-	*/
+	admin := mux.NewRouter()
+	r.PathPrefix("/admin").Handler(negroni.New(
+		negroni.HandlerFunc(jwtMiddleware.HandlerWithNext),
+		negroni.Wrap(admin),
+	))
+	b := admin.PathPrefix("/admin").Subrouter()
+	b.Path("/{univ}/circle").HandlerFunc(admins.AdminCircleHandler).Methods("GET")
+	b.Path("/{univ}/circle/event").HandlerFunc(admins.AdminEventHandler).Methods("GET")
+	b.Path("/{univ}/circle/{circle_name}").HandlerFunc(admins.AdminCircleDetailHandler).Methods("GET")
 
 	//all handler add middleware
 	n := negroni.New()

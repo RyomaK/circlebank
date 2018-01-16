@@ -3,30 +3,31 @@ package model
 import (
 	"database/sql"
 	"fmt"
+	"time"
 
 	_ "github.com/go-sql-driver/mysql"
 )
 
-func GetCircleDetail(db *sql.DB, univ, url_name string) (*CircleDetail, error) {
+func GetCircleDetail(db *sql.DB, univ, circle_url_name string) (CircleDetail, error) {
 	query := `select circles.id,circles.name,circles.url_name,number,circles.gender_ratio,circles.image,introduction,message_for_fresh,  delegetes.name as delegate_name ,delegetes.contact as delegate_contact,campus,excite,fee,universities.name as university
-	from (circles left outer join universities on univ_id = universities.id)
+	from (circles inner join universities on univ_id = universities.id)
 	left outer join delegetes on circles.id = delegetes.circle_id
 	where universities.url_name = ? and circles.url_name = ?;`
-	row := db.QueryRow(query, univ, url_name)
+	row := db.QueryRow(query, univ, circle_url_name)
 	circle, err := ScanCircle(row)
 	if err != nil {
-		return &CircleDetail{}, err
+		return CircleDetail{}, err
 	}
-	events, err := GetCircleEvents(db, univ, url_name)
+	events, err := GetCircleEvents(db, univ, circle_url_name)
 	if err != nil {
 		fmt.Print(err)
 	}
 
-	tags, err := GetCircleTags(db, univ, url_name)
+	tags, err := GetCircleTags(db, univ, circle_url_name)
 	if err != nil {
 		fmt.Print(err)
 	}
-	return &CircleDetail{
+	return CircleDetail{
 		Circle: circle,
 		Events: events,
 		Tags:   tags,
@@ -36,7 +37,7 @@ func GetCircleDetail(db *sql.DB, univ, url_name string) (*CircleDetail, error) {
 
 func GetUnivCircles(db *sql.DB, univ string) ([]Circle, error) {
 	query := `select circles.id,circles.name,circles.url_name,number,circles.gender_ratio,circles.image,introduction,message_for_fresh,  delegetes.name as delegate_name ,delegetes.contact as delegate_contact,campus,excite,fee,universities.name as university
-	from (circles left outer join universities on univ_id = universities.id)
+	from (circles inner join universities on univ_id = universities.id)
 	left outer join delegetes on circles.id = delegetes.circle_id
 	where universities.url_name = ? `
 	rows, _ := db.Query(query, univ)
@@ -93,7 +94,7 @@ func GetCircleTags(db *sql.DB, univ_name, circle_name string) ([]Tag, error) {
 func GetCircleEventDetail(db *sql.DB, univ, circle_name, id string) (Event, error) {
 	query := `select events.id ,events.name,events.image,events.agenda,events.place,events.detail,events.capacity,events.fee
 		from (circles left outer join universities on univ_id = universities.id)
-		left outer join events on events.circle_id = circles.id
+		inner join events on events.circle_id = circles.id
 		where universities.url_name = ? and circles.url_name = ? and events.id = ?`
 	row := db.QueryRow(query, univ, circle_name, id)
 	event, err := ScanEvent(row)
@@ -135,14 +136,126 @@ func DeleteEvent(db *sql.DB, mail, event_id string) error {
 func PostEvent(db *sql.DB, mail, event_id string) error {
 	id := GetUserID(db, mail)
 	query := `insert  into events_schedules
-	(user_id,event_id) values(?,?) `
+			(user_id,likes.event_id) 
+			select ?,?
+			from dual
+			where not exists(select user_id FROM events_schedules WHERE user_id=? and = events_schedules.event_id =?)`
 	stmt, err := db.Prepare(query)
 	if err != nil {
 		return err
 	}
-	_, err = stmt.Exec(id, event_id)
+	_, err = stmt.Exec(id, event_id, id, event_id)
 	if err != nil {
 		return err
 	}
 	return nil
+}
+
+func GetUserLikeCircles(db *sql.DB, mail string) (UserCircleLikes, error) {
+	query := `select circles.id,circles.name,circles.url_name,number,circles.gender_ratio,circles.image,introduction,message_for_fresh,  delegetes.name as delegate_name ,delegetes.contact as delegate_contact,campus,excite,fee,universities.name as university
+	from circles 
+	inner join delegetes on circles.id = delegetes.circle_id
+	inner join universities on univ_id = universities.id
+	inner join likes on likes.circle_id = circles.id
+	inner join users on users.id = likes.user_id
+	where users.mail = ?`
+	rows, _ := db.Query(query, mail)
+	circles, err := ScanCircles(rows)
+	if err != nil {
+		return UserCircleLikes{}, err
+	}
+	return UserCircleLikes{Circle: circles}, nil
+}
+
+func PostUserLikesCircles(db *sql.DB, mail, circle_id string) error {
+	id := GetUserID(db, mail)
+	query := `insert  into likes
+			(user_id,likes.circle_id) 
+			select ?,?
+			FROM dual
+			where not exists(select user_id FROM likes WHERE user_id=? and likes.circle_id= ?)`
+	stmt, err := db.Prepare(query)
+	if err != nil {
+		return err
+	}
+	_, err = stmt.Exec(id, circle_id, id, circle_id)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func DeleteUserLikesCircles(db *sql.DB, mail, circle_id string) error {
+	id := GetUserID(db, mail)
+	query := `delete
+	from likes 
+	where likes.user_id = ?  and likes.circle_id = ?`
+	stmt, err := db.Prepare(query)
+	if err != nil {
+		return err
+	}
+	_, err = stmt.Exec(id, circle_id)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func PostCiecleComments(db *sql.DB, mail, circle_id, point, text string) error {
+	id := GetUserID(db, mail)
+	query := `insert  into comments
+			(user_id,comments.circle_id,point,text,created_at) 
+			select ?,?,?,?,?
+			FROM dual
+			where not exists(select user_id FROM comments WHERE user_id=? and comments.circle_id= ?)`
+	stmt, err := db.Prepare(query)
+	if err != nil {
+		return err
+	}
+	now := time.Now()
+	_, err = stmt.Exec(id, circle_id, point, text, id, circle_id, now)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func DeleteCiecleComments(db *sql.DB, mail, circle_id string) error {
+	id := GetUserID(db, mail)
+	query := `delete
+	from comments 
+	where comments.user_id = ?  and comments.circle_id = ?`
+	stmt, err := db.Prepare(query)
+	if err != nil {
+		return err
+	}
+	_, err = stmt.Exec(id, circle_id)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func GetCircleComments(db *sql.DB, univ, circle_url_name string) (CircleComments, error) {
+	query := `select circles.id,circles.name,circles.url_name,number,circles.gender_ratio,circles.image,introduction,message_for_fresh,  delegetes.name as delegate_name ,delegetes.contact as delegate_contact,campus,excite,fee,universities.name as university
+	from (circles inner join universities on univ_id = universities.id)
+	left outer join delegetes on circles.id = delegetes.circle_id
+	where universities.url_name = ? and circles.url_name = ?;`
+	row := db.QueryRow(query, univ, circle_url_name)
+	circle, err := ScanCircle(row)
+	if err != nil {
+		return CircleComments{}, err
+	}
+
+	query = `select comments.id,users.name,users.gender,comments.point,comments.text comments.created_at
+	from circles 
+	inner join comments on circles.id = comments.circle_id
+	inner join users on comments.user_id = users.id
+	where circles.url_name = ?`
+	rows, _ := db.Query(query, circle_url_name)
+	comments, err := ScanComments(rows)
+	if err != nil {
+		return CircleComments{}, err
+	}
+	return CircleComments{Circle: circle, Comments: comments}, nil
 }

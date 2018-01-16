@@ -142,3 +142,52 @@ func ScanUser(r *sql.Row) (User, error) {
 	}
 	return s, nil
 }
+
+func ScanComments(rs *sql.Rows) ([]Comment, error) {
+	structs := []Comment{}
+	var err error
+	for rs.Next() {
+		var s Comment
+		if err = rs.Scan(
+			&s.ID,
+			&s.Name,
+			&s.Gender,
+			&s.Point,
+			&s.Text,
+			&s.CreateAt,
+		); err != nil {
+			return []Comment{}, err
+		}
+		structs = append(structs, s)
+	}
+	if err = rs.Err(); err != nil {
+		return []Comment{}, err
+	}
+	return structs, nil
+}
+
+func ScanAdminCircleEvents(rs *sql.Rows) ([]AdminCircleEvents, error) {
+	structs := []AdminCircleEvents{}
+	for rs.Next() {
+		var s AdminCircleEvents
+		if err := rs.Scan(
+			&s.ID,
+			&s.Name,
+			&s.Image,
+			&s.Agenda,
+			&s.Place,
+			&s.Detail,
+			&s.Capacity,
+			&s.Fee,
+			&s.CircleID,
+			&s.CircleName,
+		); err != nil {
+			return []AdminCircleEvents{}, err
+		}
+		structs = append(structs, s)
+	}
+	if err := rs.Err(); err != nil {
+		return []AdminCircleEvents{}, err
+	}
+	return structs, nil
+}
