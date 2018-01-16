@@ -34,7 +34,7 @@ class LoginPage extends Component{
         return(
           <div className="log">
             <Grid>
-            <Col smOffset={4} sm={4}>
+            <Col smOffset={4} sm={4} xm={12}>
             <Paper style = {style} className="paper" zDepth={3}>
 
                 <h4>Circle Bankにログイン</h4>

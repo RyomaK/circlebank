@@ -41,7 +41,28 @@ export const setImage = image => dispatch => dispatch({type: 'IMAGE_SET',image})
 
 export const setSearchWord = word => dispatch => dispatch({type: 'SET_WORD',word});
 
+export const setProIma = image => dispatch => dispatch({type: 'PRO_IMAGE',image});
 
+export const image = () => dispatch => {
+  axios
+  .get('/static/img/users/2.png').then((results) => {
+    console.log(results)
+    const status = results.status
+    const data = results.data
+    return { status, data }
+  }).then(({ status, data })=>{
+    switch(status){
+      case 200:
+        dispatch(setImage(data))
+      break;
+
+      default:
+      break;
+    }
+  }).catch(() => {
+      console.log("エラー")
+  });
+}
 
 export const signup = data => dispatch => {
   var params = new URLSearchParams();

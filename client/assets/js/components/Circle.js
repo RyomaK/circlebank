@@ -4,11 +4,12 @@ import {Grid,Col,Table} from "react-bootstrap"
 const Circle = ({circle}) => {
   return(
     <div>
-      <div className="circlePicture"></div>
-      <div className="circlePro">
+      <div className="centerPosition">
+        <img src={`/static/${circle.image}`} alt={circle.image}/>
         <h1>{circle.name}</h1>
         <h3>新入生へ</h3>
         <p>{circle.message_for_fresh}</p>
+      </div>
         <Table responsive>
     <tbody>
       <tr>
@@ -31,8 +32,6 @@ const Circle = ({circle}) => {
       </tr>
     </tbody>
   </Table>
-
-      </div>
     </div>
   )
 }

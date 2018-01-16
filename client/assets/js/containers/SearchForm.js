@@ -4,7 +4,6 @@ import { Link, withRouter} from 'react-router-dom'
 import { connect } from 'react-redux'
 import { FormControl, Button, Grid, Row, Col } from 'react-bootstrap'
 import { setSearchWord,circleSearch } from '../actions/index'
-import TagMenu from './TagMenu'
 import IconButton from 'material-ui/IconButton';
 
 

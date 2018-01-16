@@ -1,10 +1,11 @@
 import React,{ Component } from 'react'
 import Circle from '../components/Circle'
 import Events from '../components/Events'
+import Menu from '../components/Menu'
 import Paper from 'material-ui/Paper';
 import { connect } from 'react-redux'
 import { Link, withRouter} from 'react-router-dom'
-import {Grid,Col} from "react-bootstrap"
+import {Grid,Col,Row} from "react-bootstrap"
 
 class CirclePage extends Component {
 
@@ -18,12 +19,15 @@ class CirclePage extends Component {
     }
     return(
       <div>
-        <div className="leftside">
-          <Paper style = {style} zDepth={3}>
+        <Row>
+          <Menu/>
+        <Col sm={9}>
+          <div className="circlePage">
             <Circle circle={this.props.circle}/>
-          </Paper>
+          </div>
           <Events events={this.props.events}/>
-        </div>
+        </Col>
+        </Row>
       </div>
     )
   }
