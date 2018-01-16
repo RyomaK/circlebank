@@ -1,5 +1,6 @@
 import React,{Component} from 'react'
 import Header from './Header'
+import Menu from './Menu'
 
 import SearchForm from '../containers/SearchForm'
 import LoginPage from './LoginPage'
@@ -24,6 +25,7 @@ const App =() => {
               <Auth>
                 <SearchForm/>
               </Auth>
+
               <Switch>
                 <Route path="/login" component={LoginPage}/>
                 <Route path="/signup" component={SignupPage}/>

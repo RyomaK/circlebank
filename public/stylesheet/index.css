@@ -3,16 +3,14 @@ body{
   background-color: #EEEEEE;
 }
 
-.paper{
-
+.circlePage{
 }
-.circlePicture{
-  background-image: url("./default.png");
-  width:100vw;
-  height:50vh;
+
+.centerPosition{
+  text-align: center;
 }
 .picture1{
-  background-image: url("./sozai1.png");
+  background-image: url("./sozai2.png");
   width:100vw;
   height:500px;
 }
@@ -22,7 +20,7 @@ body{
   height:500px;
 }
 .picture3{
-  background-image: url("./sozai3.png");
+  background-image: url("./sozai2.png");
   width:100vw;
   height:500px;
 }
@@ -47,6 +45,10 @@ body{
 	content: ' ';
 }
 
+.menucolor{
+  background-color: white;
+  height:100vh;
+}
 .rightside{
   text-align: right;
   margin-top:10px;
@@ -76,8 +78,4 @@ body{
 .card{
   padding: 20px 20px;
   margin-bottom:20px;
-}
-
-.leftside{
-  margin-left:20%
 }
