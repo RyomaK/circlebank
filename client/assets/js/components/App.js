@@ -9,10 +9,10 @@ import CirclePage from '../containers/CirclePage'
 import MainPage from './MainPage'
 import Auth from './Auth'
 import UserPage from './UserPage'
+import TagPage from './TagPage'
 import { BrowserRouter, Route, Link, Switch} from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { connect } from 'react-redux'
-
 
 
 
@@ -27,13 +27,14 @@ const App =() => {
               </Auth>
 
               <Switch>
-                <Route path="/login" component={LoginPage}/>
-                <Route path="/signup" component={SignupPage}/>
+                <Route path='/login' component={LoginPage}/>
+                <Route path='/signup' component={SignupPage}/>
                 <Auth>
                   <Switch>
-                    <Route exact path="/" component={MainPage}/>
-                    <Route path="/user" component={UserPage}/>
-                    <Route path ="/circle" component={CirclePage}/>
+                    <Route exact path='/' component={MainPage}/>
+                    <Route path='/user' component={UserPage}/>
+                    <Route path='/circle/:name' component={CirclePage}/>
+                    <Route path='/tag/:id' component={TagPage}/>
                   </Switch>
                 </Auth>
                 </Switch>
