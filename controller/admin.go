@@ -86,33 +86,35 @@ func (a *Admin) AdminCircleDetailHandler(w http.ResponseWriter, r *http.Request)
 
 //json受け取り
 func (a *Admin) PostAdminCircleDetailHandler(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	univ := vars["univ"]
-	var circle model.CircleDetail
-	err := json.Unmarshal(r.Body, &circle)
-	if err != nil {
-		log.Printf("post admin circleDeteil err %v\n", err)
-		w = SetHeader(w, http.StatusNotFound)
-		status := StatusCode{Code: http.StatusBadRequest, Message: "but shape"}
-		res, _ := json.Marshal(status)
-		w.Write(res)
-		return
-	}
+	/*
+		vars := mux.Vars(r)
+		univ := vars["univ"]
+		var circle model.CircleDetail
+		err := json.Unmarshal(&circle, r.Body)
+		if err != nil {
+			log.Printf("post admin circleDeteil err %v\n", err)
+			w = SetHeader(w, http.StatusNotFound)
+			status := StatusCode{Code: http.StatusBadRequest, Message: "but shape"}
+			res, _ := json.Marshal(status)
+			w.Write(res)
+			return
+		}
 
-	err = model.InsertCircle(a.DB, univ, circle)
-	if err != nil {
-		log.Printf("post admin circleDeteil err %v\n", err)
-		w = SetHeader(w, http.StatusNotFound)
-		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot regist circle"}
+		err = model.InsertCircle(a.DB, univ, circle)
+		if err != nil {
+			log.Printf("post admin circleDeteil err %v\n", err)
+			w = SetHeader(w, http.StatusNotFound)
+			status := StatusCode{Code: http.StatusBadRequest, Message: "cannot regist circle"}
+			res, _ := json.Marshal(status)
+			w.Write(res)
+			return
+		}
+		w = SetHeader(w, http.StatusOK)
+		status := StatusCode{Code: http.StatusOK, Message: "regist circle"}
 		res, _ := json.Marshal(status)
 		w.Write(res)
 		return
-	}
-	w = SetHeader(w, http.StatusOK)
-	status := StatusCode{Code: http.StatusOK, Message: "regist circle"}
-	res, _ := json.Marshal(status)
-	w.Write(res)
-	return
+	*/
 
 }
 
