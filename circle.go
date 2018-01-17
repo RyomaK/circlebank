@@ -51,9 +51,6 @@ func (s *Server) Route(addr string) {
 	r.HandleFunc("/signup", users.SignUpHandler).Methods("POST")
 	r.HandleFunc("/", Index)
 
-	//admin
-	//r.HandleFunc("/login", users.LoginHandler)
-
 	//static
 	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("public"))))
 
@@ -98,9 +95,17 @@ func (s *Server) Route(addr string) {
 		negroni.Wrap(admin),
 	))
 	b := admin.PathPrefix("/admin").Subrouter()
+	//一覧表示
 	b.Path("/{univ}/circle").HandlerFunc(admins.AdminCircleHandler).Methods("GET")
-	b.Path("/{univ}/circle/event").HandlerFunc(admins.AdminEventHandler).Methods("GET")
+	b.Path("/{univ}/circle/event").HandlerFunc(admins.AdminCircleEventHandler).Methods("GET")
 	b.Path("/{univ}/circle/{circle_name}").HandlerFunc(admins.AdminCircleDetailHandler).Methods("GET")
+	//データ入力
+	b.Path("/{univ}/circle").HandlerFunc(admins.PostAdminCircleDetailHandler).Methods("POST")
+	b.Path("/{univ}/circle").HandlerFunc(admins.UpdateAdminCircleDetailHandler).Methods("PUT")
+	b.Path("/{univ}/circle").HandlerFunc(admins.DeleteAdminCircleDetailHandler).Methods("DELETE")
+	b.Path("/{univ}/circle/{circle_name}/event").HandlerFunc(admins.PostAdminCircleEventHandler).Methods("POST")
+	b.Path("/{univ}/circle/{circle_name}/event").HandlerFunc(admins.DeleteAdminCircleEventHandler).Methods("DELETE")
+	b.Path("/{univ}/circle/{circle_name}/event").HandlerFunc(admins.UpdateAdminCircleEventHandler).Methods("PUT")
 
 	//all handler add middleware
 	n := negroni.New()
