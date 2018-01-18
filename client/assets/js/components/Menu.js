@@ -6,7 +6,7 @@ import {List, ListItem} from 'material-ui/List';
 import Run from 'material-ui/svg-icons/maps/directions-run';
 import ContentSend from 'material-ui/svg-icons/content/send';
 import Subheader from 'material-ui/Subheader';
-import { tagSearchStart } from '../actions/index'
+import { tagSearchStart,tagSearch} from '../actions/index'
 
 
 class Menu extends Component {
@@ -46,6 +46,7 @@ class Menu extends Component {
                   key={tag.id}
                   primaryText={tag.name} onClick={(event)=>{
                     event.preventDefault();
+                    this.props.Search(tag.id)
                     this.props.history.push(`/tag/${tag.id}`)
                   }}
                 />))}
@@ -70,6 +71,9 @@ const mapDispatchToProps= dispatch => {
   return{
       tagSearch: () => {
         dispatch(tagSearchStart())
+      },
+      Search: id =>{
+        dispatch(tagSearch(id))
       }
     }
   }

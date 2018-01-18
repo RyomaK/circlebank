@@ -25,5 +25,5 @@ migrate/seed:
 install:
 	go get -u github.com/golang/dep/cmd/dep
 	go get -u github.com/tools/godep
-	dep init 
+	dep init
 	dep status
