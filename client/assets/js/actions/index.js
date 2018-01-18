@@ -114,6 +114,8 @@ export const login = data => dispatch => {
 
 
 
+
+
 export const getUserInfo = () => dispatch => {
   const Auth = getAuth();
   axios
@@ -227,7 +229,7 @@ export const circleSearch = name => dispatch => {
     }
   })
   .catch(() => {
-    console.log("circleStart");
+    dispatch(setSearchWord('notFound'));
   });
 }
 
@@ -330,6 +332,66 @@ export const tagSearch = id => dispatch => {
       console.log("エラーtagSearchStart")
     });
 }
+
+export const like = circleId => dispatch => {
+    const Auth = getAuth();
+    var params = new URLSearchParams();
+    params.append('circle_id',circleId);
+    axios
+    .post('/api/user/like',params,{headers:{'Authorization':`Bearer ${Auth}`}})
+    .then((results) => {
+      console.log(results)
+      const status = results.status
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+}
+
+export const getlike = () => dispatch => {
+    axios
+    .get('/api/user/like',{headers:{'Authorization':`Bearer ${Auth}`}})
+    .then((results) => {
+      console.log(results)
+      const status = results.status
+      const circle = results.circle
+      return { status, circle }
+    }).then(({ status, circle }) => {
+      switch (status) {
+        case 200: {
+          dispatch({type:'LIKE',circle});
+          break;
+        }
+        case 401: {
+          dispatch(setLogin(-1));
+          break;
+        }
+        default: {
+          dispatch(setErrorMessage('エラーが発生しました'));
+          break;
+        }
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+}
+
+export const deletelike = circleId => dispatch => {
+    const Auth = getAuth();
+    var params = new URLSearchParams();
+    params.append('circle_id',circleId);
+    axios
+    .delete('/api/user/like',params,{headers:{'Authorization':`Bearer ${Auth}`}})
+    .then((results) => {
+      console.log(results)
+      const status = results.status
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+}
+
 
 
 export const ImageUpload = image => dispatch => {

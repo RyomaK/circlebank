@@ -5,8 +5,6 @@ import { connect } from 'react-redux'
 import { FormControl, Button, Grid, Row, Col } from 'react-bootstrap'
 import { setSearchWord,circleSearch} from '../actions/index'
 import IconButton from 'material-ui/IconButton';
-
-
 import ActionSearch from 'material-ui/svg-icons/action/search';
 class SearchForm  extends Component{
 

@@ -12,7 +12,7 @@ class TagPage extends Component {
           <Menu/>
         <Col sm={9} className="paper">
         {this.props.circle.map( circle => (
-          <div key={circle.id}><Link to={`/circle/${circle.url_name}`} >
+          <div key={circle.id}><Link to={`/circle/search/${circle.url_name}`} >
 
               {circle.name}
           </Link>

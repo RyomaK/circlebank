@@ -6,6 +6,7 @@ import LoginPage from './LoginPage'
 import SignupPage from './SignupPage'
 import CirclePage from '../containers/CirclePage'
 import MainPage from './MainPage'
+import SearchResult from './SearchResult'
 import Auth from './Auth'
 import UserPage from './UserPage'
 import TagPage from './TagPage'
@@ -32,7 +33,8 @@ const App =() => {
                   <Switch>
                     <Route exact path='/' component={MainPage}/>
                     <Route path='/user' component={UserPage}/>
-                    <Route path='/circle/:name' component={CirclePage}/>
+                    <Route exact path='/circle/:name' component={SearchResult}/>
+                    <Route exact path='/circle/search/:name' component={CirclePage}/>
                     <Route path='/tag/:id' component={TagPage}/>
                     <Route component={ NotFound }/>
                   </Switch>
