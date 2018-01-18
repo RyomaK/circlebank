@@ -1,4 +1,4 @@
-import React,{Componet} from 'react'
+import React,{Component} from 'react'
 import {connect} from 'react-redux'
 import {getlike} from '../actions/index'
 import Result from './Result'
@@ -8,7 +8,6 @@ import {Carousel} from 'react-bootstrap'
 class MainPage extends Component{
   componentDidMount(){
     this.props.getLike();
-    console.log(this.props.like)
   }
   render(){
     return(
@@ -43,7 +42,7 @@ class MainPage extends Component{
 
 const mapStateToProps = state => {
   return{
-    like: state.like.circle
+    state
   }
 }
 const mapDispatchToProps = dispatch => {

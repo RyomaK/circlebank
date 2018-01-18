@@ -5,6 +5,7 @@ import setStatus from './setStatus'
 import loginCheck from './loginCheck'
 import user from './user'
 import image from './image'
+import like from './like'
 import searchWord from './searchWord'
 import circle from './circle'
 import circleTag from './circleTag'
@@ -19,7 +20,8 @@ const reducer = combineReducers({
   image,
   searchWord,
   circle,
-  circleTag
+  circleTag,
+  like
 })
 
 export default reducer

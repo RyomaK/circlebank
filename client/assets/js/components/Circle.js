@@ -1,11 +1,11 @@
-import React from 'react'
+import React,{ Component } from 'react'
 import {Grid,Col,Table} from "react-bootstrap"
-
-const Circle = ({circle}) => {
+import LikeButton from './LikeButton'
+const Circle =({circle})=>{
   return(
     <div>
       <div className="centerPosition">
-        
+
         <h1>{circle.name}</h1>
         <h3>新入生へ</h3>
         <p>{circle.message_for_fresh}</p>
@@ -32,6 +32,8 @@ const Circle = ({circle}) => {
       </tr>
     </tbody>
   </Table>
+    <LikeButton id={circle.id}/>
+
     </div>
   )
 }

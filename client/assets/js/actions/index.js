@@ -322,12 +322,12 @@ export const tagSearch = id => dispatch => {
           dispatch(setLogin(-1));
           break;
         }
-        default: {
+        default:
           dispatch(setErrorMessage('エラーが発生しました'));
           break;
         }
       }
-    })
+    )
     .catch(() => {
       console.log("エラーtagSearchStart")
     });
@@ -342,6 +342,15 @@ export const like = circleId => dispatch => {
     .then((results) => {
       console.log(results)
       const status = results.status
+      return{status}
+    }).then(({status})=>{
+      switch(status){
+        case 200:
+          dispatch(getlike())
+          break;
+        default:
+          break;
+      }
     })
     .catch((e) => {
       console.log(e);
@@ -349,12 +358,12 @@ export const like = circleId => dispatch => {
 }
 
 export const getlike = () => dispatch => {
+  const Auth = getAuth();
     axios
     .get('/api/user/like',{headers:{'Authorization':`Bearer ${Auth}`}})
     .then((results) => {
-      console.log(results)
       const status = results.status
-      const circle = results.circle
+      const circle = results.data.circle
       return { status, circle }
     }).then(({ status, circle }) => {
       switch (status) {
@@ -380,12 +389,21 @@ export const getlike = () => dispatch => {
 export const deletelike = circleId => dispatch => {
     const Auth = getAuth();
     var params = new URLSearchParams();
+    console.log(circleId)
     params.append('circle_id',circleId);
-    axios
-    .delete('/api/user/like',params,{headers:{'Authorization':`Bearer ${Auth}`}})
+    axios.delete('/api/user/like',{headers:{'Authorization':`Bearer ${Auth}`},body: {'circle_id':circleId}})
     .then((results) => {
       console.log(results)
       const status = results.status
+      return({status})
+    }).then(({status})=>{
+      switch(status){
+        case 200:
+          dispatch(getlike())
+          break;
+        default:
+          break;
+      }
     })
     .catch((e) => {
       console.log(e);
