@@ -557,6 +557,54 @@ ___ query ___
     ]
 }
 ```
+## POST ```admin/{univ}/circle```
+サークルを追加する。
+
+## POST ```admin/{univ}/circle/{circle_id}```
+サークルの情報を編集
+
+## DELETE ```admin/{univ}/circle/{circle_id}```
+サークルを削除する。そのサークルのイベント、タグも一緒に削除する
+
+## POST ```admin/{univ}/circle/event```
+サークルのイベントを追加する
+
+## POST ```admin/{univ}/circle/event/{event_id}```
+サークルのイベントを編集する
+
+## DELETE ```admin/{univ}/circle/event/{event_id}```
+サークルのイベントを削除する
+
+## POST ```admin/{univ}/circle/tag```
+サークルのタグを追加する
+
+## DELETE  ```admin/{univ}/circle/tag/{tag_id}```
+サークルのタグを削除する
+
+## GET ```api/{univ}/circle/event/日付```
+その日付のイベントを入手する
+
+
+
+(おり実ページは、サークルを追加、イベントの追加と同じ感じで)
+## GET ```api/{univ}/ori```
+おり実ページの情報を入手
+## POST ```admin/{univ}/ori/{id}```
+おり実ページの情報を編集
+## DELETE ```admin/{univ}/ori/{id}```
+おり実ページの情報を削除
+## POST ```admin/{univ}/ori/event```
+おり実のイベントを追加
+## POST ```admin/{univ}/ori/event/{event_id}```
+おり実のイベントを編集
+## DELETE ```admin/{univ}/ori/event/{event_id}```
+おり実のイベントを削除
+
+
+
+
+
+
 
 ex...
 [api設計](https://hackmd.io/KYBg7AZgxgjDAmBaAnAFgEwUamBWGiARpAByIBsJJs6M5I6JAhkA?view)
