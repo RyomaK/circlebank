@@ -2,8 +2,6 @@ package circlebank
 
 import (
 	"net/http"
-
-	"github.com/RyomaK/circlebank/controller"
 )
 
 func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
@@ -12,7 +10,6 @@ func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
 }
 func Index(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "public/index.html")
-	w = controller.SetHeader(w, 200)
 }
 
 /*

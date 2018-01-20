@@ -17,7 +17,7 @@ type Event struct {
 
 func (e *Event) EventHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	events, err := model.GetCircleEventDetail(e.DB, vars["univ"], vars["circle_name"], vars["event"])
+	events, err := model.GetCircleEventDetail(e.DB, vars["univ"], vars["circle_name"], vars["event_id"])
 	if err != nil {
 		log.Printf("event err %v", err)
 	}

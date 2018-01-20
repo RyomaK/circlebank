@@ -55,12 +55,11 @@ type User struct {
 }
 
 type Comment struct {
-	ID        uint      `db:"id" json:"id"`
-	Name      string    `db:"name" json:"name"`
-	Gender    string    `db:"gender" json:"gender"`
-	Point     int       `db:"point" json:"point"`
-	Text      string    `db:"university" json:"university"`
-	CreatedAt time.Time `db:"created_at" json:"created_at"`
+	ID     uint   `db:"id" json:"id"`
+	Name   string `db:"name" json:"name"`
+	Gender string `db:"gender" json:"gender"`
+	Point  int    `db:"point" json:"point"`
+	Text   string `db:"university" json:"university"`
 }
 
 type Userschedule struct {
@@ -72,9 +71,9 @@ type UserCircleLikes struct {
 	Circle []Circle `db:"circle" json:"circle"`
 }
 
-type CircleComments struct {
-	Circle   Circle
-	Comments []Comment `db:"comment" json:"comment"`
+type CircleComment struct {
+	Circle  Circle
+	Comment Comment `db:"comment" json:"comment"`
 }
 
 type AdminCircleEvents struct {

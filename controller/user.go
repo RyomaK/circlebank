@@ -10,6 +10,7 @@ import (
 	"log"
 
 	"github.com/RyomaK/circlebank/model"
+	"github.com/gorilla/mux"
 	"github.com/olahol/go-imageupload"
 )
 
@@ -110,12 +111,13 @@ func (u *User) LoginHandler(w http.ResponseWriter, r *http.Request) {
 	if model.IsLogin(u.DB, mail, password) {
 		WriteJWT(w, mail)
 		w = SetHeader(w, http.StatusOK)
-	} else {
-		status := StatusCode{Code: http.StatusNotAcceptable, Message: "error login"}
-		a, _ := json.Marshal(status)
-		w = SetHeader(w, http.StatusNotFound)
-		w.Write(a)
+		return
 	}
+
+	status := StatusCode{Code: http.StatusNotAcceptable, Message: "error login"}
+	a, _ := json.Marshal(status)
+	w = SetHeader(w, http.StatusUnauthorized)
+	w.Write(a)
 
 }
 
@@ -146,20 +148,20 @@ func (u *User) SignUpHandler(w http.ResponseWriter, r *http.Request) {
 		person.Subject = r.FormValue("subject")
 		person.Password = r.FormValue("password")
 		person.Year, _ = strconv.Atoi(r.FormValue("year"))
+		person.Image = "img/users/default.png"
 		if err := model.Regist(u.DB, person); err != nil {
 			log.Printf("err in signHandler %v", err)
 			status := StatusCode{Code: http.StatusNotAcceptable, Message: "NG"}
 			a, _ := json.Marshal(status)
 			w = SetHeader(w, http.StatusNotAcceptable)
 			w.Write(a)
-		} else {
-			WriteJWT(w, person.Mail)
-			status := StatusCode{Code: http.StatusCreated, Message: "OK"}
-			a, _ := json.Marshal(status)
-			w = SetHeader(w, http.StatusCreated)
-			w.Write(a)
+			return
 		}
-
+		status := StatusCode{Code: http.StatusCreated, Message: "OK"}
+		a, _ := json.Marshal(status)
+		WriteJWT(w, person.Mail)
+		w = SetHeader(w, http.StatusCreated)
+		w.Write(a)
 	}
 
 }
@@ -258,6 +260,105 @@ func (u *User) DeleteLikeCircleHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	w = SetHeader(w, http.StatusOK)
 	status := StatusCode{Code: http.StatusOK, Message: "delete like"}
+	a, _ := json.Marshal(status)
+	w.Write(a)
+}
+func (u *User) GetCircleCommentHandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	circlceComment, err := model.GetCircleComment(u.DB, getUserEmail(r), vars["circle_name"])
+	if err != nil {
+		w = SetHeader(w, http.StatusNoContent)
+		status := StatusCode{Code: http.StatusNoContent, Message: "not found comment"}
+		a, _ := json.Marshal(status)
+		w.Write(a)
+		return
+	}
+	a, err := json.Marshal(circlceComment)
+	if err != nil {
+		log.Printf("err %v", err)
+	}
+	w = SetHeader(w, http.StatusOK)
+	w.Write(a)
+}
+
+func (u *User) PostCircleCommentHandler(w http.ResponseWriter, r *http.Request) {
+	mail := getUserEmail(r)
+	circle_id := r.PostFormValue("circle_id")
+	point := r.PostFormValue("point")
+	text := r.PostFormValue("text")
+	err := model.PostCiecleComments(u.DB, mail, circle_id, point, text)
+	if err != nil {
+		log.Printf("err %v", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot post comment"}
+		a, _ := json.Marshal(status)
+		w.Write(a)
+		return
+	}
+	if point == "" || text == "" || circle_id == "" {
+		log.Printf("err %v", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot post comment"}
+		a, _ := json.Marshal(status)
+		w.Write(a)
+		return
+	}
+	w = SetHeader(w, http.StatusOK)
+	status := StatusCode{Code: http.StatusOK, Message: "post  comment"}
+	a, _ := json.Marshal(status)
+	w.Write(a)
+}
+
+func (u *User) DeleteCircleCommentHandler(w http.ResponseWriter, r *http.Request) {
+	mail := getUserEmail(r)
+	circle_id := r.PostFormValue("circle_id")
+	err := model.DeleteCiecleComments(u.DB, mail, circle_id)
+	if err != nil {
+		log.Printf("err %v", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot delete comment"}
+		a, _ := json.Marshal(status)
+		w.Write(a)
+		return
+	}
+	if circle_id == "" {
+		log.Printf("err %v", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot delete comment"}
+		a, _ := json.Marshal(status)
+		w.Write(a)
+		return
+	}
+	w = SetHeader(w, http.StatusOK)
+	status := StatusCode{Code: http.StatusOK, Message: "delete  comment"}
+	a, _ := json.Marshal(status)
+	w.Write(a)
+}
+
+func (u *User) UpdateCircleCommentHandler(w http.ResponseWriter, r *http.Request) {
+	mail := getUserEmail(r)
+	circle_id := r.PostFormValue("circle_id")
+	point := r.PostFormValue("point")
+	text := r.PostFormValue("text")
+	err := model.UpdateCiecleComments(u.DB, mail, circle_id, point, text)
+	if err != nil {
+		log.Printf("err %v", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot post comment"}
+		a, _ := json.Marshal(status)
+		w.Write(a)
+		return
+	}
+	if point == "" || text == "" || circle_id == "" {
+		log.Printf("err %v", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot post comment"}
+		a, _ := json.Marshal(status)
+		w.Write(a)
+		return
+	}
+	w = SetHeader(w, http.StatusOK)
+	status := StatusCode{Code: http.StatusOK, Message: "post  comment"}
 	a, _ := json.Marshal(status)
 	w.Write(a)
 }
