@@ -32,9 +32,17 @@ const circle = this.props.circle
     return(
       <div>
         <div className="centerPosition">
+          <div className="circleName">
+            <span className="circleNameRight">{circle.name}</span>
+            <LikeButton id={circle.id}/>
+          </div>
+          <div className="circleImage">
+            <img src="static/img/users/default.png" alt="aa" width="50%" height="50%"/>
+          </div>
 
-          <h1>{circle.name}</h1>
-          <LikeButton id={this.props.circle.id}/>
+        </div>
+        <div>
+
         </div>
 
 
@@ -42,23 +50,23 @@ const circle = this.props.circle
       <Tabs
           value={this.state.value}
           onChange={this.handleChange.bind(this)}
-        >
+         className="fontChange1 whitePage">
           <Tab label="団体紹介" value="a">
-            <div className="centerPosition">
-              <h3>
+            <div className="centerPosition whitePage">
+              <div className="circleInt">
                 {circle.message_for_fresh}
-              </h3>
+              </div>
             </div>
           </Tab>
           <Tab label="団体詳細" value="b">
             <div>
-            <Table responsive>
+            <Table className="whitePage">
             <tbody>
               <tr>
-                <td>キャンパス</td>
-                <td>{circle.campus}</td>
-                <td>カテゴリ</td>
-                <td>{circle.introduction}</td>
+                <td width="25%">キャンパス</td>
+                <td width="25%">{circle.campus}</td>
+                <td width="25%">カテゴリ</td>
+                <td width="25%">{circle.introduction}</td>
               </tr>
               <tr>
                 <td>サークル人数</td>

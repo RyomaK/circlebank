@@ -9,6 +9,19 @@ body{
 .centerPosition{
   text-align: center;
 }
+.circleInt{
+  margin:15px;
+}
+
+.circleName{
+  font-size:40px;
+}
+.circleNameRight{
+  margin-right:10px;
+}
+.circleImage{
+  margin:20px;
+}
 .picture1{
   background-image: url("./sozai2.png");
   width:100vw;
@@ -103,9 +116,16 @@ body{
   padding:20px;
   background-color:white;
 }
+.whitePage{
+  background-color:white;
+}
 
 .fontChange{
   font-size:20px;
+}
+
+.fontChange1{
+  font-size:15px;
 }
 
 .favoPage{
