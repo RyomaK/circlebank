@@ -28,8 +28,8 @@
 [[projects]]
   name = "github.com/gorilla/mux"
   packages = ["."]
-  revision = "7f08801859139f86dfafd1c296e2cba9a80d292e"
-  version = "v1.6.0"
+  revision = "53c1911da2b537f792e7cafcb446b05ffe33b996"
+  version = "v1.6.1"
 
 [[projects]]
   branch = "master"
@@ -53,11 +53,11 @@
   branch = "master"
   name = "golang.org/x/crypto"
   packages = ["bcrypt","blowfish"]
-  revision = "13931e22f9e72ea58bb73048bc752b48c6d4d4ac"
+  revision = "a6600008915114d9c087fad9f03d75087b1a74df"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "b945d195542ef90bdcf83dbf2c9e670ac2fdad994e1856eedec1815453447a4a"
+  inputs-digest = "51d0d87227025a7dd9860402eb901fa14f5a85c86c2ca6a350ff2a0cf68bbdf2"
   solver-name = "gps-cdcl"
   solver-version = 1

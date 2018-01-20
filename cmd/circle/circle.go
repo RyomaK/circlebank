@@ -4,7 +4,7 @@ import (
 	"flag"
 	"os"
 
-	"github.com/RyomaK/circlebank"
+	"github.com/ryomak/circlebank"
 )
 
 func main() {

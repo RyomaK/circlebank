@@ -8,9 +8,9 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/RyomaK/circlebank/model"
 	"github.com/gorilla/mux"
 	imageupload "github.com/olahol/go-imageupload"
+	"github.com/ryomak/circlebank/model"
 )
 
 type Admin struct {
