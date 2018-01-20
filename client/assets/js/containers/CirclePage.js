@@ -1,6 +1,5 @@
 import React,{ Component } from 'react'
 import Circle from '../components/Circle'
-import Events from '../components/Events'
 import Menu from '../components/Menu'
 import Paper from 'material-ui/Paper';
 import { connect } from 'react-redux'
@@ -31,7 +30,6 @@ class CirclePage extends Component {
           <div className="circlePage">
             <Circle circle={this.props.circle}/>
           </div>
-          <Events events={this.props.events}/>
         </Col>
         </Row>
       </div>

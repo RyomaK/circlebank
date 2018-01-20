@@ -1,10 +1,19 @@
-import React from 'react'
+import React,{Component} from 'react'
 
-const Events = ({events}) => {
-  console.log(events)
-  return(
-    <div></div>
-  )
+class Events extends Component{
+  render(){
+    return(
+      <div>
+      {this.props.events.map(eve=>{
+        return(
+          <div key={eve.id}>{eve.name}</div>
+        )
+
+      })}
+      </div>
+    )
+
+  }
 }
 
 export default Events

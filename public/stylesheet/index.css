@@ -52,6 +52,7 @@ body{
 }
 .paper{
   background-color: #e4f0fc;
+  padding:20px;
   border-radius: 10px;
   margin-left: -13px;
   height:100vh;
@@ -93,8 +94,7 @@ body{
 }
 
 .mypage{
-  margin:20px;
-  padding:20px;
+  margin-top:20px;
   background-color:white;
 }
 
