@@ -6,7 +6,7 @@
 - [x] ログイン機能 
 - [ ] API設計 ->けんちゃん
 
-## WebApi
+# WebApi
 ## loginしている時
 ### GET```/api/{大学}/circle/{circle_name}```
 ```json
@@ -161,7 +161,6 @@ mail,avatar,name
 ### POST```/signup```
 db登録（未実装）
 
-# API サーバー
 ## POST /login
 ログイン
 - mail
@@ -645,7 +644,8 @@ circle画像をアップロード
 ## GET ```api/{univ}/circle/event/日付```
 その日付のイベントを入手する
 
-## POST ```api/tag```
+## POST ```admin/tag```
+jsonでpost
 ```json
 [
     {    
