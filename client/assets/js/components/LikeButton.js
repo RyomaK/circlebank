@@ -12,39 +12,38 @@ class LikeButton extends Component{
     }
   }
 
-  componentWillMount(){
-      this.props.like.map((like)=>{
-        if(this.state.like.id == this.props.id){
-          this.setState({like:true})
-        }
-      })
+  componentDidMount(){
+
   }
-  handleClick(e){
+  handleClick1(e){
     e.preventDefault()
-    if(this.state.like==false){
+    console.log(this.props.id)
+    this.props.Delete(this.props.id);
+  }
 
-        this.setState({like:true})
-        console.log(this.state)
-        this.props.Delete(this.props.id)
-        console.log("unfavo")
-    }else{
-      this.setState({like:false})
-      console.log(this.state)
-      this.props.Like(this.props.id)
-      console.log("favo")
-
-    }
-
+  handleClick2(e){
+    e.preventDefault();
+    console.log(this.props.id)
+    this.props.Like(this.props.id);
   }
   render(){
-
-    return(
-      <div>
-        <Button onClick={this.handleClick.bind(this)}>aa</Button>
-      </div>
-    )
-  }
-}
+    let count = 0;
+    this.props.like.map((like)=>{
+      if(like.id == this.props.id){
+        count++;
+      }else{
+      }
+    })
+    if(count == 0){
+        return(
+          <Button onClick={this.handleClick2.bind(this)}>お気に入り登録</Button>
+        )
+      }else{
+        return(
+          <Button onClick={this.handleClick1.bind(this)}>お気に入り解除</Button>
+        )
+    }
+}}
 
 const mapStateToProps = state => {
   return{

@@ -16,7 +16,10 @@ class SearchResult extends Component{
           <Row>
             <Menu/>
             <Col sm={9} className="paper">
-              <Link to={`/circle/search/${this.props.url_name}`}>{this.props.circle.name}</Link>
+              <div className="SearchResult ">
+                <h1>検索結果</h1>
+                <Link to={`/circle/search/${this.props.url_name}`}><h3>{this.props.circle.name}</h3></Link>
+              </div>
             </Col>
           </Row>
         </div>

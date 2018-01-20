@@ -56,6 +56,11 @@ body{
   margin-left: -13px;
   height:100vh;
 }
+.login_up{
+  background-color: #e4f0fc;
+  border-radius: 10px;
+  margin-left: -13px;
+}
 .rightside{
   text-align: right;
   margin-top:10px;
@@ -85,4 +90,16 @@ body{
 .card{
   padding: 20px 20px;
   margin-bottom:20px;
+}
+
+.mypage{
+  margin:20px;
+  padding:20px;
+  background-color:white;
+}
+
+.SearchResult{
+  margin:20px;
+  padding:20px;
+  background-color:white;
 }

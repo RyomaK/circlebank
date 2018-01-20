@@ -337,6 +337,7 @@ export const like = circleId => dispatch => {
     const Auth = getAuth();
     var params = new URLSearchParams();
     params.append('circle_id',circleId);
+    console.log(circleId)
     axios
     .post('/api/user/like',params,{headers:{'Authorization':`Bearer ${Auth}`}})
     .then((results) => {
@@ -388,10 +389,10 @@ export const getlike = () => dispatch => {
 
 export const deletelike = circleId => dispatch => {
     const Auth = getAuth();
-    var params = new URLSearchParams();
-    console.log(circleId)
-    params.append('circle_id',circleId);
-    axios.delete('/api/user/like',{headers:{'Authorization':`Bearer ${Auth}`},body: {'circle_id':circleId}})
+    const headers = {'Authorization':`Bearer ${Auth}`}
+    const data = new FormData();
+    data.append('circle_id',circleId);
+    axios.delete('/api/user/like',{headers,data})
     .then((results) => {
       console.log(results)
       const status = results.status

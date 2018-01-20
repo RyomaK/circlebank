@@ -17,7 +17,7 @@ class SignupPage extends Component{
       <div className="log">
         <Grid>
         <Col smOffset={3} sm={6}>
-          <Paper style = {style} className="paper" zDepth={3}>
+          <Paper style = {style} className="login_up" zDepth={3}>
             <h4>アカウント作成</h4>
             <SignupForm/>
           </Paper>
