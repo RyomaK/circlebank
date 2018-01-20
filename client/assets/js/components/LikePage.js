@@ -8,7 +8,9 @@ class LikePage extends Component{
   render(){
     return(
       <div>
+      <div className="centerPosition">
       <h1>お気に入りサークル一覧</h1>
+      </div>
       <div className="mypage fontChange">
       {this.props.like.map((like) => {
 

@@ -37,7 +37,7 @@ const circle = this.props.circle
             <LikeButton id={circle.id}/>
           </div>
           <div className="circleImage">
-            <img src="static/img/users/default.png" alt="aa" width="50%" height="50%"/>
+            <img src="static/img/users/default.png" alt="aa" width="50%" height="40%"/>
           </div>
 
         </div>
