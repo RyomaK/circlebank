@@ -1,6 +1,6 @@
 import React, {Component} from "react"
 
-import {Grid,Col,Button} from "react-bootstrap"
+import {Grid,Col,Button,Table} from "react-bootstrap"
 import { connect } from 'react-redux'
 
 class LikePage extends Component{
@@ -9,16 +9,16 @@ class LikePage extends Component{
     return(
       <div>
       <h1>お気に入りサークル一覧</h1>
+      <div className="mypage fontChange">
       {this.props.like.map((like) => {
-        return(
-          <div key={like.id}>
-            {like.name}
 
-            <Button bsStyle="primary">編集</Button>
-
-          </div>
-        )
+          return(
+            <div key={like.id} className="favoPage">
+            {like.name}<span className="floatright"><Button bsStyle="primary">編集</Button></span>
+            </div>
+          )
       })}
+      </div>
       </div>
     )
   }

@@ -103,3 +103,16 @@ body{
   padding:20px;
   background-color:white;
 }
+
+.fontChange{
+  font-size:20px;
+}
+
+.favoPage{
+  margin:10px;
+  padding:10px;
+}
+.floatright{
+  display:block;
+  float: right;
+}

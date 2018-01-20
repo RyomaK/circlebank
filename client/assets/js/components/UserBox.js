@@ -9,11 +9,11 @@ const UserBox = ({data}) => {
       <Col sm={9} className="paper">
           <h1>マイページ</h1>
           <div className="mypage">
-            <Table responsive>
+            <Table className="fontChange">
               <tbody>
                 <tr>
-                  <td>名前</td>
-                  <td>{data.name}</td>
+                  <td　width="50%">名前</td>
+                  <td　width="50%">{data.name}</td>
                 </tr>
                 <tr>
                   <td>入学年度</td>
