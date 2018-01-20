@@ -36,11 +36,11 @@ class LikeButton extends Component{
     })
     if(count == 0){
         return(
-          <Button onClick={this.handleClick2.bind(this)}>お気に入り登録</Button>
+          <Button onClick={this.handleClick2.bind(this)} bsStyle="info">お気に入り登録</Button>
         )
       }else{
         return(
-          <Button onClick={this.handleClick1.bind(this)}>お気に入り解除</Button>
+          <Button onClick={this.handleClick1.bind(this)} bsStyle="danger">お気に入り解除</Button>
         )
     }
 }}
