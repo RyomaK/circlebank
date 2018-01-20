@@ -23,10 +23,6 @@
 
 [[constraint]]
   branch = "master"
-  name = "github.com/RyomaK/circlebank"
-
-[[constraint]]
-  branch = "master"
   name = "github.com/auth0/go-jwt-middleware"
 
 [[constraint]]
