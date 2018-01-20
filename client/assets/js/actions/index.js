@@ -114,6 +114,8 @@ export const login = data => dispatch => {
 
 
 
+
+
 export const getUserInfo = () => dispatch => {
   const Auth = getAuth();
   axios
@@ -227,7 +229,7 @@ export const circleSearch = name => dispatch => {
     }
   })
   .catch(() => {
-    console.log("circleStart");
+    dispatch(setSearchWord('notFound'));
   });
 }
 
@@ -320,16 +322,95 @@ export const tagSearch = id => dispatch => {
           dispatch(setLogin(-1));
           break;
         }
+        default:
+          dispatch(setErrorMessage('エラーが発生しました'));
+          break;
+        }
+      }
+    )
+    .catch(() => {
+      console.log("エラーtagSearchStart")
+    });
+}
+
+export const like = circleId => dispatch => {
+    const Auth = getAuth();
+    var params = new URLSearchParams();
+    params.append('circle_id',circleId);
+    console.log(circleId)
+    axios
+    .post('/api/user/like',params,{headers:{'Authorization':`Bearer ${Auth}`}})
+    .then((results) => {
+      console.log(results)
+      const status = results.status
+      return{status}
+    }).then(({status})=>{
+      switch(status){
+        case 200:
+          dispatch(getlike())
+          break;
+        default:
+          break;
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+}
+
+export const getlike = () => dispatch => {
+  const Auth = getAuth();
+    axios
+    .get('/api/user/like',{headers:{'Authorization':`Bearer ${Auth}`}})
+    .then((results) => {
+      const status = results.status
+      const circle = results.data.circle
+      return { status, circle }
+    }).then(({ status, circle }) => {
+      switch (status) {
+        case 200: {
+          dispatch({type:'LIKE',circle});
+          break;
+        }
+        case 401: {
+          dispatch(setLogin(-1));
+          break;
+        }
         default: {
           dispatch(setErrorMessage('エラーが発生しました'));
           break;
         }
       }
     })
-    .catch(() => {
-      console.log("エラーtagSearchStart")
+    .catch((e) => {
+      console.log(e);
     });
 }
+
+export const deletelike = circleId => dispatch => {
+    const Auth = getAuth();
+    const headers = {'Authorization':`Bearer ${Auth}`}
+    const data = new FormData();
+    data.append('circle_id',circleId);
+    axios.delete('/api/user/like',{headers,data})
+    .then((results) => {
+      console.log(results)
+      const status = results.status
+      return({status})
+    }).then(({status})=>{
+      switch(status){
+        case 200:
+          dispatch(getlike())
+          break;
+        default:
+          break;
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+}
+
 
 
 export const ImageUpload = image => dispatch => {
