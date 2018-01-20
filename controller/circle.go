@@ -8,8 +8,8 @@ import (
 
 	"log"
 
-	"github.com/RyomaK/circlebank/model"
 	"github.com/gorilla/mux"
+	"github.com/ryomak/circlebank/model"
 )
 
 type Circle struct {

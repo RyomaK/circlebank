@@ -9,9 +9,9 @@ import (
 
 	"log"
 
-	"github.com/RyomaK/circlebank/model"
 	"github.com/gorilla/mux"
 	"github.com/olahol/go-imageupload"
+	"github.com/ryomak/circlebank/model"
 )
 
 type User struct {

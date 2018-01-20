@@ -12,8 +12,8 @@ import (
 
 	"net/http"
 
-	"github.com/RyomaK/circlebank/controller"
-	"github.com/RyomaK/circlebank/model"
+	"github.com/ryomak/circlebank/controller"
+	"github.com/ryomak/circlebank/model"
 )
 
 type Server struct {
