@@ -38,3 +38,108 @@ func GetEvents(db *sql.DB, univ string, page int) ([]AdminCircleEvents, error) {
 
 	return events, nil
 }
+
+func InsertCircle(db *sql.DB, circle *Circle) error {
+	query := `insert into circles (univ_id,name,url_name,number,gender_ratio,introduction,excite,fee,campus,message_for_fresh) values (?,?,?,?,?,?,?,?,?,?)`
+	result, err := db.Exec(query, "1", circle.Name, circle.URLName, circle.Number, circle.GenderRatio, circle.Introduction, circle.Excite, circle.Fee, circle.Campus, circle.MessageForFresh)
+	if err != nil {
+		return err
+	}
+	id, err := result.LastInsertId()
+	if err != nil {
+		return err
+	}
+	query = `insert into delegetes (circle_id,name,contact) values(?,?,?)`
+	_, err = db.Exec(query, id, circle.DelegeteName, circle.DelegeteContact)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func InsertEvents(db *sql.DB, circle_id int, events *[]Event) error {
+	for _, v := range *events {
+		query := `insert into events (circle_id,name,agenda,place,detail,capacity,fee) values (?,?,?,?,?,?,?)`
+		_, err := db.Exec(query, circle_id, v.Name, v.Agenda, v.Place, v.Detail, v.Capacity, v.Fee)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func InsertCircleTags(db *sql.DB, circle_id int, tags *[]Tag) error {
+	for _, v := range *tags {
+		query := `insert into circles_tags (circle_id,tag_id) 
+		select ?,? from dual
+		where not exists (select * from circles_tags  where circle_id = ? and tag_id =?)`
+		_, err := db.Exec(query, circle_id, v.ID, circle_id, v.ID)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func InsertTags(db *sql.DB, tags *[]Tag) error {
+	for _, v := range *tags {
+		query := `insert into tags (name) 
+		select ? from dual
+		where not exists (select * from tags  where name =?)`
+		_, err := db.Exec(query, v.Name, v.Name)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func DeleteCircle(db *sql.DB, circle_id int) error {
+	query := `delete from circles where id = ?`
+	_, err := db.Exec(query, circle_id)
+	if err != nil {
+		return err
+	}
+	query = `delete from delegetes where circle_id = ?`
+	_, err = db.Exec(query, circle_id)
+	if err != nil {
+		return err
+	}
+	query = `delete from likes where circle_id = ?`
+	_, err = db.Exec(query, circle_id)
+	if err != nil {
+		return err
+	}
+	query = `delete from comments where circle_id = ?`
+	_, err = db.Exec(query, circle_id)
+	if err != nil {
+		return err
+	}
+	query = `delete from circles_tags where circle_id = ?`
+	_, err = db.Exec(query, circle_id)
+	if err != nil {
+		return err
+	}
+	query = `delete from events where circle_id = ?`
+	_, err = db.Exec(query, circle_id)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func UploadCirclePicture(db *sql.DB, circle_id int, image string) error {
+	_, err := db.Exec("update circles SET image = ? WHERE  id = ?", image, circle_id)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func UploadEventPicture(db *sql.DB, circle_id, event_id int, image string) error {
+	_, err := db.Exec("update events SET image = ? WHERE  id = ? and circle_id = ?", image, event_id, circle_id)
+	if err != nil {
+		return err
+	}
+	return nil
+}

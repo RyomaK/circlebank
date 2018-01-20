@@ -6,7 +6,7 @@
 - [x] ログイン機能 
 - [ ] API設計 ->けんちゃん
 
-## WebApi
+# WebApi
 ## loginしている時
 ### GET```/api/{大学}/circle/{circle_name}```
 ```json
@@ -161,7 +161,6 @@ mail,avatar,name
 ### POST```/signup```
 db登録（未実装）
 
-# API サーバー
 ## POST /login
 ログイン
 - mail
@@ -338,48 +337,45 @@ ___成功した場合cookieに新しくJwtを付与するから，また"Bearer 
 }
 ```
 
-## GET ```api/{univ}/circle/{circle_name}/comment```
+## GET ```api/user/{circle_name}/comment```
 
 ```json
 {
     "Circle": {
-        "id": 2,
-        "name": "fly speck",
-        "url_name": "flyspeck",
-        "number": 100,
+        "id": 1,
+        "name": "hands up",
+        "url_name": "handsup",
+        "number": 30,
         "gender_ratio": "1:1",
         "image": "1",
-        "introduction": "テニス",
-        "message_for_fresh": "いつでもきてねえええ",
-        "delegete_name": "大野",
-        "delegete_contact": "arashi@mail.com",
-        "campus": "京田辺/今出川",
-        "excite": 9,
-        "fee": 3000,
+        "introduction": "アットホームなバスケットボールサークルです",
+        "message_for_fresh": "いつでもきてね",
+        "delegete_name": "田中",
+        "delegete_contact": "tanaka@mail.com",
+        "campus": "京田辺",
+        "excite": 3,
+        "fee": 5000,
         "university": "同志社大学"
     },
-    "comment": [
-        {
-            "id": 1,
-            "name": "栗栖",
-            "gender": "男",
-            "point": 4,
-            "university": "良い",
-            "created_at": "2017-02-14T00:00:00Z"
-        }
-    ]
+    "comment": {
+        "id": 3,
+        "name": "admin",
+        "gender": "男",
+        "point": 12,
+        "university": "いいね"
+    }
 }
 
 ```
 
 ##
 
-## POST ```api/{univ}/circle/{circle_name}/comment```
+## POST ```api/user/{circle_name}/comment```
 - circle_id
 - point(1~5?)
 - text
 
-## DELETE ```api/{univ}/circle/{circle_name}/comment```
+## DELETE ```api/user/{circle_name}/comment```
 
 
 ## GET ```admin/{univ}/circle```
@@ -559,32 +555,110 @@ ___ query ___
 ```
 ## POST ```admin/{univ}/circle```
 サークルを追加する。
+記入する内容例
+```json
+{
+    "name": "basket",
+    "url_name": "basket",
+    "number": 100,
+    "gender_ratio": "1:2",
+    "image": "img/d/png",
+    "introduction": "バスケだよ",
+    "message_for_fresh": "いつでもきてねえええ",
+    "delegete_name": "baske",
+    "delegete_contact": "baske@mail.com",
+    "campus": "今出川",
+    "excite": 9,
+    "fee": 3000,
+    "university": "同志社大学"
+}
+```
 
-## POST ```admin/{univ}/circle/{circle_id}```
+## PUT  ```admin/{univ}/circle/{circle_id}```
 サークルの情報を編集
 
 ## DELETE ```admin/{univ}/circle/{circle_id}```
 サークルを削除する。そのサークルのイベント、タグも一緒に削除する
 
-## POST ```admin/{univ}/circle/event```
+## POST ```admin/{univ}/circle/{circle_id}/event```
 サークルのイベントを追加する
-
-## POST ```admin/{univ}/circle/event/{event_id}```
+入れるjson
+```json
+	[
+        {
+            "name": "ほわ音でー",
+            "image": "img/users/default.png",
+            "agenda": "2017-02-14T00:00:00Z",
+            "place": "a",
+            "detail": "f",
+            "capacity": 10,
+            "fee": 10
+        },
+        {
+            "name": "fsa",
+            "image": "img/users/default.png",
+            "agenda": "2017-02-14T00:00:00Z",
+            "place": "fsa",
+            "detail": "fdsa",
+            "capacity": 1,
+            "fee": 1
+        }
+    ]
+```
+## PUT ```admin/{univ}/circle/{circle_id}/event/{event_id}```
 サークルのイベントを編集する
 
-## DELETE ```admin/{univ}/circle/event/{event_id}```
+## DELETE ```admin/{univ}/circle/{circle_id}/event/{event_id}```
 サークルのイベントを削除する
 
-## POST ```admin/{univ}/circle/tag```
+## POST ```admin/{univ}/circle/{circle_id}/tag```
 サークルのタグを追加する
+```json
+[
+    {
+        "id": 1,
+        "name": "バスケットボール"
+    },
+    {
+        "id": 2,
+        "name": "アットホーム"
+    },
+    {
+        "id": 3,
+        "name": "京田辺"
+    }
+]
+```
 
-## DELETE  ```admin/{univ}/circle/tag/{tag_id}```
+## DELETE  ```admin/{univ}/circle/tag/{circle_id}/{tag_id}```
 サークルのタグを削除する
 
+## POST ``` admin/{univ}/circle/{circle_id}/upload```
+circle画像をアップロード
+- image 
+(form data)
+## POST ``` admin/{univ}/circle/{circle_id}/event/{event_id}upload```
+circle画像をアップロード
+- image 
+(formdata)
 ## GET ```api/{univ}/circle/event/日付```
 その日付のイベントを入手する
 
-
+## POST ```admin/tag```
+jsonでpost
+```json
+[
+    {    
+        "name": "飲みサークル"
+    },
+    {
+        "name": "アットホーム"
+    },
+    {
+        "name": "京田辺"
+    }
+]
+```
 
 (おり実ページは、サークルを追加、イベントの追加と同じ感じで)
 ## GET ```api/{univ}/ori```

@@ -7,7 +7,7 @@
 #
 # ホスト: 127.0.0.1 (MySQL 5.7.19)
 # データベース: circle_bank
-# 作成時刻: 2018-01-16 14:56:52 +0000
+# 作成時刻: 2018-01-20 08:05:11 +0000
 # ************************************************************
 
 
@@ -29,8 +29,8 @@ CREATE TABLE `circles` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `univ_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL DEFAULT '',
-  `url_name` varchar(11) DEFAULT NULL,
-  `image` varchar(255) DEFAULT NULL,
+  `url_name` varchar(11) NOT NULL DEFAULT '',
+  `image` varchar(255) NOT NULL DEFAULT 'img/circles/default.png',
   `number` int(11) NOT NULL,
   `gender_ratio` varchar(30) DEFAULT NULL,
   `introduction` text NOT NULL,
@@ -46,7 +46,7 @@ LOCK TABLES `circles` WRITE;
 
 INSERT INTO `circles` (`id`, `univ_id`, `name`, `url_name`, `image`, `number`, `gender_ratio`, `introduction`, `excite`, `fee`, `campus`, `message_for_fresh`)
 VALUES
-	(1,1,'hands up','handsup','1',30,'1:1','アットホームなバスケットボールサークルです',3,5000,'京田辺','いつでもきてね'),
+	(1,1,'hands up','handsup','img/circles/1.png',30,'1:1','アットホームなバスケットボールサークルです',3,5000,'京田辺','いつでもきてね'),
 	(2,1,'fly speck','flyspeck','1',100,'1:1','テニス',9,3000,'京田辺/今出川','いつでもきてねえええ');
 
 /*!40000 ALTER TABLE `circles` ENABLE KEYS */;
@@ -91,16 +91,16 @@ CREATE TABLE `comments` (
   `circle_id` int(11) DEFAULT NULL,
   `point` int(11) NOT NULL,
   `text` text NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `comments` WRITE;
 /*!40000 ALTER TABLE `comments` DISABLE KEYS */;
 
-INSERT INTO `comments` (`id`, `user_id`, `circle_id`, `point`, `text`, `created_at`)
+INSERT INTO `comments` (`id`, `user_id`, `circle_id`, `point`, `text`)
 VALUES
-	(1,1,2,4,'良い','2017-02-14 00:00:00');
+	(1,1,2,4,'良い'),
+	(2,2,2,10,'本当良い');
 
 /*!40000 ALTER TABLE `comments` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -235,7 +235,8 @@ VALUES
 	(1,'バスケットボール'),
 	(2,'アットホーム'),
 	(3,'京田辺'),
-	(4,'今出川');
+	(4,'今出川'),
+	(5,'飲みサークル');
 
 /*!40000 ALTER TABLE `tags` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -278,7 +279,7 @@ CREATE TABLE `users` (
   `gender` char(2) NOT NULL DEFAULT '',
   `mail` varchar(255) NOT NULL DEFAULT '',
   `password` varchar(255) NOT NULL,
-  `image` varchar(255) DEFAULT 'img/users/default.png',
+  `image` varchar(255) NOT NULL DEFAULT 'img/users/default.png',
   `year` int(11) NOT NULL,
   `department` varchar(255) NOT NULL DEFAULT '',
   `subject` varchar(255) NOT NULL DEFAULT '',
@@ -291,9 +292,10 @@ LOCK TABLES `users` WRITE;
 INSERT INTO `users` (`id`, `univ_id`, `name`, `gender`, `mail`, `password`, `image`, `year`, `department`, `subject`)
 VALUES
 	(1,1,'栗栖','男','ryooomaaa0413@gmail.com','$2a$10$3rCT9hO/RZu1Qxd.lhJA7.6EDUZ5SPTVcVlu4KKQZNPYin.rKNJ0S','img/users/1.png',2015,'理工学部','情報システムデザイン学科'),
-	(2,1,'津國健太','男','tsukuni1@gmail.com','$2a$10$dg/iWh6zeFBEfuL.kDE3MO/xygMGyTYOypo9XsjV5BBHwv1kH9T0y','img/users/2.png',2015,'理工学部','機械システム学科'),
+	(2,1,'津國健太','男','tsukuni@gmail.com','$2a$10$g0Xsy1kZ3eoAOxNRdXe.xOTHpw1SKMtRlOSsMgamhWqA6DYPevu3a','img/users/2.png',2015,'理工学部','機械システム学科'),
 	(3,1,'櫻井','男','sakurai@gmail.com','$2a$10$Stqc3LpJYS7.yzvF3mFIku6ZO/9Apr7KN8BvtSOLqgI6sTfxdD4UC','img/users/default.png',2015,'理工学部','情報システムデザイン学科'),
-	(4,1,'相田','男','aida@gmail.com','$2a$10$XMGMyBAaoRYHWdrzY7HfKu3Wcla6S9w3BThdYKd8NehrgYnU81aRO','img/users/default.png',2015,'理工学部','情報システムデザイン学科');
+	(4,1,'相田','男','aida@gmail.com','$2a$10$XMGMyBAaoRYHWdrzY7HfKu3Wcla6S9w3BThdYKd8NehrgYnU81aRO','img/users/default.png',2015,'理工学部','情報システムデザイン学科'),
+	(5,1,'admin','男','admin@user1234','$2a$10$Rj43eRZVwv4ISdNxCuIi0O3PC3NBNnaUNzXAk1UHnDJ5fgImoUdWO','img/users/default.png',2015,'理工学部','情報システムデザイン学科');
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;

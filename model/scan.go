@@ -143,6 +143,20 @@ func ScanUser(r *sql.Row) (User, error) {
 	return s, nil
 }
 
+func ScanComment(r *sql.Row) (Comment, error) {
+	var c Comment
+	if err := r.Scan(
+		&c.ID,
+		&c.Name,
+		&c.Gender,
+		&c.Point,
+		&c.Text,
+	); err != nil {
+		return Comment{}, err
+	}
+	return c, nil
+}
+
 func ScanComments(rs *sql.Rows) ([]Comment, error) {
 	structs := []Comment{}
 	var err error
@@ -154,7 +168,6 @@ func ScanComments(rs *sql.Rows) ([]Comment, error) {
 			&s.Gender,
 			&s.Point,
 			&s.Text,
-			&s.CreatedAt,
 		); err != nil {
 			return []Comment{}, err
 		}
