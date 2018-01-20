@@ -3,7 +3,7 @@ package circlebank
 import (
 	"net/http"
 
-	"github.com/RyomaK/circlebank/controller"
+	"github.com/ryomak/circlebank/controller"
 )
 
 func NotFoundHandler(w http.ResponseWriter, r *http.Request) {

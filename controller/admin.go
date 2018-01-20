@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/RyomaK/circlebank/model"
 	"github.com/gorilla/mux"
+	"github.com/ryomak/circlebank/model"
 )
 
 type Admin struct {
