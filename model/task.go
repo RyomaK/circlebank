@@ -139,7 +139,7 @@ func PostEvent(db *sql.DB, mail, event_id string) error {
 			(user_id,likes.event_id) 
 			select ?,?
 			from dual
-			where not exists(select user_id FROM events_schedules WHERE user_id=? and = events_schedules.event_id =?)`
+			where not exists(select user_id FROM events_schedules WHERE user_id=? and  events_schedules.event_id = ?)`
 	stmt, err := db.Prepare(query)
 	if err != nil {
 		return err
@@ -204,16 +204,15 @@ func DeleteUserLikesCircles(db *sql.DB, mail, circle_id string) error {
 func PostCiecleComments(db *sql.DB, mail, circle_id, point, text string) error {
 	id := GetUserID(db, mail)
 	query := `insert  into comments
-			(user_id,comments.circle_id,point,text,created_at) 
-			select ?,?,?,?,?
+			(user_id,comments.circle_id,point,text) 
+			select ?,?,?,?
 			FROM dual
 			where not exists(select user_id FROM comments WHERE user_id=? and comments.circle_id= ?)`
 	stmt, err := db.Prepare(query)
 	if err != nil {
 		return err
 	}
-	now := time.Now()
-	_, err = stmt.Exec(id, circle_id, point, text, id, circle_id, now)
+	_, err = stmt.Exec(id, circle_id, point, text, id, circle_id)
 	if err != nil {
 		return err
 	}
@@ -236,27 +235,44 @@ func DeleteCiecleComments(db *sql.DB, mail, circle_id string) error {
 	return nil
 }
 
-func GetCircleComments(db *sql.DB, univ, circle_url_name string) (CircleComments, error) {
+func GetCircleComment(db *sql.DB, mail, circle_url_name string) (CircleComment, error) {
 	query := `select circles.id,circles.name,circles.url_name,number,circles.gender_ratio,circles.image,introduction,message_for_fresh,  delegetes.name as delegate_name ,delegetes.contact as delegate_contact,campus,excite,fee,universities.name as university
 	from (circles inner join universities on univ_id = universities.id)
 	left outer join delegetes on circles.id = delegetes.circle_id
-	where universities.url_name = ? and circles.url_name = ?;`
-	row := db.QueryRow(query, univ, circle_url_name)
+	where  circles.url_name = ?;`
+	row := db.QueryRow(query, circle_url_name)
 	circle, err := ScanCircle(row)
 	if err != nil {
-		return CircleComments{}, err
+		return CircleComment{}, err
 	}
-
-	query = `select comments.id,users.name,users.gender,comments.point,comments.text ,comments.created_at
+	query = `select comments.id,users.name,users.gender,comments.point,comments.text 
 	from circles 
 	inner join comments on circles.id = comments.circle_id
 	inner join users on comments.user_id = users.id
-	where circles.url_name = ?`
-	rows, _ := db.Query(query, circle_url_name)
-	comments, err := ScanComments(rows)
+	where users.mail = ? and circles.url_name = ?`
+	row = db.QueryRow(query, mail, circle_url_name)
+	comment, err := ScanComment(row)
 	if err != nil {
-		return CircleComments{}, err
+		return CircleComment{Circle: circle}, err
 	}
-	return CircleComments{Circle: circle, Comments: comments}, nil
+	return CircleComment{Circle: circle, Comment: comment}, nil
 
+}
+
+func UpdateCiecleComments(db *sql.DB, mail, circle_id, point, text string) error {
+	id := GetUserID(db, mail)
+	query := `update comments
+			set point = ? ,text = ?,created_at = ?
+			where user_id = ? and circle_id = ?
+			`
+	stmt, err := db.Prepare(query)
+	if err != nil {
+		return err
+	}
+	now := time.Now()
+	_, err = stmt.Exec(point, text, now, id, circle_id)
+	if err != nil {
+		return err
+	}
+	return nil
 }

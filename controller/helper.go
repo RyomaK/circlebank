@@ -10,7 +10,8 @@ import (
 )
 
 type AuthUser struct {
-	Mail string `json:"mail"`
+	Mail      string `json:"mail"`
+	Authority string
 	jwt.StandardClaims
 }
 
@@ -33,7 +34,8 @@ func CreateJWT(user *AuthUser) string {
 	token := jwt.New(jwt.GetSigningMethod("HS256"))
 
 	token.Claims = jwt.MapClaims{
-		"Mail": user.Mail,
+		"Mail":      user.Mail,
+		"Authority": user.Authority,
 	}
 	/*
 	 トークンに対して署名の付与
@@ -69,9 +71,31 @@ func getUserEmail(r *http.Request) string {
 	return user.Mail
 }
 
+func IsAdmin(r *http.Request) bool {
+	jwtString := r.Header.Get("Authorization")
+	jwtString = strings.Replace(jwtString, "Bearer ", "", 1)
+	user, err := JwtToData(jwtString)
+	if err != nil {
+		fmt.Printf("err getUser admin %v\n", err)
+		return false
+	}
+	if user.Authority == "adminuser" {
+		return true
+	}
+	return false
+}
+
+//仮
+var admin string = "admin@user1234"
+
 func WriteJWT(w http.ResponseWriter, mail string) {
+	auth := "1"
+	if mail == admin {
+		auth = "adminuser"
+	}
 	jwtString := CreateJWT(&AuthUser{
-		Mail: mail,
+		Mail:      mail,
+		Authority: auth,
 	})
 	//cookieに保存
 	http.SetCookie(w, &http.Cookie{
@@ -79,4 +103,15 @@ func WriteJWT(w http.ResponseWriter, mail string) {
 		Value: jwtString,
 		Path:  "/",
 	})
+}
+
+/*==================admin middleware ===================*/
+
+func MiddlewareAdmin(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
+	if IsAdmin(r) {
+		next(w, r)
+		return
+	}
+	w.WriteHeader(http.StatusUnauthorized)
+	w.Write([]byte("Required authorization token not found"))
 }
