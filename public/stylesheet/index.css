@@ -1,6 +1,19 @@
 /*header*/
 body{
-  background-color: #EEEEEE;
+  background-color: #e4f0fc;
+}
+@media screen and (max-width: 768px) {
+  .menucolor{
+    background-color: white;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .menucolor{
+    background-color: white;
+    border-radius: 10px;
+    height:100vh;
+  }
 }
 
 .circlePage{
@@ -58,22 +71,15 @@ body{
 	content: ' ';
 }
 
-.menucolor{
-  background-color: white;
-  border-radius: 10px;
-  height:100vh;
-}
 .paper{
   background-color: #e4f0fc;
   padding:20px;
   border-radius: 10px;
-  margin-left: -13px;
   height:100vh;
 }
 .login_up{
   background-color: #e4f0fc;
   border-radius: 10px;
-  margin-left: -13px;
 }
 .rightside{
   text-align: right;
@@ -107,7 +113,7 @@ body{
 }
 
 .mypage{
-  margin-top:20px;
+  margin:20px;
   background-color:white;
 }
 
