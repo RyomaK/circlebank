@@ -10,6 +10,8 @@ import SearchResult from './SearchResult'
 import Auth from './Auth'
 import UserPage from './UserPage'
 import TagPage from './TagPage'
+
+import AdminAuth from './admin/AdminAuth'
 import { BrowserRouter, Route, Link, Switch} from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { connect } from 'react-redux'
@@ -25,10 +27,10 @@ const App =() => {
               <Auth>
                 <SearchForm/>
               </Auth>
-
               <Switch>
                 <Route path='/login' component={LoginPage}/>
                 <Route path='/signup' component={SignupPage}/>
+                <AdminAuth>
                 <Auth>
                   <Switch>
                     <Route exact path='/' component={MainPage}/>
@@ -39,6 +41,7 @@ const App =() => {
                     <Route component={ NotFound }/>
                   </Switch>
                 </Auth>
+                </AdminAuth>
                 </Switch>
             </div>
           </MuiThemeProvider>

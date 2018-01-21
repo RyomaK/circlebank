@@ -9,7 +9,10 @@ import like from './like'
 import searchWord from './searchWord'
 import circle from './circle'
 import circleTag from './circleTag'
-
+import adminCheck from './admin/adminCheck'
+import adminCircle from './admin/adminCircle'
+import adminSetState from './admin/adminSetState'
+import adminEventState from './admin/adminEventState'
 
 const reducer = combineReducers({
   search,
@@ -21,7 +24,12 @@ const reducer = combineReducers({
   searchWord,
   circle,
   circleTag,
-  like
+  like,
+
+  adminCheck,
+  adminCircle,
+  adminSetState,
+  adminEventState
 })
 
 export default reducer

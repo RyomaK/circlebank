@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 
 class Auth extends Component{
   componentWillMount(){
-
     this.props.LoginCheck();
   }
 
