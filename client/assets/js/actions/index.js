@@ -160,6 +160,7 @@ export const logout = () => dispatch => {
       switch (status){
         case 202:{
           dispatch({type:'LOGOUT'});
+          dispatch({type:'ADMIN_LOGOUT'})
           break;
         }
         default: {
@@ -331,6 +332,77 @@ export const tagSearch = id => dispatch => {
     .catch(() => {
       console.log("エラーtagSearchStart")
     });
+}
+
+export const getComment = (name) => dispatch =>{
+  const Auth = getAuth();
+  axios
+  .get(`/api/user/${name}/comment`,{headers:{'Authorization':`Bearer ${Auth}`}})
+  .then((results) => {
+    console.log(results)
+    const status = results.status
+    const comment = results.data.comment.university
+    return{status,comment}
+  }).then(({status,comment})=>{
+    switch(status){
+      case 200:
+        dispatch({type:'GET_COMMENT',comment})
+        break;
+      default:
+        break;
+    }
+  })
+  .catch((e) => {
+    console.log(e);
+  });
+}
+export const comment = (circleName, circle_Id, text)=> dispatch => {
+  const Auth = getAuth();
+  var params = new URLSearchParams();
+  params.append('circle_id',circle_Id);
+  params.append('point',1);
+  params.append('text',text);
+  axios
+  .post(`/api/user/${circleName}/comment`,params,{headers:{'Authorization':`Bearer ${Auth}`}})
+  .then((results) => {
+    console.log(results)
+    const status = results.status
+    return{status}
+  }).then(({status})=>{
+    switch(status){
+      case 200:
+        break;
+      default:
+        break;
+    }
+  })
+  .catch((e) => {
+    console.log(e);
+  });
+}
+
+export const deleteComment = (circleName,circleId)=> dispatch => {
+  const Auth = getAuth();
+  const headers = {'Authorization':`Bearer ${Auth}`}
+  const data = new FormData();
+  data.append('circle_id',circleId);
+  axios
+  .delete(`/api/user/${circleName}/comment`,{headers,data})
+  .then((results) => {
+    console.log(results)
+    const status = results.status
+    return{status}
+  }).then(({status})=>{
+    switch(status){
+      case 200:
+        break;
+      default:
+        break;
+    }
+  })
+  .catch((e) => {
+    console.log(e);
+  });
 }
 
 export const like = circleId => dispatch => {

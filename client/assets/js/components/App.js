@@ -10,8 +10,9 @@ import SearchResult from './SearchResult'
 import Auth from './Auth'
 import UserPage from './UserPage'
 import TagPage from './TagPage'
+import Comment from './Comment'
 
-import AdminAuth from './admin/AdminAuth'
+
 import { BrowserRouter, Route, Link, Switch} from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { connect } from 'react-redux'
@@ -24,25 +25,23 @@ const App =() => {
           <MuiThemeProvider>
             <div>
               <Header />
-              <Auth>
-                <SearchForm/>
-              </Auth>
-              <Switch>
                 <Route path='/login' component={LoginPage}/>
                 <Route path='/signup' component={SignupPage}/>
-                <AdminAuth>
+
                 <Auth>
+                  <div>
+                  <SearchForm/>
                   <Switch>
                     <Route exact path='/' component={MainPage}/>
-                    <Route path='/user' component={UserPage}/>
+                    <Route exact path='/user' component={UserPage}/>
                     <Route exact path='/circle/:name' component={SearchResult}/>
                     <Route exact path='/circle/search/:name' component={CirclePage}/>
-                    <Route path='/tag/:id' component={TagPage}/>
+                    <Route exact path='/tag/:id' component={TagPage}/>
+                    <Route exact path='/user/:id/:name/comment' component={Comment}/>
                     <Route component={ NotFound }/>
                   </Switch>
+                  </div>
                 </Auth>
-                </AdminAuth>
-                </Switch>
             </div>
           </MuiThemeProvider>
         </BrowserRouter>

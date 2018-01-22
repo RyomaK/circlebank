@@ -4,6 +4,10 @@ const adminCheck = (state={admin:false},action) => {
       return{
         admin:true
       }
+    case 'ADMIN_LOGOUT':
+      return{
+        admin:false
+      }
     default:
       return(
         state
