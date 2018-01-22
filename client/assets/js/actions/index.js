@@ -160,6 +160,7 @@ export const logout = () => dispatch => {
       switch (status){
         case 202:{
           dispatch({type:'LOGOUT'});
+          dispatch({type:'ADMIN_LOGOUT'})
           break;
         }
         default: {

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Home from './admin/Home'
 import CirclePage from './admin/CirclePage'
 import AddEvent from './admin/AddEvent'
-import { Redirect, Route} from 'react-router-dom'
+import { Redirect, Route, Switch} from 'react-router-dom'
 import { loginCheck,adminCheck} from '../actions/index'
 import { connect } from 'react-redux'
 
