@@ -32,7 +32,7 @@ class AdminAuth extends Component{
 
       return(
         <div>
-        <Route children={this.props.children} />
+        {this.props.children}
         </div>
       )
     }

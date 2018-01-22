@@ -31,7 +31,7 @@ const App =() => {
               <Switch>
                 <Route path='/login' component={LoginPage}/>
                 <Route path='/signup' component={SignupPage}/>
-                <AdminAuth>
+
                 <Auth>
                   <Switch>
                     <Route exact path='/' component={MainPage}/>
@@ -43,7 +43,6 @@ const App =() => {
                     <Route component={ NotFound }/>
                   </Switch>
                 </Auth>
-                </AdminAuth>
                 </Switch>
             </div>
           </MuiThemeProvider>
