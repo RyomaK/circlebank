@@ -10,6 +10,7 @@ import SearchResult from './SearchResult'
 import Auth from './Auth'
 import UserPage from './UserPage'
 import TagPage from './TagPage'
+import Comment from './Comment'
 
 import AdminAuth from './admin/AdminAuth'
 import { BrowserRouter, Route, Link, Switch} from 'react-router-dom';
@@ -34,10 +35,11 @@ const App =() => {
                 <Auth>
                   <Switch>
                     <Route exact path='/' component={MainPage}/>
-                    <Route path='/user' component={UserPage}/>
+                    <Route exact path='/user' component={UserPage}/>
                     <Route exact path='/circle/:name' component={SearchResult}/>
                     <Route exact path='/circle/search/:name' component={CirclePage}/>
-                    <Route path='/tag/:id' component={TagPage}/>
+                    <Route exact path='/tag/:id' component={TagPage}/>
+                    <Route exact path='/user/:id/:name/comment' component={Comment}/>
                     <Route component={ NotFound }/>
                   </Switch>
                 </Auth>
