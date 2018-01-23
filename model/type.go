@@ -1,6 +1,9 @@
 package model
 
-import "time"
+import (
+	"database/sql"
+	"time"
+)
 
 type CircleDetail struct {
 	Circle Circle
@@ -55,11 +58,11 @@ type User struct {
 }
 
 type Comment struct {
-	ID     uint   `db:"id" json:"id"`
-	Name   string `db:"name" json:"name"`
-	Gender string `db:"gender" json:"gender"`
-	Point  int    `db:"point" json:"point"`
-	Text   string `db:"university" json:"university"`
+	ID     sql.NullInt64  `db:"id" json:"id"`
+	Name   sql.NullString `db:"name" json:"name"`
+	Gender sql.NullString `db:"gender" json:"gender"`
+	Point  sql.NullInt64  `db:"point" json:"point"`
+	Text   sql.NullString `db:"text" json:"text"`
 }
 
 type Userschedule struct {

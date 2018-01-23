@@ -301,27 +301,42 @@ ___成功した場合cookieに新しくJwtを付与するから，また"Bearer 
 [
     {
         "circle": {
-            "id": 2,
-            "name": "fly speck",
-            "url_name": "flyspeck",
-            "number": 100,
+            "id": 1,
+            "name": "hands up",
+            "url_name": "handsup",
+            "number": 30,
             "gender_ratio": "1:1",
-            "image": "1",
-            "introduction": "テニス",
-            "message_for_fresh": "いつでもきてねえええ",
-            "delegete_name": "大野",
-            "delegete_contact": "arashi@mail.com",
-            "campus": "京田辺/今出川",
-            "excite": 9,
-            "fee": 3000,
+            "image": "img/circles/1.png",
+            "introduction": "アットホームなバスケットボールサークルです",
+            "message_for_fresh": "いつでもきてね",
+            "delegete_name": "田中",
+            "delegete_contact": "tanaka@mail.com",
+            "campus": "京田辺",
+            "excite": 3,
+            "fee": 5000,
             "university": "同志社大学"
         },
         "comment": {
-            "id": 1,
-            "name": "栗栖",
-            "gender": "男",
-            "point": 4,
-            "university": "良い"
+            "id": {
+                "Int64": 4,
+                "Valid": true
+            },
+            "name": {
+                "String": "栗栖",
+                "Valid": true
+            },
+            "gender": {
+                "String": "男",
+                "Valid": true
+            },
+            "point": {
+                "Int64": 22,
+                "Valid": true
+            },
+            "text": {
+                "String": "良すぎ\n",
+                "Valid": true
+            }
         }
     },
     {
@@ -342,11 +357,26 @@ ___成功した場合cookieに新しくJwtを付与するから，また"Bearer 
             "university": "同志社大学"
         },
         "comment": {
-            "id": 3,
-            "name": "栗栖",
-            "gender": "男",
-            "point": 5,
-            "university": "rsだf\n"
+            "id": {
+                "Int64": 0,
+                "Valid": false
+            },
+            "name": {
+                "String": "栗栖",
+                "Valid": true
+            },
+            "gender": {
+                "String": "男",
+                "Valid": true
+            },
+            "point": {
+                "Int64": 0,
+                "Valid": false
+            },
+            "text": {
+                "String": "",
+                "Valid": false
+            }
         }
     }
 ]

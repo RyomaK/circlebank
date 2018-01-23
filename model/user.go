@@ -77,8 +77,8 @@ func GetUser(db *sql.DB, mail string) (*Userschedule, error) {
 		return &Userschedule{}, err
 	}
 	return &Userschedule{
-		User:   user,
-		Events: events,
+		User:   *user,
+		Events: *events,
 	}, nil
 }
 
