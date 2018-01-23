@@ -1,17 +1,18 @@
 package circlebank
 
 import (
-	"encoding/json"
 	"net/http"
-
-	"github.com/ryomak/circlebank/controller"
 )
 
 func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
-	w = controller.SetHeader(w, http.StatusNotFound)
-	status := controller.StatusCode{Code: http.StatusNotFound, Message: "cannot regist event"}
-	res, _ := json.Marshal(status)
-	w.Write(res)
+	/*
+		w = controller.SetHeader(w, http.StatusNotFound)
+		status := controller.StatusCode{Code: http.StatusNotFound, Message: "not found"}
+		res, _ := json.Marshal(status)
+		w.Write(res)
+	*/
+	w.Header().Set("location", "/")
+	w.WriteHeader(http.StatusTemporaryRedirect)
 }
 func Index(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "public/index.html")

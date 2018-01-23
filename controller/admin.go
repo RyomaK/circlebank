@@ -170,7 +170,7 @@ func (a *Admin) PostAdminCircleEventHandler(w http.ResponseWriter, r *http.Reque
 	circle_id, err := strconv.Atoi(vars["circle_id"])
 	if err != nil {
 		log.Printf("post admin event err %v\n", err)
-		w = SetHeader(w, http.StatusNotFound)
+		w = SetHeader(w, http.StatusBadRequest)
 		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot regist event"}
 		res, _ := json.Marshal(status)
 		w.Write(res)
@@ -179,7 +179,7 @@ func (a *Admin) PostAdminCircleEventHandler(w http.ResponseWriter, r *http.Reque
 	b, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		log.Printf("post admin event err %v\n", err)
-		w = SetHeader(w, http.StatusNotFound)
+		w = SetHeader(w, http.StatusBadRequest)
 		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot regist event"}
 		res, _ := json.Marshal(status)
 		w.Write(res)
