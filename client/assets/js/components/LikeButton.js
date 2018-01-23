@@ -11,25 +11,20 @@ class LikeButton extends Component{
       like:false
     }
   }
-
-  componentDidMount(){
-
-  }
   handleClick1(e){
     e.preventDefault()
-    console.log(this.props.id)
     this.props.Delete(this.props.id);
   }
 
   handleClick2(e){
     e.preventDefault();
-    console.log(this.props.id)
     this.props.Like(this.props.id);
   }
   render(){
     let count = 0;
     this.props.like.map((like)=>{
-      if(like.id == this.props.id){
+      console.log(like)
+      if(like.circle.id == this.props.id){
         count++;
       }else{
       }

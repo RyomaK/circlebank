@@ -1,5 +1,6 @@
 const like = (state="",action) => {
   switch(action.type){
+
     case 'LIKE':
       return{
         circle: action.circle
