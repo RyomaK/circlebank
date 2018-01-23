@@ -13,7 +13,7 @@ class SearchResult extends Component{
     }else{
       return(
         <div>
-          <Row>
+
             <Menu/>
             <Col sm={9} className="paper">
               <div className="SearchResult ">
@@ -21,7 +21,7 @@ class SearchResult extends Component{
                 <Link to={`/circle/search/${this.props.url_name}`}><h3>{this.props.circle.name}</h3></Link>
               </div>
             </Col>
-          </Row>
+          
         </div>
       )
 
