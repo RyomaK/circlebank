@@ -59,6 +59,9 @@ body{
     margin-top:100px;
     display: 'inline-block';
   }
+  .topmargin{
+    margin-top:100px;
+  }
 }
 
 .circlePage{
