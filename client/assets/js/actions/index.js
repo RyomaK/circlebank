@@ -172,33 +172,29 @@ export const logout = () => dispatch => {
 }
 
 export const loginCheck = () => dispatch => {
-
+    let status = 0;
     const Auth = getAuth();
-    axios
-    .get('/api/doshisha/circle',{headers: { "Authorization": `Bearer ${Auth}`}})
-    .then((results) => {
-      const status = results.status
-      return { status };
-    })
-    .then(({status})=> {
+      if(Auth){
+        status = 200
+      }else{
+        status = 401
+      }
       switch (status) {
-        case 200: {
+        case 200:
+
           dispatch(setLogin(1));
           break;
-        }
-        case 401: {
+
+        case 401:
           dispatch(setLogin(-1));
-        }
-        default: {
+          break;
+
+        default:
           dispatch(setErrorMessage('エラーが発生しました'));
           break;
         }
-      }
-    })
-    .catch((e) => {
-      console.log("loginCheckerror")
-    });
-}
+    }
+
 
 export const circleSearch = name => dispatch => {
   const Auth = getAuth();
@@ -521,8 +517,11 @@ export const EventFee = fee => dispatch => dispatch({type: 'EVENT_FEE',fee});
 export const EventCapacity = capacity => dispatch => dispatch({type: 'EVENT_CAPACITY',capacity});
 
 
-export const adminCheck = () => dispatch => {
-  const Auth = getAuth();
+export const adminCheck = (id) => dispatch => {
+  let Auth =''
+  if(id=='admin@user1234'){
+  Auth = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBdXRob3JpdHkiOiJhZG1pbnVzZXIiLCJNYWlsIjoiYWRtaW5AdXNlcjEyMzQifQ.b5rkA7_fzseEf-3wdxKpNVWn3qfj81w67rf9lpTWp5g'
+  }
     axios
     .get('/admin/doshisha/circle',{headers:{'Authorization':`Bearer ${Auth}`}})
     .then((results) => {

@@ -5,7 +5,7 @@ import ActionFavorite from 'material-ui/svg-icons/action/favorite';
 import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
 import Visibility from 'material-ui/svg-icons/action/visibility';
 import VisibilityOff from 'material-ui/svg-icons/action/visibility-off';
-import { setEmail,setPassword,login} from '../actions/index'
+import { setEmail,setPassword,login,adminCheck} from '../actions/index'
 import { connect } from 'react-redux'
 import {Col,Form,FormGroup,FormControl,Button} from "react-bootstrap"
 import { Link, withRouter} from 'react-router-dom'
@@ -17,6 +17,8 @@ class LoginForm extends Component {
     e.preventDefault()
 
     this.props.login(this.props.info);
+    this.props.AdminCheck(this.props.info.email)
+
     this.props.history.push('/');
 
   }
@@ -106,6 +108,9 @@ const mapDispatchToProps = dispatch => {
       },
       login: data => {
         dispatch(login(data))
+      },
+      AdminCheck: (data) => {
+        dispatch(adminCheck(data))
       }
   }
 }
