@@ -433,6 +433,7 @@ export const getlike = () => dispatch => {
 
       const status = results.status
       let circle = results.data.circle
+      console.log(results)
       if(!circle){
         circle = []
       }

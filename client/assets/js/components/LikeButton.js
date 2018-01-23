@@ -11,19 +11,13 @@ class LikeButton extends Component{
       like:false
     }
   }
-
-  componentDidMount(){
-
-  }
   handleClick1(e){
     e.preventDefault()
-    console.log(this.props.id)
     this.props.Delete(this.props.id);
   }
 
   handleClick2(e){
     e.preventDefault();
-    console.log(this.props.id)
     this.props.Like(this.props.id);
   }
   render(){

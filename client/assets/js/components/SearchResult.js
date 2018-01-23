@@ -18,7 +18,7 @@ class SearchResult extends Component{
             <Col xs ={12} sm={8} className="paper">
               <div className="SearchResult ">
                 <h2>検索結果</h2>
-                <Link to={`/circle/search/${this.props.url_name}`}><h3>{this.props.circle.name}</h3></Link>
+                <Link to={`/circle/search/${this.props.circle.url_name}`}><h3>{this.props.circle.name}</h3></Link>
               </div>
             </Col>
 
