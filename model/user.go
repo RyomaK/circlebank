@@ -54,7 +54,7 @@ func GetUserPass(db *sql.DB, mail string) string {
 	return pass
 }
 
-func GetUser(db *sql.DB, mail string) (Userschedule, error) {
+func GetUser(db *sql.DB, mail string) (*Userschedule, error) {
 	row := db.QueryRow(`
 		SELECT users.id,universities.name as university ,users.name,users.gender,users.mail,users.password,users.image,users.year,users.department,users.subject
 		from users
@@ -64,7 +64,7 @@ func GetUser(db *sql.DB, mail string) (Userschedule, error) {
 	user, err := ScanUser(row)
 	if err != nil {
 		log.Printf("mail:%v,err:%v", mail, err)
-		return Userschedule{}, err
+		return &Userschedule{}, err
 	}
 	rows, _ := db.Query(`SELECT events.id ,events.name,events.image,events.agenda,events.place,events.detail,events.capacity,events.fee
 		from users
@@ -74,9 +74,9 @@ func GetUser(db *sql.DB, mail string) (Userschedule, error) {
 	events, err := ScanEvents(rows)
 	if err != nil {
 		log.Printf("mail:%v,err:%v", mail, err)
-		return Userschedule{}, err
+		return &Userschedule{}, err
 	}
-	return Userschedule{
+	return &Userschedule{
 		User:   user,
 		Events: events,
 	}, nil

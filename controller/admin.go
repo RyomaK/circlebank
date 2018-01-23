@@ -3,6 +3,7 @@ package controller
 import (
 	"database/sql"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -17,8 +18,11 @@ type Admin struct {
 	DB *sql.DB
 }
 
-func (a *Admin) AdminCircleHandler(w http.ResponseWriter, r *http.Request) {
+func (a *Admin) Index(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "public/index.html")
+}
 
+func (a *Admin) AdminCircleHandler(w http.ResponseWriter, r *http.Request) {
 	q := r.URL.Query()
 	vars := mux.Vars(r)
 	page, err := strconv.Atoi(q.Get("page"))
@@ -26,21 +30,21 @@ func (a *Admin) AdminCircleHandler(w http.ResponseWriter, r *http.Request) {
 		page = 1
 	}
 	circles, err := model.GetCircles(a.DB, vars["univ"], page)
-
+	fmt.Printf("ffaf\n")
 	if err != nil {
 		log.Printf("adminCircle err %v", err)
 		w = SetHeader(w, http.StatusNotFound)
 		status := StatusCode{Code: http.StatusNotFound, Message: "not found"}
-		a, _ := json.Marshal(status)
-		w.Write(a)
-	} else {
-		a, err := json.Marshal(circles)
-		if err != nil {
-			log.Printf("Marshal %v", err)
-		}
-		w = SetHeader(w, http.StatusOK)
-		w.Write(a)
+		res, _ := json.Marshal(status)
+		w.Write(res)
+		return
 	}
+	res, err := json.Marshal(circles)
+	if err != nil {
+		log.Printf("Marshal %v", err)
+	}
+	w = SetHeader(w, http.StatusOK)
+	w.Write(res)
 }
 
 func (a *Admin) AdminCircleEventHandler(w http.ResponseWriter, r *http.Request) {
@@ -56,15 +60,15 @@ func (a *Admin) AdminCircleEventHandler(w http.ResponseWriter, r *http.Request) 
 		log.Printf("adminCircle err %v", err)
 		w = SetHeader(w, http.StatusNotFound)
 		status := StatusCode{Code: http.StatusNotFound, Message: "not found"}
-		a, _ := json.Marshal(status)
-		w.Write(a)
+		res, _ := json.Marshal(status)
+		w.Write(res)
 	} else {
-		a, err := json.Marshal(events)
+		res, err := json.Marshal(events)
 		if err != nil {
 			log.Printf("Marshal %v", err)
 		}
 		w = SetHeader(w, http.StatusOK)
-		w.Write(a)
+		w.Write(res)
 	}
 }
 

@@ -103,7 +103,6 @@ func (s *Server) Route(addr string) {
 	//一覧表示
 	b.Path("/{univ}/circle").HandlerFunc(admins.AdminCircleHandler).Methods("GET")
 	b.Path("/{univ}/circle/event").HandlerFunc(admins.AdminCircleEventHandler).Methods("GET")
-	b.Path("/{univ}/circle/{circle_name}").HandlerFunc(admins.AdminCircleDetailHandler).Methods("GET")
 	//データ入力
 	b.Path("/tag").HandlerFunc(admins.PostAdminTagHandler).Methods("POST")
 	b.Path("/{univ}/circle").HandlerFunc(admins.PostAdminCircleHandler).Methods("POST")
