@@ -3,38 +3,37 @@ package model
 import "time"
 
 type CircleDetail struct {
-	ID              uint   `db:"id" json:"id"`
-	Name            string `db:"name" json:"name"`
-	Number          string `db:"number" json:"number"`
-	Introduce       string `db:"introduction" json:"introduction"`
-	MessageForFresh string `db:"message_fresh" json:"message_fresh"`
-	DelegeteName    string `db:"delegete_name" json:"delegete_name"`
-	DelegeteContact string `db:"delegete_contact" json:"delegete_contact"`
-	Campus          string `db:"campus" json:"campus"`
-	Excite          uint   `db:"excite" json:"excite"`
-	Fee             uint   `db:"fee" json:"fee"`
-	University      string `db:"university" json:"university"`
+	Circle Circle
+	Events []Event `db:"events" json:"events"`
+	Tags   []Tag   `db:"tags" json:"tags"`
 }
 
 type Circle struct {
-	ID        uint   `db:"id" json:"id"`
-	Name      string `db:"name" json:"name"`
-	Number    string `db:"number" json:"number"`
-	Introduce string `db:"introduction" json:"introduction"`
-	Campus    string `db:"campus" json:"campus"`
-	Excite    uint   `db:"excite" json:"excite"`
-	Fee       uint   `db:"fee" json:"fee"`
+	ID              uint   `db:"id" json:"id"`
+	Name            string `db:"name" json:"name"`
+	URLName         string `db:"url_name" json:"url_name"`
+	Number          int    `db:"number" json:"number"`
+	GenderRatio     string `db:"gender_ratio" json:"gender_ratio"`
+	Image           string `db:"image" json:"image"`
+	Introduction    string `db:"introduction" json:"introduction"`
+	MessageForFresh string `db:"message_for_fresh" json:"message_for_fresh"`
+	DelegeteName    string `db:"delegete_name" json:"delegete_name"`
+	DelegeteContact string `db:"delegete_contact" json:"delegete_contact"`
+	Campus          string `db:"campus" json:"campus"`
+	Excite          int    `db:"excite" json:"excite"`
+	Fee             int    `db:"fee" json:"fee"`
+	University      string `db:"university" json:"university"`
 }
 
 type Event struct {
-	ID         uint      `db:"id" json:"id"`
-	Name       string    `db:"name" json:"name"`
-	Content    string    `db:"number" json:"number"`
-	Agenda     time.Time `db:"introduction" json:"introduction"`
-	Detail     string    `db:"message_fresh" json:"message_fresh"`
-	Capacity   uint      `db:"excite" json:"excite"`
-	Fee        uint      `db:"fee" json:"fee"`
-	University string    `db:"university" json:"university"`
+	ID       uint      `db:"id" json:"id"`
+	Name     string    `db:"name" json:"name"`
+	Image    string    `db:"image" json:"image"`
+	Agenda   time.Time `db:"agenda" json:"agenda"`
+	Place    string    `db:"place" json:"place"`
+	Detail   string    `db:"detail" json:"detail"`
+	Capacity int       `db:"capacity" json:"capacity"`
+	Fee      int       `db:"fee" json:"fee"`
 }
 
 type Tag struct {
@@ -46,11 +45,46 @@ type User struct {
 	ID         uint   `db:"id" json:"id"`
 	University string `db:"university" json:"university"`
 	Name       string `db:"name" json:"name"`
-	Sex        string `db:"sex" json:"sex"`
+	Gender     string `db:"gender" json:"gender"`
 	Mail       string `db:"mail" json:"mail"`
 	Password   string `db:"password" json:"password"`
 	Image      string `db:"image" json:"image"`
 	Year       int    `db:"year" json:"year"`
 	Department string `db:"department" json:"department"`
 	Subject    string `db:"subject" json:"subject"`
+}
+
+type Comment struct {
+	ID     uint   `db:"id" json:"id"`
+	Name   string `db:"name" json:"name"`
+	Gender string `db:"gender" json:"gender"`
+	Point  int    `db:"point" json:"point"`
+	Text   string `db:"university" json:"university"`
+}
+
+type Userschedule struct {
+	User   User
+	Events []Event `db:"events" json:"events"`
+}
+
+type UserCircleLikes struct {
+	Circle []Circle `db:"circle" json:"circle"`
+}
+
+type CircleComment struct {
+	Circle  Circle
+	Comment Comment `db:"comment" json:"comment"`
+}
+
+type AdminCircleEvents struct {
+	ID         uint      `db:"id" json:"id"`
+	Name       string    `db:"name" json:"name"`
+	Image      string    `db:"image" json:"image"`
+	Agenda     time.Time `db:"agenda" json:"agenda"`
+	Place      string    `db:"place" json:"place"`
+	Detail     string    `db:"detail" json:"detail"`
+	Capacity   int       `db:"capacity" json:"capacity"`
+	Fee        int       `db:"fee" json:"fee"`
+	CircleID   int       `db:"circle_id" json:"circle_id"`
+	CircleName string    `db:"circle_name" json:"circle_name"`
 }

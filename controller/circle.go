@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"fmt"
 	"net/http"
 
 	"database/sql"
@@ -9,8 +8,8 @@ import (
 
 	"log"
 
-	"github.com/RyomaK/circlebank/model"
 	"github.com/gorilla/mux"
+	"github.com/ryomak/circlebank/model"
 )
 
 type Circle struct {
@@ -18,10 +17,10 @@ type Circle struct {
 }
 
 func (c *Circle) CircleHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("circlehandler")
+
 	vars := mux.Vars(r)
-	//ここにeventの配列も後で追加
-	circle, err := model.GetCircleDetail(c.DB, vars["univ"], vars["id"])
+	circle, err := model.GetCircleDetail(c.DB, vars["univ"], vars["circle_name"])
+
 	if err != nil {
 		log.Printf("getCircleDetail err %v", err)
 		w = SetHeader(w, http.StatusNotFound)
@@ -36,12 +35,11 @@ func (c *Circle) CircleHandler(w http.ResponseWriter, r *http.Request) {
 		w = SetHeader(w, http.StatusOK)
 		w.Write(a)
 	}
+
 }
 
 func (c *Circle) UnivCircleHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("univcirclehandler")
 	vars := mux.Vars(r)
-	//ここにeventの配列も後で追加
 	circles, err := model.GetUnivCircles(c.DB, vars["univ"])
 	if err != nil {
 		log.Printf("getCircleDetail err %v", err)
@@ -60,7 +58,6 @@ func (c *Circle) UnivCircleHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func (c *Circle) SearchHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("searchhandler")
 	vars := mux.Vars(r)
 	tags, err := model.GetTags(c.DB, vars["univ"])
 	if err != nil {
@@ -88,12 +85,13 @@ func (c *Circle) TagCirclesHandler(w http.ResponseWriter, r *http.Request) {
 		status := StatusCode{Code: http.StatusNotFound, Message: "not found"}
 		a, _ := json.Marshal(status)
 		w.Write(a)
-	} else {
-		a, err := json.Marshal(circles)
-		if err != nil {
-			log.Printf("err %v", err)
-		}
-		w = SetHeader(w, http.StatusOK)
-		w.Write(a)
+		return
 	}
+	a, err := json.Marshal(circles)
+	if err != nil {
+		log.Printf("err %v", err)
+	}
+	w = SetHeader(w, http.StatusOK)
+	w.Write(a)
+
 }

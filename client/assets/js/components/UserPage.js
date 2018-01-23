@@ -1,16 +1,25 @@
 import React, { Component } from 'react'
 import UserBox from './UserBox'
-import { getUserInfo } from '../actions/index'
+import ImageUp from './ImageUp'
+import Menu from './Menu'
+import {Row} from "react-bootstrap"
+import { getUserInfo, image } from '../actions/index'
 import { connect } from 'react-redux'
 
 class UserPage extends Component{
-  componentDidMount(){
-    this.props.getUser();
-  }
-  render(){
+
+componentWillMount(){
+  this.props.getUser();
+  this.props.getImage();
+}
+
+render(){
     return(
       <div>
-        <UserBox data={this.props.user}/>
+        <Row>
+          <Menu/>
+          <UserBox data={this.props.user} />
+        </Row>
       </div>
     )
   }
@@ -18,7 +27,8 @@ class UserPage extends Component{
 
 const mapStateToProps = state => {
   return{
-    user: state.user
+    user: state.user,
+    image: state.image.image
   }
 }
 
@@ -26,9 +36,13 @@ const mapDispatchToProps = dispatch => {
   return{
     getUser: () => {
       dispatch(getUserInfo())
+    },
+    getImage: () => {
+      dispatch(image())
     }
   }
 }
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps

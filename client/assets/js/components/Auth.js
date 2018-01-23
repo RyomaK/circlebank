@@ -1,41 +1,55 @@
 import React, { Component } from 'react'
+import Home from './admin/Home'
+import CirclePage from './admin/CirclePage'
+import AddEvent from './admin/AddEvent'
 import { Redirect, Route} from 'react-router-dom'
 import { loginCheck } from '../actions/index'
 import { connect } from 'react-redux'
 
 class Auth extends Component{
   componentWillMount(){
-    console.log("a")
     this.props.LoginCheck();
   }
-  componentWillReceiveProps(){
-    console.log("i")
+
+  componentWillUpdate(){
     this.props.LoginCheck();
   }
+
 
   render(){
 
     const isLogin = this.props.isLogin
-    if(isLogin=="true"){
+    const admin = this.props.admin
+    if((isLogin=="true")&&(admin==true)){
 
       return(
         <div>
-        <Route children={this.props.children} />
+          <Route exact path='/' component={Home}/>
+          <Route exact path='/admin/circle' component={CirclePage}/>
+          <Route exact path='/admin/add/:id/event' component={AddEvent}/>
         </div>
       )
-    }else{
+    }else if((isLogin=="true")&&(admin==false)){
+      return(
+      <div>
+      <Route children={this.props.children} />
+      </div>
+    )
 
+    }else{
       return(
 
         <Redirect to="/login" />
       )
+
     }
   }
 
 }
 const mapStateToProps = state => {
   return{
-    isLogin: state.loginCheck.isLogin
+    isLogin: state.loginCheck.isLogin,
+    admin: state.adminCheck.admin
   }
 }
 const mapDispatchToProps = dispatch => {

@@ -1,45 +1,150 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { setUniversity,setName,setSex,setEmail,setDepartment,setSubject,settYear,setPassword,signup } from '../actions/index'
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
+import TextField from 'material-ui/TextField';
+import Checkbox from 'material-ui/Checkbox';
+import Visibility from 'material-ui/svg-icons/action/visibility';
+import VisibilityOff from 'material-ui/svg-icons/action/visibility-off';
+import { setUniversity,setName,setSex,setEmail,setDepartment,setSubject,settYear,setPassword,signup,selectUniversity } from '../actions/index'
 import { connect } from 'react-redux'
-import {Col,Form,FormGroup,FormControl,Button,Checkbox} from "react-bootstrap"
+import { Link, withRouter} from 'react-router-dom'
+import {Row,Col,Form,FormGroup,FormControl,DropdownButton} from "react-bootstrap"
+import FlatButton from 'material-ui/FlatButton';
+
+const univerBox = [{tag:0,name:"同志社大学"},{tag:1,name:"同志社女子大学"}]
+const departmentBox = [[{tag:0,name:"神学部"},{tag:1,name:"文学部"},{tag:2,name:"法学部"},
+{tag:3,name:"社会学部"},{tag:4,name:"経済学部"},{tag:5,name:"商学部"},{tag:6,name:"政策学部"},
+{tag:7,name:"文化情報学部"},{tag:8,name:"理工学部"},{tag:9,name:"生命医科学部"},{tag:10,name:"スポーツ健康科学部"},
+{tag:11,name:"心理学部"},{tag:12,name:"グローバル・コミュニケーション学部"},{tag:13,name:"グローバル地域文化学部"}],
+[{tag:0,name:"学芸学部"},{tag:1,name:"現代社会学部"},{tag:2,name:"薬学部"},{tag:3,name:"表象文化学部"},
+{tag:4,name:"生活科学部"},{tag:5,name:"看護学部"}]]
+const subjectBox = [[[{tag:0,name:"神学科"}],
+[{tag:0,name:"英文学科"},{tag:1,name:"哲学科"},{tag:2,name:"美学芸術学科"},{tag:3,name:"文化史学科"},{tag:4,name:"国文学科"}],
+[{tag:0,name:"社会学科"},{tag:1,name:"社会福祉学科"},{tag:2,name:"メディア学科"},{tag:3,name:"産業関係学科"},{tag:4,name:"教育文化学科"}],
+[{tag:0,name:"法律学科"},{tag:1,name:"政治学科"}],
+[{tag:0,name:"経済学科"}],
+[{tag:0,name:"商学科"}],
+[{tag:0,name:"政策学科"}],
+[{tag:0,name:"文化情報学科"}],
+[{tag:0,name:"インテリジェント情報工学科"},{tag:1,name:"情報システムデザイン学科"},{tag:2,name:"電気工学科"},{tag:3,name:"電子工学科"},{tag:4,name:"機械システム工学科"},
+{tag:5,name:"エネルギー機械工学科"},{tag:6,name:"機能分子・生命科学科"},{tag:7,name:"科学システム創世工学科"},{tag:8,name:"環境システム学科"},{tag:9,name:"数理システム学科"}],
+[{tag:0,name:"医工学科"},{tag:1,name:"医情報学科"},{tag:2,name:"医生命システム学科"}],
+[{tag:0,name:"スポーツ健康科学科"}],
+[{tag:0,name:"心理学科"}],
+[{tag:0,name:"グローバル・コミュニケーション学科"}],
+[{tag:0,name:"グローバル地域文化学科"}]],
+[[{tag:0,name:"音楽学科"},{tag:1,name:"創造学科(情報メディア学科)"},{tag:2,name:"国際教養学科"}],
+  [{tag:0,name:"社会システム学科"},{tag:1,name:"現代こども学科"}],
+  [{tag:0,name:"医療薬学科"}],
+  [{tag:0,name:"日本語日本文学科"},{tag:1,name:"英語英文学科"}],
+  [{tag:0,name:"人間生活学科"}],
+  [{tag:0,name:"植物栄養科学科"}],
+  [{tag:0,name:"看護学科"}]]]
+const year = [{tag:0,year:"2018"},{tag:1,year:"2017"},{tag:2,year:"2016"}]
+const sexBox = [{tag:0,sex:"男"},{tag:1,sex:"女"}]
+
+
+
 
 class SignupForm extends Component{
+
   constructor(props) {
     super(props);
-    this.state = {check: "true"};
+    this.state = {checked: true,value1:0,value2:0,value3:0,value4:0,value5:0};
   }
+
+
 
   handleSubmit(e){
     e.preventDefault();
+
     this.props.signup(this.props.info)
+    this.props.history.push('/');
+
+  }
+
+  handleChange1(event, index, value){
+    const value1 = value
+    const value2 = 0
+    const value3 = 0
+    const value4 = this.state.value4
+    const value5 = this.state.value5
+    this.setState({value1:value,value2:0,value3:0});
+    this.props.setUniversity(univerBox[value1].name);
+    this.props.setDepartment(departmentBox[value1][value2].name);
+    this.props.setSubject(subjectBox[value1][value2][value3].name);
+    this.props.settYear(year[value4].year);
+    this.props.setSex(sexBox[value5].sex);
+  }
+  handleChange2(event, index, value){
+    const value1 = this.state.value1
+    const value2 = value
+    const value3 = 0
+    const value4 = this.state.value4
+    const value5 = this.state.value5
+    this.setState({value2:value,value3:0});
+    this.props.setUniversity(univerBox[value1].name);
+    this.props.setDepartment(departmentBox[value1][value2].name);
+    this.props.setSubject(subjectBox[value1][value2][value3].name);
+    this.props.settYear(year[value4].year);
+    this.props.setSex(sexBox[value5].sex);
+
+
+  }
+  handleChange3(event, index, value){
+    const value1 = this.state.value1
+    const value2 = this.state.value2
+    const value3 = value
+    const value4 = this.state.value4
+    const value5 = this.state.value5
+
+    this.setState({value3:value});
+    this.props.setUniversity(univerBox[value1].name);
+    this.props.setDepartment(departmentBox[value1][value2].name);
+    this.props.setSubject(subjectBox[value1][value2][value3].name);
+    this.props.settYear(year[value4].year);
+    this.props.setSex(sexBox[value5].sex);
+
+  }
+
+  handleChange4(event, index, value){
+    const value1 = this.state.value1
+    const value2 = this.state.value2
+    const value3 = this.state.value3
+    const value4 = value
+    const value5 = this.state.value5
+    this.setState({value4:value});
+    this.props.setUniversity(univerBox[value1].name);
+    this.props.setDepartment(departmentBox[value1][value2].name);
+    this.props.setSubject(subjectBox[value1][value2][value3].name);
+    this.props.settYear(year[value4].year);
+    this.props.setSex(sexBox[value5].sex);
+
+  }
+  handleChange5(event, index, value){
+    const value1 = this.state.value1
+    const value2 = this.state.value2
+    const value3 = this.state.value3
+    const value4 = this.state.value4
+    const value5 = value
+    this.setState({value5:value});
+    this.props.setUniversity(univerBox[value1].name);
+    this.props.setDepartment(departmentBox[value1][value2].name);
+    this.props.setSubject(subjectBox[value1][value2][value3].name);
+    this.props.settYear(year[value4].year);
+    this.props.setSex(sexBox[value5].sex);
   }
 
 
   handleChange(e){
-
     switch(e.target.name){
-      case 'university':
-        this.props.setUniversity(e.target.value)
-      break;
+
       case 'name':
         this.props.setName(e.target.value)
       break;
-      case 'year':
-        this.props.settYear(e.target.value)
-      break;
-      case 'sex':
-        this.setState({check:!this.state.check})
-        this.props.setSex(this.state.check)
-      break;
       case 'mail':
         this.props.setEmail(e.target.value)
-      break;
-      case 'department':
-        this.props.setDepartment(e.target.value)
-      break;
-      case 'subject':
-        this.props.setSubject(e.target.value)
       break;
       case 'password':
         this.props.setPassword(e.target.value)
@@ -51,85 +156,145 @@ class SignupForm extends Component{
 
 
   render(){
+    const styles = {
+      customWidth: {
+        width: 250,
+      },
+      customWidth1: {
+        width: 100,
+      },
+      customColor:{
+        color: "white",
+      },
+    };
     return(
+
       <Form horizontal onSubmit={this.handleSubmit.bind(this)}>
   		<FormGroup>
-  			<Col sm={2}>
-  				大学
-  			</Col>
-  			<Col sm={10}>
-  				<FormControl name = "university" type="text" placeholder="同志社" onChange={this.handleChange.bind(this)}/>
-  			</Col>
-  		</FormGroup>
 
-      <FormGroup>
-  			<Col sm={2}>
-  				名前
-  			</Col>
-  			<Col sm={10}>
-  				<FormControl name = "name" type="text" placeholder="Name" onChange={this.handleChange.bind(this)}/>
-  			</Col>
-  		</FormGroup>
+  			<Col sm={6}>
+        <SelectField
+          floatingLabelText="大学"
+          value={this.state.value1}
+          onChange={this.handleChange1.bind(this)}
+          fullWidth={true}
+        >
+        {univerBox.map(univer => (
 
-      <FormGroup validationState="success">
-        <Col sm={2}>
-          入学年
+          <MenuItem key={univer.tag} value={univer.tag} primaryText={univer.name}/>
+        ))}
+
+        </SelectField>
         </Col>
-        <Col sm={10}>
-          <FormControl name = "year" type="text" placeholder="Year" onChange={this.handleChange.bind(this)}/>
+        <Col sm={6}>
+        <SelectField
+          floatingLabelText="入学年"
+          value={this.state.value4}
+          onChange={this.handleChange4.bind(this)}
+          style={styles.customWidth1}
+        >
+        {year.map(year => (
+
+          <MenuItem key={year.tag} value={year.tag} primaryText={year.year}/>
+        ))}
+
+        </SelectField>
       </Col>
   		</FormGroup>
-      <FormGroup validationState="success">
-      <Col sm={2}>
-        性別
+
+      <FormGroup>
+  			<Col sm={6}>
+        <SelectField
+          floatingLabelText="学部"
+          value={this.state.value2}
+          onChange={this.handleChange2.bind(this)}
+          fullWidth={true}
+          maxHeight={200}
+        >
+        {departmentBox[this.state.value1].map(department => (
+
+          <MenuItem key={department.tag} value={department.tag} primaryText={department.name}/>
+        ))}
+
+        </SelectField>
+  			</Col>
+
+  			<Col sm={6}>
+        <SelectField
+          floatingLabelText="学科"
+          value={this.state.value3}
+          onChange={this.handleChange3.bind(this)}
+          fullWidth={true}
+          maxHeight={200}
+        >
+        {subjectBox[this.state.value1][this.state.value2].map(subject => (
+
+          <MenuItem key={subject.tag} value={subject.tag} primaryText={subject.name}/>
+        ))}
+
+        </SelectField>
+  			</Col>
+  		</FormGroup>
+
+      <FormGroup>
+  			<Col sm={6}>
+        <TextField
+        name = "name"
+        floatingLabelText="名前"
+        floatingLabelFixed={true}
+        onChange={this.handleChange.bind(this)}
+        fullWidth={true}
+        />
+  			</Col>
+
+        <Col sm={6}>
+        <SelectField
+          floatingLabelText="性別"
+          value={this.state.value5}
+          onChange={this.handleChange5.bind(this)}
+          style={styles.customWidth1}
+        >
+        {sexBox.map(sex => (
+
+          <MenuItem key={sex.tag} value={sex.tag} primaryText={sex.sex}/>
+        ))}
+
+        </SelectField>
       </Col>
-      <Col sm={10}>
-      <Checkbox inline name="sex" checked={this.state.check} onChange={this.handleChange.bind(this)}>男</Checkbox> <Checkbox inline  name ="sex" checked={!this.state.check} onChange={this.handleChange.bind(this)}>女</Checkbox>
-    </Col>
-    </FormGroup>
-
-
+      </FormGroup>
 
       <FormGroup>
-  			<Col sm={2}>
-  				Email
+  			<Col sm={6}>
+          <TextField
+          name = "mail"
+          type = "mail"
+          floatingLabelText="メールアドレス"
+          floatingLabelFixed={true}
+          fullWidth={true}
+          onChange={this.handleChange.bind(this)}
+          />
   			</Col>
-  			<Col sm={10}>
-  				<FormControl name = "mail"type="mail" placeholder="Email" onChange={this.handleChange.bind(this)}/>
-  			</Col>
-  		</FormGroup>
 
-      <FormGroup>
-  			<Col sm={2}>
-  				学部
-  			</Col>
-  			<Col sm={10}>
-  				<FormControl name="department" type="text" placeholder="department" onChange={this.handleChange.bind(this)}/>
-  			</Col>
-  		</FormGroup>
-
-      <FormGroup>
-  			<Col sm={2}>
-  				学科
-  			</Col>
-  			<Col sm={10}>
-  				<FormControl name = "subject" type="text" placeholder="subject" onChange={this.handleChange.bind(this)}/>
-  			</Col>
-  		</FormGroup>
-
-  		<FormGroup>
-  			<Col sm={2}>
-  				Password
-  			</Col>
-  			<Col sm={10}>
-  				<FormControl name = "password" type="password" placeholder="Password" onChange={this.handleChange.bind(this)}/>
+  			<Col sm={6}>
+          <TextField
+          name = "password"
+          type = "password"
+          floatingLabelText="パスワード"
+          floatingLabelFixed={true}
+          fullWidth={true}
+          onChange={this.handleChange.bind(this)}
+          />
   			</Col>
   		</FormGroup>
   		<FormGroup>
-  			<Col smOffset={2} sm={10}>
-  				<Button type="submit">Sign Up</Button>
+  			<Col sm={12}>
+          <FlatButton label="Sign Up" fullWidth={true} backgroundColor="#1160AA"  hoverColor="#3F52E3" style={styles.customColor} type ="submit" />
   			</Col>
+        <Col sm={12}>
+          <Link to="/login"><p className="rightside">ログイン画面はこちら</p></Link>
+        </Col>
   		</FormGroup>
+
   	</Form>
     )
   }
@@ -138,6 +303,7 @@ class SignupForm extends Component{
 const mapStateToProps = state => {
   return{
     info: state.setStatus
+
   }
 }
 
@@ -169,13 +335,12 @@ const mapDispatchToProps = dispatch => {
       },
       signup: data => {
         dispatch(signup(data))
+      },
+      selectUniver: () => {
+        dispatch(selectUniversity())
       }
 
     }
   }
 
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SignupForm)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SignupForm))

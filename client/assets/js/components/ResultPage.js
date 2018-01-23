@@ -26,7 +26,7 @@ ResultPage.propTypes = {
   circle: PropTypes.shape({
     id: PropTypes.number,
     name: PropTypes.string,
-    number: PropTypes.string,
+    number: PropTypes.number,
     introduction: PropTypes.string,
     campus: PropTypes.string
   })

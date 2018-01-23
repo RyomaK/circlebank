@@ -1,10 +1,11 @@
 import React,{Component} from 'react';
 import Auth from './Auth'
+import Filter from './Filter'
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
-import { logout } from '../actions/index'
-import {Redirect, Link} from 'react-router-dom'
+import { logout,getUserInfo} from '../actions/index'
+import {Redirect, Link ,withRouter} from 'react-router-dom'
 import RaisedButton from 'material-ui/RaisedButton';
 import {lightBlue900} from 'material-ui/styles/colors';
 import { connect } from 'react-redux'
@@ -19,21 +20,25 @@ handleToggle(){ this.setState({open: !this.state.open})}
 
     return(
     <div className="header">
+      <Filter>
       <Drawer
       open={this.state.open}
       docked={false}
       onRequestChange={()=>this.handleToggle()}
       >
-        
+
           <Link to="/"><MenuItem>ホーム</MenuItem></Link>
-          <Link to="/user"><MenuItem>マイページ</MenuItem></Link>
           <MenuItem onClick={ e =>{
-            e.preventDefault();this.props.Logout()}}>ログアウト</MenuItem>
+            e.preventDefault(); this.props.history.push("/user");
+          }}>マイページ</MenuItem>
+          <MenuItem onClick={ e =>{
+            e.preventDefault();this.props.Logout();this.props.history.push('/');}}>ログアウト</MenuItem>
 
 
       </Drawer>
+      </Filter>
       <AppBar
-      title="サークルバンク"
+      title="Circle Bank"
       onLeftIconButtonTouchTap={ () => this.handleToggle()}
       style={{backgroundColor:lightBlue900}}
       />
@@ -54,8 +59,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Header)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header))

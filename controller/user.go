@@ -9,8 +9,9 @@ import (
 
 	"log"
 
-	"github.com/RyomaK/circlebank/model"
+	"github.com/gorilla/mux"
 	"github.com/olahol/go-imageupload"
+	"github.com/ryomak/circlebank/model"
 )
 
 type User struct {
@@ -35,19 +36,18 @@ func (u *User) UserHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-/*
-pass 二回
-新しいやつ
-*/
-
 func (u *User) UserUpdateHandler(w http.ResponseWriter, r *http.Request) {
 	user, err := model.GetUser(u.DB, getUserEmail(r))
 	name := r.FormValue("name")
 	mail := r.FormValue("mail")
 	pass := r.FormValue("password")
 	newPass := r.FormValue("newpassword")
-	if err = model.ComparePass(user.Password, pass); err == nil {
-		err = model.UpdateProfile(u.DB, user.ID, name, mail, newPass)
+	if err = model.ComparePass(user.User.Password, pass); err == nil {
+		if newPass != "" {
+			err = model.UpdateProfile(u.DB, user.User.ID, name, mail, newPass)
+		} else {
+			err = model.UpdateProfile(u.DB, user.User.ID, name, mail, pass)
+		}
 		if err != nil {
 			fmt.Printf("update err : %v\n", err)
 			a, _ := json.Marshal("{update: NG}")
@@ -67,6 +67,43 @@ func (u *User) UserUpdateHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func (u *User) PostEvent(w http.ResponseWriter, r *http.Request) {
+	//イベントを追加
+	event_id := r.FormValue("event_id")
+	mail := getUserEmail(r)
+	err := model.PostEvent(u.DB, mail, event_id)
+	if err != nil {
+		fmt.Println(err)
+		status := StatusCode{Code: http.StatusNotAcceptable, Message: "cannnot post events"}
+		a, _ := json.Marshal(status)
+		w = SetHeader(w, http.StatusNotAcceptable)
+		w.Write(a)
+		return
+	}
+	status := StatusCode{Code: http.StatusOK, Message: "regist events"}
+	a, _ := json.Marshal(status)
+	w = SetHeader(w, http.StatusOK)
+	w.Write(a)
+}
+
+func (u *User) DeleteEvent(w http.ResponseWriter, r *http.Request) {
+	//イベントを削除
+	event_id := r.FormValue("event_id")
+	mail := getUserEmail(r)
+	err := model.DeleteEvent(u.DB, mail, event_id)
+	if err != nil {
+		status := StatusCode{Code: http.StatusNotAcceptable, Message: "cannnot delete events"}
+		a, _ := json.Marshal(status)
+		w = SetHeader(w, http.StatusNotAcceptable)
+		w.Write(a)
+		return
+	}
+	status := StatusCode{Code: http.StatusOK, Message: "delete events"}
+	a, _ := json.Marshal(status)
+	w = SetHeader(w, http.StatusOK)
+	w.Write(a)
+}
+
 // login handler
 func (u *User) LoginHandler(w http.ResponseWriter, r *http.Request) {
 	mail := r.FormValue("mail")
@@ -74,12 +111,13 @@ func (u *User) LoginHandler(w http.ResponseWriter, r *http.Request) {
 	if model.IsLogin(u.DB, mail, password) {
 		WriteJWT(w, mail)
 		w = SetHeader(w, http.StatusOK)
-	} else {
-		status := StatusCode{Code: http.StatusNotAcceptable, Message: "error login"}
-		a, _ := json.Marshal(status)
-		w = SetHeader(w, http.StatusNotFound)
-		w.Write(a)
+		return
 	}
+
+	status := StatusCode{Code: http.StatusNotAcceptable, Message: "error login"}
+	a, _ := json.Marshal(status)
+	w = SetHeader(w, http.StatusUnauthorized)
+	w.Write(a)
 
 }
 
@@ -105,25 +143,25 @@ func (u *User) SignUpHandler(w http.ResponseWriter, r *http.Request) {
 		person.University = r.FormValue("university")
 		person.Name = r.FormValue("name")
 		person.Mail = r.FormValue("mail")
-		person.Sex = r.FormValue("sex")
+		person.Gender = r.FormValue("sex")
 		person.Department = r.FormValue("department")
 		person.Subject = r.FormValue("subject")
 		person.Password = r.FormValue("password")
 		person.Year, _ = strconv.Atoi(r.FormValue("year"))
+		person.Image = "img/users/default.png"
 		if err := model.Regist(u.DB, person); err != nil {
 			log.Printf("err in signHandler %v", err)
 			status := StatusCode{Code: http.StatusNotAcceptable, Message: "NG"}
 			a, _ := json.Marshal(status)
 			w = SetHeader(w, http.StatusNotAcceptable)
 			w.Write(a)
-		} else {
-			WriteJWT(w, person.Mail)
-			status := StatusCode{Code: http.StatusCreated, Message: "OK"}
-			a, _ := json.Marshal(status)
-			w = SetHeader(w, http.StatusCreated)
-			w.Write(a)
+			return
 		}
-
+		status := StatusCode{Code: http.StatusCreated, Message: "OK"}
+		a, _ := json.Marshal(status)
+		WriteJWT(w, person.Mail)
+		w = SetHeader(w, http.StatusCreated)
+		w.Write(a)
 	}
 
 }
@@ -152,8 +190,8 @@ func (u *User) UploadPicture(w http.ResponseWriter, r *http.Request) {
 		a, _ := json.Marshal(status)
 		w.Write(a)
 	} else {
-		image := "public/img/users/" + strconv.FormatUint(uint64(user.ID), 10) + ".png"
-		err = model.UpdatePicture(u.DB, user.Mail, image)
+		image := "img/users/" + strconv.FormatUint(uint64(user.User.ID), 10) + ".png"
+		err = model.UpdatePicture(u.DB, user.User.Mail, image)
 		if err != nil {
 			log.Printf("err %v", err)
 			w = SetHeader(w, http.StatusBadRequest)
@@ -161,7 +199,7 @@ func (u *User) UploadPicture(w http.ResponseWriter, r *http.Request) {
 			a, _ := json.Marshal(status)
 			w.Write(a)
 		} else {
-			thumb.Save(image)
+			thumb.Save("public/" + image)
 			w = SetHeader(w, http.StatusCreated)
 			status := StatusCode{Code: http.StatusCreated, Message: "upload"}
 			a, _ := json.Marshal(status)
@@ -170,4 +208,157 @@ func (u *User) UploadPicture(w http.ResponseWriter, r *http.Request) {
 
 	}
 
+}
+
+func (u *User) GetLikeCircleHandler(w http.ResponseWriter, r *http.Request) {
+	circles, err := model.GetUserLikeCircles(u.DB, getUserEmail(r))
+	if err != nil {
+		log.Printf("err %v", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "not found"}
+		a, _ := json.Marshal(status)
+		w.Write(a)
+	} else {
+		a, err := json.Marshal(circles)
+		if err != nil {
+			log.Printf("err %v", err)
+		}
+		w = SetHeader(w, http.StatusOK)
+		w.Write(a)
+	}
+}
+
+func (u *User) PostLikeCircleHandler(w http.ResponseWriter, r *http.Request) {
+	mail := getUserEmail(r)
+	circle_id := r.PostFormValue("circle_id")
+	err := model.PostUserLikesCircles(u.DB, mail, circle_id)
+	if err != nil {
+		log.Printf("err %v", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot regist like"}
+		a, _ := json.Marshal(status)
+		w.Write(a)
+		return
+	}
+	w = SetHeader(w, http.StatusOK)
+	status := StatusCode{Code: http.StatusOK, Message: "regist like"}
+	a, _ := json.Marshal(status)
+	w.Write(a)
+}
+
+func (u *User) DeleteLikeCircleHandler(w http.ResponseWriter, r *http.Request) {
+	mail := getUserEmail(r)
+	circle_id := r.PostFormValue("circle_id")
+	err := model.DeleteUserLikesCircles(u.DB, mail, circle_id)
+	if err != nil {
+		log.Printf("err %v", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot delete like"}
+		a, _ := json.Marshal(status)
+		w.Write(a)
+		return
+	}
+	w = SetHeader(w, http.StatusOK)
+	status := StatusCode{Code: http.StatusOK, Message: "delete like"}
+	a, _ := json.Marshal(status)
+	w.Write(a)
+}
+func (u *User) GetCircleCommentHandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	circlceComment, err := model.GetCircleComment(u.DB, getUserEmail(r), vars["circle_name"])
+	if err != nil {
+		w = SetHeader(w, http.StatusNoContent)
+		status := StatusCode{Code: http.StatusNoContent, Message: "not found comment"}
+		a, _ := json.Marshal(status)
+		w.Write(a)
+		return
+	}
+	a, err := json.Marshal(circlceComment)
+	if err != nil {
+		log.Printf("err %v", err)
+	}
+	w = SetHeader(w, http.StatusOK)
+	w.Write(a)
+}
+
+func (u *User) PostCircleCommentHandler(w http.ResponseWriter, r *http.Request) {
+	mail := getUserEmail(r)
+	circle_id := r.PostFormValue("circle_id")
+	point := r.PostFormValue("point")
+	text := r.PostFormValue("text")
+	err := model.PostCiecleComments(u.DB, mail, circle_id, point, text)
+	if err != nil {
+		log.Printf("err %v", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot post comment"}
+		a, _ := json.Marshal(status)
+		w.Write(a)
+		return
+	}
+	if point == "" || text == "" || circle_id == "" {
+		log.Printf("err %v", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot post comment"}
+		a, _ := json.Marshal(status)
+		w.Write(a)
+		return
+	}
+	w = SetHeader(w, http.StatusOK)
+	status := StatusCode{Code: http.StatusOK, Message: "post  comment"}
+	a, _ := json.Marshal(status)
+	w.Write(a)
+}
+
+func (u *User) DeleteCircleCommentHandler(w http.ResponseWriter, r *http.Request) {
+	mail := getUserEmail(r)
+	circle_id := r.PostFormValue("circle_id")
+	err := model.DeleteCiecleComments(u.DB, mail, circle_id)
+	if err != nil {
+		log.Printf("err %v", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot delete comment"}
+		a, _ := json.Marshal(status)
+		w.Write(a)
+		return
+	}
+	if circle_id == "" {
+		log.Printf("err %v", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot delete comment"}
+		a, _ := json.Marshal(status)
+		w.Write(a)
+		return
+	}
+	w = SetHeader(w, http.StatusOK)
+	status := StatusCode{Code: http.StatusOK, Message: "delete  comment"}
+	a, _ := json.Marshal(status)
+	w.Write(a)
+}
+
+func (u *User) UpdateCircleCommentHandler(w http.ResponseWriter, r *http.Request) {
+	mail := getUserEmail(r)
+	circle_id := r.PostFormValue("circle_id")
+	point := r.PostFormValue("point")
+	text := r.PostFormValue("text")
+	err := model.UpdateCiecleComments(u.DB, mail, circle_id, point, text)
+	if err != nil {
+		log.Printf("err %v", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot post comment"}
+		a, _ := json.Marshal(status)
+		w.Write(a)
+		return
+	}
+	if point == "" || text == "" || circle_id == "" {
+		log.Printf("err %v", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot post comment"}
+		a, _ := json.Marshal(status)
+		w.Write(a)
+		return
+	}
+	w = SetHeader(w, http.StatusOK)
+	status := StatusCode{Code: http.StatusOK, Message: "post  comment"}
+	a, _ := json.Marshal(status)
+	w.Write(a)
 }

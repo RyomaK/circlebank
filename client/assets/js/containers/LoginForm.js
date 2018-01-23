@@ -1,20 +1,30 @@
 import React, { Component } from 'react'
-import { setEmail,setPassword,login} from '../actions/index'
+import TextField from 'material-ui/TextField';
+import Checkbox from 'material-ui/Checkbox';
+import ActionFavorite from 'material-ui/svg-icons/action/favorite';
+import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
+import Visibility from 'material-ui/svg-icons/action/visibility';
+import VisibilityOff from 'material-ui/svg-icons/action/visibility-off';
+import { setEmail,setPassword,login,adminCheck} from '../actions/index'
 import { connect } from 'react-redux'
 import {Col,Form,FormGroup,FormControl,Button} from "react-bootstrap"
-import { Link } from 'react-router-dom'
+import { Link, withRouter} from 'react-router-dom'
 import FlatButton from 'material-ui/FlatButton';
 
 class LoginForm extends Component {
 
   handleSubmit(e){
-    e.preventDefault();
-    this.props.login(this.props.info)
+    e.preventDefault()
+
+    this.props.login(this.props.info);
+    this.props.AdminCheck(this.props.info.email)
+
+    this.props.history.push('/');
+
   }
 
   handleChange(e){
 
-    e.preventDefault();
     switch(e.target.name){
       case 'mail':
         this.props.setEmail(e.target.value)
@@ -29,37 +39,50 @@ class LoginForm extends Component {
 
 
   render(){
-    const style={
-      color:"white"
-    }
-
+    const styles = {
+      customWidth: {
+        width: '100%',
+      },
+      customColor:{
+        color: "white",
+        width: "100%",
+      },
+    };
     return(
       <div>
         <Form horizontal onSubmit={this.handleSubmit.bind(this)}>
-    		<FormGroup>
-    			<Col sm={2}>
-    				Email
-    			</Col>
-    			<Col sm={10}>
-    				<FormControl name = "mail" type="email" placeholder="Email" onChange={this.handleChange.bind(this)}/>
+        <FormGroup>
+    			<Col smOffset={2} sm={8}>
+            <TextField
+            name = "mail"
+            type = "mail"
+            floatingLabelText="メールアドレス"
+            floatingLabelFixed={true}
+            fullWidth={true}
+            onChange={this.handleChange.bind(this)}
+            />
     			</Col>
     		</FormGroup>
 
     		<FormGroup>
-    			<Col sm={2}>
-    				Password
-    			</Col>
-    			<Col sm={10}>
-    				<FormControl name = "password" type="password" placeholder="Password" onChange={this.handleChange.bind(this)}/>
+    			<Col smOffset={2} sm={8}>
+            <TextField
+            name = "password"
+            type = "password"
+            floatingLabelText="パスワード"
+            floatingLabelFixed={true}
+            fullWidth={true}
+            onChange={this.handleChange.bind(this)}
+            />
     			</Col>
     		</FormGroup>
     		<FormGroup>
-          <Col sm={12}>
-            <FlatButton label="Log In" fullWidth={true} backgroundColor="#8AA62F" hoverColor="#7CBD1E" style={style} type="submit"/>
+          <Col smOffset={2} sm={8}>
+            <FlatButton label="Log In"  backgroundColor="#8AA62F" hoverColor="#7CBD1E" style={styles.customColor} type="submit" />
     		   </Col>
-          <Col sm={12}></Col>
-          <Col sm={12}>
-            <Link to="/signup"><FlatButton label="Sign Up" fullWidth={true} backgroundColor="#1160AA"  hoverColor="#3F52E3" style={style}/></Link>
+
+          <Col smOffset={2}sm={8}>
+            <Link to="/signup"><p className="rightside">アカウント作成はコチラ</p></Link>
           </Col>
     		</FormGroup>
     	   </Form>
@@ -85,11 +108,11 @@ const mapDispatchToProps = dispatch => {
       },
       login: data => {
         dispatch(login(data))
+      },
+      AdminCheck: (data) => {
+        dispatch(adminCheck(data))
       }
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(LoginForm)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(LoginForm))

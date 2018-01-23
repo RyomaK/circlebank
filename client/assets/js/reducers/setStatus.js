@@ -1,18 +1,17 @@
 const initialState = {
 
-  university: "同志社",
+  university: "同志社大学",
   name: "",
   sex: "男",
-  year: "",
+  year: "2018",
   email: "",
-  department: "",
-  subject: "",
+  department: "神学部",
+  subject: "神学科",
   password: ""
 
 }
 
 const setStatus = (state=initialState,action) => {
-
   switch(action.type){
     case 'SET_UNIVERSITY':
       return Object.assign({},state,{
@@ -28,15 +27,10 @@ const setStatus = (state=initialState,action) => {
         year: action.year
         })
     case 'SET_SEX':
-      if(action.sex){
-        return Object.assign({}, state, {
-            sex: "男"
-            })
-      }else{
-        return Object.assign({}, state, {
-            sex: "女"
-          })
-      }
+    console.log("a")
+      return Object.assign({}, state, {
+        sex: action.sex
+        })
     case 'SET_EMAIL':
       return Object.assign({}, state, {
         email: action.email

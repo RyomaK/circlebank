@@ -1,41 +1,132 @@
 /*header*/
 body{
-  background-color: #EEEEEE;
+  background-color: #white;
+
+}
+@media screen and (max-width: 768px) {
+  .menucolor{
+    background-color: white;
+  }
+  .log{
+    background-image: url("./doshisha.jpg");
+    background-size: cover;
+  	position: relative;
+    width: 100vw;
+    min-height: 100vh;
+
+    height: auto;
+  }
+  .log::before{
+  	/* 透過した黒を重ねる */
+  	background-color: rgba(0,0,0,0.5);
+  	/* どの範囲に重ねるかを指定 */
+  	position: absolute;
+  	top: 0;
+  	right: 0;
+  	bottom: 0;
+  	left: 0;
+  	content: ' ';
+  }
+  .picture1{
+    background-image: url("./sozai2.png");
+    width:100vw;
+    height:200px;
+  }
+  .picture2{
+    background-image: url("./sozai2.png");
+    width:100vw;
+    height:200px;
+  }
+  .picture3{
+    background-image: url("./sozai2.png");
+    width:100vw;
+    height:200px;
+  }
 }
 
-.login{
-  background-image: url("./doshisha.jpg");
-  background-size: cover;
-	position: relative;
-  width: 100vw;
-  min-height: 100vh;
+@media screen and (min-width: 768px) {
+  .menucolor{
+    background-color: white;
+    border-radius: 10px;
+    height:100vh;
+  }
+  .log{
+    background-image: url("./doshisha.jpg");
+    background-size: cover;
+  	position: relative;
+    width: 100vw;
+    min-height: 100vh;
 
-  height: auto;
+    height: auto;
+  }
+  .log::before{
+  	/* 透過した黒を重ねる */
+  	background-color: rgba(0,0,0,0.5);
+  	/* どの範囲に重ねるかを指定 */
+  	position: absolute;
+  	top: 0;
+  	right: 0;
+  	bottom: 0;
+  	left: 0;
+  	content: ' ';
+  }
+  .login_up{
+    position: 'absolute';
+    margin-top:100px;
+    display: 'inline-block';
+  }
+  .topmargin{
+    margin-top:100px;
+  }
+  .picture1{
+    background-image: url("./sozai2.png");
+    width:100vw;
+    height:500px;
+  }
+  .picture2{
+    background-image: url("./sozai2.png");
+    width:100vw;
+    height:500px;
+  }
+  .picture3{
+    background-image: url("./sozai2.png");
+    width:100vw;
+    height:500px;
+  }
 }
-.login::before{
-	/* 透過した黒を重ねる */
-	background-color: rgba(0,0,0,0.5);
-	/* どの範囲に重ねるかを指定 */
-	position: absolute;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	content: ' ';
+
+.circlePage{
 }
 
-
-.top{
-  position: absolute;
-  height:60%;
-  width:30%;
-  background-color: white;
-  margin-left:35%;
-  margin-top:50px;
-  padding:10px 10px;
-  border-radius: 5px;
-  box-shadow: 0 0 20px gray;
+.centerPosition{
   text-align: center;
+}
+.circleInt{
+  margin:15px;
+}
+
+.circleName{
+  font-size:40px;
+}
+.circleNameRight{
+  margin-right:10px;
+}
+.circleImage{
+  margin:20px;
+}
+
+
+
+.paper{
+  background-color: #e4f0fc;
+  padding:20px;
+  border-radius: 10px;
+  height:100vh;
+}
+
+.rightside{
+  text-align: right;
+  margin-top:10px;
 }
 
 .button{
@@ -46,19 +137,51 @@ body{
   margin-bottom: 20px;
 }
 
-.circle{
-  padding: auto;
+.search{
 
 }
 
-
+.search1{
+  margin-top:7px;
+}
 
 .searchForm{
-  margin-top:40px;
-  margin-bottom: 40px;
+  padding:10px;
+  background-color:#CDD8E4
 }
 
 .card{
   padding: 20px 20px;
   margin-bottom:20px;
+}
+
+.mypage{
+  margin:20px;
+  background-color:white;
+}
+
+.SearchResult{
+  margin:5px;
+  padding:10px;
+  background-color:white;
+}
+.whitePage{
+  background-color:white;
+}
+
+.fontChange{
+  font-size:20px;
+}
+
+.fontChange1{
+  font-size:15px;
+}
+
+.favoPage{
+  margin:10px;
+  padding:10px;
+}
+.floatright{
+  display:block;
+  float: right;
 }
