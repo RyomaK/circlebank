@@ -8,11 +8,10 @@ class TagPage extends Component {
   render(){
     return(
       <div>
-        <Row>
           <Menu/>
-        <Col sm={9} className="paper">
+        <Col sm={8} className="paper">
           <div className="SearchResult">
-            <h1>検索結果</h1>
+            <h2>検索結果</h2>
           {this.props.circle.map( circle => (
             <div key={circle.id}><Link to={`/circle/search/${circle.url_name}`} >
               <h3>{circle.name}</h3>
@@ -21,7 +20,6 @@ class TagPage extends Component {
           ))}
           </div>
         </Col>
-        </Row>
       </div>
     )
 }

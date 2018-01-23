@@ -6,13 +6,13 @@ class NotFound extends Component{
   render(){
     return(
       <div>
-        <Row>
           <Menu/>
-          <Col sm={8} className="paper">
+          <Col xs={12} sm={8} className="paper">
+
             <h1>Not Found</h1>
           </Col>
-        </Row>
       </div>
+
     )
   }
 }

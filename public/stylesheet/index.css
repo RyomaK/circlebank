@@ -1,6 +1,7 @@
 /*header*/
 body{
   background-color: #white;
+
 }
 @media screen and (max-width: 768px) {
   .menucolor{
@@ -160,8 +161,8 @@ body{
 }
 
 .SearchResult{
-  margin:20px;
-  padding:20px;
+  margin:5px;
+  padding:10px;
   background-color:white;
 }
 .whitePage{
