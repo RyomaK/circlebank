@@ -204,3 +204,38 @@ func ScanAdminCircleEvents(rs *sql.Rows) ([]AdminCircleEvents, error) {
 	}
 	return structs, nil
 }
+
+func ScanLikeCircleDetails(rs *sql.Rows) ([]LikeCircleDetail, error) {
+	structs := []LikeCircleDetail{}
+	for rs.Next() {
+		var s LikeCircleDetail
+		if err := rs.Scan(
+			&s.Circle.ID,
+			&s.Circle.Name,
+			&s.Circle.URLName,
+			&s.Circle.Number,
+			&s.Circle.GenderRatio,
+			&s.Circle.Image,
+			&s.Circle.Introduction,
+			&s.Circle.MessageForFresh,
+			&s.Circle.DelegeteName,
+			&s.Circle.DelegeteContact,
+			&s.Circle.Campus,
+			&s.Circle.Excite,
+			&s.Circle.Fee,
+			&s.Circle.University,
+			&s.Comment.ID,
+			&s.Comment.Name,
+			&s.Comment.Gender,
+			&s.Comment.Point,
+			&s.Comment.Text,
+		); err != nil {
+			return []LikeCircleDetail{}, err
+		}
+		structs = append(structs, s)
+	}
+	if err := rs.Err(); err != nil {
+		return []LikeCircleDetail{}, err
+	}
+	return structs, nil
+}

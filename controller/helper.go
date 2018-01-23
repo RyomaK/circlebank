@@ -108,10 +108,10 @@ func WriteJWT(w http.ResponseWriter, mail string) {
 /*==================admin middleware ===================*/
 
 func MiddlewareAdmin(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
-	if IsAdmin(r) {
-		next(w, r)
+	if !IsAdmin(r) {
+		w.WriteHeader(http.StatusUnauthorized)
+		w.Write([]byte("Required authorization token not found"))
 		return
 	}
-	w.WriteHeader(http.StatusUnauthorized)
-	w.Write([]byte("Required authorization token not found"))
+	next(w, r)
 }
