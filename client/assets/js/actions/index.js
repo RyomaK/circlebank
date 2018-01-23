@@ -427,13 +427,13 @@ export const like = circleId => dispatch => {
 
 export const getlike = () => dispatch => {
   const Auth = getAuth();
+
     axios
     .get('/api/user/like',{headers:{'Authorization':`Bearer ${Auth}`}})
     .then((results) => {
-
       const status = results.status
-      let circle = results.data.circle
-      console.log(results)
+      let circle = results.data
+      console.log(circle)
       if(!circle){
         circle = []
       }

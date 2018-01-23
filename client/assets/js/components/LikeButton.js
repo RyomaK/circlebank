@@ -23,7 +23,8 @@ class LikeButton extends Component{
   render(){
     let count = 0;
     this.props.like.map((like)=>{
-      if(like.id == this.props.id){
+      console.log(like)
+      if(like.circle.id == this.props.id){
         count++;
       }else{
       }

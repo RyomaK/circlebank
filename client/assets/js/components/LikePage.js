@@ -15,14 +15,24 @@ class LikePage extends Component{
   }
 
   render(){
-    console.log(this.props)
     return(
       <div>
       <div className="centerPosition">
       <h1>お気に入りサークル一覧</h1>
       </div>
+      <div className="mypage fontChange">
+      {this.props.like.map((like) => {
+          return(
+            <div key={like.circle.id} className="favoPage" >
+              <div>
+              {like.circle.name}
+              <span className="floatright"><Button bsStyle="primary" onClick={(event)=>this.handleClick(event,like.circleId.id,like.circle.url_name)}>コメントを書く</Button></span>
 
-
+              </div>
+            </div>
+          )
+      })}
+      </div>
       </div>
     )
   }
@@ -30,7 +40,6 @@ class LikePage extends Component{
 
 const mapStateToProps = state => {
   return{
-
     like: state.like.circle,
     comment: state.comment.comment
   }
