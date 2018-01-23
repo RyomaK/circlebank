@@ -1,6 +1,5 @@
 DBNAME:=circle_bank
 ENV:=development
-
 DBCONFIG:=root:@/circle_bank?parseTime=true
 #DBCONFIG:=root:Kenta71619@/circle_bank?parseTime=true
 
