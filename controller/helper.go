@@ -112,6 +112,6 @@ func MiddlewareAdmin(w http.ResponseWriter, r *http.Request, next http.HandlerFu
 		next(w, r)
 		return
 	}
-	//w.WriteHeader(http.StatusUnauthorized)
-	//w.Write([]byte("Required authorization token not found"))
+	w.WriteHeader(http.StatusUnauthorized)
+	w.Write([]byte("Required authorization token not found"))
 }

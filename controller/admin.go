@@ -3,6 +3,7 @@ package controller
 import (
 	"database/sql"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -29,7 +30,7 @@ func (a *Admin) AdminCircleHandler(w http.ResponseWriter, r *http.Request) {
 		page = 1
 	}
 	circles, err := model.GetCircles(a.DB, vars["univ"], page)
-
+	fmt.Printf("ffaf\n")
 	if err != nil {
 		log.Printf("adminCircle err %v", err)
 		w = SetHeader(w, http.StatusNotFound)
