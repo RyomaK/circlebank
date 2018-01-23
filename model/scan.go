@@ -11,7 +11,7 @@ func (TrashScanner) Scan(interface{}) error {
 	return nil
 }
 
-func ScanCircle(r *sql.Row) (Circle, error) {
+func ScanCircle(r *sql.Row) (*Circle, error) {
 	var s Circle
 	if err := r.Scan(
 		&s.ID,
@@ -29,12 +29,12 @@ func ScanCircle(r *sql.Row) (Circle, error) {
 		&s.Fee,
 		&s.University,
 	); err != nil {
-		return Circle{}, err
+		return &Circle{}, err
 	}
-	return s, nil
+	return &s, nil
 }
 
-func ScanCircles(rs *sql.Rows) ([]Circle, error) {
+func ScanCircles(rs *sql.Rows) (*[]Circle, error) {
 	structs := []Circle{}
 	for rs.Next() {
 		var s = Circle{}
@@ -59,12 +59,12 @@ func ScanCircles(rs *sql.Rows) ([]Circle, error) {
 		structs = append(structs, s)
 	}
 	if err := rs.Err(); err != nil {
-		return []Circle{}, err
+		return &[]Circle{}, err
 	}
-	return structs, nil
+	return &structs, nil
 }
 
-func ScanEvent(r *sql.Row) (Event, error) {
+func ScanEvent(r *sql.Row) (*Event, error) {
 	var s Event
 	if err := r.Scan(
 		&s.ID,
@@ -76,12 +76,12 @@ func ScanEvent(r *sql.Row) (Event, error) {
 		&s.Capacity,
 		&s.Fee,
 	); err != nil {
-		return Event{}, err
+		return &Event{}, err
 	}
-	return s, nil
+	return &s, nil
 }
 
-func ScanEvents(rs *sql.Rows) ([]Event, error) {
+func ScanEvents(rs *sql.Rows) (*[]Event, error) {
 	structs := []Event{}
 	for rs.Next() {
 		var s Event
@@ -95,17 +95,17 @@ func ScanEvents(rs *sql.Rows) ([]Event, error) {
 			&s.Capacity,
 			&s.Fee,
 		); err != nil {
-			return []Event{}, err
+			return &[]Event{}, err
 		}
 		structs = append(structs, s)
 	}
 	if err := rs.Err(); err != nil {
-		return []Event{}, err
+		return &[]Event{}, err
 	}
-	return structs, nil
+	return &structs, nil
 }
 
-func ScanTags(rs *sql.Rows) ([]Tag, error) {
+func ScanTags(rs *sql.Rows) (*[]Tag, error) {
 	structs := []Tag{}
 	var err error
 	for rs.Next() {
@@ -114,17 +114,17 @@ func ScanTags(rs *sql.Rows) ([]Tag, error) {
 			&s.ID,
 			&s.Name,
 		); err != nil {
-			return []Tag{}, err
+			return &[]Tag{}, err
 		}
 		structs = append(structs, s)
 	}
 	if err = rs.Err(); err != nil {
-		return []Tag{}, err
+		return &[]Tag{}, err
 	}
-	return structs, nil
+	return &structs, nil
 }
 
-func ScanUser(r *sql.Row) (User, error) {
+func ScanUser(r *sql.Row) (*User, error) {
 	var s User
 	if err := r.Scan(
 		&s.ID,
@@ -138,12 +138,12 @@ func ScanUser(r *sql.Row) (User, error) {
 		&s.Department,
 		&s.Subject,
 	); err != nil {
-		return User{}, err
+		return &User{}, err
 	}
-	return s, nil
+	return &s, nil
 }
 
-func ScanComment(r *sql.Row) (Comment, error) {
+func ScanComment(r *sql.Row) (*Comment, error) {
 	var c Comment
 	if err := r.Scan(
 		&c.ID,
@@ -152,12 +152,12 @@ func ScanComment(r *sql.Row) (Comment, error) {
 		&c.Point,
 		&c.Text,
 	); err != nil {
-		return Comment{}, err
+		return &Comment{}, err
 	}
-	return c, nil
+	return &c, nil
 }
 
-func ScanComments(rs *sql.Rows) ([]Comment, error) {
+func ScanComments(rs *sql.Rows) (*[]Comment, error) {
 	structs := []Comment{}
 	var err error
 	for rs.Next() {
@@ -169,17 +169,17 @@ func ScanComments(rs *sql.Rows) ([]Comment, error) {
 			&s.Point,
 			&s.Text,
 		); err != nil {
-			return []Comment{}, err
+			return &[]Comment{}, err
 		}
 		structs = append(structs, s)
 	}
 	if err = rs.Err(); err != nil {
-		return []Comment{}, err
+		return &[]Comment{}, err
 	}
-	return structs, nil
+	return &structs, nil
 }
 
-func ScanAdminCircleEvents(rs *sql.Rows) ([]AdminCircleEvents, error) {
+func ScanAdminCircleEvents(rs *sql.Rows) (*[]AdminCircleEvents, error) {
 	structs := []AdminCircleEvents{}
 	for rs.Next() {
 		var s AdminCircleEvents
@@ -195,17 +195,17 @@ func ScanAdminCircleEvents(rs *sql.Rows) ([]AdminCircleEvents, error) {
 			&s.CircleID,
 			&s.CircleName,
 		); err != nil {
-			return []AdminCircleEvents{}, err
+			return &[]AdminCircleEvents{}, err
 		}
 		structs = append(structs, s)
 	}
 	if err := rs.Err(); err != nil {
-		return []AdminCircleEvents{}, err
+		return &[]AdminCircleEvents{}, err
 	}
-	return structs, nil
+	return &structs, nil
 }
 
-func ScanLikeCircleDetails(rs *sql.Rows) ([]LikeCircleDetail, error) {
+func ScanLikeCircleDetails(rs *sql.Rows) (*[]LikeCircleDetail, error) {
 	structs := []LikeCircleDetail{}
 	for rs.Next() {
 		var s LikeCircleDetail
@@ -230,12 +230,12 @@ func ScanLikeCircleDetails(rs *sql.Rows) ([]LikeCircleDetail, error) {
 			&s.Comment.Point,
 			&s.Comment.Text,
 		); err != nil {
-			return []LikeCircleDetail{}, err
+			return &[]LikeCircleDetail{}, err
 		}
 		structs = append(structs, s)
 	}
 	if err := rs.Err(); err != nil {
-		return []LikeCircleDetail{}, err
+		return &[]LikeCircleDetail{}, err
 	}
-	return structs, nil
+	return &structs, nil
 }

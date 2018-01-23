@@ -28,7 +28,7 @@ func GetCircleDetail(db *sql.DB, univ, circle_url_name string) (*CircleDetail, e
 		fmt.Print(err)
 	}
 	return &CircleDetail{
-		Circle: circle,
+		Circle: *circle,
 		Events: *events,
 		Tags:   *tags,
 	}, nil
@@ -45,7 +45,7 @@ func GetUnivCircles(db *sql.DB, univ string) (*[]Circle, error) {
 	if err != nil {
 		return &[]Circle{}, err
 	}
-	return &circles, nil
+	return circles, nil
 }
 
 func GetTagCircles(db *sql.DB, univ_name, tag_id string) (*[]Circle, error) {
@@ -60,7 +60,7 @@ func GetTagCircles(db *sql.DB, univ_name, tag_id string) (*[]Circle, error) {
 	if err != nil {
 		return &[]Circle{}, err
 	}
-	return &circles, nil
+	return circles, nil
 }
 
 func GetTags(db *sql.DB, univ_name string) (*[]Tag, error) {
@@ -74,7 +74,7 @@ func GetTags(db *sql.DB, univ_name string) (*[]Tag, error) {
 	if err != nil {
 		return &[]Tag{}, err
 	}
-	return &tags, nil
+	return tags, nil
 }
 
 func GetCircleTags(db *sql.DB, univ_name, circle_name string) (*[]Tag, error) {
@@ -88,7 +88,7 @@ func GetCircleTags(db *sql.DB, univ_name, circle_name string) (*[]Tag, error) {
 	if err != nil {
 		return &[]Tag{}, err
 	}
-	return &tags, err
+	return tags, err
 }
 
 func GetCircleEventDetail(db *sql.DB, univ, circle_name, id string) (*Event, error) {
@@ -101,7 +101,7 @@ func GetCircleEventDetail(db *sql.DB, univ, circle_name, id string) (*Event, err
 	if err != nil {
 		return &Event{}, err
 	}
-	return &event, nil
+	return event, nil
 }
 
 func GetCircleEvents(db *sql.DB, univ, circle_name string) (*[]Event, error) {
@@ -114,7 +114,7 @@ func GetCircleEvents(db *sql.DB, univ, circle_name string) (*[]Event, error) {
 	if err != nil {
 		return &[]Event{}, err
 	}
-	return &events, nil
+	return events, nil
 }
 
 func DeleteEvent(db *sql.DB, mail, event_id string) error {
@@ -158,14 +158,14 @@ func GetUserLikeCircles(db *sql.DB, mail string) (*[]LikeCircleDetail, error) {
 	inner join universities on univ_id = universities.id
 	inner join likes on likes.circle_id = circles.id
 	inner join users on users.id = likes.user_id
-	inner join comments on comments.circle_id = circles.id 
-	where comments.user_id = users.id and users.mail =  ?`
+	left  join comments on comments.user_id = users.id and comments.circle_id = circles.id
+	where users.mail = ?`
 	rows, _ := db.Query(query, mail)
 	circles, err := ScanLikeCircleDetails(rows)
 	if err != nil {
 		return &[]LikeCircleDetail{}, err
 	}
-	return &circles, nil
+	return circles, nil
 }
 
 func PostUserLikesCircles(db *sql.DB, mail, circle_id string) error {
@@ -246,18 +246,17 @@ func GetCircleComment(db *sql.DB, mail, circle_url_name string) (*CircleComment,
 	if err != nil {
 		return &CircleComment{}, err
 	}
-	query = `select comments.id,users.name,users.gender,comments.point,comments.text 
-	from circles 
+	query = `select comments.id,users.name,users.gender,comments.point,comments.text
+	from circles
 	inner join comments on circles.id = comments.circle_id
 	inner join users on comments.user_id = users.id
 	where users.mail = ? and circles.url_name = ?`
 	row = db.QueryRow(query, mail, circle_url_name)
 	comment, err := ScanComment(row)
 	if err != nil {
-		return &CircleComment{Circle: circle}, err
+		return &CircleComment{Circle: *circle}, err
 	}
-	return &CircleComment{Circle: circle, Comment: comment}, nil
-
+	return &CircleComment{Circle: *circle, Comment: *comment}, nil
 }
 
 func UpdateCiecleComments(db *sql.DB, mail, circle_id, point, text string) error {
