@@ -6,6 +6,7 @@
 - [x] ログイン機能 
 - [ ] API設計 ->けんちゃん
 
+
 # WebApi
 ## loginしている時
 ### GET```/api/{大学}/circle/{circle_name}```
