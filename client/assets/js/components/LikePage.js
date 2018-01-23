@@ -18,15 +18,21 @@ class LikePage extends Component{
     return(
       <div>
       <div className="centerPosition">
-      <h1>お気に入りサークル一覧</h1>
+      <h3>お気に入りサークル一覧</h3>
       </div>
       <div className="mypage fontChange">
       {this.props.like.map((like) => {
+        console.log(like)
           return(
             <div key={like.circle.id} className="favoPage" >
               <div>
+              <div>
               {like.circle.name}
-              <span className="floatright"><Button bsStyle="primary" onClick={(event)=>this.handleClick(event,like.circleId.id,like.circle.url_name)}>コメントを書く</Button></span>
+              </div>
+              <div>
+              {like.comment.text.String}
+              </div>
+              <span className="floatright"><Button bsStyle="primary" onClick={(event)=>this.handleClick(event,like.circle.id,like.circle.url_name)}>コメントを書く</Button></span>
 
               </div>
             </div>

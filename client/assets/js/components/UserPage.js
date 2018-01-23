@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import UserBox from './UserBox'
 import ImageUp from './ImageUp'
 import Menu from './Menu'
-import {Row} from "react-bootstrap"
+import {Col} from "react-bootstrap"
 import { getUserInfo, image } from '../actions/index'
 import { connect } from 'react-redux'
 
@@ -16,10 +16,10 @@ componentWillMount(){
 render(){
     return(
       <div>
-        <Row>
           <Menu/>
+          <Col xs ={12} sm={8} className="paper">
           <UserBox data={this.props.user} />
-        </Row>
+          </Col>
       </div>
     )
   }

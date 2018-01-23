@@ -354,7 +354,8 @@ export const getComment = (name) => dispatch =>{
 export const comment = (circleName, circle_Id, text)=> dispatch => {
   const Auth = getAuth();
   var params = new URLSearchParams();
-  params.append('circle_id',circle_Id);
+  const id = circle_Id
+  params.append('circle_id',id);
   params.append('point',1);
   params.append('text',text);
   axios
@@ -366,6 +367,7 @@ export const comment = (circleName, circle_Id, text)=> dispatch => {
   }).then(({status})=>{
     switch(status){
       case 200:
+        dispatch(getlike(id))
         break;
       default:
         break;

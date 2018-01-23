@@ -6,9 +6,8 @@ import {connect} from 'react-redux'
 const UserBox = ({data}) => {
   return(
     <div>
-      <Col sm={9}>
         <div className="centerPosition">
-          <h1>マイページ</h1>
+          <h3>マイページ</h3>
           </div>
           <div className="mypage">
             <Table className="fontChange">
@@ -33,9 +32,6 @@ const UserBox = ({data}) => {
             </Table>
             </div>
         <LikePage/>
-
-      </Col>
-
     </div>
   )
 }

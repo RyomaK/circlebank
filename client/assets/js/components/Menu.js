@@ -32,7 +32,7 @@ class Menu extends Component {
 
     return(
       <div>
-          <Col sm={4}>
+          <Col sm={3} xsHidden>
           <List>
             <Subheader>絞り検索</Subheader>
             <ListItem

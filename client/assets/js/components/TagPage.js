@@ -9,7 +9,7 @@ class TagPage extends Component {
     return(
       <div>
           <Menu/>
-        <Col sm={8} className="paper">
+        <Col sm={9} className="paper">
           <div className="SearchResult">
             <h2>検索結果</h2>
           {this.props.circle.map( circle => (
