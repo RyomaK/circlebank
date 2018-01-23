@@ -26,6 +26,21 @@ body{
   	left: 0;
   	content: ' ';
   }
+  .picture1{
+    background-image: url("./sozai2.png");
+    width:100vw;
+    height:200px;
+  }
+  .picture2{
+    background-image: url("./sozai2.png");
+    width:100vw;
+    height:200px;
+  }
+  .picture3{
+    background-image: url("./sozai2.png");
+    width:100vw;
+    height:200px;
+  }
 }
 
 @media screen and (min-width: 768px) {
@@ -62,6 +77,21 @@ body{
   .topmargin{
     margin-top:100px;
   }
+  .picture1{
+    background-image: url("./sozai2.png");
+    width:100vw;
+    height:500px;
+  }
+  .picture2{
+    background-image: url("./sozai2.png");
+    width:100vw;
+    height:500px;
+  }
+  .picture3{
+    background-image: url("./sozai2.png");
+    width:100vw;
+    height:500px;
+  }
 }
 
 .circlePage{
@@ -83,21 +113,7 @@ body{
 .circleImage{
   margin:20px;
 }
-.picture1{
-  background-image: url("./sozai2.png");
-  width:100vw;
-  height:500px;
-}
-.picture2{
-  background-image: url("./sozai2.png");
-  width:100vw;
-  height:500px;
-}
-.picture3{
-  background-image: url("./sozai2.png");
-  width:100vw;
-  height:500px;
-}
+
 
 
 .paper{

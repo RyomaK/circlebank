@@ -32,7 +32,7 @@ class Menu extends Component {
 
     return(
       <div>
-        <Col sm={3}>
+        <Col sm={4}>
           <div className="menucolor">
           <List>
             <Subheader>絞り検索</Subheader>

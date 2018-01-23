@@ -8,7 +8,7 @@ class NotFound extends Component{
       <div>
         <Row>
           <Menu/>
-          <Col sm={9} className="paper">
+          <Col sm={8} className="paper">
             <h1>Not Found</h1>
           </Col>
         </Row>
