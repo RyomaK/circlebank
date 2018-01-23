@@ -230,8 +230,9 @@ func (u *User) GetLikeCircleHandler(w http.ResponseWriter, r *http.Request) {
 
 func (u *User) PostLikeCircleHandler(w http.ResponseWriter, r *http.Request) {
 	mail := getUserEmail(r)
-	circle_id := r.PostFormValue("circle_id")
-	err := model.PostUserLikesCircles(u.DB, mail, circle_id)
+	circleID := r.PostFormValue("circle_id")
+	fmt.Printf("%v\n", mail)
+	err := model.PostUserLikesCircles(u.DB, mail, circleID)
 	if err != nil {
 		log.Printf("err %v", err)
 		w = SetHeader(w, http.StatusBadRequest)
