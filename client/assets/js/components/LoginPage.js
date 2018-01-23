@@ -1,6 +1,6 @@
 import React, {Component} from "react"
 import LoginForm from '../containers/LoginForm';
-import {Grid,Col} from "react-bootstrap"
+import {Grid,Col,Row} from "react-bootstrap"
 import {Redirect} from 'react-router-dom'
 import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
@@ -20,7 +20,7 @@ class LoginPage extends Component{
     const style = {
       width: '100%',
       padding: 30,
-      marginTop:100,
+      marginTop:'15%',
       textAlign:'center',
       position: 'absolute',
       display: 'inline-block',
@@ -29,20 +29,21 @@ class LoginPage extends Component{
       if(isLogin == "true"){
         return(
             <Redirect to="/"/>
-        )
+)
       }else{
         return(
           <div className="log">
-            <Grid>
-            <Col smOffset={4} sm={4} xm={12}>
-            <Paper style = {style} className="login_up" zDepth={3}>
 
+            <Row>
+            <Col xs={11} smOffset={3} sm={6}>
+            <Paper style = {style} zDepth={3}>
                 <h4>Circle Bankにログイン</h4>
                 <LoginForm />
-
             </Paper>
             </Col>
-            </Grid>
+            </Row>
+
+
           </div>
         )
       }

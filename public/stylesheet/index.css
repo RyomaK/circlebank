@@ -1,10 +1,30 @@
 /*header*/
 body{
-  background-color: #e4f0fc;
+  background-color: #white;
 }
 @media screen and (max-width: 768px) {
   .menucolor{
     background-color: white;
+  }
+  .log{
+    background-image: url("./doshisha.jpg");
+    background-size: cover;
+  	position: relative;
+    width: 100vw;
+    min-height: 100vh;
+
+    height: auto;
+  }
+  .log::before{
+  	/* 透過した黒を重ねる */
+  	background-color: rgba(0,0,0,0.5);
+  	/* どの範囲に重ねるかを指定 */
+  	position: absolute;
+  	top: 0;
+  	right: 0;
+  	bottom: 0;
+  	left: 0;
+  	content: ' ';
   }
 }
 
@@ -13,6 +33,31 @@ body{
     background-color: white;
     border-radius: 10px;
     height:100vh;
+  }
+  .log{
+    background-image: url("./doshisha.jpg");
+    background-size: cover;
+  	position: relative;
+    width: 100vw;
+    min-height: 100vh;
+
+    height: auto;
+  }
+  .log::before{
+  	/* 透過した黒を重ねる */
+  	background-color: rgba(0,0,0,0.5);
+  	/* どの範囲に重ねるかを指定 */
+  	position: absolute;
+  	top: 0;
+  	right: 0;
+  	bottom: 0;
+  	left: 0;
+  	content: ' ';
+  }
+  .login_up{
+    position: 'absolute';
+    margin-top:100px;
+    display: 'inline-block';
   }
 }
 
@@ -50,26 +95,7 @@ body{
   width:100vw;
   height:500px;
 }
-.log{
-  background-image: url("./doshisha.jpg");
-  background-size: cover;
-	position: relative;
-  width: 100vw;
-  min-height: 100vh;
 
-  height: auto;
-}
-.log::before{
-	/* 透過した黒を重ねる */
-	background-color: rgba(0,0,0,0.5);
-	/* どの範囲に重ねるかを指定 */
-	position: absolute;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	content: ' ';
-}
 
 .paper{
   background-color: #e4f0fc;
@@ -77,10 +103,7 @@ body{
   border-radius: 10px;
   height:100vh;
 }
-.login_up{
-  background-color: #e4f0fc;
-  border-radius: 10px;
-}
+
 .rightside{
   text-align: right;
   margin-top:10px;
