@@ -71,8 +71,13 @@ type UserCircleLikes struct {
 	Circle []Circle `db:"circle" json:"circle"`
 }
 
+type LikeCircleDetail struct {
+	Circle  Circle  `db:"circle" json:"circle"`
+	Comment Comment `db:"comment" json:"comment"`
+}
+
 type CircleComment struct {
-	Circle  Circle
+	Circle  Circle  `db:"circle" json:"circle"`
 	Comment Comment `db:"comment" json:"comment"`
 }
 

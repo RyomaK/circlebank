@@ -114,8 +114,6 @@ func (s *Server) Route(addr string) {
 	b.Path("/{univ}/circle/{circle_id}/tag").HandlerFunc(admins.PostAdminCircleTagHandler).Methods("POST")
 	b.Path("/{univ}/circle/{circle_id}/tag").HandlerFunc(admins.DeleteAdminCircleTagHandler).Methods("DELETE")
 	b.Path("/{univ}/circle/{circle_id}/tag").HandlerFunc(admins.UpdateAdminCircleTagHandler).Methods("PUT")
-	//indexに戻す
-	b.Path("/{univ}/circle").HandlerFunc(admins.Index).Methods("GET")
 	//画像upload
 	b.Path("/{univ}/circle/{circle_id}/upload").HandlerFunc(admins.UploadCirclePicture).Methods("POST")
 	b.Path("/{univ}/circle/{circle_id}/event/{event_id}/upload").HandlerFunc(admins.UploadEventPicture).Methods("POST")
