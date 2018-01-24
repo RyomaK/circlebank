@@ -8,12 +8,14 @@ class TagPage extends Component {
   render(){
     return(
       <div>
+        <Col sm={3} xsHidden>
           <Menu/>
-        <Col sm={8} className="paper">
+        </Col>
+        <Col sm={9} className="paper">
           <div className="SearchResult">
             <h2>検索結果</h2>
           {this.props.circle.map( circle => (
-            <div key={circle.id}><Link to={`/circle/search/${circle.url_name}`} >
+            <div className="resultPage" key={circle.id}><Link to={`/circle/search/${circle.url_name}`} >
               <h3>{circle.name}</h3>
             </Link>
             </div>

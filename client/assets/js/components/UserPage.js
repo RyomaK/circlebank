@@ -2,10 +2,9 @@ import React, { Component } from 'react'
 import UserBox from './UserBox'
 import ImageUp from './ImageUp'
 import Menu from './Menu'
-import {Row} from "react-bootstrap"
+import {Col} from "react-bootstrap"
 import { getUserInfo, image } from '../actions/index'
 import { connect } from 'react-redux'
-
 class UserPage extends Component{
 
 componentWillMount(){
@@ -16,10 +15,12 @@ componentWillMount(){
 render(){
     return(
       <div>
-        <Row>
+          <Col sm={3} xsHidden>
           <Menu/>
+          </Col>
+          <Col xs ={12} sm={9} className="paper">
           <UserBox data={this.props.user} />
-        </Row>
+          </Col>
       </div>
     )
   }

@@ -24,14 +24,10 @@ class CirclePage extends Component {
     }
     return(
       <div>
-        <Row>
           <Menu/>
-        <Col sm={9} className="paper">
-          <div className="circlePage">
+          <Col sm={9} className="circlePage">
             <Circle circle={this.props.circle}/>
-          </div>
-        </Col>
-        </Row>
+          </Col>
       </div>
     )
   }

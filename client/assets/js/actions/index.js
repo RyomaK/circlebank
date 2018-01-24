@@ -354,7 +354,8 @@ export const getComment = (name) => dispatch =>{
 export const comment = (circleName, circle_Id, text)=> dispatch => {
   const Auth = getAuth();
   var params = new URLSearchParams();
-  params.append('circle_id',circle_Id);
+  const id = circle_Id
+  params.append('circle_id',id);
   params.append('point',1);
   params.append('text',text);
   axios
@@ -366,6 +367,7 @@ export const comment = (circleName, circle_Id, text)=> dispatch => {
   }).then(({status})=>{
     switch(status){
       case 200:
+        dispatch(getlike(id))
         break;
       default:
         break;
@@ -378,6 +380,7 @@ export const comment = (circleName, circle_Id, text)=> dispatch => {
 
 export const deleteComment = (circleName,circleId)=> dispatch => {
   const Auth = getAuth();
+  const id = circleId
   const headers = {'Authorization':`Bearer ${Auth}`}
   const data = new FormData();
   data.append('circle_id',circleId);
@@ -390,6 +393,7 @@ export const deleteComment = (circleName,circleId)=> dispatch => {
   }).then(({status})=>{
     switch(status){
       case 200:
+        dispatch(getlike(id))
         break;
       default:
         break;
@@ -466,11 +470,12 @@ export const deletelike = circleId => dispatch => {
     data.append('circle_id',circleId);
     axios.delete('/api/user/like',{headers,data})
     .then((results) => {
-      console.log(results)
       const status = results.status
+
       return({status})
     }).then(({status})=>{
       switch(status){
+
         case 200:
           dispatch(getlike())
           break;

@@ -32,7 +32,6 @@ class Menu extends Component {
 
     return(
       <div>
-          <Col sm={4}>
           <List>
             <Subheader>絞り検索</Subheader>
             <ListItem
@@ -51,7 +50,6 @@ class Menu extends Component {
                 />))}
                 />
           </List>
-          </Col>
       </div>
 
     )

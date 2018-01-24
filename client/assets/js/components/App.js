@@ -11,6 +11,8 @@ import Auth from './Auth'
 import UserPage from './UserPage'
 import TagPage from './TagPage'
 import Comment from './Comment'
+import SmartPage from './SmartPage'
+import TabMenu from './TabMenu'
 
 import { BrowserRouter, Route, Link, Switch} from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -24,12 +26,11 @@ const App =() => {
           <MuiThemeProvider>
             <div>
               <Header />
-
               <Switch>
                 <Route path='/login' component={LoginPage}/>
                 <Route path='/signup' component={SignupPage}/>
                 <Auth>
-                  <div>
+                  <div id="contens">
                   <SearchForm/>
                   <Switch>
                     <Route exact path='/' component={MainPage}/>
@@ -38,12 +39,16 @@ const App =() => {
                     <Route exact path='/circle/search/:name' component={CirclePage}/>
                     <Route exact path='/tag/:id' component={TagPage}/>
                     <Route exact path='/user/:id/:name/comment' component={Comment}/>
+                    <Route exact path='/menu' component={SmartPage}/>
                     <Route component={ NotFound }/>
                   </Switch>
                   </div>
                 </Auth>
                 </Switch>
-            </div>
+                <div id="footer">
+                <TabMenu/>
+                </div>
+              </div>
           </MuiThemeProvider>
         </BrowserRouter>
   )
