@@ -23,8 +23,8 @@ class LikePage extends Component{
           return(
             <div key={like.circle.id} className="favoPage mypage " >
               <div>
-              <div>
-              {like.circle.name}<span><Button className="buttonsize" bsStyle="primary" onClick={(event)=>this.handleClick(event,like.circle.id,like.circle.url_name)}>編集</Button></span>
+              <div className="commentbox">
+              {like.circle.name}<span className="floatright"><Button className="buttonsize" bsStyle="primary" onClick={(event)=>this.handleClick(event,like.circle.id,like.circle.url_name)}>編集</Button></span>
               </div>
               <div>
               {like.comment.text.String}

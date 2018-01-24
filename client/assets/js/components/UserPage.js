@@ -5,7 +5,6 @@ import Menu from './Menu'
 import {Col} from "react-bootstrap"
 import { getUserInfo, image } from '../actions/index'
 import { connect } from 'react-redux'
-
 class UserPage extends Component{
 
 componentWillMount(){
@@ -17,7 +16,7 @@ render(){
     return(
       <div>
           <Menu/>
-          <Col xs ={12} sm={8} className="paper">
+          <Col xs ={12} sm={9} className="paper">
           <UserBox data={this.props.user} />
           </Col>
       </div>

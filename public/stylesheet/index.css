@@ -23,6 +23,14 @@ width: 100%;	/* 横の幅を100% */
     height:30px;
     font-size: 10px
   }
+
+  .paper{
+    background-color: #e4f0fc;
+    padding:20px;
+    border-radius: 10px;
+    height:100vh;
+    margin-bottom:72px
+  }
   .fontChange{
     font-size:15px;
   }
@@ -53,6 +61,13 @@ width: 100%;	/* 横の幅を100% */
   	left: 0;
   	content: ' ';
   }
+  .notFound{
+    background-color: #e4f0fc;
+    padding:20px;
+    border-radius: 10px;
+    height:100vh;
+    margin-bottom:72px
+  }
   .picture1{
     background-image: url("./sozai2.png");
     width:100vw;
@@ -73,6 +88,18 @@ width: 100%;	/* 横の幅を100% */
 @media screen and (min-width: 768px) {
   .fontChange{
     font-size:20px;
+  }
+  .paper{
+    background-color: #e4f0fc;
+    padding:20px;
+    border-radius: 10px;
+    height:100vh;
+  }
+  .notFound{
+    background-color: #e4f0fc;
+    padding:20px;
+    border-radius: 10px;
+    height:100vh;
   }
 
   .fontChange1{
@@ -147,12 +174,7 @@ width: 100%;	/* 横の幅を100% */
 
 
 
-.paper{
-  background-color: #e4f0fc;
-  padding:20px;
-  border-radius: 10px;
-  height:100vh;
-}
+
 .circlePage{
   background-color: #e4f0fc;
   border-radius: 10px;
@@ -193,23 +215,35 @@ width: 100%;	/* 横の幅を100% */
 
 .mypage{
   background-color:white;
+  border-radius:10px;
 }
 
 .SearchResult{
   margin:5px;
-  padding:10px;
-  background-color:white;
+  padding:5px;
 }
 .whitePage{
   background-color:white;
 }
 
+.resultPage{
+  background-color:white;
+  padding:5px;
+  margin-bottom:10px;
+  border-radius:10px;
+}
 
+.commentbox{
+  margin-top:5px;
+  padding-bottom:20px;
+}
 
 .favoPage{
-  padding:10px;
+  padding:30px;
+  margin-bottom:20px;
 }
 .floatright{
-  display:block;
+  display:inline-block;
   float: right;
+  padding-bottom:10px;
 }

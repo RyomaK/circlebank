@@ -13,7 +13,7 @@ class TagPage extends Component {
           <div className="SearchResult">
             <h2>検索結果</h2>
           {this.props.circle.map( circle => (
-            <div key={circle.id}><Link to={`/circle/search/${circle.url_name}`} >
+            <div className="resultPage" key={circle.id}><Link to={`/circle/search/${circle.url_name}`} >
               <h3>{circle.name}</h3>
             </Link>
             </div>
