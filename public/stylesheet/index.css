@@ -18,6 +18,11 @@ width: 100%;	/* 横の幅を100% */
   height: 72px;
 }
 @media screen and (max-width: 768px) {
+  .buttonsize{
+    width:60px;
+    height:30px;
+    font-size: 10px
+  }
   .fontChange{
     font-size:15px;
   }
@@ -187,7 +192,6 @@ width: 100%;	/* 横の幅を100% */
 }
 
 .mypage{
-  margin:20px;
   background-color:white;
 }
 
@@ -203,7 +207,6 @@ width: 100%;	/* 横の幅を100% */
 
 
 .favoPage{
-  margin:10px;
   padding:10px;
 }
 .floatright{

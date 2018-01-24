@@ -7,8 +7,6 @@ import {withRouter} from 'react-router-dom'
 class LikePage extends Component{
 
   handleClick(event,id,name){
-
-    console.log(this.props)
     event.preventDefault();
     this.props.history.push(`/user/${id}/${name}/comment`);
 
@@ -20,19 +18,18 @@ class LikePage extends Component{
       <div className="centerPosition">
       <h3>お気に入りサークル一覧</h3>
       </div>
-      <div className="mypage fontChange">
+      <div className="fontChange">
       {this.props.like.map((like) => {
-        console.log(like)
           return(
-            <div key={like.circle.id} className="favoPage" >
+            <div key={like.circle.id} className="favoPage mypage " >
               <div>
               <div>
-              {like.circle.name}
+              {like.circle.name}<span><Button className="buttonsize" bsStyle="primary" onClick={(event)=>this.handleClick(event,like.circle.id,like.circle.url_name)}>編集</Button></span>
               </div>
               <div>
               {like.comment.text.String}
               </div>
-              <span className="floatright"><Button bsStyle="primary" onClick={(event)=>this.handleClick(event,like.circle.id,like.circle.url_name)}>コメントを書く</Button></span>
+
 
               </div>
             </div>
