@@ -15,7 +15,9 @@ componentWillMount(){
 render(){
     return(
       <div>
+          <Col sm={3} xsHidden>
           <Menu/>
+          </Col>
           <Col xs ={12} sm={9} className="paper">
           <UserBox data={this.props.user} />
           </Col>

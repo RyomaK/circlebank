@@ -11,6 +11,7 @@ import Auth from './Auth'
 import UserPage from './UserPage'
 import TagPage from './TagPage'
 import Comment from './Comment'
+import SmartPage from './SmartPage'
 import TabMenu from './TabMenu'
 
 import { BrowserRouter, Route, Link, Switch} from 'react-router-dom';
@@ -38,6 +39,7 @@ const App =() => {
                     <Route exact path='/circle/search/:name' component={CirclePage}/>
                     <Route exact path='/tag/:id' component={TagPage}/>
                     <Route exact path='/user/:id/:name/comment' component={Comment}/>
+                    <Route exact path='/menu' component={SmartPage}/>
                     <Route component={ NotFound }/>
                   </Switch>
                   </div>

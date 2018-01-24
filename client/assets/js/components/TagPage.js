@@ -8,7 +8,9 @@ class TagPage extends Component {
   render(){
     return(
       <div>
+        <Col sm={3} xsHidden>
           <Menu/>
+        </Col>
         <Col sm={9} className="paper">
           <div className="SearchResult">
             <h2>検索結果</h2>

@@ -13,7 +13,7 @@ class TabMenu extends Component{
     this.props.history.push('/')
   }
   handleClick1(){
-    this.props.history.push('/')
+    this.props.history.push('/menu')
   }
   handleClick2(){
     this.props.history.push('/user')

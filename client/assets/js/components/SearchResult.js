@@ -13,10 +13,11 @@ class SearchResult extends Component{
     }else{
       return(
         <div>
-
+            <Col sm={3} xsHidden>
             <Menu/>
+            </Col>
             <Col xs ={12} sm={9} className="paper">
-              <div className="SearchResult ">
+              <div className="SearchResult">
                 <h2>検索結果</h2>
                 <div className="resultPage">
                 <Link to={`/circle/search/${this.props.circle.url_name}`}><h3>{this.props.circle.name}</h3></Link>
