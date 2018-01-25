@@ -3,16 +3,18 @@ import {adminSetName,adminSetUrl,adminSetNumber,adminSetRaitio,
 adminSetImage,adminSetIntro,adminSetMessage,adminSetDeleName,
 adminSetContact,adminSetCampus,adminSetExcite,adminSetFee,
 adminSetCircle} from '../../actions/index';
+import {withRouter} from 'react-router-dom'
 
 import {Col,Form,FormGroup,FormControl,Button} from "react-bootstrap"
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import { connect } from 'react-redux'
 
-class CirclePage extends Component{
+class AdminCirclePage extends Component{
   handleSubmit(e){
     e.preventDefault()
     this.props.adminSetCircle(this.props.circle);
+    this.props.history.push('/');
 
   }
 
@@ -34,7 +36,6 @@ class CirclePage extends Component{
         this.props.adminSetImage(e.target.value)
       break;
       case 'introduction':
-      console.log("aafs")
         this.props.adminSetIntro(e.target.value)
       break;
       case 'message_for_fresh':
@@ -153,6 +154,9 @@ class CirclePage extends Component{
             floatingLabelText="サークル紹介文"
             floatingLabelFixed={true}
             fullWidth={true}
+            multiLine={true}
+            rows={2}
+            rowsMax={4}
             onChange={this.handleChange.bind(this)}
             />
     			</Col>
@@ -283,7 +287,4 @@ const mapDispatchToProps = dispatch => {
     }
   }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CirclePage)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AdminCirclePage))

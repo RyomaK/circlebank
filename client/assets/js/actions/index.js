@@ -593,7 +593,7 @@ export const adminSetCircle = circle => dispatch => {
       'name':circle.name,
       'url_name':circle.url_name,
       'number':circle.number,
-      'gender_raito':circle.gender_ratio,
+      'gender_ratio':circle.gender_ratio,
       'delegete_name':circle.delegete_name,
       'introduction':circle.introduction,
       'message_for_fresh':circle.message_for_fresh,
@@ -609,6 +609,7 @@ export const adminSetCircle = circle => dispatch => {
     }).then(({status})=>{
       switch(status){
         case 200:
+          dispatch(adminGetCircle())
           break;
         default:
           break;
@@ -633,6 +634,7 @@ export const adminSetEvent = (id,events) => dispatch =>{
     }).then(({status})=>{
       switch(status){
         case 200:
+          dispatch(adminGetCircle())
           break;
         default:
           break;

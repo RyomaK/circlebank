@@ -14,10 +14,10 @@ class Home extends Component{
     this.props.history.push(`/admin/add/${id}/event`)
 
   }
-  handleClick1(event,id){
+  handleClick1(event,id,name){
     event.preventDefault();
     this.props.DeleteCircle(id)
-    this.props.history.push(`/`)
+    this.props.history.push(`/admin/delete/${name}`)
 
   }
   render(){
@@ -26,14 +26,14 @@ class Home extends Component{
         <div>
         {this.props.circles.map( circle => (
           <div key={circle.id}>
-            <h3>{circle.name}</h3>
+            <Link to={`/admin/circle/${circle.url_name}`}><h3>{circle.name}</h3></Link>
             <Button onClick={(event)=>this.handleClick(event,circle.id)}>イベント追加</Button>
-            <Button onClick={(event)=>this.handleClick1(event,circle.id)}>削除</Button>
+            <Button onClick={(event)=>this.handleClick1(event,circle.id,circle.url_name)}>削除</Button>
 
           </div>
         ))}
 
-        <Link to="/admin/circle">サークルを追加する</Link>
+        <Link to="/admin/add/circle">サークルを追加する</Link>
 
 
         </div>
