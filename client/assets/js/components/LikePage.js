@@ -31,10 +31,15 @@ class LikePage extends Component{
               <div className="favoPage" >
               <p>メモ枠</p>
               <div>
-              {like.comment.text.String}
+              {like.comment.text.String.split('\n').map((message,i)=>{
+
+                return(
+
+                  <p className="heightPosi" key={i}>{message}</p>
+                )
+
+              })}
               </div>
-
-
               </div>
             </div>
             </Paper>

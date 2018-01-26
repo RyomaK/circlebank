@@ -16,10 +16,10 @@ class TagPage extends Component {
           <div>
             <h2>検索結果</h2>
           {this.props.circle.map( circle => (
-            <div key={circle.id}><Link to={`/circle/search/${circle.url_name}`} >
+            <div className="marginbottom" key={circle.id}><Link to={`/circle/search/${circle.url_name}`} >
                 <Card>
                 <CardMedia>
-                  <img src="static/img/users/default.png" alt="aa" height="200px;"/>
+                  <img src="static/img/users/default.png" alt="aa" height="250px;"/>
                 </CardMedia>
                 <CardTitle title={circle.name} />
                 <CardText>

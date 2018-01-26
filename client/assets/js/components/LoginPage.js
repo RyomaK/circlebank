@@ -20,7 +20,7 @@ class LoginPage extends Component{
     const style = {
       width: '100%',
       padding: 30,
-      marginTop:'15%',
+      marginTop:'130px',
       textAlign:'center',
       position: 'absolute',
       display: 'inline-block',
