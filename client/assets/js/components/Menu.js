@@ -31,7 +31,7 @@ class Menu extends Component {
   render(){
 
     return(
-      <div>
+      <div className="whitePage">
           <List>
             <Subheader>絞り検索</Subheader>
             <ListItem

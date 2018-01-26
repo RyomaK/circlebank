@@ -1,4 +1,6 @@
 import React,{Component} from 'react'
+import Paper from 'material-ui/Paper';
+import FlatButton from 'material-ui/FlatButton';
 import { comment, deleteComment } from '../actions/index'
 import { FormControl, Button, Grid, Row, Col } from 'react-bootstrap'
 import { connect } from 'react-redux'
@@ -28,18 +30,23 @@ handleChange(e){
   render(){
     return(
       <div>
-      <h1>サークルメモ</h1>
-      <form onSubmit = {this.handleSubmit.bind(this)}>
-        <Col xs={7} xsOffset={1}>
-        <FormControl
-          type="text"
-          placeholder="コメントを追加してください"
-          onChange = {this.handleChange.bind(this)}
-          className="search1"
-          />
-          </Col>
-        <Button type="submit">追加</Button>
+      <Paper zDepth={1} className="padZero">
+        <form onSubmit = {this.handleSubmit.bind(this)}>
+        <div className="commentbox">
+        <span className="fontChange2 posi">サークルメモ</span>
+        <span className="floatright"><FlatButton type="submit" style={{color:'white'}}>追加</FlatButton></span>
+        </div>
+        <div className="favoPage" >
+          <FormControl
+            componentClass="textarea"
+            placeholder="コメントを追加してください"
+            onChange = {this.handleChange.bind(this)}
+            className="search1"
+            rows={5}
+            />
+        </div>
       </form>
+      </Paper>
       </div>
     )
   }

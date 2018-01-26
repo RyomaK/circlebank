@@ -62,24 +62,30 @@ const circle = this.props.circle
             <div>
             <Table className="whitePage">
             <tbody>
-              <tr>
-                <td width="25%">キャンパス</td>
-                <td width="25%">{circle.campus}</td>
-                <td width="25%">カテゴリ</td>
-                <td width="25%">{circle.introduction}</td>
-              </tr>
-              <tr>
-                <td>サークル人数</td>
-                <td>{circle.number}人</td>
-                <td>代表者</td>
-                <td>{circle.delegete_name}</td>
-              </tr>
-              <tr>
-                <td>男女比</td>
-                <td>{circle.gender_ratio}</td>
-                <td>連絡先</td>
-                <td>{circle.delegete_contact}</td>
-              </tr>
+            <tr>
+              <td width="25%">キャンパス</td>
+              <td width="25%">{circle.campus}</td>
+              <td width="25%">カテゴリ</td>
+              <td width="25%">{circle.introduction}</td>
+            </tr>
+            <tr>
+              <td>サークル人数</td>
+              <td>{circle.number}人</td>
+              <td>男女比</td>
+              <td>{circle.gender_ratio}</td>
+            </tr>
+            <tr>
+              <td>活動頻度</td>
+              <td>{circle.excite}</td>
+              <td>年会費・入会費</td>
+              <td>{circle.fee}</td>
+            </tr>
+            <tr>
+              <td>代表者</td>
+              <td>{circle.delegete_name}</td>
+              <td>連絡先</td>
+              <td>{circle.delegete_contact}</td>
+            </tr>
             </tbody>
             </Table>
             </div>

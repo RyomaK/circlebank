@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import Home from './admin/Home'
-import CirclePage from './admin/CirclePage'
+import AdminCirclePage from './admin/AdminCirclePage'
 import AddEvent from './admin/AddEvent'
+import adminEventPage from './admin/adminEventPage'
+import DeletePage from './admin/DeletePage'
+import CirclePage from '../containers/CirclePage'
 import { Redirect, Route} from 'react-router-dom'
 import { loginCheck } from '../actions/index'
 import { connect } from 'react-redux'
@@ -25,8 +28,11 @@ class Auth extends Component{
       return(
         <div>
           <Route exact path='/' component={Home}/>
-          <Route exact path='/admin/circle' component={CirclePage}/>
-          <Route exact path='/admin/add/:id/event' component={AddEvent}/>
+          <Route exact path='/admin/add/circle' component={AdminCirclePage}/>
+          <Route exact path='/admin/event/:name' component={adminEventPage}/>
+          <Route exact path='/admin/circle/:name' component={CirclePage}/>
+          <Route exact path='/admin/delete/:name' component={DeletePage}/>
+          <Route exact path='/admin/add/event/:id' component={AddEvent}/>
         </div>
       )
     }else if((isLogin=="true")&&(admin==false)){

@@ -3,16 +3,18 @@ import {adminSetName,adminSetUrl,adminSetNumber,adminSetRaitio,
 adminSetImage,adminSetIntro,adminSetMessage,adminSetDeleName,
 adminSetContact,adminSetCampus,adminSetExcite,adminSetFee,
 adminSetCircle} from '../../actions/index';
+import {withRouter} from 'react-router-dom'
 
 import {Col,Form,FormGroup,FormControl,Button} from "react-bootstrap"
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import { connect } from 'react-redux'
 
-class CirclePage extends Component{
+class AdminCirclePage extends Component{
   handleSubmit(e){
     e.preventDefault()
     this.props.adminSetCircle(this.props.circle);
+    this.props.history.push('/');
 
   }
 
@@ -34,7 +36,6 @@ class CirclePage extends Component{
         this.props.adminSetImage(e.target.value)
       break;
       case 'introduction':
-      console.log("aafs")
         this.props.adminSetIntro(e.target.value)
       break;
       case 'message_for_fresh':
@@ -121,18 +122,8 @@ class CirclePage extends Component{
             onChange={this.handleChange.bind(this)}
             />
     			</Col>
-    		</FormGroup><FormGroup>
-    			<Col smOffset={2} sm={8}>
-            <TextField
-            name = "image"
-            type = "text"
-            floatingLabelText="画像"
-            floatingLabelFixed={true}
-            fullWidth={true}
-            onChange={this.handleChange.bind(this)}
-            />
-    			</Col>
     		</FormGroup>
+
         <FormGroup>
     			<Col smOffset={2} sm={8}>
             <TextField
@@ -153,6 +144,9 @@ class CirclePage extends Component{
             floatingLabelText="サークル紹介文"
             floatingLabelFixed={true}
             fullWidth={true}
+            multiLine={true}
+            rows={2}
+            rowsMax={4}
             onChange={this.handleChange.bind(this)}
             />
     			</Col>
@@ -217,14 +211,16 @@ class CirclePage extends Component{
             />
     			</Col>
     		</FormGroup>
+        <FormGroup>
+    			<Col smOffset={2} sm={8}>
+            <p>サークル画像</p>
+            <input name="image" type="file"/>
+    			</Col>
+    		</FormGroup>
     		<FormGroup>
           <Col smOffset={2} sm={8}>
             <FlatButton label="登録"  backgroundColor="#8AA62F" hoverColor="#7CBD1E" style={styles.customColor} type="submit" />
     		   </Col>
-
-          <Col smOffset={2}sm={8}>
-          <p className="rightside">アカウント作成はコチラ</p>
-          </Col>
     		</FormGroup>
     	   </Form>
        </div>
@@ -283,7 +279,4 @@ const mapDispatchToProps = dispatch => {
     }
   }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CirclePage)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AdminCirclePage))

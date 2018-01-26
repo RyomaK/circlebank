@@ -34,7 +34,6 @@ class CircleEdit extends Component{
         this.props.adminSetImage(e.target.value)
       break;
       case 'introduction':
-      console.log("aafs")
         this.props.adminSetIntro(e.target.value)
       break;
       case 'message_for_fresh':

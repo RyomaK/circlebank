@@ -30,7 +30,7 @@ class SearchForm  extends Component{
   <div className="searchForm">
       <Row>
         <form onSubmit = {this.handleSubmit.bind(this)}>
-          <Col xs={7} xsOffset={1}>
+          <Col xs={9} smOffset={1}>
           <FormControl
             type="text"
             placeholder="サークルを検索"

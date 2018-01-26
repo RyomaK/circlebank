@@ -1,15 +1,17 @@
 import React from 'react'
 import LikePage from './LikePage'
 import {Col,Table} from "react-bootstrap"
+import Paper from 'material-ui/Paper';
 import {connect} from 'react-redux'
 
 const UserBox = ({data}) => {
   return(
     <div>
+
         <div className="centerPosition">
           <h3>マイページ</h3>
           </div>
-          <div className="mypage">
+              <Paper zDepth={1}>
             <Table className="fontChange">
               <tbody>
                 <tr>
@@ -30,7 +32,7 @@ const UserBox = ({data}) => {
                 </tr>
               </tbody>
             </Table>
-            </div>
+            </Paper>
         <LikePage/>
     </div>
   )

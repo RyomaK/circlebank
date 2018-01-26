@@ -5,19 +5,25 @@ html,body{
 padding: 0;	/* 余白の削除 */
 height: 100%;	/* 縦の高さを100% */
 width: 100%;	/* 横の幅を100% */
+background-color:#F8F8F8
 }
 
-#contents{
-  padding:0 0 72px 0;
-}
-#footer{
-  position: fixed;            /* フッターの固定 */
-  bottom: 0px;                /* 位置(下0px) */
-  left: 0px;                  /* 位置(左0px) */
-  width: 100%;                /* 横幅100%　*/
-  height: 72px;
-}
+
 @media screen and (max-width: 768px) {
+  #contents{
+    padding:0 0 72px 0;
+  }
+  #footer{
+    position: fixed;            /* フッターの固定 */
+    bottom: 0px;                /* 位置(下0px) */
+    left: 0px;                  /* 位置(左0px) */
+    width: 100%;                /* 横幅100%　*/
+    height: 72px;
+  }
+  .fontChange2{
+    color:white;
+    font-size:20px
+  }
   .buttonsize{
     width:60px;
     height:30px;
@@ -25,9 +31,7 @@ width: 100%;	/* 横の幅を100% */
   }
 
   .paper{
-    background-color: #e4f0fc;
-    padding:20px;
-    border-radius: 10px;
+    padding:10px;
     height:100vh;
     margin-bottom:72px
   }
@@ -62,7 +66,7 @@ width: 100%;	/* 横の幅を100% */
   	content: ' ';
   }
   .notFound{
-    background-color: #e4f0fc;
+
     padding:20px;
     border-radius: 10px;
     height:100vh;
@@ -90,13 +94,11 @@ width: 100%;	/* 横の幅を100% */
     font-size:20px;
   }
   .paper{
-    background-color: #e4f0fc;
-    padding:20px;
-    border-radius: 10px;
+    padding:10px;
     height:100vh;
   }
   .notFound{
-    background-color: #e4f0fc;
+
     padding:20px;
     border-radius: 10px;
     height:100vh;
@@ -176,8 +178,6 @@ width: 100%;	/* 横の幅を100% */
 
 
 .circlePage{
-  background-color: #e4f0fc;
-  border-radius: 10px;
   height:100vh;
   padding:0;
 }
@@ -213,10 +213,6 @@ width: 100%;	/* 横の幅を100% */
   margin-bottom:20px;
 }
 
-.mypage{
-  background-color:white;
-  border-radius:10px;
-}
 
 .SearchResult{
   margin:5px;
@@ -234,16 +230,26 @@ width: 100%;	/* 横の幅を100% */
 }
 
 .commentbox{
-  margin-top:5px;
-  padding-bottom:20px;
+  background-color:#FDC44F;
+  padding-top:5px;
+  padding-bottom:10px;
+}
+
+.padZero{
+  padding:0;
+  margin:0;
 }
 
 .favoPage{
-  padding:30px;
+  padding:10px;
   margin-bottom:20px;
 }
 .floatright{
   display:inline-block;
   float: right;
   padding-bottom:10px;
+}
+
+.posi{
+  margin-left:10px
 }
