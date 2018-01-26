@@ -24,6 +24,7 @@ const circle = (state=initialState,action) => {
 
   switch(action.type){
     case 'CIRCLE':
+
       return{
         circle:action.circle.Circle,
         events:action.circle.events,

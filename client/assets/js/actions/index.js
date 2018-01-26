@@ -620,6 +620,38 @@ export const adminSetCircle = circle => dispatch => {
     });
 }
 
+export const adminGetEvent = (name) => dispatch => {
+  const Auth = getAuth();
+    axios
+    .get(`/api/doshisha/circle/${name}`,{headers:{'Authorization':`Bearer ${Auth}`}})
+    .then((results) => {
+      console.log(results)
+      const status = results.status
+      const circle = results.data
+      return { status, circle }
+    }).then(({ status, circle }) => {
+      switch (status) {
+        case 200: {
+          dispatch({type:'CIRCLE',circle})
+          break;
+        }
+        case 401: {
+          dispatch(setLogin(-1));
+          break;
+        }
+        default: {
+          dispatch(setErrorMessage('エラーが発生しました'));
+          break;
+        }
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+}
+
+
+
 export const adminSetEvent = (id,events) => dispatch =>{
     const Auth = getAuth();
     var params = [events]
@@ -644,6 +676,32 @@ export const adminSetEvent = (id,events) => dispatch =>{
       console.log(e);
     });
 }
+
+export const adminDeleteEvent = (circle_id,event_id,name) => dispatch =>{
+    const Auth = getAuth();
+    const Url = name
+    axios
+    .delete(`/admin/doshisha/circle/${circle_id}/event/${event_id}`
+
+,{headers:{'Authorization':`Bearer ${Auth}`}})
+    .then((results) => {
+      console.log(results)
+      const status = results.status
+      return{status}
+    }).then(({status})=>{
+      switch(status){
+        case 200:
+          dispatch(adminGetCircle(Url))
+          break;
+        default:
+          break;
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+}
+
 
 export const adminDeleteCircle = (id) => dispatch =>{
     const Auth = getAuth();

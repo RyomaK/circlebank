@@ -9,9 +9,9 @@ class Home extends Component{
 
     this.props.getCircle();
   }
-  handleClick(event,id){
+  handleClick(event,name){
     event.preventDefault();
-    this.props.history.push(`/admin/add/${id}/event`)
+    this.props.history.push(`/admin/event/${name}`)
 
   }
   handleClick1(event,id,name){
@@ -21,13 +21,13 @@ class Home extends Component{
 
   }
   render(){
-    console.log(this.props)
+
     return(
         <div>
-        {this.props.circles.map( circle => (
+        {this.props.circles.circle.map( circle => (
           <div key={circle.id}>
             <Link to={`/admin/circle/${circle.url_name}`}><h3>{circle.name}</h3></Link>
-            <Button onClick={(event)=>this.handleClick(event,circle.id)}>イベント追加</Button>
+            <Button onClick={(event)=>this.handleClick(event,circle.url_name)}>イベント編集</Button>
             <Button onClick={(event)=>this.handleClick1(event,circle.id,circle.url_name)}>削除</Button>
 
           </div>
@@ -42,9 +42,8 @@ class Home extends Component{
 }
 
 const mapStateToProps = state => {
-  console.log(state)
   return{
-    circles: state.adminCircle.circle
+    circles: state.adminCircle
   }
 }
 const mapDispatchToProps = dispatch => {

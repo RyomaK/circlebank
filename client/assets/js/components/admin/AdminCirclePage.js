@@ -122,18 +122,8 @@ class AdminCirclePage extends Component{
             onChange={this.handleChange.bind(this)}
             />
     			</Col>
-    		</FormGroup><FormGroup>
-    			<Col smOffset={2} sm={8}>
-            <TextField
-            name = "image"
-            type = "text"
-            floatingLabelText="画像"
-            floatingLabelFixed={true}
-            fullWidth={true}
-            onChange={this.handleChange.bind(this)}
-            />
-    			</Col>
     		</FormGroup>
+
         <FormGroup>
     			<Col smOffset={2} sm={8}>
             <TextField
@@ -221,14 +211,16 @@ class AdminCirclePage extends Component{
             />
     			</Col>
     		</FormGroup>
+        <FormGroup>
+    			<Col smOffset={2} sm={8}>
+            <p>サークル画像</p>
+            <input name="image" type="file"/>
+    			</Col>
+    		</FormGroup>
     		<FormGroup>
           <Col smOffset={2} sm={8}>
             <FlatButton label="登録"  backgroundColor="#8AA62F" hoverColor="#7CBD1E" style={styles.customColor} type="submit" />
     		   </Col>
-
-          <Col smOffset={2}sm={8}>
-          <p className="rightside">アカウント作成はコチラ</p>
-          </Col>
     		</FormGroup>
     	   </Form>
        </div>

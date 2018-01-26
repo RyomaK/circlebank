@@ -1,5 +1,6 @@
 import React,{ Component } from 'react'
 import Menu from './Menu'
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import { Link, Redirect} from 'react-router-dom'
 import { Row, Col } from 'react-bootstrap'
 import { connect } from 'react-redux'
@@ -17,11 +18,19 @@ class SearchResult extends Component{
             <Menu/>
             </Col>
             <Col xs ={12} sm={9} className="paper">
-              <div className="SearchResult">
+              <div>
                 <h2>検索結果</h2>
-                <div className="resultPage">
-                <Link to={`/circle/search/${this.props.circle.url_name}`}><h3>{this.props.circle.name}</h3></Link>
-                </div>
+                <Link to={`/circle/search/${this.props.circle.url_name}`}>
+                  <Card>
+                    <CardMedia>
+                      <img src="static/img/users/default.png" alt="aa" height="200px;"/>
+                    </CardMedia>
+                    <CardTitle title={this.props.circle.name}/>
+                    <CardText>
+                      {this.props.circle.message_for_fresh}
+                    </CardText>
+                  </Card>
+                </Link>
               </div>
             </Col>
 
