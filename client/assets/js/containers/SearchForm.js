@@ -28,7 +28,7 @@ class SearchForm  extends Component{
 
   return(
   <div className="searchForm">
-      <Row>
+
         <form onSubmit = {this.handleSubmit.bind(this)}>
           <Col xs={9} smOffset={1}>
           <FormControl
@@ -40,7 +40,7 @@ class SearchForm  extends Component{
             </Col>
           <IconButton type ="submit"><ActionSearch  className="search"/></IconButton>
         </form>
-      </Row>
+
   </div>
 
     )

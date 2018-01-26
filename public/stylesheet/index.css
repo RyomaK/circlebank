@@ -1,17 +1,34 @@
 /*header*/
+@import url(https://fonts.googleapis.com/css?family=Lato:400,700);
+@import url(http://fonts.googleapis.com/earlyaccess/notosansjp.css);
 
 html,body{
+  font-family: Lato, "Noto Sans JP", "游ゴシック Medium", "游ゴシック体", "Yu Gothic Medium", YuGothic, "ヒラギノ角ゴ ProN", "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
   margin: 0;	/* 余白の削除 */
 padding: 0;	/* 余白の削除 */
 height: 100%;	/* 縦の高さを100% */
-width: 100%;	/* 横の幅を100% */
-background-color:#F8F8F8
+width: 100%;
+max-width:100%;	/* 横の幅を100% */
+background-color:#F8F8F8;
+
+}
+
+#Header{
+  position:fixed;
+  top: 0px;
+  left: 0px;
+  width:100%;
+  height:64px;
+  z-index:100;
+  max-width:100%;
 }
 
 
 @media screen and (max-width: 768px) {
   #contents{
-    padding:0 0 72px 0;
+    padding:64px 0 72px 0;
+    max-width:100%;
+
   }
   #footer{
     position: fixed;            /* フッターの固定 */
@@ -19,6 +36,7 @@ background-color:#F8F8F8
     left: 0px;                  /* 位置(左0px) */
     width: 100%;                /* 横幅100%　*/
     height: 72px;
+    max-width:100%;
   }
   .fontChange2{
     color:white;
@@ -32,7 +50,7 @@ background-color:#F8F8F8
 
   .paper{
     padding:10px;
-    height:100vh;
+    height:100%;
     margin-bottom:72px
   }
   .fontChange{
@@ -72,21 +90,20 @@ background-color:#F8F8F8
     height:100vh;
     margin-bottom:72px
   }
-  .picture1{
-    background-image: url("./sozai2.png");
-    width:100vw;
-    height:200px;
+  .picture{
+    width:100%;
+    height:300px;
   }
-  .picture2{
-    background-image: url("./sozai2.png");
-    width:100vw;
-    height:200px;
-  }
-  .picture3{
-    background-image: url("./sozai2.png");
-    width:100vw;
-    height:200px;
-  }
+  .picture img{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  max-width: 100%;
+  max-height: 100%;
+}
 }
 
 @media screen and (min-width: 768px) {
@@ -169,6 +186,7 @@ background-color:#F8F8F8
 }
 .circleNameRight{
   margin-right:10px;
+  max-width:100%;
 }
 .circleImage{
   margin:20px;
@@ -204,7 +222,8 @@ background-color:#F8F8F8
 }
 
 .searchForm{
-  padding:10px;
+  height:60px;
+  padding-top:5px;
   background-color:#CDD8E4
 }
 
@@ -252,4 +271,12 @@ background-color:#F8F8F8
 
 .posi{
   margin-left:10px
+}
+.heightPosi{
+  margin:0;
+  padding:0;
+}
+
+.marginbottom{
+  margin-bottom:10px;
 }
