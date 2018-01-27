@@ -45,7 +45,7 @@ const circle = this.props.circle
       <Tabs
           value={this.state.value}
           onChange={this.handleChange.bind(this)}
-         className="fontChange1 whitePage">
+         className="fontChange1 whitePage pad">
           <Tab label="団体紹介" value="a">
             <div className="centerPosition whitePage">
               <div className="circleInt">
