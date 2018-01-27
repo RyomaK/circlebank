@@ -21,7 +21,7 @@ const initialState = {
 const adminCircle = (state=initialState,action) => {
   switch(action.type){
     case 'ADMIN_CIRCLE':
-      console.log(action)
+      
       return{
         circle: action.circle
       }

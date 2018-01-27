@@ -21,13 +21,13 @@ class SearchResult extends Component{
               <div>
                 <h2>検索結果</h2>
                 <Link to={`/circle/search/${this.props.circle.url_name}`}>
-                  <Card>
+                  <Card className="sizebox">
                     <CardMedia>
-                      <img src="static/img/users/default.png" alt="aa" height="200px;"/>
+                      <img src={`static/${this.props.circle.image}`} alt="aa" height="200px;"/>
                     </CardMedia>
                     <CardTitle title={this.props.circle.name}/>
                     <CardText>
-                      {this.props.circle.message_for_fresh}
+                      サークルの種類:{this.props.circle.introduction}
                     </CardText>
                   </Card>
                 </Link>

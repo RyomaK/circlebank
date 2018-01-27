@@ -1,6 +1,8 @@
 import React,{Component} from 'react'
 import {Link,withRouter} from 'react-router-dom'
-import {Button} from 'react-bootstrap'
+import Paper from 'material-ui/Paper';
+import FlatButton from 'material-ui/FlatButton';
+import {Button,Col} from 'react-bootstrap'
 import {connect} from 'react-redux'
 import {adminGetEvent,adminDeleteEvent} from '../../actions/index'
 
@@ -24,15 +26,24 @@ class adminEventPage extends Component{
     return(
 
         <div>
-          <h3>{`${this.props.circle.name}のイベント`}</h3>
+          <Col smOffset={2} sm={8}>
+          <h1>{`${this.props.circle.name}のイベント`}</h1>
           <Button　onClick={(event)=>this.handleClick(event,this.props.circle.id)}>イベントを追加する</Button>
           {this.props.events.map( eve => (
-            <div key={eve.id}>
-              <Link to={`/`}><h3>{eve.name}</h3></Link>
-              <Button onClick={(event)=>this.handleClick(event,eve)}>編集</Button>
-              <Button onClick={(event)=>this.handleClick1(event,this.props.circle.id,eve.id,this.props.circle.url_name,this.props.circle.name)}>削除</Button>
+              <Paper zDepth={1} key={eve.id} className="padZero">
+              <div className="commentbox">
+              <span className="fontSizeChange">{eve.name}</span>
+                <span className="floatright">
+                <FlatButton onClick={(event)=>this.handleClick(event,eve)}>編集</FlatButton>
+                <FlatButton onClick={(event)=>this.handleClick1(event,this.props.circle.id,eve.id,this.props.circle.url_name,this.props.circle.name)}>削除</FlatButton>
+              </span>
               </div>
+              <div className="eventbox">
+                <p>日程</p>
+              </div>
+              </Paper>
             ))}
+            </Col>
         </div>
       )
   }

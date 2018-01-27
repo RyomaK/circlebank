@@ -1,4 +1,3 @@
-/*header*/
 @import url(https://fonts.googleapis.com/css?family=Lato:400,700);
 @import url(http://fonts.googleapis.com/earlyaccess/notosansjp.css);
 
@@ -25,7 +24,7 @@ background-color:#F8F8F8;
 
 
 @media screen and (max-width: 768px) {
-  #contents{
+  .contents{
     padding:64px 0 72px 0;
     max-width:100%;
 
@@ -47,11 +46,17 @@ background-color:#F8F8F8;
     height:30px;
     font-size: 10px
   }
-
+  .sizebox{
+    height:330px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
   .paper{
     padding:10px;
     height:100%;
-    margin-bottom:72px
+    margin-bottom:80px;
+
   }
   .fontChange{
     font-size:15px;
@@ -92,7 +97,7 @@ background-color:#F8F8F8;
   }
   .picture{
     width:100%;
-    height:300px;
+    height:250px;
   }
   .picture img{
   position: absolute;
@@ -107,6 +112,19 @@ background-color:#F8F8F8;
 }
 
 @media screen and (min-width: 768px) {
+  .contents{
+    padding:64px 0 72px 0;
+    max-width:100%;
+
+  }
+  #footer{
+    position: fixed;            /* フッターの固定 */
+    bottom: 0px;                /* 位置(下0px) */
+    left: 0px;                  /* 位置(左0px) */
+    width: 100%;                /* 横幅100%　*/
+    height: 72px;
+    max-width:100%;
+  }
   .fontChange{
     font-size:20px;
   }
@@ -182,14 +200,15 @@ background-color:#F8F8F8;
 
 .circleName{
   padding-top:20px;
-  font-size:35px;
+  font-size:20px;
 }
 .circleNameRight{
   margin-right:10px;
   max-width:100%;
 }
 .circleImage{
-  margin:20px;
+  margin-top:10px;
+  width:100%;
 }
 
 
@@ -264,7 +283,7 @@ background-color:#F8F8F8;
   margin-bottom:20px;
 }
 .floatright{
-  display:inline-block;
+
   float: right;
   padding-bottom:10px;
 }

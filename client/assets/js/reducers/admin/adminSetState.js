@@ -15,7 +15,7 @@ const initialState = {
   }
 
 const adminSetState = (state=initialState,action) => {
-console.log(action)
+
   switch(action.type){
 
     case 'ADMIN_SET_NAME':
