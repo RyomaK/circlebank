@@ -361,7 +361,6 @@ export const comment = (circleName, circle_Id, text)=> dispatch => {
   axios
   .post(`/api/user/${circleName}/comment`,params,{headers:{'Authorization':`Bearer ${Auth}`}})
   .then((results) => {
-    console.log(results)
     const status = results.status
     return{status}
   }).then(({status})=>{
@@ -387,7 +386,7 @@ export const deleteComment = (circleName,circleId)=> dispatch => {
   axios
   .delete(`/api/user/${circleName}/comment`,{headers,data})
   .then((results) => {
-    console.log(results)
+
     const status = results.status
     return{status}
   }).then(({status})=>{
@@ -408,11 +407,10 @@ export const like = circleId => dispatch => {
     const Auth = getAuth();
     var params = new URLSearchParams();
     params.append('circle_id',circleId);
-    console.log(circleId)
     axios
     .post('/api/user/like',params,{headers:{'Authorization':`Bearer ${Auth}`}})
     .then((results) => {
-      console.log(results)
+
       const status = results.status
       return{status}
     }).then(({status})=>{
@@ -437,7 +435,7 @@ export const getlike = () => dispatch => {
     .then((results) => {
       const status = results.status
       let circle = results.data
-      console.log(circle)
+
       if(!circle){
         circle = []
       }
@@ -497,7 +495,7 @@ export const ImageUpload = image => dispatch => {
     axios
     .post('/api/user/upload',params,{headers:{'Authorization':`Bearer ${Auth}`}})
     .then((results) => {
-      console.log(results)
+
       const status = results.status
     })
     .catch((e) => {
@@ -560,7 +558,7 @@ export const adminGetCircle = () => dispatch => {
     axios
     .get('/admin/doshisha/circle',{headers:{'Authorization':`Bearer ${Auth}`}})
     .then((results) => {
-      console.log(results)
+
       const status = results.status
       const circle = results.data
       return { status, circle }
@@ -603,7 +601,7 @@ export const adminSetCircle = circle => dispatch => {
       'fee':circle.fee,
 },{headers:{'Authorization':`Bearer ${Auth}`}})
     .then((results) => {
-      console.log(results)
+
       const status = results.status
       return{status}
     }).then(({status})=>{
@@ -625,7 +623,7 @@ export const adminGetEvent = (name) => dispatch => {
     axios
     .get(`/api/doshisha/circle/${name}`,{headers:{'Authorization':`Bearer ${Auth}`}})
     .then((results) => {
-      console.log(results)
+
       const status = results.status
       const circle = results.data
       return { status, circle }
@@ -660,7 +658,7 @@ export const adminSetEvent = (id,events) => dispatch =>{
 
 ,{headers:{'Authorization':`Bearer ${Auth}`}})
     .then((results) => {
-      console.log(results)
+
       const status = results.status
       return{status}
     }).then(({status})=>{
@@ -685,7 +683,7 @@ export const adminDeleteEvent = (circle_id,event_id,name) => dispatch =>{
 
 ,{headers:{'Authorization':`Bearer ${Auth}`}})
     .then((results) => {
-      console.log(results)
+
       const status = results.status
       return{status}
     }).then(({status})=>{
@@ -708,7 +706,7 @@ export const adminDeleteCircle = (id) => dispatch =>{
     axios
     .delete(`/admin/doshisha/circle/${id}`,{headers:{'Authorization':`Bearer ${Auth}`}})
     .then((results) => {
-      console.log(results)
+
       const status = results.status
       return{status}
     }).then(({status})=>{
@@ -718,6 +716,22 @@ export const adminDeleteCircle = (id) => dispatch =>{
         default:
           break;
       }
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+}
+
+
+export const circleImage = (image,id) => dispatch => {
+    const Auth = getAuth();
+    var params = new FormData();
+    params.append('image',image);
+    axios
+    .post(`/admin/doshisha/circle/${id}/upload`,params,{headers:{'Authorization':`Bearer ${Auth}`}})
+    .then((results) => {
+
+      const status = results.status
     })
     .catch((e) => {
       console.log(e);

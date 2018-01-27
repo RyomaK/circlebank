@@ -36,15 +36,10 @@ const circle = this.props.circle
             <span className="circleNameRight">{circle.name}</span>
             <LikeButton id={circle.id}/>
           </div>
-          <div className="circleImage">
-            <img src="static/img/users/default.png" alt="aa" width="50%" height="40%"/>
-          </div>
-
         </div>
-        <div>
-
+        <div className="circleImage">
+          <img src={`static/${circle.image}`} alt="aa" width="100%"/>
         </div>
-
 
 
       <Tabs
@@ -54,7 +49,14 @@ const circle = this.props.circle
           <Tab label="団体紹介" value="a">
             <div className="centerPosition whitePage">
               <div className="circleInt">
-                {circle.message_for_fresh}
+              {circle.message_for_fresh.split('\n').map((message,i)=>{
+
+                return(
+
+                  <p className="heightPosi" key={i}>{message}</p>
+                )
+
+              })}
               </div>
             </div>
           </Tab>

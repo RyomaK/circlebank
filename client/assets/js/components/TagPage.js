@@ -17,13 +17,13 @@ class TagPage extends Component {
             <h2>検索結果</h2>
           {this.props.circle.map( circle => (
             <div className="marginbottom" key={circle.id}><Link to={`/circle/search/${circle.url_name}`} >
-                <Card>
+                <Card className="sizebox">
                 <CardMedia>
-                  <img src="static/img/users/default.png" alt="aa" height="250px;"/>
+                  <img src={`static/${circle.image}`} alt="aa" height="200px;"/>
                 </CardMedia>
                 <CardTitle title={circle.name} />
                 <CardText>
-                  {circle.message_for_fresh}
+                  サークルの種類:{circle.introduction}
                 </CardText>
               </Card>
               </Link>

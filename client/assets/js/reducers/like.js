@@ -1,4 +1,4 @@
-const like = (state="",action) => {
+const like = (state={circle:[]},action) => {
   switch(action.type){
 
     case 'LIKE':

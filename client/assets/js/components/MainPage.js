@@ -18,21 +18,21 @@ class MainPage extends Component{
           <Carousel>
             <Carousel.Item>
               <div className="picture">
-              <img src="static/img/users/LINEスタンプ(公式)_180126_0008.jpg"/>
+              <img src="static/img/users/11.jpg" height="250px"/>
               </div>
 
             </Carousel.Item>
             <Carousel.Item>
               <div className="picture">
-                <img src="static/img/users/LINEスタンプ(公式)_180126_0010.jpg"/>
+                <img src="static/img/users/12.JPG" height="250px"/>
               </div>
 
             </Carousel.Item>
             <Carousel.Item>
             <div className="picture">
-              <img src="static/img/users/LINEスタンプ(公式)_180126_0012.jpg"/>
+              <img src="static/img/users/13.jpg" height="250px"/>
             </div>
-            
+
             </Carousel.Item>
           </Carousel>
         </div>
