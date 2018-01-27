@@ -33,7 +33,9 @@ const UserBox = ({data}) => {
               </tbody>
             </Table>
             </Paper>
+        <div className="pad">
         <LikePage/>
+        </div>
     </div>
   )
 }

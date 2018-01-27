@@ -34,14 +34,14 @@ class LoginPage extends Component{
         return(
           <div className="log">
 
-            <Row>
+
             <Col xs={11} smOffset={3} sm={6}>
-            <Paper style = {style} zDepth={3}>
+                <Paper style = {style} zDepth={3}>
                 <h4>Circle Bankにログイン</h4>
                 <LoginForm />
-            </Paper>
+              </Paper>
             </Col>
-            </Row>
+
 
 
           </div>

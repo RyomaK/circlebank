@@ -30,9 +30,9 @@ const App =() => {
               <Header />
               </div>
               <Switch>
+
                 <Route path='/login' component={LoginPage}/>
                 <Route path='/signup' component={SignupPage}/>
-
                 <Auth>
                   <div className="contents">
                   <SearchForm/>
