@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import { adminSetEvent,EventName,EventAgenda,EventPlace,EventDetail,EventFee,EventCapacity} from '../../actions/index';
 import {withRouter} from 'react-router-dom'
-import {Col,Form,FormGroup,FormControl,Button} from "react-bootstrap"
+import {Col,Form,FormGroup,FormControl} from "react-bootstrap"
 import TextField from 'material-ui/TextField';
 import MenuItem from 'material-ui/MenuItem';
 import SelectField from 'material-ui/SelectField';
@@ -90,8 +90,6 @@ class AddEvent extends Component{
     switch(e.target.name){
       case 'name':
         this.props.EventName(e.target.value)
-      break;
-      case 'image':
       break;
       case 'fee':
         this.props.EventFee(e.target.value)
