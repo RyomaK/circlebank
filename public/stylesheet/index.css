@@ -228,9 +228,6 @@ background-color:#F8F8F8;
   margin-bottom: 20px;
 }
 
-.search{
-
-}
 
 .search1{
   margin-top:7px;
@@ -297,8 +294,18 @@ background-color:#F8F8F8;
 }
 .padbot{
   margin-bottom:40px;
-  paddign-bottom:40px;
+  padding-bottom:40px;
 }
 .topmargin{
   margin-top:70px;
+}
+
+.addButton{
+  margin-top:20px;
+}
+.adminHome{
+  margin:7px;
+}
+.adminHome1{
+  margin-bottom:20px;
 }

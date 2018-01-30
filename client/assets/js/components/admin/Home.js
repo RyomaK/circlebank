@@ -4,6 +4,9 @@ import {Button,Col} from 'react-bootstrap'
 import {connect} from 'react-redux';
 import Paper from 'material-ui/Paper';
 import FlatButton from 'material-ui/FlatButton';
+import FontIcon from 'material-ui/FontIcon';
+import IconButton from 'material-ui/IconButton';
+import AddButton from 'material-ui/svg-icons/content/add';
 import {adminGetCircle,adminDeleteCircle} from '../../actions/index'
 
 class Home extends Component{
@@ -27,11 +30,24 @@ class Home extends Component{
     event.preventDefault();
     this.props.history.push(`/admin/image/circle/${id}`)
   }
+
+  handleClick3(e){
+    e.preventDefault();
+    this.props.history.push(`/admin/add/circle`)
+  }
   render(){
     return(
         <div>
         <Col smOffset={2} sm={8}>
-        <h1>サークル一覧</h1>
+        <div className="adminHome">
+        <span className="fontChange adminHome1">サークル一覧</span>
+        <span className="addButton">
+          <IconButton onClick={this.handleClick3.bind(this)} >
+            <AddButton/>
+          </IconButton>
+        </span>
+        </div>
+
 
         {this.props.circles.circle.map( circle => (
           <Paper zDepth={1} key={circle.id} className="padZero">
@@ -50,7 +66,6 @@ class Home extends Component{
             </div>
           </Paper>
         ))}
-        <Link to="/admin/add/circle">サークルを追加する</Link>
         </Col>
         </div>
       )
