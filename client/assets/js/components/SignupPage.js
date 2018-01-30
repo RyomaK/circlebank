@@ -14,8 +14,8 @@ class SignupPage extends Component{
       display: 'inline-block',
     };
     return(
-      <div className="log">
-        <Row>
+      <div >
+
         <Col xs={11} smOffset={3} sm={6}>
           <div className="topmargin">
           <Paper style = {style} zDepth={3}>
@@ -24,7 +24,7 @@ class SignupPage extends Component{
           </Paper>
           </div>
         </Col>
-        </Row>
+
       </div>
     )
   }

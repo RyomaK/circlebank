@@ -13,6 +13,7 @@ class CircleImage extends Component{
     e.preventDefault();
     const id = this.props.match.params.id
     this.props.CircleImage(this.state.image,id)
+    this.props.history.push('/')
 
   }
 

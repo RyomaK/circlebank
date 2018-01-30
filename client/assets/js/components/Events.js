@@ -5,7 +5,7 @@ class Events extends Component{
   render(){
 
     return(
-      <div>
+      <div className="madin">
       <Table className="whitePage">
 
       {this.props.events.map(eve=>{

@@ -11,6 +11,9 @@ max-width:100%;	/* 横の幅を100% */
 background-color:#F8F8F8;
 
 }
+#wrap{
+  max-width: 100%
+}
 
 #Header{
   position:fixed;
@@ -27,6 +30,10 @@ background-color:#F8F8F8;
   .contents{
     padding:64px 0 72px 0;
     max-width:100%;
+
+  }
+  .pad{
+    margin-bottom:100px;
 
   }
   #footer{
@@ -69,10 +76,11 @@ background-color:#F8F8F8;
     background-color: white;
   }
   .log{
+
     background-image: url("./doshisha.jpg");
     background-size: cover;
   	position: relative;
-    width: 100vw;
+    width: 100%;
     min-height: 100vh;
 
     height: auto;
@@ -148,11 +156,12 @@ background-color:#F8F8F8;
     height:100vh;
   }
   .log{
+    padding:0;
     background-image: url("./doshisha.jpg");
     background-size: cover;
   	position: relative;
-    width: 100vw;
-    min-height: 100vh;
+    width: 100%;
+    min-height: 100%;
 
     height: auto;
   }
@@ -175,21 +184,7 @@ background-color:#F8F8F8;
   .topmargin{
     margin-top:100px;
   }
-  .picture1{
-    background-image: url("./sozai2.png");
-    width:100vw;
-    height:500px;
-  }
-  .picture2{
-    background-image: url("./sozai2.png");
-    width:100vw;
-    height:500px;
-  }
-  .picture3{
-    background-image: url("./sozai2.png");
-    width:100vw;
-    height:500px;
-  }
+
 }
 .centerPosition{
   text-align: center;
@@ -215,8 +210,9 @@ background-color:#F8F8F8;
 
 
 .circlePage{
-  height:100vh;
+  height:100%;
   padding:0;
+  margin-bottom:90px
 }
 
 .rightside{
@@ -298,4 +294,11 @@ background-color:#F8F8F8;
 
 .marginbottom{
   margin-bottom:10px;
+}
+.padbot{
+  margin-bottom:40px;
+  paddign-bottom:40px;
+}
+.topmargin{
+  margin-top:70px;
 }
