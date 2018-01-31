@@ -2,7 +2,7 @@ import React,{Component} from 'react'
 import {connect} from 'react-redux'
 import {getlike} from '../actions/index'
 import Result from './Result'
-import {Carousel} from 'react-bootstrap'
+import {Carousel,Col} from 'react-bootstrap'
 import Menu from './Menu'
 import {Row} from 'react-bootstrap'
 
@@ -18,25 +18,27 @@ class MainPage extends Component{
           <Carousel>
             <Carousel.Item>
               <div className="picture">
-              <img src="static/img/users/11.jpg" height="250px"/>
+              <img src="static/img/users/11.jpg"/>
               </div>
 
             </Carousel.Item>
             <Carousel.Item>
               <div className="picture">
-                <img src="static/img/users/12.JPG" height="250px"/>
+                <img src="static/img/users/12.JPG" />
               </div>
 
             </Carousel.Item>
             <Carousel.Item>
             <div className="picture">
-              <img src="static/img/users/13.jpg" height="250px"/>
+              <img src="static/img/users/13.jpg"/>
             </div>
 
             </Carousel.Item>
           </Carousel>
         </div>
+        <Col sm={3} className="reset">
         <Menu/>
+        </Col>
         </div>
       )
   }

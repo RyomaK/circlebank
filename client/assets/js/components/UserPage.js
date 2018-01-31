@@ -15,7 +15,7 @@ componentWillMount(){
 render(){
     return(
       <div>
-          <Col sm={3} xsHidden>
+          <Col sm={3} xsHidden className="reset">
           <Menu/>
           </Col>
           <Col xs ={12} sm={9} className="paper">
