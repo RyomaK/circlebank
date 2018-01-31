@@ -9,7 +9,7 @@ class TagPage extends Component {
   render(){
     return(
       <div>
-        <Col sm={3} xsHidden>
+        <Col sm={3} xsHidden className="reset">
           <Menu/>
         </Col>
         <Col sm={9} className="paper">

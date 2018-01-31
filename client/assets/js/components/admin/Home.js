@@ -52,7 +52,7 @@ class Home extends Component{
         {this.props.circles.circle.map( circle => (
           <Paper zDepth={1} key={circle.id} className="padZero">
             <div className="commentbox">
-            <Link to={`/admin/circle/${circle.url_name}`}　 style={{ textDecoration: 'none' ,color:'white'}}><span className="fontSizeChange">{circle.name}</span></Link>
+            <Link to={`/admin/circle/${circle.url_name}`}　 style={{ textDecoration: 'none' ,color:'white'}}><span className="adminFont">{circle.name}</span></Link>
               <span className="floatright">
               <FlatButton onClick={(event)=>this.handleClick2(event,circle.id)} >サークル画像追加</FlatButton>
 

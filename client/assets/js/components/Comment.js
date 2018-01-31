@@ -5,6 +5,7 @@ import { comment, deleteComment } from '../actions/index'
 import { FormControl, Button, Grid, Row, Col } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import {withRouter} from 'react-router-dom'
+import Menu from './Menu'
 
 class Comment extends Component{
 
@@ -30,6 +31,10 @@ handleChange(e){
   render(){
     return(
       <div>
+      <Col sm={3} className="reset" xsHidden>
+      <Menu/>
+      </Col>
+      <Col sm={9}>
       <Paper zDepth={1} className="padZero">
         <form onSubmit = {this.handleSubmit.bind(this)}>
         <div className="commentbox">
@@ -47,6 +52,7 @@ handleChange(e){
         </div>
       </form>
       </Paper>
+      </Col>
       </div>
     )
   }

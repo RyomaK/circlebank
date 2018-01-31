@@ -32,6 +32,10 @@ background-color:#F8F8F8;
     max-width:100%;
 
   }
+  .pictureheight{
+    height:250px;
+    width:100%;
+  }
   .pad{
     margin-bottom:100px;
 
@@ -119,20 +123,23 @@ background-color:#F8F8F8;
 }
 }
 
+.reset{
+  padding:0;
+  margin:0
+}
+
 @media screen and (min-width: 768px) {
+
+  .pictureheight{
+    height:500px;
+    width:100%;
+  }
   .contents{
-    padding:64px 0 72px 0;
+    padding:64px 0 0 0;
     max-width:100%;
 
   }
-  #footer{
-    position: fixed;            /* フッターの固定 */
-    bottom: 0px;                /* 位置(下0px) */
-    left: 0px;                  /* 位置(左0px) */
-    width: 100%;                /* 横幅100%　*/
-    height: 72px;
-    max-width:100%;
-  }
+
   .fontChange{
     font-size:20px;
   }
@@ -184,6 +191,22 @@ background-color:#F8F8F8;
   .topmargin{
     margin-top:100px;
   }
+  .picture{
+    width:100vw;
+    height: 550px;
+  }
+  .picture img{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width:100%;
+  height:100%;
+  max-width: 100%;
+  max-height: 100%;
+}
 
 }
 .centerPosition{
@@ -262,8 +285,10 @@ background-color:#F8F8F8;
 
 .commentbox{
   background-color:#FDC44F;
-  padding-top:5px;
+  padding-top:10px;
   padding-bottom:10px;
+  padding-left:5px;
+  height:50px;
 }
 
 .padZero{
@@ -301,11 +326,15 @@ background-color:#F8F8F8;
 }
 
 .addButton{
-  margin-top:20px;
+
 }
 .adminHome{
   margin:7px;
 }
 .adminHome1{
   margin-bottom:20px;
+}
+
+.adminFont{
+  size:25px;
 }

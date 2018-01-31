@@ -19,7 +19,6 @@ class CircleImage extends Component{
 
   handleChange(e){
     e.preventDefault();
-    console.log(e.target.files[0])
     this.setState({image:e.target.files[0]})
   }
 
