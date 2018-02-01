@@ -17,7 +17,7 @@ class SearchResult extends Component{
             <Col sm={3} xsHidden className="reset">
             <Menu/>
             </Col>
-            <Col xs ={12} sm={9} className="paper">
+            <Col xs ={12} sm={4} className="paper">
               <div>
                 <h2>検索結果</h2>
                 <Link to={`/circle/search/${this.props.circle.url_name}`}>

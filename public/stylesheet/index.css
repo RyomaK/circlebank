@@ -40,6 +40,11 @@ background-color:#F8F8F8;
     margin-bottom:100px;
 
   }
+  .circlePage{
+    height:100%;
+    padding:0;
+    margin-bottom:90px
+  }
   #footer{
     position: fixed;            /* フッターの固定 */
     bottom: 0px;                /* 位置(下0px) */
@@ -139,6 +144,9 @@ background-color:#F8F8F8;
     max-width:100%;
 
   }
+  .circlePage{
+    height:100%;
+  }
 
   .fontChange{
     font-size:20px;
@@ -232,11 +240,7 @@ background-color:#F8F8F8;
 
 
 
-.circlePage{
-  height:100%;
-  padding:0;
-  margin-bottom:90px
-}
+
 
 .rightside{
   text-align: right;
