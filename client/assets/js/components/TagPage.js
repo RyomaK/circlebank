@@ -12,11 +12,13 @@ class TagPage extends Component {
         <Col sm={3} xsHidden className="reset">
           <Menu/>
         </Col>
-        <Col sm={9} className="paper">
+        <div className="paper">
           <div>
+            <Col sm={9}>
             <h2>検索結果</h2>
+            </Col>
           {this.props.circle.map( circle => (
-            <div className="marginbottom" key={circle.id}><Link to={`/circle/search/${circle.url_name}`} >
+            <Col sm={4} className="marginbottom" key={circle.id}><Link to={`/circle/search/${circle.url_name}`} >
                 <Card className="sizebox">
                 <CardMedia>
                   <img src={`static/${circle.image}`} alt="aa" height="200px;"/>
@@ -27,10 +29,10 @@ class TagPage extends Component {
                 </CardText>
               </Card>
               </Link>
-              </div>
+              </Col>
           ))}
           </div>
-        </Col>
+        </div>
       </div>
     )
 }
