@@ -26,14 +26,16 @@ const App =() => {
         <BrowserRouter>
           <MuiThemeProvider>
             <div>
-              <div id="Header">
-              <Header />
-              </div>
+
               <Switch>
 
                 <Route path='/login' component={LoginPage}/>
                 <Route path='/signup' component={SignupPage}/>
                 <Auth>
+                  <div>
+                  <div id="Header">
+                  <Header />
+                  </div>
                   <div className="contents">
                   <SearchForm/>
                   <Switch>
@@ -46,6 +48,7 @@ const App =() => {
                     <Route exact path='/menu' component={SmartPage}/>
                     <Route component={ NotFound }/>
                   </Switch>
+                  </div>
                   </div>
                 </Auth>
                 </Switch>

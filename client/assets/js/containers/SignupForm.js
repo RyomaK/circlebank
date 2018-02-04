@@ -170,7 +170,7 @@ class SignupForm extends Component{
     return(
 
       <Form horizontal onSubmit={this.handleSubmit.bind(this)}>
-  		<FormGroup>
+  		{/*<FormGroup>
 
   			<Col sm={6}>
         <SelectField
@@ -234,7 +234,7 @@ class SignupForm extends Component{
 
         </SelectField>
   			</Col>
-  		</FormGroup>
+  		</FormGroup>*/}
 
       <FormGroup>
   			<Col sm={6}>
@@ -247,7 +247,7 @@ class SignupForm extends Component{
         />
   			</Col>
 
-        <Col sm={6}>
+        {/*<Col sm={6}>
         <SelectField
           floatingLabelText="性別"
           value={this.state.value5}
@@ -260,8 +260,9 @@ class SignupForm extends Component{
         ))}
 
         </SelectField>
-      </Col>
+      </Col>*/}
       </FormGroup>
+
 
       <FormGroup>
   			<Col sm={6}>

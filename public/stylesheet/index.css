@@ -178,7 +178,7 @@ background-color:#F8F8F8;
     width: 100%;
     min-height: 100%;
 
-    height: auto;
+    height: 100vh;
   }
   .log::before{
   	/* 透過した黒を重ねる */
@@ -197,7 +197,7 @@ background-color:#F8F8F8;
     display: 'inline-block';
   }
   .topmargin{
-    margin-top:100px;
+    margin-top:230px;
   }
   .picture{
     width:100vw;
@@ -226,7 +226,7 @@ background-color:#F8F8F8;
 
 .circleName{
   padding-top:20px;
-  font-size:20px;
+  font-size:30px;
 }
 .circleNameRight{
   margin-right:10px;
@@ -289,10 +289,16 @@ background-color:#F8F8F8;
 
 .commentbox{
   background-color:#FDC44F;
-  padding-top:10px;
-  padding-bottom:10px;
-  padding-left:5px;
-  height:50px;
+  padding-left: 5px;
+  height:40px;
+}
+
+.padbottom{
+  margin-bottom:10px;
+}
+
+.eventbox{
+  padding: 5px
 }
 
 .padZero{
@@ -307,7 +313,8 @@ background-color:#F8F8F8;
 .floatright{
 
   float: right;
-  padding-bottom:10px;
+  display:inline-block;
+  padding:0
 }
 
 .posi{
@@ -331,6 +338,7 @@ background-color:#F8F8F8;
 
 .addButton{
 
+  height: 10px;
 }
 .adminHome{
   margin:7px;
@@ -340,5 +348,7 @@ background-color:#F8F8F8;
 }
 
 .adminFont{
+  display:inline-block;
+  padding-top:10px;
   size:25px;
 }
