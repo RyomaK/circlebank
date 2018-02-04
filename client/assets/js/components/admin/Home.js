@@ -50,7 +50,9 @@ class Home extends Component{
 
 
         {this.props.circles.circle.map( circle => (
+          <div className="padbottom">
           <Paper zDepth={1} key={circle.id} className="padZero">
+
             <div className="commentbox">
             <Link to={`/admin/circle/${circle.url_name}`}　 style={{ textDecoration: 'none' ,color:'white'}}><span className="adminFont">{circle.name}</span></Link>
               <span className="floatright">
@@ -65,6 +67,7 @@ class Home extends Component{
               <p>{circle.introduction}</p>
             </div>
           </Paper>
+          </div>
         ))}
         </Col>
         </div>

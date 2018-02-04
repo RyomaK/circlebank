@@ -18,19 +18,19 @@ class MainPage extends Component{
           <Carousel>
             <Carousel.Item>
               <div className="picture">
-              <img src="static/img/users/11.jpg"/>
+              <img src="static/img/users/11.jpg" height='250'/>
               </div>
 
             </Carousel.Item>
             <Carousel.Item>
               <div className="picture">
-                <img src="static/img/users/12.JPG" />
+                <img src="static/img/users/12.JPG" height='250'/>
               </div>
 
             </Carousel.Item>
             <Carousel.Item>
             <div className="picture">
-              <img src="static/img/users/13.jpg"/>
+              <img src="static/img/users/13.jpg" height='250'/>
             </div>
 
             </Carousel.Item>
