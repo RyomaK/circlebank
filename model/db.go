@@ -14,7 +14,7 @@ func DBConnect(config string) *sql.DB {
 	}
 	err = db.Ping()
 	if err != nil {
-		panic(err.Error()) // proper error handling instead of panic in your app
+		log.Printf(err.Error()) // proper error handling instead of panic in your app
 	}
 	return db
 }

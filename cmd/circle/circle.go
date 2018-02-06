@@ -2,17 +2,17 @@ package main
 
 import (
 	"flag"
-	"os"
 
 	"github.com/ryomak/circlebank"
 )
 
+var (
+	addr     = flag.String("addr", "8080", "addr to bind")
+	dbconfig = flag.String("dbconfig", "root:@/circle_bank?parseTime=true", "db connect")
+)
+
 func main() {
-	dbuser := os.Args
-	var (
-		addr     = flag.String("addr", "8080", "addr to bind")
-		dbconfig = flag.String("dbconfig", dbuser[1], "db connect")
-	)
+	flag.Parse()
 	b := circlebank.New()
 	b.Run(*dbconfig, *addr)
 }

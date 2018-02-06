@@ -2,7 +2,7 @@ const webpack = require('webpack')
 var path = require('path')
 
 module.exports = {
-	entry: './assets/js/index.js', // エントリポイントのjsxファイル
+	entry: [path.join(__dirname,'./assets/js/index.js')], // エントリポイントのjsxファイル
 	output: {
 		path: path.join(__dirname, '../public/js'),
 		filename: 'bundle.js' // 出力するファイル
