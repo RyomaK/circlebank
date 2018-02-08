@@ -9,32 +9,10 @@ const UserBox = ({data}) => {
     <div>
 
         <div className="centerPosition">
-          <h3>マイページ</h3>
-          </div>
-              <Paper zDepth={1}>
-            <Table className="fontChange">
-              <tbody>
-                <tr>
-                  <td　width="50%">名前</td>
-                  <td　width="50%">{data.name}</td>
-                </tr>
-                <tr>
-                  <td>入学年度</td>
-                  <td>{data.year}</td>
-                </tr>
-                <tr>
-                  <td>学部</td>
-                  <td>{data.department}</td>
-                </tr>
-                <tr>
-                  <td>学科</td>
-                  <td>{data.subject}</td>
-                </tr>
-              </tbody>
-            </Table>
-            </Paper>
+          <h3>{`${data.name}さんのお気に入りサークル`}</h3>
+        </div>
         <div className="pad">
-        <LikePage/>
+          <LikePage/>
         </div>
     </div>
   )

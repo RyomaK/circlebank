@@ -28,19 +28,24 @@ class SearchForm  extends Component{
 
   return(
   <div className="searchForm">
+    <div className="searchFormBox">
+
 
         <form onSubmit = {this.handleSubmit.bind(this)}>
-          <Col xs={9} smOffset={1}>
-          <FormControl
+          <Col xs={9} sm={11}>
+          <input
             type="text"
-            placeholder="サークルを検索"
             onChange = {this.handleChange.bind(this)}
             className="search1"
             />
             </Col>
-          <IconButton type ="submit"><ActionSearch  className="search"/></IconButton>
+
+
+            <button type="submit" className="searchFormButton">検索</button>
+          {/*<IconButton type ="submit"><ActionSearch  className="search"/></IconButton>*/}
         </form>
 
+    </div>
   </div>
 
     )
