@@ -7,7 +7,7 @@ import MenuItem from 'material-ui/MenuItem';
 import { logout,getUserInfo} from '../actions/index'
 import {Redirect, Link ,withRouter} from 'react-router-dom'
 import RaisedButton from 'material-ui/RaisedButton';
-import {lightBlue900} from 'material-ui/styles/colors';
+import {grey50,indigo900} from 'material-ui/styles/colors';
 import { connect } from 'react-redux'
 
 class Header extends Component{
@@ -40,7 +40,8 @@ handleToggle(){ this.setState({open: !this.state.open})}
       <AppBar
       title="Circle Bank"
       onLeftIconButtonTouchTap={ () => this.handleToggle()}
-      style={{backgroundColor:lightBlue900}}
+      style={{backgroundColor:indigo900}}
+
       />
     </div>
   )
