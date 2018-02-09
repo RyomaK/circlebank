@@ -143,3 +143,51 @@ func UploadEventPicture(db *sql.DB, circle_id, event_id int, image string) error
 	}
 	return nil
 }
+
+func UpdateCircleEvent(db *sql.DB, circle_id, event_id int, event *Event) error {
+	query := `update events SET name = ? ,agenda = ?,place = ?,detail = ?,capacity = ?,fee = ? WHERE id = ? and circle_id = ?`
+	_, err := db.Exec(query, event.Name, event.Agenda, event.Place, event.Detail, event.Capacity, event.Fee, event_id, circle_id)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func DeleteCircleEvent(db *sql.DB, circle_id, event_id int) error {
+	query := `delete from events where id = ? and circle_id = ?`
+	_, err := db.Exec(query, event_id, circle_id)
+	if err != nil {
+		return err
+	}
+	query = `delete from events_schedules where id = ?`
+	_, err = db.Exec(query, event_id)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func UpdateCircle(db *sql.DB, circle_id int, circle *Circle) error {
+	query := `update circles SET name = ? ,url_name = ?,number = ?,gender_ratio = ?,introduction = ?,excite = ? ,fee = ?,campus = ?,message_for_fresh = ? WHERE id = ?`
+	_, err := db.Exec(query, circle.Name, circle.URLName, circle.Number, circle.GenderRatio, circle.Introduction, circle.Excite, circle.Fee, circle.Campus, circle.MessageForFresh, circle_id)
+	if err != nil {
+		return err
+	}
+	query = `update delegetes SET name = ?,contact = ? where circle_id = ?`
+	_, err = db.Exec(query, circle.DelegeteName, circle.DelegeteContact, circle_id)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func DeleteCircleTags(db *sql.DB, circle_id int, tags *[]Tag) error {
+	for _, v := range *tags {
+		query := `delete from circles_tags where circle_id = ? and tag_id = ?`
+		_, err := db.Exec(query, circle_id, v.ID)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}

@@ -640,6 +640,22 @@ ___ query ___
 ## PUT  ```admin/{univ}/circle/{circle_id}```
 サークルの情報を編集
 
+```json
+ {
+        "name": "hands up",
+        "url_name": "handsup",
+        "number": 300,
+        "gender_ratio": "1:2",
+        "introduction": "めちゃアットホーム",
+        "message_for_fresh": "楽しいいよおお",
+        "delegete_name": "田中",
+        "delegete_contact": "tanaka@mail.com",
+        "campus": "京田辺",
+        "excite": 10,
+        "fee": 5000
+    }
+```
+
 ## DELETE ```admin/{univ}/circle/{circle_id}```
 サークルを削除する。そのサークルのイベント、タグも一緒に削除する
 
@@ -670,6 +686,9 @@ ___ query ___
 ```
 ## PUT ```admin/{univ}/circle/{circle_id}/event/{event_id}```
 サークルのイベントを編集する
+```json
+
+```
 
 ## DELETE ```admin/{univ}/circle/{circle_id}/event/{event_id}```
 サークルのイベントを削除する
