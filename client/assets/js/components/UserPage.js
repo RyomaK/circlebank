@@ -12,6 +12,7 @@ componentWillMount(){
   this.props.getImage();
 }
 
+
 render(){
     return(
       <div>

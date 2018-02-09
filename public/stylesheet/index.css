@@ -24,6 +24,9 @@ background-color:#F8F8F8;
   z-index:100;
   max-width:100%;
 }
+/*Header*/
+
+
 
 
 @media screen and (max-width: 768px) {
@@ -94,6 +97,7 @@ background-color:#F8F8F8;
 
     height: auto;
   }
+
   .log::before{
   	/* 透過した黒を重ねる */
   	background-color: rgba(0,0,0,0.5);
@@ -256,15 +260,39 @@ background-color:#F8F8F8;
 }
 
 
-.search1{
-  margin-top:7px;
-}
 
+/*form*/
 .searchForm{
   height:60px;
-  padding-top:5px;
-  background-color:#CDD8E4
+  background-color:white
 }
+.search1{
+  height:45px;
+  width:100%;
+  background: none;
+  border: none;
+}
+.searchFormBox{
+  height:55px;
+  margin:5px;
+  border-radius:5px;
+  border-style: solid;
+  border-color:#1A237E;
+}
+.searchFormButton{
+  background-color:#1A237E;
+  float:right;
+  color:white;
+  height:42px;
+  border-radius: 3px;
+  margin:3px;
+  width:70px;
+}
+input[type="text"]:focus{
+  outline: 0;
+  border-color:white;
+}
+/**/
 
 .card{
   padding: 20px 20px;
