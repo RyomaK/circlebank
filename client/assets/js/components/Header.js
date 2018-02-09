@@ -4,6 +4,10 @@ import Filter from './Filter'
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
+import IconButton from 'material-ui/IconButton';
+import IconMenu from 'material-ui/svg-icons/navigation/menu';
+import Exit from 'material-ui/svg-icons/action/exit-to-app';
+
 import { logout,getUserInfo} from '../actions/index'
 import {Redirect, Link ,withRouter} from 'react-router-dom'
 import RaisedButton from 'material-ui/RaisedButton';
@@ -16,6 +20,10 @@ class Header extends Component{
     this.state = {open: false};
   }
 handleToggle(){ this.setState({open: !this.state.open})}
+handleClick(){
+  this.props.Logout()
+  this.props.history.push('/')
+}
   render(){
 
     return(
@@ -31,15 +39,14 @@ handleToggle(){ this.setState({open: !this.state.open})}
           <MenuItem onClick={ e =>{
             e.preventDefault(); this.props.history.push("/user");
           }}>マイページ</MenuItem>
-          <MenuItem onClick={ e =>{
-            e.preventDefault();this.props.Logout();this.props.history.push('/');}}>ログアウト</MenuItem>
-
-
       </Drawer>
       </Filter>
       <AppBar
       title="Circle Bank"
+      iconElementLeft={window.parent.screen.width>768?<IconButton><IconMenu /></IconButton>:<div></div>}
+      iconElementRight={<IconButton><Exit /></IconButton>}
       onLeftIconButtonTouchTap={ () => this.handleToggle()}
+      onRightIconButtonTouchTap={ () => this.handleClick()}
       style={{backgroundColor:indigo900}}
 
       />
