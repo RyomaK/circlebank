@@ -92,7 +92,6 @@ func (s *Server) Route(addr string) {
 	a.Path("/user/upload").HandlerFunc(users.UploadPicture).Methods("POST")
 
 	//subrouter-Admin
-	//to-do adminだけしかadmin/には入れないようにする
 	admin := mux.NewRouter()
 	r.PathPrefix("/admin").Handler(negroni.New(
 		negroni.HandlerFunc(jwtMiddleware.HandlerWithNext),
@@ -113,7 +112,6 @@ func (s *Server) Route(addr string) {
 	b.Path("/{univ}/circle/{circle_id}/event/{event_id}").HandlerFunc(admins.UpdateAdminCircleEventHandler).Methods("PUT")
 	b.Path("/{univ}/circle/{circle_id}/tag").HandlerFunc(admins.PostAdminCircleTagHandler).Methods("POST")
 	b.Path("/{univ}/circle/{circle_id}/tag").HandlerFunc(admins.DeleteAdminCircleTagHandler).Methods("DELETE")
-	b.Path("/{univ}/circle/{circle_id}/tag").HandlerFunc(admins.UpdateAdminCircleTagHandler).Methods("PUT")
 	//画像upload
 	b.Path("/{univ}/circle/{circle_id}/upload").HandlerFunc(admins.UploadCirclePicture).Methods("POST")
 	b.Path("/{univ}/circle/{circle_id}/event/{event_id}/upload").HandlerFunc(admins.UploadEventPicture).Methods("POST")

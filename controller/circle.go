@@ -48,7 +48,7 @@ func (c *Circle) UnivCircleHandler(w http.ResponseWriter, r *http.Request) {
 		a, _ := json.Marshal(status)
 		w.Write(a)
 	} else {
-		a, err := json.Marshal(circles)
+		a, err := json.Marshal(*circles)
 		if err != nil {
 			log.Printf("Marshal %v", err)
 		}

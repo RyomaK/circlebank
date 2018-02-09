@@ -23,6 +23,7 @@ func (a *Admin) Index(w http.ResponseWriter, r *http.Request) {
 }
 
 func (a *Admin) AdminCircleHandler(w http.ResponseWriter, r *http.Request) {
+	defer r.Body.Close()
 	q := r.URL.Query()
 	vars := mux.Vars(r)
 	page, err := strconv.Atoi(q.Get("page"))
@@ -48,7 +49,7 @@ func (a *Admin) AdminCircleHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func (a *Admin) AdminCircleEventHandler(w http.ResponseWriter, r *http.Request) {
-
+	defer r.Body.Close()
 	q := r.URL.Query()
 	vars := mux.Vars(r)
 	page, err := strconv.Atoi(q.Get("page"))
@@ -73,7 +74,7 @@ func (a *Admin) AdminCircleEventHandler(w http.ResponseWriter, r *http.Request) 
 }
 
 func (a *Admin) AdminCircleDetailHandler(w http.ResponseWriter, r *http.Request) {
-
+	defer r.Body.Close()
 	vars := mux.Vars(r)
 	circle, err := model.GetCircleDetail(a.DB, vars["univ"], vars["circle_name"])
 	if err != nil {
@@ -100,7 +101,7 @@ func (a *Admin) PostAdminCircleHandler(w http.ResponseWriter, r *http.Request) {
 	b, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		log.Printf("post admin circleDeteil err %v\n", err)
-		w = SetHeader(w, http.StatusNotFound)
+		w = SetHeader(w, http.StatusBadRequest)
 		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot regist circle"}
 		res, _ := json.Marshal(status)
 		w.Write(res)
@@ -111,7 +112,7 @@ func (a *Admin) PostAdminCircleHandler(w http.ResponseWriter, r *http.Request) {
 	err = json.Unmarshal(b, &circle)
 	if err != nil {
 		log.Printf("post admin circleDeteil err %v\n", err)
-		w = SetHeader(w, http.StatusNotFound)
+		w = SetHeader(w, http.StatusBadRequest)
 		status := StatusCode{Code: http.StatusBadRequest, Message: "but shape"}
 		res, _ := json.Marshal(status)
 		w.Write(res)
@@ -121,7 +122,7 @@ func (a *Admin) PostAdminCircleHandler(w http.ResponseWriter, r *http.Request) {
 	err = model.InsertCircle(a.DB, &circle)
 	if err != nil {
 		log.Printf("post admin circleDeteil err %v\n", err)
-		w = SetHeader(w, http.StatusNotFound)
+		w = SetHeader(w, http.StatusBadRequest)
 		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot regist circle"}
 		res, _ := json.Marshal(status)
 		w.Write(res)
@@ -135,14 +136,60 @@ func (a *Admin) PostAdminCircleHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func (a *Admin) UpdateAdminCircleHandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	defer r.Body.Close()
+	circle_id, err := strconv.Atoi(vars["circle_id"])
+	if err != nil {
+		log.Printf("update circle_id  err %v\n", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot uptada circle"}
+		res, _ := json.Marshal(status)
+		w.Write(res)
+		return
+	}
+	b, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		log.Printf("update admin circleDeteil err %v\n", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot update circle"}
+		res, _ := json.Marshal(status)
+		w.Write(res)
+		return
+	}
+	var circle model.Circle
+	err = json.Unmarshal(b, &circle)
+	if err != nil {
+		log.Printf("post admin circleDeteil err %v\n", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "but shape"}
+		res, _ := json.Marshal(status)
+		w.Write(res)
+		return
+	}
+
+	err = model.UpdateCircle(a.DB, circle_id, &circle)
+	if err != nil {
+		log.Printf("post admin circleDeteil err %v\n", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot regist circle"}
+		res, _ := json.Marshal(status)
+		w.Write(res)
+		return
+	}
+	w = SetHeader(w, http.StatusOK)
+	status := StatusCode{Code: http.StatusOK, Message: "regist circle"}
+	res, _ := json.Marshal(status)
+	w.Write(res)
+	return
 }
 
 func (a *Admin) DeleteAdminCircleHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
+	defer r.Body.Close()
 	circle_id, err := strconv.Atoi(vars["circle_id"])
 	if err != nil {
 		log.Printf("delete circle_id  err %v\n", err)
-		w = SetHeader(w, http.StatusNotFound)
+		w = SetHeader(w, http.StatusBadRequest)
 		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot delete circle"}
 		res, _ := json.Marshal(status)
 		w.Write(res)
@@ -151,7 +198,7 @@ func (a *Admin) DeleteAdminCircleHandler(w http.ResponseWriter, r *http.Request)
 	err = model.DeleteCircle(a.DB, circle_id)
 	if err != nil {
 		log.Printf("delete circle  err %v\n", err)
-		w = SetHeader(w, http.StatusNotFound)
+		w = SetHeader(w, http.StatusBadRequest)
 		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot delete circl"}
 		res, _ := json.Marshal(status)
 		w.Write(res)
@@ -190,7 +237,7 @@ func (a *Admin) PostAdminCircleEventHandler(w http.ResponseWriter, r *http.Reque
 	err = json.Unmarshal(b, &events)
 	if err != nil {
 		log.Printf("post admin event err %v\n", err)
-		w = SetHeader(w, http.StatusNotFound)
+		w = SetHeader(w, http.StatusBadRequest)
 		status := StatusCode{Code: http.StatusBadRequest, Message: "but shape"}
 		res, _ := json.Marshal(status)
 		w.Write(res)
@@ -200,7 +247,7 @@ func (a *Admin) PostAdminCircleEventHandler(w http.ResponseWriter, r *http.Reque
 	err = model.InsertEvents(a.DB, circle_id, &events)
 	if err != nil {
 		log.Printf("post admin event err %v\n", err)
-		w = SetHeader(w, http.StatusNotFound)
+		w = SetHeader(w, http.StatusBadRequest)
 		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot regist event"}
 		res, _ := json.Marshal(status)
 		w.Write(res)
@@ -214,20 +261,106 @@ func (a *Admin) PostAdminCircleEventHandler(w http.ResponseWriter, r *http.Reque
 }
 
 func (a *Admin) UpdateAdminCircleEventHandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	defer r.Body.Close()
+	circle_id, err := strconv.Atoi(vars["circle_id"])
+	if err != nil {
+		log.Printf("circle_id  err %v\n", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "not found circle_id"}
+		res, _ := json.Marshal(status)
+		w.Write(res)
+		return
+	}
+	event_id, err := strconv.Atoi(vars["event_id"])
+	if err != nil {
+		log.Printf("event_id  err %v\n", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "not found event_id"}
+		res, _ := json.Marshal(status)
+		w.Write(res)
+		return
+	}
+	b, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		log.Printf("event_id  err %v\n", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot update event"}
+		res, _ := json.Marshal(status)
+		w.Write(res)
+		return
+	}
+	var event model.Event
+	err = json.Unmarshal(b, &event)
+	if err != nil {
+		log.Printf("update admin event err %v\n", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "but shape"}
+		res, _ := json.Marshal(status)
+		w.Write(res)
+		return
+	}
+	err = model.UpdateCircleEvent(a.DB, circle_id, event_id, &event)
+	if err != nil {
+		log.Printf("update admin event err %v\n", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot update event"}
+		res, _ := json.Marshal(status)
+		w.Write(res)
+		return
+	}
+	w = SetHeader(w, http.StatusOK)
+	status := StatusCode{Code: http.StatusOK, Message: "update event"}
+	res, _ := json.Marshal(status)
+	w.Write(res)
+	return
 
 }
 
 func (a *Admin) DeleteAdminCircleEventHandler(w http.ResponseWriter, r *http.Request) {
-
+	vars := mux.Vars(r)
+	defer r.Body.Close()
+	circle_id, err := strconv.Atoi(vars["circle_id"])
+	if err != nil {
+		log.Printf("circle_id  err %v\n", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "not found circle_id"}
+		res, _ := json.Marshal(status)
+		w.Write(res)
+		return
+	}
+	event_id, err := strconv.Atoi(vars["event_id"])
+	if err != nil {
+		log.Printf("event_id  err %v\n", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "not found event_id"}
+		res, _ := json.Marshal(status)
+		w.Write(res)
+		return
+	}
+	err = model.DeleteCircleEvent(a.DB, circle_id, event_id)
+	if err != nil {
+		log.Printf("delete admin event err %v\n", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot delete event"}
+		res, _ := json.Marshal(status)
+		w.Write(res)
+		return
+	}
+	w = SetHeader(w, http.StatusAccepted)
+	status := StatusCode{Code: http.StatusAccepted, Message: "delete event"}
+	res, _ := json.Marshal(status)
+	w.Write(res)
+	return
 }
 
 func (a *Admin) PostAdminCircleTagHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	circle_id, err := strconv.Atoi(vars["circle_id"])
+	circle_id, _ := strconv.Atoi(vars["circle_id"])
 	b, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		log.Printf("post admin event tag err %v\n", err)
-		w = SetHeader(w, http.StatusNotFound)
+		w = SetHeader(w, http.StatusBadRequest)
 		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot regist event tag"}
 		res, _ := json.Marshal(status)
 		w.Write(res)
@@ -238,7 +371,7 @@ func (a *Admin) PostAdminCircleTagHandler(w http.ResponseWriter, r *http.Request
 	err = json.Unmarshal(b, &tags)
 	if err != nil {
 		log.Printf("post admin event tag err %v\n", err)
-		w = SetHeader(w, http.StatusNotFound)
+		w = SetHeader(w, http.StatusBadRequest)
 		status := StatusCode{Code: http.StatusBadRequest, Message: "but shape"}
 		res, _ := json.Marshal(status)
 		w.Write(res)
@@ -248,7 +381,7 @@ func (a *Admin) PostAdminCircleTagHandler(w http.ResponseWriter, r *http.Request
 	err = model.InsertCircleTags(a.DB, circle_id, &tags)
 	if err != nil {
 		log.Printf("post admin event tag err %v\n", err)
-		w = SetHeader(w, http.StatusNotFound)
+		w = SetHeader(w, http.StatusBadRequest)
 		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot regist tag"}
 		res, _ := json.Marshal(status)
 		w.Write(res)
@@ -260,20 +393,51 @@ func (a *Admin) PostAdminCircleTagHandler(w http.ResponseWriter, r *http.Request
 	w.Write(res)
 	return
 }
-
-func (a *Admin) UpdateAdminCircleTagHandler(w http.ResponseWriter, r *http.Request) {
-
-}
-
 func (a *Admin) DeleteAdminCircleTagHandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	circle_id, _ := strconv.Atoi(vars["circle_id"])
+	b, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		log.Printf("delete circle tag err %v\n", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot delete circle tag"}
+		res, _ := json.Marshal(status)
+		w.Write(res)
+		return
+	}
+	defer r.Body.Close()
+	var tags []model.Tag
+	err = json.Unmarshal(b, &tags)
+	if err != nil {
+		log.Printf("delete circle tag err %v\n", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "but shape"}
+		res, _ := json.Marshal(status)
+		w.Write(res)
+		return
+	}
 
+	err = model.DeleteCircleTags(a.DB, circle_id, &tags)
+	if err != nil {
+		log.Printf("update circle tag  err %v\n", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot update tag"}
+		res, _ := json.Marshal(status)
+		w.Write(res)
+		return
+	}
+	w = SetHeader(w, http.StatusOK)
+	status := StatusCode{Code: http.StatusOK, Message: "regist circle"}
+	res, _ := json.Marshal(status)
+	w.Write(res)
+	return
 }
 
 func (a *Admin) PostAdminTagHandler(w http.ResponseWriter, r *http.Request) {
 	b, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		log.Printf("post tag err %v\n", err)
-		w = SetHeader(w, http.StatusNotFound)
+		w = SetHeader(w, http.StatusBadRequest)
 		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot regist tag"}
 		res, _ := json.Marshal(status)
 		w.Write(res)
@@ -284,7 +448,7 @@ func (a *Admin) PostAdminTagHandler(w http.ResponseWriter, r *http.Request) {
 	err = json.Unmarshal(b, &tags)
 	if err != nil {
 		log.Printf("post admin tag err %v\n", err)
-		w = SetHeader(w, http.StatusNotFound)
+		w = SetHeader(w, http.StatusBadRequest)
 		status := StatusCode{Code: http.StatusBadRequest, Message: "but shape"}
 		res, _ := json.Marshal(status)
 		w.Write(res)
@@ -294,7 +458,7 @@ func (a *Admin) PostAdminTagHandler(w http.ResponseWriter, r *http.Request) {
 	err = model.InsertTags(a.DB, &tags)
 	if err != nil {
 		log.Printf("post admin event tag err %v\n", err)
-		w = SetHeader(w, http.StatusNotFound)
+		w = SetHeader(w, http.StatusBadRequest)
 		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot regist tag"}
 		res, _ := json.Marshal(status)
 		w.Write(res)
