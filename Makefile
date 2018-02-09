@@ -1,8 +1,8 @@
 DBNAME:=circle_bank
 ENV:=development
-DBCONFIG:=root:@/circle_bank?parseTime=true
-#DBCONFIG:=root:Kenta71619@/circle_bank?parseTime=true
-ADDR:=80
+#DBCONFIG:=root:@/circle_bank?parseTime=true
+DBCONFIG:=root:Kenta71619@/circle_bank?parseTime=true
+ADDR:=8080
 
 install:
 	go get -u github.com/golang/dep/cmd/dep
