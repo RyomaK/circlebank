@@ -92,7 +92,6 @@ func (s *Server) Route(addr string) {
 	a.Path("/user/upload").HandlerFunc(users.UploadPicture).Methods("POST")
 
 	//subrouter-Admin
-	//to-do adminだけしかadmin/には入れないようにする
 	admin := mux.NewRouter()
 	r.PathPrefix("/admin").Handler(negroni.New(
 		negroni.HandlerFunc(jwtMiddleware.HandlerWithNext),
