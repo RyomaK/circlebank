@@ -14,6 +14,7 @@ import adminCheck from './admin/adminCheck'
 import adminCircle from './admin/adminCircle'
 import adminSetState from './admin/adminSetState'
 import adminEventState from './admin/adminEventState'
+import circleAll from './circleAll'
 
 
 const reducer = combineReducers({
@@ -28,6 +29,7 @@ const reducer = combineReducers({
   circleTag,
   like,
   comment,
+  circleAll,
 
   adminCheck,
   adminCircle,

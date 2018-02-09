@@ -38,6 +38,8 @@ export const setSearchWord = word => dispatch => dispatch({type: 'SET_WORD',word
 
 export const setProIma = image => dispatch => dispatch({type: 'PRO_IMAGE',image});
 
+export const setfilter = item => dispatch => dispatch({type: 'SET_ITEM',item});
+
 export const image = () => dispatch => {
   axios
   .get('/static/img/users/2.png').then((results) => {
@@ -226,6 +228,39 @@ export const circleSearch = name => dispatch => {
   })
   .catch(() => {
     dispatch(setSearchWord('notFound'));
+  });
+}
+
+export const circleSearchAll1 = () => dispatch => {
+  const Auth = getAuth();
+  axios
+  .get('/api/doshisha/circle',{ headers:{'Authorization':`Bearer ${Auth}`}})
+  .then((results) => {
+    const status = results.status
+    const circles = results.data
+    if (typeof circles === undefined) {
+      return { status };
+    }
+    return { status, circles };
+  })
+  .then(({status,circles})=>{
+    switch (status) {
+      case 200: {
+        dispatch({type:'SEARCLE_FILTER',circles});
+        break;
+      }
+      case 401: {
+        dispatch(setLogin(-1));
+        break;
+      }
+      default: {
+        dispatch(setErrorMessage('エラーが発生しました'));
+        break;
+      }
+    }
+  })
+  .catch(() => {
+    console.log("error");
   });
 }
 
