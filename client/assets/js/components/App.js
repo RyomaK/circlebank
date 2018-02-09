@@ -44,7 +44,7 @@ const App =() => {
 
                     <Route exact path='/' component={MainPage}/>
                     <Route exact path='/user' component={UserPage}/>
-                    <Route exact path='/circle/:name' component={SearchResult}/>
+                    <Route exact path='/circle/name/search' component={SearchResult}/>
                     <Route exact path='/circle/search/:name' component={CirclePage}/>
                     <Route exact path='/tag/:id' component={TagPage}/>
                     <Route exact path='/user/:id/:name/comment' component={Comment}/>

@@ -7,13 +7,12 @@ import {connect} from 'react-redux'
 const UserBox = ({data}) => {
   return(
     <div>
-
         <div className="centerPosition">
           <h3>{`${data.name}さんのお気に入りサークル`}</h3>
         </div>
         <div className="pad">
           <LikePage/>
-        </div>
+        </div>u
     </div>
   )
 }

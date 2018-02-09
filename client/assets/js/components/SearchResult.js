@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 
 class SearchResult extends Component{
   render(){
-    if(this.props.word == 'notFound'){
+    if(this.props.item==false){
       return(
         <Redirect to="/notFound"/>
       )
@@ -17,22 +17,27 @@ class SearchResult extends Component{
             <Col sm={3} xsHidden className="reset">
             <Menu/>
             </Col>
-            <Col xs ={12} sm={4} className="paper">
+            <div className="paper">
               <div>
+                <Col sm={9}>
                 <h2>検索結果</h2>
-                <Link to={`/circle/search/${this.props.circle.url_name}`}>
-                  <Card className="sizebox">
+                </Col>
+              {this.props.item.map( circle => (
+                <Col sm={4} className="marginbottom" key={circle.id}><Link to={`/circle/search/${circle.url_name}`} >
+                    <Card className="sizebox">
                     <CardMedia>
-                      <img src={`static/${this.props.circle.image}`} alt="aa" height="200px;"/>
+                      <img src={`static/${circle.image}`} alt="aa" height="200px;"/>
                     </CardMedia>
-                    <CardTitle title={this.props.circle.name}/>
+                    <CardTitle title={circle.name} />
                     <CardText>
-                      サークルの種類:{this.props.circle.introduction}
+                      サークルの種類:{circle.introduction}
                     </CardText>
                   </Card>
-                </Link>
+                  </Link>
+                  </Col>
+              ))}
               </div>
-            </Col>
+            </div>
 
         </div>
       )
@@ -44,8 +49,7 @@ class SearchResult extends Component{
 
 const mapStateToProps = state => {
   return{
-    word: state.searchWord.word,
-    circle: state.circle.circle
+    item: state.circleAll.item,
   }
 }
 
