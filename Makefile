@@ -1,10 +1,8 @@
 DBNAME:=circle_bank
 ENV:=development
-
-DBCONFIG:="root:password@tcp(db:3306)/circlebank?parseTime=true"
-#DBCONFIG:=root:@/circle_bank?parseTime=true
+DBCONFIG:=root:@/circle_bank?parseTime=true
 #DBCONFIG:=root:Kenta71619@/circle_bank?parseTime=true
-ADDR:=8080
+ADDR:=80
 
 install:
 	go get -u github.com/golang/dep/cmd/dep
@@ -23,23 +21,7 @@ test:
 migrate/init:
 	mysql -u root -h localhost --protocol tcp -e "create database \`$(DBNAME)\`" -p
 
-docker/build: Dockerfile docker-compose.yml
-	docker-compose build
 
-docker/start:
-	docker-compose up 
-
-docker/clean:
-	docker-compose rm
-
-docker/stop:
-	docker-compose down
-
-docker/logs:
-	docker-compose logs
-
-docker/db/ssh:
-	docker exec -it db  /bin/bash
-
-docker/app/ssh:
-	docker exec -it app /bin/bash
+migrate/seed:
+	mysql -u root -p $(DBNAME) < ./model/dump/1_init.sql
+	mysql -u root -p $(DBNAME) < ./model/dump/2_dump.sql
