@@ -18,15 +18,13 @@ class TagPage extends Component {
             <h2>検索結果</h2>
             </Col>
           {this.props.circle.map( circle => (
-            <Col sm={4} className="marginbottom" key={circle.id}><Link to={`/circle/search/${circle.url_name}`} >
-                <Card className="sizebox">
-                <CardMedia>
+            <Col sm={4} className="marginbottom circleName" key={circle.id}><Link to={`/circle/search/${circle.url_name}`} >
+                <Card>
+                <CardMedia
+                  overlay={<CardTitle title={circle.name} subtitle={circle.introduction}/>}
+                >
                   <img src={`static/${circle.image}`} alt="aa" height="200px;"/>
                 </CardMedia>
-                <CardTitle title={circle.name} />
-                <CardText>
-                  サークルの種類:{circle.introduction}
-                </CardText>
               </Card>
               </Link>
               </Col>
