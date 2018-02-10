@@ -6,7 +6,6 @@ import {Carousel,Col} from 'react-bootstrap'
 import Menu from './Menu'
 import {Row} from 'react-bootstrap'
 
-
 class MainPage extends Component{
   componentDidMount(){
     this.props.getLike();

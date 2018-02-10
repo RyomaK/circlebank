@@ -53,7 +53,7 @@ background-color:#F8F8F8;
     bottom: 0px;                /* 位置(下0px) */
     left: 0px;                  /* 位置(左0px) */
     width: 100%;                /* 横幅100%　*/
-    height: 72px;
+    height: 56px;
     max-width:100%;
   }
   .fontChange2{
@@ -87,6 +87,8 @@ background-color:#F8F8F8;
   .menucolor{
     background-color: white;
   }
+
+
   .log{
 
     background-image: url("./doshisha.jpg");

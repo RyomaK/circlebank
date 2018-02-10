@@ -1,11 +1,14 @@
-const circleTag = (state={circle:[{id:0}]},action) => {
+const circleTag = (state={circle:[{id:0}],isLoad:false},action) => {
   switch(action.type){
     case 'TAG_SEARCH':
 
       return{
-        circle: action.data
+        circle:action.data
       }
-    break;
+    case 'TAG_RESET':
+    return {
+        circle:[{id:0}]
+    }
     default:
     return(
       state

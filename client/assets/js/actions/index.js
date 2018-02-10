@@ -40,6 +40,8 @@ export const setProIma = image => dispatch => dispatch({type: 'PRO_IMAGE',image}
 
 export const setfilter = item => dispatch => dispatch({type: 'SET_ITEM',item});
 
+export const tagReset = () => dispatch => dispatch({type: 'TAG_RESET'});
+
 export const image = () => dispatch => {
   axios
   .get('/static/img/users/2.png').then((results) => {
@@ -231,8 +233,9 @@ export const circleSearch = name => dispatch => {
   });
 }
 
-export const circleSearchAll1 = () => dispatch => {
+export const circleSearchAll1 = () => dispatch=> {
   const Auth = getAuth();
+
   axios
   .get('/api/doshisha/circle',{ headers:{'Authorization':`Bearer ${Auth}`}})
   .then((results) => {
