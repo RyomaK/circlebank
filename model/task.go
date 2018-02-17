@@ -136,10 +136,10 @@ func DeleteEvent(db *sql.DB, mail, event_id string) error {
 func PostEvent(db *sql.DB, mail, event_id string) error {
 	id := GetUserID(db, mail)
 	query := `insert  into events_schedules
-			(user_id,likes.event_id) 
+			(user_id,event_id) 
 			select ?,?
 			from dual
-			where not exists(select user_id FROM events_schedules WHERE user_id=? and  events_schedules.event_id = ?)`
+			where not exists(select user_id FROM events_schedules WHERE user_id=? and event_id=?)`
 	stmt, err := db.Prepare(query)
 	if err != nil {
 		return err
