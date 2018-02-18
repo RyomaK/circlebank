@@ -12,7 +12,7 @@ const UserBox = ({data}) => {
         </div>
         <div className="pad">
           <LikePage/>
-        </div>u
+        </div>
     </div>
   )
 }

@@ -6,7 +6,9 @@ import { Col,Row } from 'react-bootstrap'
 import { connect } from 'react-redux'
 
 class TagPage extends Component {
+
   render(){
+  
     return(
       <div>
         <Col sm={3} xsHidden className="reset">

@@ -4,6 +4,7 @@ import allTagSearch from './allTagSearch'
 import setStatus from './setStatus'
 import loginCheck from './loginCheck'
 import user from './user'
+import userEvent from './userEvent'
 import image from './image'
 import like from './like'
 import searchWord from './searchWord'
@@ -17,11 +18,13 @@ import adminEventState from './admin/adminEventState'
 import circleAll from './circleAll'
 
 
+
 const reducer = combineReducers({
   search,
   allTagSearch,
   setStatus,
   user,
+  userEvent,
   loginCheck,
   image,
   searchWord,
