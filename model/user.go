@@ -88,7 +88,6 @@ func IsLogin(db *sql.DB, mail, pass string) bool {
 	if err == sql.ErrNoRows {
 		return false
 	}
-
 	if err = ComparePass(user.Password, pass); err == nil {
 		return true
 	}

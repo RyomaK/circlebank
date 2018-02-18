@@ -44,6 +44,11 @@ type Tag struct {
 	Name string `db:"name" json:"name"`
 }
 
+type ClassedTag struct {
+	Title string `json:"title"`
+	Tags  []Tag  `json:"tags"`
+}
+
 type User struct {
 	ID         uint   `db:"id" json:"id"`
 	University string `db:"university" json:"university"`

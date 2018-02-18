@@ -97,6 +97,7 @@ func WriteJWT(w http.ResponseWriter, mail string) {
 		Mail:      mail,
 		Authority: auth,
 	})
+	fmt.Println(jwtString)
 	//cookieに保存
 	http.SetCookie(w, &http.Cookie{
 		Name:  "Authorization",

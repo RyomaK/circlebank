@@ -57,9 +57,9 @@ func (c *Circle) UnivCircleHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (c *Circle) SearchHandler(w http.ResponseWriter, r *http.Request) {
+func (c *Circle) TagHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	tags, err := model.GetTags(c.DB, vars["univ"])
+	tags, err := model.GetTags(c.DB, vars["univ"], "運動", "文化", "その他")
 	if err != nil {
 		log.Printf("sarch err %v", err)
 		w = SetHeader(w, http.StatusNotFound)
@@ -67,12 +67,12 @@ func (c *Circle) SearchHandler(w http.ResponseWriter, r *http.Request) {
 		a, _ := json.Marshal(status)
 		w.Write(a)
 	} else {
-		a, err := json.Marshal(tags)
+		res, err := json.Marshal(tags)
 		if err != nil {
 			log.Printf("err %v", err)
 		}
 		w = SetHeader(w, http.StatusOK)
-		w.Write(a)
+		w.Write(res)
 	}
 }
 

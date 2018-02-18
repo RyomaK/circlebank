@@ -73,7 +73,7 @@ func (s *Server) Route(addr string) {
 	a.Path("/{univ}/circle").HandlerFunc(circles.UnivCircleHandler).Methods("GET")
 
 	//tag
-	a.Path("/{univ}/tag").HandlerFunc(circles.SearchHandler).Methods("GET")
+	a.Path("/{univ}/tag").HandlerFunc(circles.TagHandler).Methods("GET")
 	a.Path("/{univ}/tag/{id:[0-9]+}").HandlerFunc(circles.TagCirclesHandler).Methods("GET")
 	//event
 	a.Path("/{univ}/circle/{circle_name}/{event_id:[0-9]+}").HandlerFunc(events.EventHandler).Methods("GET")

@@ -63,18 +63,28 @@ func GetTagCircles(db *sql.DB, univ_name, tag_id string) (*[]Circle, error) {
 	return circles, nil
 }
 
-func GetTags(db *sql.DB, univ_name string) (*[]Tag, error) {
-	query := `select distinct tags.id, tags.name
-			  from (circles inner join universities on circles.univ_id = universities.id)
-			  inner join circles_tags on circles.id = circles_tags.circle_id
-			  inner join tags on circles_tags.tag_id = tags.id
-			  where universities.url_name = ?`
-	rows, _ := db.Query(query, univ_name)
-	tags, err := ScanTags(rows)
-	if err != nil {
-		return &[]Tag{}, err
+func GetTags(db *sql.DB, univ_name string, title ...string) (*[]ClassedTag, error) {
+	tags := []ClassedTag{}
+	for _, v := range title {
+		fmt.Printf("%s\n", v)
+		query := `select distinct tags.id, tags.name
+		from (circles inner join universities on circles.univ_id = universities.id)
+		inner join circles_tags on circles.id = circles_tags.circle_id
+		inner join tags on circles_tags.tag_id = tags.id
+		where universities.url_name = ? and tags.class_name = ?`
+		rows, _ := db.Query(query, univ_name, v)
+		tag, err := ScanTags(rows)
+		classedTag := ClassedTag{
+			Title: v,
+			Tags:  *tag,
+		}
+		if err != nil {
+			return &tags, err
+		}
+		tags = append(tags, classedTag)
 	}
-	return tags, nil
+	fmt.Printf("%+v\n", tags)
+	return &tags, nil
 }
 
 func GetCircleTags(db *sql.DB, univ_name, circle_name string) (*[]Tag, error) {

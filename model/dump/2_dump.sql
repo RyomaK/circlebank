@@ -5,9 +5,9 @@
 # http://www.sequelpro.com/
 # https://github.com/sequelpro/sequelpro
 #
-# ホスト: 127.0.0.1 (MySQL 5.7.18)
+# ホスト: 127.0.0.1 (MySQL 5.7.19)
 # データベース: circle_bank
-# 作成時刻: 2018-02-07 08:44:29 +0000
+# 作成時刻: 2018-02-18 13:11:32 +0000
 # ************************************************************
 
 
@@ -50,7 +50,10 @@ VALUES
 	(2,1,2),
 	(3,2,3),
 	(4,1,3),
-	(5,2,4);
+	(5,2,4),
+	(6,5,7),
+	(7,4,5),
+	(8,2,6);
 
 /*!40000 ALTER TABLE `circles_tags` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -156,13 +159,15 @@ UNLOCK TABLES;
 LOCK TABLES `tags` WRITE;
 /*!40000 ALTER TABLE `tags` DISABLE KEYS */;
 
-INSERT INTO `tags` (`id`, `name`)
+INSERT INTO `tags` (`id`, `name`, `class_name`)
 VALUES
-	(1,'バスケットボール'),
-	(2,'アットホーム'),
-	(3,'京田辺'),
-	(4,'今出川'),
-	(5,'飲みサークル');
+	(1,'バスケットボール','運動'),
+	(2,'アットホーム','その他'),
+	(3,'京田辺','その他'),
+	(4,'今出川','その他'),
+	(5,'飲みサークル','その他'),
+	(6,'テニス','運動'),
+	(7,'軽音','文化');
 
 /*!40000 ALTER TABLE `tags` ENABLE KEYS */;
 UNLOCK TABLES;
