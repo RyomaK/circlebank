@@ -1,5 +1,6 @@
 import React from 'react'
 import LikePage from './LikePage'
+import UserEventPage from './UserEventPage'
 import {Col,Table} from "react-bootstrap"
 import Paper from 'material-ui/Paper';
 import {connect} from 'react-redux'
@@ -12,6 +13,7 @@ const UserBox = ({data}) => {
         </div>
         <div className="pad">
           <LikePage/>
+          <UserEventPage/>
         </div>
     </div>
   )
