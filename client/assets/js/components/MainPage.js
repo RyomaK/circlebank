@@ -1,6 +1,6 @@
 import React,{Component} from 'react'
 import {connect} from 'react-redux'
-import {getlike} from '../actions/index'
+import {getlike,getUserEvent} from '../actions/index'
 import Result from './Result'
 import {Carousel,Col} from 'react-bootstrap'
 import Menu from './Menu'
@@ -9,6 +9,7 @@ import {Row} from 'react-bootstrap'
 class MainPage extends Component{
   componentDidMount(){
     this.props.getLike();
+    this.props.getEvents();
   }
   render(){
     return(
@@ -52,6 +53,9 @@ const mapDispatchToProps = dispatch => {
   return{
       getLike:() => {
         dispatch(getlike())
+      },
+      getEvents:()=>{
+        dispatch(getUserEvent())
       }
     }
   }

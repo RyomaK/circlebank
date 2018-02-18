@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
-import { like, deletelike } from '../actions/index'
-import {Button } from 'react-bootstrap'
+import { addEvent,deleteEvent } from '../actions/index'
+import { Button } from 'react-bootstrap'
 
-class LikeButton extends Component{
+class EventButton extends Component{
 
   constructor(props){
     super(props)
@@ -18,17 +18,17 @@ class LikeButton extends Component{
 
   handleClick2(e){
     e.preventDefault();
-    this.props.Like(this.props.id);
+    this.props.Add(this.props.id);
   }
   render(){
     let count = 0;
-    this.props.like.map((like)=>{
-      if(like.circle.id == this.props.id){
+    this.props.events.map((eve)=>{
+      if(eve.id == this.props.id){
         count++;
       }else{
       }
     })
-    if(count == 0){
+    if(count==0){
         return(
           <Button onClick={this.handleClick2.bind(this)} bsStyle="info">追加</Button>
         )
@@ -41,16 +41,16 @@ class LikeButton extends Component{
 
 const mapStateToProps = state => {
   return{
-    like: state.like.circle
+    events:state.userEvent.events
   }
 }
 const mapDispatchToProps = dispatch => {
   return{
-    Like:(id)=>{
-      dispatch(like(id))
+    Add:(id)=>{
+      dispatch(addEvent(id))
     },
     Delete:(id)=>{
-      dispatch(deletelike(id))
+      dispatch(deleteEvent(id))
     }
   }
 }
@@ -59,4 +59,4 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 
-)(LikeButton)
+)(EventButton)

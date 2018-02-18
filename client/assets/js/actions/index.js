@@ -153,6 +153,33 @@ export const getUserInfo = () => dispatch => {
   });
 }
 
+export const getUserEvent = () => dispatch => {
+  const Auth = getAuth();
+  axios
+  .get('/api/user',{ headers:{'Authorization':`Bearer ${Auth}`}})
+  .then((results) => {
+    const status = results.status
+    const events = results.data.events
+    return {status,events}})
+  .then(({status,events}) => {
+    switch(status){
+      case 200:
+        dispatch({type:'USER_EVENT',events});
+        break;
+      case 401:
+        dispatch(setLogin(-1));
+        break;
+      default:
+        console.log(e)
+        break;
+    }
+  })
+  .catch((e) => {
+    console.log(e)
+  });
+}
+
+
 export const logout = () => dispatch => {
   axios
   .post('/logout')
@@ -526,6 +553,51 @@ export const deletelike = circleId => dispatch => {
     });
 }
 
+export const addEvent = eventId => dispatch => {
+    const Auth = getAuth();
+    var params = new URLSearchParams();
+    params.append('event_id',eventId);
+    axios
+    .post('/api/user/event',params,{headers:{'Authorization':`Bearer ${Auth}`}})
+    .then((results) => {
+      const status = results.status
+      return{status}
+    }).then(({status})=>{
+      switch(status){
+        case 200:
+          dispatch(getUserEvent());
+          break;
+        default:
+          break;
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+}
+
+export const deleteEvent = eventId => dispatch => {
+    const Auth = getAuth();
+    const headers = {'Authorization':`Bearer ${Auth}`}
+    const data = new FormData();
+    data.append('event_id',eventId);
+    axios.delete('/api/user/event',{headers,data})
+    .then((results) => {
+      const status = results.status
+      return({status})
+    }).then(({status})=>{
+      switch(status){
+        case 200:
+          dispatch(getUserEvent())
+          break;
+        default:
+          break;
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+}
 
 
 export const ImageUpload = image => dispatch => {
