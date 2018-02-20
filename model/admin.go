@@ -83,10 +83,10 @@ func InsertCircleTags(db *sql.DB, circle_id int, tags *[]Tag) error {
 
 func InsertTags(db *sql.DB, tags *[]Tag) error {
 	for _, v := range *tags {
-		query := `insert into tags (name) 
-		select ? from dual
+		query := `insert into tags (name,class_name) 
+		select ? ,? from dual
 		where not exists (select * from tags  where name =?)`
-		_, err := db.Exec(query, v.Name, v.Name)
+		_, err := db.Exec(query, v.Name, v.ClassName, v.Name)
 		if err != nil {
 			return err
 		}

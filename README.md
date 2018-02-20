@@ -753,14 +753,13 @@ circle画像をアップロード
 jsonでpost
 ```json
 [
-    {    
-        "name": "飲みサークル"
+    {
+        "name": "野球",
+        "class_name": "運動"
     },
     {
-        "name": "アットホーム"
-    },
-    {
-        "name": "京田辺"
+        "name": "女の子可愛い",
+        "class_name": "その他"
     }
 ]
 ```

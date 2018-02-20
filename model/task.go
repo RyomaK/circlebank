@@ -83,7 +83,6 @@ func GetTags(db *sql.DB, univ_name string, title ...string) (*[]ClassedTag, erro
 		}
 		tags = append(tags, classedTag)
 	}
-	fmt.Printf("%+v\n", tags)
 	return &tags, nil
 }
 

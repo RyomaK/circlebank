@@ -40,8 +40,9 @@ type Event struct {
 }
 
 type Tag struct {
-	ID   uint   `db:"id" json:"id"`
-	Name string `db:"name" json:"name"`
+	ID        uint   `db:"id" json:"id"`
+	Name      string `db:"name" json:"name"`
+	ClassName string `db:"class_name" json:"class_name"`
 }
 
 type ClassedTag struct {

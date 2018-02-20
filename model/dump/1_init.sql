@@ -1,5 +1,27 @@
+# ************************************************************
+# Sequel Pro SQL dump
+# バージョン 4541
+#
+# http://www.sequelpro.com/
+# https://github.com/sequelpro/sequelpro
+#
+# ホスト: 127.0.0.1 (MySQL 5.7.19)
+# データベース: circle_bank
+# 作成時刻: 2018-02-20 05:35:08 +0000
+# ************************************************************
 
-DROP TABLE IF EXISTS `circles`;
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+
+# テーブルのダンプ circles
+# ------------------------------------------------------------
 
 CREATE TABLE `circles` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -22,8 +44,6 @@ CREATE TABLE `circles` (
 # テーブルのダンプ circles_tags
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `circles_tags`;
-
 CREATE TABLE `circles_tags` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `circle_id` int(11) NOT NULL,
@@ -35,8 +55,6 @@ CREATE TABLE `circles_tags` (
 
 # テーブルのダンプ comments
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `comments`;
 
 CREATE TABLE `comments` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -52,8 +70,6 @@ CREATE TABLE `comments` (
 # テーブルのダンプ delegetes
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `delegetes`;
-
 CREATE TABLE `delegetes` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `circle_id` int(11) NOT NULL,
@@ -66,8 +82,6 @@ CREATE TABLE `delegetes` (
 
 # テーブルのダンプ events
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `events`;
 
 CREATE TABLE `events` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -87,8 +101,6 @@ CREATE TABLE `events` (
 # テーブルのダンプ events_schedules
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `events_schedules`;
-
 CREATE TABLE `events_schedules` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
@@ -100,8 +112,6 @@ CREATE TABLE `events_schedules` (
 
 # テーブルのダンプ likes
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `likes`;
 
 CREATE TABLE `likes` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -115,11 +125,10 @@ CREATE TABLE `likes` (
 # テーブルのダンプ tags
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `tags`;
-
 CREATE TABLE `tags` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '',
+  `class_name` varchar(255) DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -127,8 +136,6 @@ CREATE TABLE `tags` (
 
 # テーブルのダンプ universities
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `universities`;
 
 CREATE TABLE `universities` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -141,8 +148,6 @@ CREATE TABLE `universities` (
 
 # テーブルのダンプ users
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `users`;
 
 CREATE TABLE `users` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -157,3 +162,13 @@ CREATE TABLE `users` (
   `subject` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
