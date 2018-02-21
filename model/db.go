@@ -14,7 +14,7 @@ func DBConnect(config string) *sql.DB {
 	}
 	err = db.Ping()
 	if err != nil {
-		log.Printf(err.Error()) // proper error handling instead of panic in your app
+		panic(err) // proper error handling instead of panic in your app
 	}
 	return db
 }
@@ -24,8 +24,4 @@ func DbClose(db *sql.DB) {
 		db.Close()
 		log.Println("close database")
 	}
-}
-
-func Auth() {
-
 }
