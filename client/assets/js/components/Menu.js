@@ -4,6 +4,8 @@ import {Grid,Col} from "react-bootstrap"
 import { connect } from 'react-redux'
 import {List, ListItem} from 'material-ui/List';
 import Run from 'material-ui/svg-icons/maps/directions-run';
+import Book from 'material-ui/svg-icons/action/book';
+import Other from 'material-ui/svg-icons/action/account-balance';
 import ContentSend from 'material-ui/svg-icons/content/send';
 import Subheader from 'material-ui/Subheader';
 import { tagSearchStart,tagSearch,tagReset} from '../actions/index'
@@ -35,12 +37,44 @@ class Menu extends Component {
           <List>
             <Subheader>絞り検索</Subheader>
             <ListItem
-              primaryText="サークル"
+              primaryText="運動系"
               leftIcon={<Run />}
               disabled={true}
               initiallyOpen={false}
               primaryTogglesNestedList={true}
-              nestedItems={this.props.tags.map(tag => (<ListItem
+              nestedItems={this.props.tags[0].tags.map(tag => (<ListItem
+                  key={tag.id}
+                  primaryText={tag.name} onClick={(event)=>{
+                    event.preventDefault();
+                    this.props.tagReset()
+                    this.props.Search(tag.id)
+                    this.props.history.push(`/tag/${tag.id}`)
+                  }}
+                />))}
+                />
+            <ListItem
+              primaryText="文化系"
+              leftIcon={<Book />}
+              disabled={true}
+              initiallyOpen={false}
+              primaryTogglesNestedList={true}
+              nestedItems={this.props.tags[1].tags.map(tag => (<ListItem
+                  key={tag.id}
+                  primaryText={tag.name} onClick={(event)=>{
+                    event.preventDefault();
+                    this.props.tagReset()
+                    this.props.Search(tag.id)
+                    this.props.history.push(`/tag/${tag.id}`)
+                  }}
+                />))}
+                />
+            <ListItem
+              primaryText="その他"
+              leftIcon={<Other />}
+              disabled={true}
+              initiallyOpen={false}
+              primaryTogglesNestedList={true}
+              nestedItems={this.props.tags[2].tags.map(tag => (<ListItem
                   key={tag.id}
                   primaryText={tag.name} onClick={(event)=>{
                     event.preventDefault();
