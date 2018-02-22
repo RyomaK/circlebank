@@ -628,6 +628,7 @@ export const adminSetContact = contact => dispatch => dispatch({type: 'ADMIN_SET
 export const adminSetCampus = campus => dispatch => dispatch({type: 'ADMIN_SET_CAMPUS',campus});
 export const adminSetExcite = excite => dispatch => dispatch({type: 'ADMIN_SET_EXCITE',excite});
 export const adminSetFee = fee => dispatch => dispatch({type: 'ADMIN_SET_FEE',fee});
+export const adminSetTags = tag => dispatch => dispatch({type: 'ADMIN_CIRCLE_TAG',tag})
 
 export const EventName = name => dispatch => dispatch({type: 'EVENT_NAME',name});
 export const EventAgenda = agenda => dispatch => dispatch({type: 'EVENT_AGENDA',agenda});
@@ -834,6 +835,18 @@ export const adminDeleteCircle = (id) => dispatch =>{
     });
 }
 
+export const adminAddCircleTag = (tag,circleId) => dispatch => {
+  const Auth = getAuth();
+  const tags = tag.tags
+  axios
+    .post(`/admin/doshisha/circle/${circleId}/tag`,tags,{headers:{'Authorization':`Bearer ${Auth}`}})
+    .then((results => {
+      const status = results.status
+    }))
+    .catch((e) => {
+      console.log(e);
+    });
+}
 
 export const circleImage = (image,id) => dispatch => {
     const Auth = getAuth();
