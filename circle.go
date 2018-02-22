@@ -26,6 +26,7 @@ func New() *Server {
 
 func (s *Server) Run(dbconfig, addr string) {
 	s.DB = model.DBConnect(dbconfig)
+	defer model.DbClose(s.DB)
 	s.Route(addr)
 }
 
