@@ -34,7 +34,7 @@ class Auth extends Component{
           <Route exact path='/admin/circle/:name' component={CirclePage}/>
           <Route exact path='/admin/delete/:name' component={DeletePage}/>
           <Route exact path='/admin/add/event/:id' component={AddEvent}/>
-          <Route exact path='/admin/image/circle/:id' component={CircleImage}/>
+          <Route exact path='/admin/image/:circle_url/:id' component={CircleImage}/>
         </div>
       )
     }else if((isLogin=="true")&&(admin==false)){

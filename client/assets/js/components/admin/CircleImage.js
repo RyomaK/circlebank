@@ -1,5 +1,5 @@
 import React,{Component} from 'react'
-import {circleImage,adminSetTags,adminAddCircleTag} from '../../actions/index'
+import {circleImage,adminSetTags,adminAddCircleTag,circleSearch} from '../../actions/index'
 import {withRouter} from 'react-router-dom'
 import {Col,Form,FormGroup,FormControl} from "react-bootstrap"
 import TextField from 'material-ui/TextField';
@@ -18,6 +18,11 @@ class CircleImage extends Component{
                 image:""
       }
   }
+  componentDidMount(){
+    const url = this.props.match.params.circle_url
+    this.props.circleSearch(url)
+  }
+
   handleSubmit(e){
     e.preventDefault();
     const id = this.props.match.params.id
@@ -40,9 +45,8 @@ class CircleImage extends Component{
     let tag = this.state.values1.concat(values2)
     tag = tag.concat(this.state.values3)
     this.props.adminSetTags(tag)
-
-
   }
+
   handleChange3(event,index,values3){
     event.preventDefault()
     this.setState({values3})
@@ -50,10 +54,12 @@ class CircleImage extends Component{
     tag = tag.concat(values3)
     this.props.adminSetTags(tag)
   }
+
   handleChange(e){
     e.preventDefault();
     this.setState({image:e.target.files[0]})
   }
+
   menuItems1(values) {
     return this.props.tags[0].tags.map((tag) => (
       <MenuItem
@@ -93,6 +99,14 @@ class CircleImage extends Component{
     const {values1,values2,values3} = this.state;
     return(
       <div>
+        <div>現在のタグ</div>
+        {this.props.tag.map((tag)=> {
+          return(
+            <div key={tag.id}>
+              {tag.name}
+            </div>
+          )
+        })}
         <form onSubmit={this.handleSubmit.bind(this)}>
           <input type="file" onChange={this.handleChange.bind(this)}/>
           <FormGroup>
@@ -141,7 +155,8 @@ class CircleImage extends Component{
 const mapStateToProps = state => {
   return{
     tags: state.allTagSearch.tags,
-    addTag: state.adminCircleTag
+    addTag: state.adminCircleTag,
+    tag: state.circle.tags
   }
 }
 const mapDispatchToProps = dispatch => {
@@ -154,6 +169,9 @@ const mapDispatchToProps = dispatch => {
       },
       adminAddCircleTag:(tag,id) => {
         dispatch(adminAddCircleTag(tag,id))
+      },
+      circleSearch:(url) => {
+        dispatch(circleSearch(url))
       }
     }
   }

@@ -26,9 +26,9 @@ class Home extends Component{
 
   }
 
-  handleClick2(event,id){
+  handleClick2(event,id,url){
     event.preventDefault();
-    this.props.history.push(`/admin/image/circle/${id}`)
+    this.props.history.push(`/admin/image/${url}/${id}`)
   }
 
   handleClick3(e){
@@ -56,7 +56,7 @@ class Home extends Component{
             <div className="commentbox">
             <Link to={`/admin/circle/${circle.url_name}`}　 style={{ textDecoration: 'none' ,color:'white'}}><span className="adminFont">{circle.name}</span></Link>
               <span className="floatright">
-              <FlatButton onClick={(event)=>this.handleClick2(event,circle.id)} >サークル画像追加</FlatButton>
+              <FlatButton onClick={(event)=>this.handleClick2(event,circle.id,circle.url_name)} >サークル画像追加</FlatButton>
 
               <FlatButton onClick={(event)=>this.handleClick(event,circle.url_name)} >イベント編集</FlatButton>
               <FlatButton onClick={(event)=>this.handleClick1(event,circle.id,circle.url_name)} >削除</FlatButton>
