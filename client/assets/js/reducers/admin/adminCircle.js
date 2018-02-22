@@ -18,10 +18,11 @@ const initialState = {
   ]
 }
 
+
 const adminCircle = (state=initialState,action) => {
   switch(action.type){
     case 'ADMIN_CIRCLE':
-      
+
       return{
         circle: action.circle
       }

@@ -11,10 +11,12 @@ import searchWord from './searchWord'
 import circle from './circle'
 import circleTag from './circleTag'
 import comment from './comment'
+import adminCircleTag from './admin/adminCircleTag'
 import adminCheck from './admin/adminCheck'
 import adminCircle from './admin/adminCircle'
 import adminSetState from './admin/adminSetState'
 import adminEventState from './admin/adminEventState'
+
 import circleAll from './circleAll'
 
 
@@ -37,7 +39,9 @@ const reducer = combineReducers({
   adminCheck,
   adminCircle,
   adminSetState,
-  adminEventState
+  adminEventState,
+  adminCircleTag
+
 })
 
 export default reducer

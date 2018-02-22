@@ -2,21 +2,28 @@ import React, {Component} from 'react'
 import {adminSetName,adminSetUrl,adminSetNumber,adminSetRaitio,
 adminSetImage,adminSetIntro,adminSetMessage,adminSetDeleName,
 adminSetContact,adminSetCampus,adminSetExcite,adminSetFee,
-adminSetCircle} from '../../actions/index';
+adminSetCircle,adminSetTags} from '../../actions/index';
 import {withRouter} from 'react-router-dom'
 
 import {Col,Form,FormGroup,FormControl} from "react-bootstrap"
 import TextField from 'material-ui/TextField';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 import FlatButton from 'material-ui/FlatButton';
 import { connect } from 'react-redux'
 
 class AdminCirclePage extends Component{
+
+
   handleSubmit(e){
     e.preventDefault()
     this.props.adminSetCircle(this.props.circle);
     this.props.history.push('/');
 
   }
+
+
+
 
   handleChange(e){
     switch(e.target.name){
@@ -56,10 +63,12 @@ class AdminCirclePage extends Component{
       case 'excite':
         this.props.adminSetExcite(e.target.value)
       break;
+
       default:
       break;
     }
   }
+
 
   render(){
     const styles = {
@@ -211,6 +220,7 @@ class AdminCirclePage extends Component{
             />
     			</Col>
     		</FormGroup>
+
         <FormGroup>
     			<Col smOffset={2} sm={8}>
             <p>サークル画像</p>
@@ -232,7 +242,7 @@ class AdminCirclePage extends Component{
 
 const mapStateToProps = state => {
   return{
-    circle: state.adminSetState
+    circle: state.adminSetState,
   }
 }
 const mapDispatchToProps = dispatch => {
@@ -276,6 +286,7 @@ const mapDispatchToProps = dispatch => {
       adminSetMessage:(name)=>{
         dispatch(adminSetMessage(name))
       }
+
     }
   }
 
