@@ -9,8 +9,6 @@ import Other from 'material-ui/svg-icons/action/account-balance';
 import ContentSend from 'material-ui/svg-icons/content/send';
 import Subheader from 'material-ui/Subheader';
 import { tagSearchStart,tagSearch,tagReset} from '../actions/index'
-
-
 class Menu extends Component {
   constructor(props){
     super(props);
@@ -24,14 +22,12 @@ class Menu extends Component {
       open: !this.state.open,
     });
   };
-
   handleNestedListToggle(item){
     this.setState({
       open: item.state.open,
     });
   };
   render(){
-
     return(
       <div className="whitePage">
           <List>
@@ -90,13 +86,11 @@ class Menu extends Component {
     )
   }
 }
-
 const mapStateToProps = state => {
   return{
     tags: state.allTagSearch.tags
   }
 }
-
 const mapDispatchToProps= dispatch => {
   return{
       tagSearch: () => {

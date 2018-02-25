@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
-import { Col,Row } from 'react-bootstrap'
+import {Col} from 'react-bootstrap'
 import Menu from './Menu'
-
 class NotFound extends Component{
   render(){
     return(
@@ -13,9 +12,7 @@ class NotFound extends Component{
             <h1>Not Found</h1>
           </Col>
       </div>
-
     )
   }
 }
-
 export default NotFound

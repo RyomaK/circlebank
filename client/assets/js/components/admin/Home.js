@@ -11,26 +11,22 @@ import {adminGetCircle,adminDeleteCircle} from '../../actions/index'
 
 class Home extends Component{
   componentDidMount(){
-
     this.props.getCircle();
   }
   handleClick(event,name){
     event.preventDefault();
     this.props.history.push(`/admin/event/${name}`)
-
   }
   handleClick1(event,id,name){
     event.preventDefault();
     this.props.DeleteCircle(id)
     this.props.history.push(`/admin/delete/${name}`)
-
   }
 
   handleClick2(event,id,url){
     event.preventDefault();
     this.props.history.push(`/admin/image/${url}/${id}`)
   }
-
   handleClick3(e){
     e.preventDefault();
     this.props.history.push(`/admin/add/circle`)
@@ -47,17 +43,13 @@ class Home extends Component{
           </IconButton>
         </span>
         </div>
-
-
         {this.props.circles.circle.map( circle => (
           <div key={circle.id} className="padbottom">
           <Paper zDepth={1} className="padZero">
-
             <div className="commentbox">
             <Link to={`/admin/circle/${circle.url_name}`}　 style={{ textDecoration: 'none' ,color:'white'}}><span className="adminFont">{circle.name}</span></Link>
               <span className="floatright">
               <FlatButton onClick={(event)=>this.handleClick2(event,circle.id,circle.url_name)} >サークル画像追加</FlatButton>
-
               <FlatButton onClick={(event)=>this.handleClick(event,circle.url_name)} >イベント編集</FlatButton>
               <FlatButton onClick={(event)=>this.handleClick1(event,circle.id,circle.url_name)} >削除</FlatButton>
               </span>
@@ -74,7 +66,6 @@ class Home extends Component{
       )
   }
 }
-
 const  mapStateToProps = state => {
 
   return{
@@ -91,5 +82,4 @@ const mapDispatchToProps = dispatch => {
       }
     }
   }
-
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Home))

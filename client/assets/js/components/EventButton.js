@@ -4,7 +4,6 @@ import { addEvent,deleteEvent } from '../actions/index'
 import { Button } from 'react-bootstrap'
 
 class EventButton extends Component{
-
   constructor(props){
     super(props)
     this.state = {
@@ -15,7 +14,6 @@ class EventButton extends Component{
     e.preventDefault()
     this.props.Delete(this.props.id);
   }
-
   handleClick2(e){
     e.preventDefault();
     this.props.Add(this.props.id);
@@ -38,7 +36,6 @@ class EventButton extends Component{
         )
     }
 }}
-
 const mapStateToProps = state => {
   return{
     events:state.userEvent.events
@@ -54,9 +51,7 @@ const mapDispatchToProps = dispatch => {
     }
   }
 }
-
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-
 )(EventButton)

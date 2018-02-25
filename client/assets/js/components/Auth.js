@@ -14,14 +14,10 @@ class Auth extends Component{
   componentWillMount(){
     this.props.LoginCheck();
   }
-
   componentWillUpdate(){
     this.props.LoginCheck();
   }
-
-
   render(){
-
     const isLogin = this.props.isLogin
     const admin = this.props.admin
     if((isLogin=="true")&&(admin==true)){
@@ -43,16 +39,13 @@ class Auth extends Component{
       <Route children={this.props.children} />
       </div>
     )
-
     }else{
       return(
 
         <Redirect to="/login" />
       )
-
     }
   }
-
 }
 const mapStateToProps = state => {
   return{
@@ -67,7 +60,6 @@ const mapDispatchToProps = dispatch => {
     }
   }
 }
-
 export default connect(
   mapStateToProps,
   mapDispatchToProps

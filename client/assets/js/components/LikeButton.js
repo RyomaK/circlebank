@@ -4,7 +4,6 @@ import { like, deletelike } from '../actions/index'
 import {Button } from 'react-bootstrap'
 
 class LikeButton extends Component{
-
   constructor(props){
     super(props)
     this.state = {
@@ -15,7 +14,6 @@ class LikeButton extends Component{
     e.preventDefault()
     this.props.Delete(this.props.id);
   }
-
   handleClick2(e){
     e.preventDefault();
     this.props.Like(this.props.id);
@@ -54,7 +52,6 @@ const mapDispatchToProps = dispatch => {
     }
   }
 }
-
 export default connect(
   mapStateToProps,
   mapDispatchToProps

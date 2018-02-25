@@ -12,19 +12,13 @@ import { Link, withRouter} from 'react-router-dom'
 import FlatButton from 'material-ui/FlatButton';
 
 class LoginForm extends Component {
-
   handleSubmit(e){
     e.preventDefault()
-
     this.props.login(this.props.info);
     this.props.AdminCheck(this.props.info.email)
-
     this.props.history.push('/');
-
   }
-
   handleChange(e){
-
     switch(e.target.name){
       case 'mail':
         this.props.setEmail(e.target.value)
@@ -36,8 +30,6 @@ class LoginForm extends Component {
       break;
     }
   }
-
-
   render(){
     const styles = {
       customWidth: {
@@ -80,7 +72,6 @@ class LoginForm extends Component {
           <Col smOffset={2} sm={8}>
             <FlatButton label="Log In"  backgroundColor="#8AA62F" hoverColor="#7CBD1E" style={styles.customColor} type="submit" />
     		   </Col>
-
           <Col smOffset={2}sm={8}>
             <Link to="/signup"><p className="rightside">アカウント作成はコチラ</p></Link>
           </Col>
@@ -90,16 +81,13 @@ class LoginForm extends Component {
     )
   }
 }
-
 const mapStateToProps = state => {
   return{
     info: state.setStatus
   }
 }
-
 const mapDispatchToProps = dispatch => {
   return{
-
       setEmail: mail => {
         dispatch(setEmail(mail))
       },
@@ -114,5 +102,4 @@ const mapDispatchToProps = dispatch => {
       }
   }
 }
-
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(LoginForm))

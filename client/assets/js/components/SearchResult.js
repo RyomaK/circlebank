@@ -1,10 +1,9 @@
 import React,{ Component } from 'react'
 import Menu from './Menu'
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import {Card,CardMedia} from 'material-ui/Card';
 import { Link, Redirect} from 'react-router-dom'
-import { Row, Col } from 'react-bootstrap'
+import { Col } from 'react-bootstrap'
 import { connect } from 'react-redux'
-
 class SearchResult extends Component{
   render(){
     if(this.props.item==false){
@@ -39,9 +38,7 @@ class SearchResult extends Component{
 
         </div>
       )
-
     }
-
   }
 }
 
@@ -50,7 +47,6 @@ const mapStateToProps = state => {
     item: state.circleAll.item,
   }
 }
-
 export default connect(
   mapStateToProps
 )(SearchResult)

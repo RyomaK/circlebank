@@ -1,19 +1,15 @@
 import React, {Component} from "react"
 import { comment,getComment} from '../actions/index'
 import Paper from 'material-ui/Paper';
-import {FormControl,Grid,Col,Button,Table} from "react-bootstrap"
 import FlatButton from 'material-ui/FlatButton';
 import { connect } from 'react-redux'
 import {withRouter} from 'react-router-dom'
 
 class LikePage extends Component{
-
   handleClick(event,id,name){
     event.preventDefault();
     this.props.history.push(`/user/${id}/${name}/comment`);
-
   }
-
   render(){
     return(
       <div>
@@ -29,12 +25,9 @@ class LikePage extends Component{
               <p>メモ枠</p>
               <div>
               {like.comment.text.String.split('\n').map((message,i)=>{
-
                 return(
-
                   <p className="heightPosi" key={i}>{message}</p>
                 )
-
               })}
               </div>
               </div>
@@ -47,7 +40,6 @@ class LikePage extends Component{
     )
   }
 }
-
 const mapStateToProps = state => {
   return{
     like: state.like.circle,

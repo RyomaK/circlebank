@@ -7,16 +7,12 @@ import { setSearchWord,circleSearch,circleSearchAll,setfilter} from '../actions/
 import IconButton from 'material-ui/IconButton';
 import ActionSearch from 'material-ui/svg-icons/action/search';
 class SearchForm  extends Component{
-
   componentDidMount(){
     this.props.circleSearchAll()
   }
-
-
   handleSubmit(event,item){
     event.preventDefault();
     this.props.setfilter(item);
-
     this.props.history.push('/circle/name/search');
   }
   handleChange(e){
@@ -57,7 +53,6 @@ const mapStateToProps = state => {
     circle: state.search.circles
   }
 }
-
 const mapDispatchToProps= dispatch => {
   return{
     setWord: word => {
@@ -74,6 +69,4 @@ const mapDispatchToProps= dispatch => {
     }
   }
 }
-
-
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SearchForm))

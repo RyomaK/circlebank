@@ -13,9 +13,7 @@ class CircleEdit extends Component{
   handleSubmit(e){
     e.preventDefault()
     this.props.adminSetCircle(this.props.circle);
-
   }
-
   handleChange(e){
     switch(e.target.name){
       case 'name':
@@ -58,7 +56,6 @@ class CircleEdit extends Component{
       break;
     }
   }
-
   render(){
     const styles = {
       customWidth: {
@@ -281,7 +278,6 @@ const mapDispatchToProps = dispatch => {
       }
     }
   }
-
 export default connect(
   mapStateToProps,
   mapDispatchToProps
