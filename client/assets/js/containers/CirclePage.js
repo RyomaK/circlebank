@@ -5,16 +5,13 @@ import Paper from 'material-ui/Paper';
 import { connect } from 'react-redux'
 import { Link, withRouter} from 'react-router-dom'
 import {circleSearch} from '../actions/index'
-import {Grid,Col,Row} from "react-bootstrap"
+import {Col} from "react-bootstrap"
 
 class CirclePage extends Component {
-
   componentDidMount(){
     const name = this.props.match.params.name;
     this.props.circleSearch(name)
   }
-
-
   render(){
     const style = {
       width: '100%',
@@ -47,9 +44,6 @@ const mapDispatchToProps= dispatch => {
     }
   }
 }
-
-
-
 export default connect(
   mapStateToProps,
   mapDispatchToProps

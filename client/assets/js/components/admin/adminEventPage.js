@@ -19,12 +19,9 @@ class adminEventPage extends Component{
   handleClick(event,circle_id){
     event.preventDefault();
     this.props.history.push(`/admin/add/event/${circle_id}`)
-
   }
   render(){
-
     return(
-
         <div>
           <Col smOffset={2} sm={8}>
           <h1>{`${this.props.circle.name}のイベント`}</h1>
@@ -48,7 +45,6 @@ class adminEventPage extends Component{
       )
   }
 }
-
 const mapStateToProps = state => {
   console.log(state)
   return{
@@ -66,5 +62,4 @@ const mapDispatchToProps = dispatch => {
       }
     }
   }
-
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(adminEventPage))

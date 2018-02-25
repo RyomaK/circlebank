@@ -14,23 +14,16 @@ import Comment from './Comment'
 import SmartPage from './SmartPage'
 import TabMenu from './TabMenu'
 import Filter from './Filter'
-
-
 import { BrowserRouter, Route, Link, Switch} from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { connect } from 'react-redux'
-
-
 
 const App =() => {
   return(
         <BrowserRouter>
           <MuiThemeProvider>
             <div>
-
               <Switch>
-
-
                 <Route path='/login' component={LoginPage}/>
                 <Route path='/signup' component={SignupPage}/>
                 <Auth>
@@ -41,7 +34,6 @@ const App =() => {
                   <div className="contents">
                   <SearchForm/>
                   <Switch>
-
                     <Route exact path='/' component={MainPage}/>
                     <Route exact path='/user' component={UserPage}/>
                     <Route exact path='/circle/name/search' component={SearchResult}/>
@@ -57,9 +49,7 @@ const App =() => {
                 </Switch>
                 <Filter>
                 <div id="footer">
-
                   <TabMenu/>
-
                 </div>
                 </Filter>
               </div>

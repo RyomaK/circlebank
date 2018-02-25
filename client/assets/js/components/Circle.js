@@ -1,7 +1,7 @@
 import React,{ Component } from 'react'
 import { connect } from 'react-redux'
 import {Tabs, Tab} from 'material-ui/Tabs';
-import {Grid,Col,Table} from "react-bootstrap"
+import {Table} from "react-bootstrap"
 import LikeButton from './LikeButton'
 import Events from './Events'
 class Circle extends Component{
@@ -11,24 +11,21 @@ class Circle extends Component{
       value: 'a',
     };
   }
-
   handleChange(value){
     this.setState({
       value: value,
     });
   };
   render(){
-
-const styles = {
-  headline: {
-    fontSize: 24,
-    paddingTop: 16,
-    marginBottom: 12,
-    fontWeight: 400,
-  },
-};
-const circle = this.props.circle
-
+    const styles = {
+      headline: {
+        fontSize: 24,
+        paddingTop: 16,
+        marginBottom: 12,
+        fontWeight: 400,
+      },
+    };
+    const circle = this.props.circle
     return(
       <div>
         <div className="centerPosition">
@@ -40,8 +37,6 @@ const circle = this.props.circle
         <div className="circleImage">
           <img src={`static/${circle.image}`} alt="aa" width="100%"/>
         </div>
-
-
       <Tabs
           value={this.state.value}
           onChange={this.handleChange.bind(this)}
@@ -55,7 +50,6 @@ const circle = this.props.circle
 
                   <p className="heightPosi" key={i}>{message}</p>
                 )
-
               })}
               </div>
             </div>
@@ -98,19 +92,15 @@ const circle = this.props.circle
             </div>
           </Tab>
         </Tabs>
-
       </div>
     )
-
   }
 }
-
 const mapStateToProps = state => {
     return{
     events: state.circle.events
   }
 }
-
 export default connect(
   mapStateToProps
 )(Circle)

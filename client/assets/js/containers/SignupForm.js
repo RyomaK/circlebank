@@ -153,8 +153,6 @@ class SignupForm extends Component{
       break;
     }
   }
-
-
   render(){
     const styles = {
       customWidth: {
@@ -168,7 +166,6 @@ class SignupForm extends Component{
       },
     };
     return(
-
       <Form horizontal onSubmit={this.handleSubmit.bind(this)}>
   		{/*<FormGroup>
 
@@ -235,7 +232,6 @@ class SignupForm extends Component{
         </SelectField>
   			</Col>
   		</FormGroup>*/}
-
       <FormGroup>
   			<Col sm={6}>
         <TextField
@@ -246,7 +242,6 @@ class SignupForm extends Component{
         fullWidth={true}
         />
   			</Col>
-
         {/*<Col sm={6}>
         <SelectField
           floatingLabelText="性別"
@@ -343,5 +338,4 @@ const mapDispatchToProps = dispatch => {
 
     }
   }
-
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SignupForm))

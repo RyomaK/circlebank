@@ -13,18 +13,11 @@ import FlatButton from 'material-ui/FlatButton';
 import { connect } from 'react-redux'
 
 class AdminCirclePage extends Component{
-
-
   handleSubmit(e){
     e.preventDefault()
     this.props.adminSetCircle(this.props.circle);
     this.props.history.push('/');
-
   }
-
-
-
-
   handleChange(e){
     switch(e.target.name){
       case 'name':
@@ -68,8 +61,6 @@ class AdminCirclePage extends Component{
       break;
     }
   }
-
-
   render(){
     const styles = {
       customWidth: {
@@ -237,9 +228,6 @@ class AdminCirclePage extends Component{
     )
   }
 }
-
-
-
 const mapStateToProps = state => {
   return{
     circle: state.adminSetState,

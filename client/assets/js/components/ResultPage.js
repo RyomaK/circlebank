@@ -1,8 +1,6 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import {Grid, Row, Col } from 'react-bootstrap'
+import {Col } from 'react-bootstrap'
 import {Card} from 'material-ui/Card';
-
 const ResultPage = ({circle}) => {
   return(
     <div>
@@ -18,19 +16,6 @@ const ResultPage = ({circle}) => {
     </Col>
     <Col md={1}></Col>
     </div>
-
   )
 }
-
-ResultPage.propTypes = {
-  circle: PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string,
-    number: PropTypes.number,
-    introduction: PropTypes.string,
-    campus: PropTypes.string
-  })
-}
-
-
 export default ResultPage

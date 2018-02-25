@@ -1,6 +1,5 @@
 import axios from'axios'
 import Cookies from 'universal-cookie';
-
 const getAuth = () => {
   let box1=""
   const box = document.cookie.split('Authorization=');
@@ -9,37 +8,21 @@ const getAuth = () => {
     }
   return (box1)
 }
-
 export const setErrorMessage = message => dispatch => dispatch({type: 'ZERO_RESULTS',message});
-
 export const setUniversity = university => dispatch => dispatch({type: 'SET_UNIVERSITY',university});
-
 export const setName = name => dispatch => dispatch({type: 'SET_NAME',name});
-
 export const setSex= sex => dispatch => dispatch({type: 'SET_SEX',sex});
-
 export const setDepartment = department => dispatch => dispatch({type: 'SET_DEPARTMENT',department});
-
 export const setSubject = subject => dispatch => dispatch({type: 'SET_SUBJECT',subject});
-
 export const setEmail = email => dispatch => dispatch({type: 'SET_EMAIL',email});
-
 export const setPassword = password => dispatch => dispatch({type: 'SET_PASSWORD',password});
-
 export const settYear = year => dispatch => dispatch({type: 'SET_YEAR',year});
-
 export const setLogin = number => dispatch => dispatch({type: 'LOGIN_CHECK',number});
-
 export const selectUniversity = university => dispatch => dispatch({type: 'SELECT_UNIVER',university});
-
 export const setImage = image => dispatch => dispatch({type: 'IMAGE_SET',image});
-
 export const setSearchWord = word => dispatch => dispatch({type: 'SET_WORD',word});
-
 export const setProIma = image => dispatch => dispatch({type: 'PRO_IMAGE',image});
-
 export const setfilter = item => dispatch => dispatch({type: 'SET_ITEM',item});
-
 export const tagReset = () => dispatch => dispatch({type: 'TAG_RESET'});
 
 export const image = () => dispatch => {

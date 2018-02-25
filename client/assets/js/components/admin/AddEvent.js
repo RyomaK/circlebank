@@ -8,8 +8,6 @@ import SelectField from 'material-ui/SelectField';
 import FlatButton from 'material-ui/FlatButton';
 import { connect } from 'react-redux'
 
-
-
 const months = [
   {tag:0,month:'01'},
   {tag:1,month:'02'},
@@ -85,7 +83,6 @@ class AddEvent extends Component{
     this.setState({value2})
     this.props.EventAgenda(`2018-${months[this.state.value1].month}-${days[value2].month}T00:00:00Z`)
   }
-
   handleChange(e){
     switch(e.target.name){
       case 'name':
@@ -108,7 +105,6 @@ class AddEvent extends Component{
       break;
     }
   }
-
   render(){
     const styles = {
       customWidth: {
@@ -239,9 +235,6 @@ class AddEvent extends Component{
     )
   }
 }
-
-
-
 const mapStateToProps = state => {
   return{
     events: state.adminEventState

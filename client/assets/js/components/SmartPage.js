@@ -1,8 +1,6 @@
 import React from 'react'
 import Menu from './Menu'
-
-import { Row, Col } from 'react-bootstrap'
-
+import { Col } from 'react-bootstrap'
 const SmartPage = () => {
     return(
       <Col>
@@ -10,5 +8,4 @@ const SmartPage = () => {
       </Col>
     )
 }
-
 export default SmartPage

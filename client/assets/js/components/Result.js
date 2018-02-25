@@ -2,13 +2,10 @@ import React,{ Component }from 'react'
 import { circleSearchAll } from '../actions/index'
 import { connect } from 'react-redux'
 import ResultPage from './ResultPage'
-
-
 class Result extends Component{
   componentDidMount(){
     this.props.onCircleSearch()
   }
-
   render(){
     return(
       <div>
@@ -17,13 +14,11 @@ class Result extends Component{
     )
   }
 }
-
 const mapStateToProps = state => {
   return{
     circles: state.search.circles,
   }
 }
-
 const mapDispatchToProps= dispatch => {
   return{
     onCircleSearch: () => {
@@ -31,7 +26,6 @@ const mapDispatchToProps= dispatch => {
     }
   }
 }
-
 export default connect(
   mapStateToProps,
   mapDispatchToProps

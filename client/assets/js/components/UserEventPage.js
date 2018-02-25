@@ -1,19 +1,12 @@
 import React, {Component} from "react"
-import { comment,getComment} from '../actions/index'
-import Paper from 'material-ui/Paper';
-import {FormControl,Grid,Col,Button,Table} from "react-bootstrap"
-import FlatButton from 'material-ui/FlatButton';
 import { connect } from 'react-redux'
 import {withRouter} from 'react-router-dom'
 
 class UserEventPage extends Component{
-
   handleClick(event,id,name){
     event.preventDefault();
     this.props.history.push(`/user/${id}/${name}/comment`);
-
   }
-
   render(){
     const events = this.props.events.sort((a,b)=>{
       return a.agenda > b.agenda
@@ -37,7 +30,6 @@ class UserEventPage extends Component{
     )
   }
 }
-
 const mapStateToProps = state => {
   return{
     events:state.userEvent.events

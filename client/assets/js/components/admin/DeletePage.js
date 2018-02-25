@@ -10,5 +10,4 @@ class DeletePage extends Component{
     )
   }
 }
-
 export default DeletePage

@@ -4,16 +4,13 @@ import EventButton from './EventButton'
 
 class Events extends Component{
   render(){
-
     return(
-
       <div className="madin">
       <Table className="whitePage">
       {this.props.events.map(eve=>{
         const date = eve.agenda.split("-")
         const month = date[1];
         const day = date[2].split("T")
-
         return(
           <tbody key={eve.id}>
             <tr>
@@ -35,12 +32,9 @@ class Events extends Component{
             </tbody>
         )
       })}
-
       </Table>
       </div>
     )
-
   }
 }
-
 export default Events

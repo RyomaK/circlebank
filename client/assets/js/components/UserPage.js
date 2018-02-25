@@ -11,8 +11,6 @@ componentWillMount(){
   this.props.getUser();
   this.props.getImage();
 }
-
-
 render(){
     return(
       <div>
@@ -26,7 +24,6 @@ render(){
     )
   }
 }
-
 const mapStateToProps = state => {
   return{
     user: state.user,
