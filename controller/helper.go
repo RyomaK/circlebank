@@ -7,7 +7,6 @@ import (
 	"strings"
 
 	jwt "github.com/dgrijalva/jwt-go"
-	"github.com/ryomak/circlebank/model"
 )
 
 type AuthUser struct {
@@ -85,10 +84,9 @@ func IsAdmin(r *http.Request) bool {
 	return false
 }
 
-
 func WriteJWT(w http.ResponseWriter, mail string) {
 	jwtString := CreateJWT(&AuthUser{
-		Mail:      mail,
+		Mail: mail,
 	})
 	fmt.Println(jwtString)
 	//cookieに保存
@@ -98,4 +96,3 @@ func WriteJWT(w http.ResponseWriter, mail string) {
 		Path:  "/",
 	})
 }
-
