@@ -25,12 +25,11 @@ func (a *Admin) Index(w http.ResponseWriter, r *http.Request) {
 func (a *Admin) AdminCircleHandler(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 	q := r.URL.Query()
-	vars := mux.Vars(r)
 	page, err := strconv.Atoi(q.Get("page"))
 	if err != nil {
 		page = 1
 	}
-	circles, err := model.GetCircles(a.DB, vars["univ"], page)
+	circles, err := model.GetCircles(a.DB, page)
 	fmt.Printf("ffaf\n")
 	if err != nil {
 		log.Printf("adminCircle err %v", err)
@@ -51,12 +50,11 @@ func (a *Admin) AdminCircleHandler(w http.ResponseWriter, r *http.Request) {
 func (a *Admin) AdminCircleEventHandler(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 	q := r.URL.Query()
-	vars := mux.Vars(r)
 	page, err := strconv.Atoi(q.Get("page"))
 	if err != nil {
 		page = 1
 	}
-	events, err := model.GetEvents(a.DB, vars["univ"], page)
+	events, err := model.GetEvents(a.DB, page)
 	if err != nil {
 		log.Printf("adminCircle err %v", err)
 		w = SetHeader(w, http.StatusNotFound)
@@ -64,11 +62,15 @@ func (a *Admin) AdminCircleEventHandler(w http.ResponseWriter, r *http.Request) 
 		res, _ := json.Marshal(status)
 		w.Write(res)
 	} else {
+		if events == nil{
+			status := StatusCode{Code: http.StatusOK, Message: "not found"}
+			res, _ := json.Marshal(status)
+			w.Write(res)
+		}
 		res, err := json.Marshal(events)
 		if err != nil {
 			log.Printf("Marshal %v", err)
 		}
-		w = SetHeader(w, http.StatusOK)
 		w.Write(res)
 	}
 }
@@ -76,7 +78,7 @@ func (a *Admin) AdminCircleEventHandler(w http.ResponseWriter, r *http.Request) 
 func (a *Admin) AdminCircleDetailHandler(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 	vars := mux.Vars(r)
-	circle, err := model.GetCircleDetail(a.DB, vars["univ"], vars["circle_name"])
+	circle, err := model.GetCircleDetail(a.DB, vars["circle_name"])
 	if err != nil {
 		log.Printf("getCircleDetail err %v", err)
 		w = SetHeader(w, http.StatusNotFound)

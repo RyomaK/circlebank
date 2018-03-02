@@ -29,24 +29,6 @@ func GetUserID(db *sql.DB, mail string) uint {
 	return uint(id)
 }
 
-func GetUnivID(db *sql.DB, name string) uint {
-	row := db.QueryRow(`SELECT id from universities where name = ?`, name)
-	var univ_id string
-	row.Scan(&univ_id)
-	id, err := strconv.ParseUint(univ_id, 10, 32)
-	if err != nil {
-		log.Printf("err GetUnivID: %v", err)
-	}
-	return uint(id)
-}
-
-func GetUnivName(db *sql.DB, id string) string {
-	row := db.QueryRow(`SELECT name from universities where univ_id = ?`, id)
-	var univ string
-	row.Scan(&univ)
-	return univ
-}
-
 func GetUserPass(db *sql.DB, mail string) string {
 	row := db.QueryRow(`SELECT password from users where mail = ?`, mail)
 	var pass string
@@ -54,33 +36,6 @@ func GetUserPass(db *sql.DB, mail string) string {
 	return pass
 }
 
-func GetUser(db *sql.DB, mail string) (*Userschedule, error) {
-	row := db.QueryRow(`
-		SELECT users.id,universities.name as university ,users.name,users.gender,users.mail,users.password,users.image,users.year,users.department,users.subject
-		from users
-		inner join universities on universities.id = users.univ_id 
-		where mail = ?
-		`, mail)
-	user, err := ScanUser(row)
-	if err != nil {
-		log.Printf("mail:%v,err:%v", mail, err)
-		return &Userschedule{}, err
-	}
-	rows, _ := db.Query(`SELECT events.id ,events.name,events.image,events.agenda,events.place,events.detail,events.capacity,events.fee
-		from users
-		inner join events_schedules on events_schedules.user_id = users.id
-		inner join events on events.id = events_schedules.event_id 
-		where users.mail = ?`, mail)
-	events, err := ScanEvents(rows)
-	if err != nil {
-		log.Printf("mail:%v,err:%v", mail, err)
-		return &Userschedule{}, err
-	}
-	return &Userschedule{
-		User:   *user,
-		Events: *events,
-	}, nil
-}
 
 func IsLogin(db *sql.DB, mail, pass string) bool {
 	row := db.QueryRow(`SELECT * from users where mail = ? `, mail)
@@ -107,7 +62,7 @@ func EncodePass(pass string) (string, error) {
 }
 
 func Regist(db *sql.DB, user User) error {
-	stmt, err := db.Prepare("INSERT users SET univ_id=?, name=?,mail=?,password=?,gender=?,department=?,subject=?,image=?,year=?")
+	stmt, err := db.Prepare("INSERT users SET name=?,mail=?,password=?")
 	if err != nil {
 		return err
 	}
@@ -115,7 +70,7 @@ func Regist(db *sql.DB, user User) error {
 	if err != nil {
 		return err
 	}
-	_, err = stmt.Exec(GetUnivID(db, user.University), user.Name, user.Mail, user.Password, user.Gender, user.Department, user.Subject, user.Image, user.Year)
+	_, err = stmt.Exec( user.Name, user.Mail, user.Password)
 	if err != nil {
 		return err
 	}

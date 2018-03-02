@@ -19,7 +19,7 @@ type Circle struct {
 func (c *Circle) CircleHandler(w http.ResponseWriter, r *http.Request) {
 
 	vars := mux.Vars(r)
-	circle, err := model.GetCircleDetail(c.DB, vars["univ"], vars["circle_name"])
+	circle, err := model.GetCircleDetail(c.DB, vars["circle_name"])
 
 	if err != nil {
 		log.Printf("getCircleDetail err %v", err)
@@ -39,8 +39,7 @@ func (c *Circle) CircleHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func (c *Circle) UnivCircleHandler(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	circles, err := model.GetUnivCircles(c.DB, vars["univ"])
+	circles, err := model.GetUnivCircles(c.DB)
 	if err != nil {
 		log.Printf("getCircleDetail err %v", err)
 		w = SetHeader(w, http.StatusNotFound)
@@ -58,8 +57,7 @@ func (c *Circle) UnivCircleHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func (c *Circle) TagHandler(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	tags, err := model.GetTags(c.DB, vars["univ"], "運動", "文化", "その他")
+	tags, err := model.GetTags(c.DB, "運動", "文化", "その他")
 	if err != nil {
 		log.Printf("sarch err %v", err)
 		w = SetHeader(w, http.StatusNotFound)
@@ -78,7 +76,7 @@ func (c *Circle) TagHandler(w http.ResponseWriter, r *http.Request) {
 
 func (c *Circle) TagCirclesHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	circles, err := model.GetTagCircles(c.DB, vars["univ"], vars["id"])
+	circles, err := model.GetTagCircles(c.DB, vars["id"])
 	if err != nil {
 		log.Printf("err %v", err)
 		w = SetHeader(w, http.StatusNotFound)

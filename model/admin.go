@@ -6,12 +6,12 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-func GetCircles(db *sql.DB, univ string, page int) (*[]Circle, error) {
-	query := `select circles.id,circles.name,circles.url_name,number,circles.gender_ratio,circles.image,introduction,message_for_fresh,  delegetes.name as delegate_name ,delegetes.contact as delegate_contact,campus,excite,fee,universities.name as university
-	from (circles inner join universities on univ_id = universities.id)
+func GetCircles(db *sql.DB, page int) (*[]Circle, error) {
+	query := `select circles.id,circles.name,circles.url_name,number,circles.gender_ratio,circles.image,introduction,message_for_fresh,  delegetes.name as delegate_name ,delegetes.contact as delegate_contact,campus,excite,fee
+	from circles
 	left outer join delegetes on circles.id = delegetes.circle_id
-	where universities.url_name = ? and circles.id between ?+0 and ?+30 order by circles.id`
-	row, _ := db.Query(query, univ, page, page)
+	where  circles.id between ?+0 and ?+30 order by circles.id`
+	row, _ := db.Query(query, page, page)
 	circles, err := ScanCircles(row)
 	if err != nil {
 		return &[]Circle{}, err
@@ -19,17 +19,16 @@ func GetCircles(db *sql.DB, univ string, page int) (*[]Circle, error) {
 	return circles, nil
 }
 
-func GetEvents(db *sql.DB, univ string, page int) (*[]AdminCircleEvents, error) {
+func GetEvents(db *sql.DB, page int) (*[]AdminCircleEvents, error) {
 	num := 30 //所得件数
 	query := `select events.id ,events.name,events.image,events.agenda,events.place,events.detail,events.capacity,events.fee,circles.id as circle_id ,circles.name as circle_name
-			from (circles inner join universities on univ_id = universities.id)
+			from circles 
 			inner join events on events.circle_id = circles.id
-			where universities.url_name = ? 
-			order by events.agenda 
+			order by events.agenda DESC 
 			limit  ?,?`
 	pageMin := num * (page - 1)
 	pageMax := num + pageMin
-	rows, _ := db.Query(query, univ, pageMin, pageMax)
+	rows, _ := db.Query(query,pageMin, pageMax)
 
 	events, err := ScanAdminCircleEvents(rows)
 	if err != nil {
@@ -40,8 +39,8 @@ func GetEvents(db *sql.DB, univ string, page int) (*[]AdminCircleEvents, error) 
 }
 
 func InsertCircle(db *sql.DB, circle *Circle) error {
-	query := `insert into circles (univ_id,name,url_name,number,gender_ratio,introduction,excite,fee,campus,message_for_fresh) values (?,?,?,?,?,?,?,?,?,?)`
-	result, err := db.Exec(query, "1", circle.Name, circle.URLName, circle.Number, circle.GenderRatio, circle.Introduction, circle.Excite, circle.Fee, circle.Campus, circle.MessageForFresh)
+	query := `insert into circles (name,url_name,number,gender_ratio,introduction,excite,fee,campus,message_for_fresh) values (?,?,?,?,?,?,?,?,?)`
+	result, err := db.Exec(query,  circle.Name, circle.URLName, circle.Number, circle.GenderRatio, circle.Introduction, circle.Excite, circle.Fee, circle.Campus, circle.MessageForFresh)
 	if err != nil {
 		return err
 	}
@@ -101,16 +100,6 @@ func DeleteCircle(db *sql.DB, circle_id int) error {
 		return err
 	}
 	query = `delete from delegetes where circle_id = ?`
-	_, err = db.Exec(query, circle_id)
-	if err != nil {
-		return err
-	}
-	query = `delete from likes where circle_id = ?`
-	_, err = db.Exec(query, circle_id)
-	if err != nil {
-		return err
-	}
-	query = `delete from comments where circle_id = ?`
 	_, err = db.Exec(query, circle_id)
 	if err != nil {
 		return err

@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	jwt "github.com/dgrijalva/jwt-go"
+	"github.com/ryomak/circlebank/model"
 )
 
 type AuthUser struct {
@@ -24,7 +25,6 @@ const SecretKey = "75c92a074c341e9964329c0550c2673730ed8479c885c43122c90a2843177
 
 func SetHeader(w http.ResponseWriter, status int) http.ResponseWriter {
 	w.Header().Set("Content-Type", "application/json")
-	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Expose-Headers", "Location,Authorization")
 	w.WriteHeader(status)
 	return w
@@ -85,17 +85,10 @@ func IsAdmin(r *http.Request) bool {
 	return false
 }
 
-//仮
-var admin string = "admin@user1234"
 
 func WriteJWT(w http.ResponseWriter, mail string) {
-	auth := "1"
-	if mail == admin {
-		auth = "adminuser"
-	}
 	jwtString := CreateJWT(&AuthUser{
 		Mail:      mail,
-		Authority: auth,
 	})
 	fmt.Println(jwtString)
 	//cookieに保存
@@ -106,13 +99,3 @@ func WriteJWT(w http.ResponseWriter, mail string) {
 	})
 }
 
-/*==================admin middleware ===================*/
-
-func MiddlewareAdmin(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
-	if !IsAdmin(r) {
-		w.WriteHeader(http.StatusUnauthorized)
-		w.Write([]byte("Required authorization token not found"))
-		return
-	}
-	next(w, r)
-}

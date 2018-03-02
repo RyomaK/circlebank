@@ -1,7 +1,6 @@
 package model
 
 import (
-	"database/sql"
 	"time"
 )
 
@@ -25,7 +24,6 @@ type Circle struct {
 	Campus          string `db:"campus" json:"campus"`
 	Excite          int    `db:"excite" json:"excite"`
 	Fee             int    `db:"fee" json:"fee"`
-	University      string `db:"university" json:"university"`
 }
 
 type Event struct {
@@ -52,42 +50,9 @@ type ClassedTag struct {
 
 type User struct {
 	ID         uint   `db:"id" json:"id"`
-	University string `db:"university" json:"university"`
 	Name       string `db:"name" json:"name"`
-	Gender     string `db:"gender" json:"gender"`
 	Mail       string `db:"mail" json:"mail"`
 	Password   string `db:"password" json:"password"`
-	Image      string `db:"image" json:"image"`
-	Year       int    `db:"year" json:"year"`
-	Department string `db:"department" json:"department"`
-	Subject    string `db:"subject" json:"subject"`
-}
-
-type Comment struct {
-	ID     sql.NullInt64  `db:"id" json:"id"`
-	Name   sql.NullString `db:"name" json:"name"`
-	Gender sql.NullString `db:"gender" json:"gender"`
-	Point  sql.NullInt64  `db:"point" json:"point"`
-	Text   sql.NullString `db:"text" json:"text"`
-}
-
-type Userschedule struct {
-	User   User
-	Events []Event `db:"events" json:"events"`
-}
-
-type UserCircleLikes struct {
-	Circle []Circle `db:"circle" json:"circle"`
-}
-
-type LikeCircleDetail struct {
-	Circle  Circle  `db:"circle" json:"circle"`
-	Comment Comment `db:"comment" json:"comment"`
-}
-
-type CircleComment struct {
-	Circle  Circle  `db:"circle" json:"circle"`
-	Comment Comment `db:"comment" json:"comment"`
 }
 
 type AdminCircleEvents struct {
