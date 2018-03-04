@@ -1,6 +1,6 @@
 import React,{ Component } from 'react'
 import Menu from './Menu'
-import {Card,CardMedia} from 'material-ui/Card';
+import {Card,CardMedia,CardTitle} from 'material-ui/Card';
 import { Link, Redirect} from 'react-router-dom'
 import { Col } from 'react-bootstrap'
 import { connect } from 'react-redux'

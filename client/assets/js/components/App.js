@@ -28,9 +28,9 @@ const App =() => {
                 <Route path='/signup' component={SignupPage}/>
                 <Auth>
                   <div>
-                  <div id="Header">
-                  <Header />
-                  </div>
+                    <div id="Header">
+                    <Header />
+                    </div>
                   <div className="contents">
                   <SearchForm/>
                   <Switch>
@@ -42,7 +42,7 @@ const App =() => {
                     <Route exact path='/user/:id/:name/comment' component={Comment}/>
                     <Route exact path='/menu' component={SmartPage}/>
                     <Route component={ NotFound }/>
-                  </Switch>
+                </Switch>
                   </div>
                   </div>
                 </Auth>
