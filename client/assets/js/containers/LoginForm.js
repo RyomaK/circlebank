@@ -15,8 +15,7 @@ class LoginForm extends Component {
   handleSubmit(e){
     e.preventDefault()
     this.props.login(this.props.info);
-    this.props.AdminCheck(this.props.info.email)
-    this.props.history.push('/');
+    this.props.history.push('/admin');
   }
   handleChange(e){
     switch(e.target.name){
@@ -96,9 +95,6 @@ const mapDispatchToProps = dispatch => {
       },
       login: data => {
         dispatch(login(data))
-      },
-      AdminCheck: (data) => {
-        dispatch(adminCheck(data))
       }
   }
 }

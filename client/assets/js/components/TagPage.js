@@ -12,18 +12,18 @@ class TagPage extends Component {
         <Col sm={3} xsHidden className="reset">
           <Menu/>
         </Col>
-        <div className="paper">
+        <div>
           <div>
             <Col sm={9}>
             <h2>検索結果</h2>
             </Col>
           {this.props.circle.map( circle => (
-            <Col sm={4} className="marginbottom circleName" key={circle.id}><Link to={`/circle/search/${circle.url_name}`} >
+            <Col sm={4} className="marginbottom circleName reset" key={circle.id}><Link to={`/circle/search/${circle.url_name}`} >
                 <Card>
                 <CardMedia
                   overlay={<CardTitle title={circle.name} subtitle={circle.introduction}/>}
                 >
-                  <img src={`static/${circle.image}`} alt="aa" height="200px;"/>
+                  <img src={`static/${circle.image}`} alt="aa" height="250px;"/>
                 </CardMedia>
               </Card>
               </Link>

@@ -1,26 +1,25 @@
-const loginCheck = (state={isLogin:'false',permit:'true'},action) => {
+const loginCheck = (state={isLogin:false},action) => {
+
   switch(action.type){
 
     case 'LOGIN_CHECK':
-      if((action.number == 1) &&(state.permit == 'true')){
-
+      if(action.number == 100){
         return{
-          isLogin: 'true',permit: 'true'
+          isLogin:true
         }
       }else{
-        
         return{
-
-          isLogin: 'false',permit: 'true'
+          isLogin:false
         }
       }
     case 'LOGOUT':
       return{
-        isLogin: 'false',permit: 'false'
+        isLogin:false
       }
+      break;
     case 'LOGIN':
       return{
-        isLogin: 'true',permit: 'true'
+        isLogin:true
       }
     default:
     return(

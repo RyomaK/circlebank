@@ -11,20 +11,14 @@ import { loginCheck } from '../actions/index'
 import { connect } from 'react-redux'
 
 class Auth extends Component{
-  componentWillMount(){
-    this.props.LoginCheck();
-  }
-  componentWillUpdate(){
-    this.props.LoginCheck();
-  }
+
   render(){
     const isLogin = this.props.isLogin
-    const admin = this.props.admin
-    if((isLogin=="true")&&(admin==true)){
+    if(isLogin==true){
 
       return(
         <div className="contents">
-          <Route exact path='/' component={Home}/>
+          <Route exact path='/admin' component={Home}/>
           <Route exact path='/admin/add/circle' component={AdminCirclePage}/>
           <Route exact path='/admin/event/:name' component={adminEventPage}/>
           <Route exact path='/admin/circle/:name' component={CirclePage}/>
@@ -33,16 +27,11 @@ class Auth extends Component{
           <Route exact path='/admin/image/:circle_url/:id' component={CircleImage}/>
         </div>
       )
-    }else if((isLogin=="true")&&(admin==false)){
-      return(
-      <div>
-      <Route children={this.props.children} />
-      </div>
-    )
     }else{
       return(
-
-        <Redirect to="/login" />
+        <div>
+          <Route children={this.props.children} />
+        </div>
       )
     }
   }
@@ -50,14 +39,11 @@ class Auth extends Component{
 const mapStateToProps = state => {
   return{
     isLogin: state.loginCheck.isLogin,
-    admin: state.adminCheck.admin
   }
 }
 const mapDispatchToProps = dispatch => {
   return{
-    LoginCheck: () => {
-      dispatch(loginCheck())
-    }
+
   }
 }
 export default connect(

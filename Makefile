@@ -1,7 +1,7 @@
 DBNAME:=circle_bank
 
-DBCONFIG:=root:@/circle_bank?parseTime=true
-#DBCONFIG:=root:Kenta71619@/circle_bank?parseTime=true
+#DBCONFIG:=root:@/circle_bank?parseTime=true
+DBCONFIG:=root:Kenta71619@/circle_bank?parseTime=true
 ADDR:=9000
 
 install:

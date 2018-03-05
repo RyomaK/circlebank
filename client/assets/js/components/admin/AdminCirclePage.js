@@ -18,6 +18,7 @@ class AdminCirclePage extends Component{
     this.props.adminSetCircle(this.props.circle);
     this.props.history.push('/');
   }
+
   handleChange(e){
     switch(e.target.name){
       case 'name':
@@ -56,7 +57,6 @@ class AdminCirclePage extends Component{
       case 'excite':
         this.props.adminSetExcite(e.target.value)
       break;
-
       default:
       break;
     }

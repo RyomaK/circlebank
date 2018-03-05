@@ -2,14 +2,13 @@
 @import url(http://fonts.googleapis.com/earlyaccess/notosansjp.css);
 
 html,body{
-font-family: Lato, "Noto Sans JP", "游ゴシック Medium", "游ゴシック体", "Yu Gothic Medium", YuGothic, "ヒラギノ角ゴ ProN", "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
-margin: 0;	/* 余白の削除 */
-padding: 0;	/* 余白の削除 */
-height: 100%;	/* 縦の高さを100% */
-width: 100%;
-max-width:100%;	/* 横の幅を100% */
-background-color:#F8F8F8;
-
+  font-family: Lato, "Noto Sans JP", "游ゴシック Medium", "游ゴシック体", "Yu Gothic Medium", YuGothic, "ヒラギノ角ゴ ProN", "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+  margin: 0;	/* 余白の削除 */
+  padding: 0;	/* 余白の削除 */
+  height: 100%;	/* 縦の高さを100% */
+  width: 100%;
+  max-width:100%;	/* 横の幅を100% */
+  background-color:#F8F8F8;
 }
 #wrap{
   max-width: 100%
@@ -41,7 +40,6 @@ background-color:#F8F8F8;
   }
   .pad{
     margin-bottom:100px;
-
   }
   .circlePage{
     height:100%;
@@ -140,6 +138,9 @@ background-color:#F8F8F8;
 }
 
 @media screen and (min-width: 768px) {
+  .visible{
+    display:none
+  }
   .sizebox{
     height:200px;
     overflow: hidden;
@@ -286,6 +287,12 @@ background-color:#F8F8F8;
   border-radius:5px;
   border-style: solid;
   border-color:#1A237E;
+}
+.scheduleTitle{
+  padding-top:10px;
+  padding-bottom:10px;
+  padding-left:20px;
+  font-size:24px;
 }
 .searchFormButton{
   background-color:#1A237E;
