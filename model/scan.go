@@ -150,6 +150,7 @@ func ScanAdminCircleEvents(rs *sql.Rows) (*[]AdminCircleEvents, error) {
 			&s.Fee,
 			&s.CircleID,
 			&s.CircleName,
+			&s.CircleURLName,
 		); err != nil {
 			return &[]AdminCircleEvents{}, err
 		}

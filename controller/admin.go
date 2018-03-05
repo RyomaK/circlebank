@@ -3,11 +3,11 @@ package controller
 import (
 	"database/sql"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/gorilla/mux"
 	imageupload "github.com/olahol/go-imageupload"
@@ -30,7 +30,6 @@ func (a *Admin) AdminCircleHandler(w http.ResponseWriter, r *http.Request) {
 		page = 1
 	}
 	circles, err := model.GetCircles(a.DB, page)
-	fmt.Printf("ffaf\n")
 	if err != nil {
 		log.Printf("adminCircle err %v", err)
 		w = SetHeader(w, http.StatusNotFound)
@@ -54,7 +53,13 @@ func (a *Admin) AdminCircleEventHandler(w http.ResponseWriter, r *http.Request) 
 	if err != nil {
 		page = 1
 	}
-	events, err := model.GetEvents(a.DB, page)
+	date := q.Get("date")
+	t , err:= time.Parse("2006-01-02",date)
+	if err != nil{
+		t = time.Time{}
+	}
+
+	events, err := model.GetEvents(a.DB, page,t)
 	if err != nil {
 		log.Printf("adminCircle err %v", err)
 		w = SetHeader(w, http.StatusNotFound)

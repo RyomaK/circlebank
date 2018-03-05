@@ -7,7 +7,7 @@
 #
 # ホスト: 127.0.0.1 (MySQL 5.7.19)
 # データベース: circle_bank
-# 作成時刻: 2018-03-02 16:49:12 +0000
+# 作成時刻: 2018-03-05 16:03:48 +0000
 # ************************************************************
 
 
@@ -38,7 +38,8 @@ CREATE TABLE `circles` (
   `fee` int(11) unsigned NOT NULL DEFAULT '0',
   `campus` varchar(255) DEFAULT NULL,
   `message_for_fresh` text NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `url_name` (`url_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `circles` WRITE;
@@ -86,6 +87,19 @@ VALUES
 UNLOCK TABLES;
 
 
+# テーブルのダンプ cirlce_images
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `cirlce_images`;
+
+CREATE TABLE `cirlce_images` (
+  `ciecle_id` int(11) unsigned NOT NULL,
+  `image_url` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ciecle_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
 # テーブルのダンプ delegetes
 # ------------------------------------------------------------
 
@@ -123,12 +137,12 @@ CREATE TABLE `events` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `circle_id` int(11) unsigned NOT NULL,
   `name` varchar(255) NOT NULL,
-  `image` varchar(255) NOT NULL DEFAULT 'img/users/default.png',
-  `agenda` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `place` varchar(255) NOT NULL DEFAULT '',
-  `detail` varchar(255) NOT NULL DEFAULT '',
-  `capacity` int(11) NOT NULL,
-  `fee` int(11) NOT NULL,
+  `image` varchar(255) DEFAULT 'img/users/default.png',
+  `agenda` date NOT NULL,
+  `place` varchar(255) DEFAULT '',
+  `detail` varchar(255) DEFAULT '',
+  `capacity` int(11) DEFAULT NULL,
+  `fee` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -137,16 +151,16 @@ LOCK TABLES `events` WRITE;
 
 INSERT INTO `events` (`id`, `circle_id`, `name`, `image`, `agenda`, `place`, `detail`, `capacity`, `fee`)
 VALUES
-	(1,2,'ほわ音でー','img/users/default.png','2017-02-14 15:41:30','a','f',10,10),
-	(2,1,'ホワイトデー','img/users/default.png','2017-02-15 00:00:00','fsad','fds',0,0),
-	(3,2,'fsa','img/users/default.png','2017-02-14 00:00:00','fsa','fdsa',1,1),
-	(4,1,'水族館デー','img/users/default.png','2018-04-06 00:00:00','京都水族館','京田辺駅集合です',100,1000),
-	(5,2,'宅ぱ','img/users/default.png','2018-04-04 00:00:00','会長の家','鍋をやります',100,0),
-	(6,3,'お花見','img/users/default.png','2018-03-04 00:00:00','円山公園','みんなで桜見ながらご飯食べましょう',1000,100),
-	(7,4,'お絵かき','img/users/default.png','2018-04-05 00:00:00','ローム3F','一番面白い絵かけた人の勝ちです',100,0),
-	(8,5,'新歓ライブ','img/users/default.png','2018-04-29 00:00:00','寒梅館','9:00からライブします。無料です',100,1000),
-	(9,4,'新歓合宿','img/users/default.png','2018-05-04 00:00:00','天橋立','合宿いきます',50,12000),
-	(10,3,'新歓ライブ','img/users/default.png','2018-04-05 00:00:00','京都246','入場無料です。ぜひきてください',10000,500);
+	(1,2,'ほわ音でー','img/users/default.png','2017-02-14','a','f',10,10),
+	(2,1,'ホワイトデー','img/users/default.png','2017-02-15','fsad','fds',0,0),
+	(3,2,'fsa','img/users/default.png','2017-02-14','fsa','fdsa',1,1),
+	(4,1,'水族館デー','img/users/default.png','2018-04-06','京都水族館','京田辺駅集合です',100,1000),
+	(5,2,'宅ぱ','img/users/default.png','2018-04-04','会長の家','鍋をやります',100,0),
+	(6,3,'お花見','img/users/default.png','2018-03-04','円山公園','みんなで桜見ながらご飯食べましょう',1000,100),
+	(7,4,'お絵かき','img/users/default.png','2018-04-05','ローム3F','一番面白い絵かけた人の勝ちです',100,0),
+	(8,5,'新歓ライブ','img/users/default.png','2018-04-29','寒梅館','9:00からライブします。無料です',100,1000),
+	(9,4,'新歓合宿','img/users/default.png','2018-05-04','天橋立','合宿いきます',50,12000),
+	(10,3,'新歓ライブ','img/users/default.png','2018-04-05','京都246','入場無料です。ぜひきてください',10000,500);
 
 /*!40000 ALTER TABLE `events` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -177,7 +191,8 @@ VALUES
 	(6,'テニス','運動'),
 	(7,'軽音','文化'),
 	(8,'野球','運動'),
-	(9,'女の子可愛い','その他');
+	(9,'女の子可愛い','その他'),
+	(10,'イケメン','その他');
 
 /*!40000 ALTER TABLE `tags` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -203,9 +218,18 @@ INSERT INTO `users` (`id`, `name`, `mail`, `password`)
 VALUES
 	(1,'栗栖','ryooomaaa0413@gmail.com','$2a$10$3rCT9hO/RZu1Qxd.lhJA7.6EDUZ5SPTVcVlu4KKQZNPYin.rKNJ0S'),
 	(2,'津國健太','tsukuni@gmail.com','$2a$10$g0Xsy1kZ3eoAOxNRdXe.xOTHpw1SKMtRlOSsMgamhWqA6DYPevu3a'),
-	(3,'櫻井啓裕','kei.wata.taekwondo@gmail.com','$2a$10$qqyAYPvtKMQNzyaWZ2XqIubv7vRKN0p3uobC7WHHzMQbveG/QU58a'),
-	(4,'村田裕希','2018orite@gmail.com','$2a$10$mSToa6asvkzIrJ.5drZD.uUffY7ki7U/9SKho2eOTohaJLMMVMviK'),
-	
+	(3,'櫻井','sakurai@gmail.com','$2a$10$Stqc3LpJYS7.yzvF3mFIku6ZO/9Apr7KN8BvtSOLqgI6sTfxdD4UC'),
+	(4,'相田','aida@gmail.com','$2a$10$XMGMyBAaoRYHWdrzY7HfKu3Wcla6S9w3BThdYKd8NehrgYnU81aRO'),
+	(5,'admin','admin@user1234','$2a$10$Rj43eRZVwv4ISdNxCuIi0O3PC3NBNnaUNzXAk1UHnDJ5fgImoUdWO'),
+	(6,'津國健太','tamkchi.fugu@gmail.com','$2a$10$DoukLJ3RsNIua1iw2dHLLuUKXz67LOMvkJsyjYTQQssH2HHUvRTCi'),
+	(7,'しょ','keyaki.1204@docomo.ne.jp','$2a$10$Wfq.k8YlJphRhmGpSy8z0.IPaHWVwCkHijyR7nCS7BGlB/omlYsJ.'),
+	(8,'櫻井啓裕','kei.wata.taekwondo@gmail.com','$2a$10$qqyAYPvtKMQNzyaWZ2XqIubv7vRKN0p3uobC7WHHzMQbveG/QU58a'),
+	(9,'村田裕希','2018orite@gmail.com','$2a$10$mSToa6asvkzIrJ.5drZD.uUffY7ki7U/9SKho2eOTohaJLMMVMviK'),
+	(10,'<script>alert(1);</script>','a@a','$2a$10$kSzL1Ir9st00s34u7jMwBujdwtc2oqfULRc.rTvXkHkNWjhgrn2ee'),
+	(11,'Kskmdk','Sample@sample','$2a$10$sOcYZYurRcwI3e.NYL/U1eqmfDhhWCBuwPcJgXK/HtXJLpN15vW.K'),
+	(12,'` or 1=1 --','a@aaa','$2a$10$X5vAiVG6nzbobQhQFeBSFOs0CUkWHVuFkPu/fNFiXUXHNhgTkGgGu'),
+	(13,'asdfa','afadsf@asdfa','$2a$10$cMyKUHNnGpCLaLozKXDJXuwcb5ZHD9UHUoVLX7AL.8IMtkDp9ZNo6');
+
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
