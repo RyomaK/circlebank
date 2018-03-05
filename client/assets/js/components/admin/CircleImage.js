@@ -96,6 +96,7 @@ class CircleImage extends Component{
 
 
   render(){
+    console.log(this.props.tags)
     const {values1,values2,values3} = this.state;
     return(
       <div>
@@ -153,6 +154,7 @@ class CircleImage extends Component{
 }
 
 const mapStateToProps = state => {
+
   return{
     tags: state.allTagSearch.tags,
     addTag: state.adminCircleTag,

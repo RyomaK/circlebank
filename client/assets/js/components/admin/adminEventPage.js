@@ -1,5 +1,14 @@
 import React,{Component} from 'react'
 import {Link,withRouter} from 'react-router-dom'
+import {
+  Table,
+  TableBody,
+  TableFooter,
+  TableHeader,
+  TableHeaderColumn,
+  TableRow,
+  TableRowColumn,
+} from 'material-ui/Table';
 import Paper from 'material-ui/Paper';
 import FlatButton from 'material-ui/FlatButton';
 import {Button,Col} from 'react-bootstrap'
@@ -23,23 +32,26 @@ class adminEventPage extends Component{
   render(){
     return(
         <div>
-          <Col smOffset={2} sm={8}>
-          <h1>{`${this.props.circle.name}のイベント`}</h1>
-          <Button　onClick={(event)=>this.handleClick(event,this.props.circle.id)}>イベントを追加する</Button>
-          {this.props.events.map( eve => (
-              <Paper zDepth={1} key={eve.id} className="padZero">
-              <div className="commentbox">
-              <span className="fontSizeChange">{eve.name}</span>
-                <span className="floatright">
-                <FlatButton onClick={(event)=>this.handleClick(event,eve)}>編集</FlatButton>
-                <FlatButton onClick={(event)=>this.handleClick1(event,this.props.circle.id,eve.id,this.props.circle.url_name,this.props.circle.name)}>削除</FlatButton>
-              </span>
-              </div>
-              <div className="eventbox">
-                <p>日程</p>
-              </div>
-              </Paper>
-            ))}
+          <Col smOffset={1} sm={9}>
+          <span>{`${this.props.circle.name}のイベント`}</span><FlatButton　onClick={(event)=>this.handleClick(event,this.props.circle.id)}>イベントを追加する</FlatButton>
+          <Table>
+            <TableHeader displaySelectAll={false}>
+              <TableRow >
+                <TableHeaderColumn>イベント名</TableHeaderColumn>
+                <TableHeaderColumn>日程</TableHeaderColumn>
+                <TableHeaderColumn></TableHeaderColumn>
+              </TableRow>
+            </TableHeader>
+            <TableBody displayRowCheckbox={false}>
+              {this.props.events.map( eve => (
+                <TableRow key={eve.id}>
+                  <TableRowColumn>{eve.name}</TableRowColumn>
+                  <TableRowColumn>{eve.agenda}</TableRowColumn>
+                  <TableRowColumn><FlatButton onClick={(event)=>this.handleClick1(event,this.props.circle.id,eve.id,this.props.circle.url_name,this.props.circle.name)}>削除</FlatButton></TableRowColumn>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
             </Col>
         </div>
       )
