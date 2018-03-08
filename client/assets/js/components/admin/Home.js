@@ -44,7 +44,6 @@ class Home extends Component{
   render(){
     return(
         <div>
-
         <Col smOffset={1} sm={10}>
         <div className="adminHome">
         <span className="fontChange adminHome1">サークル一覧</span>
@@ -68,7 +67,6 @@ class Home extends Component{
               <TableRow key={circle.id}>
                 <TableRowColumn>{circle.name}</TableRowColumn>
                 <TableRowColumn>{circle.introduction}</TableRowColumn>
-                <TableRowColumn><FlatButton onClick={(event)=>this.handleClick(event,circle.url_name)} >編集</FlatButton></TableRowColumn>
                 <TableRowColumn><FlatButton onClick={(event)=>this.handleClick2(event,circle.id,circle.url_name)} >画像・タグ追加</FlatButton></TableRowColumn>
                 <TableRowColumn><FlatButton onClick={(event)=>this.handleClick1(event,circle.id,circle.url_name)} >削除</FlatButton></TableRowColumn>
               </TableRow>

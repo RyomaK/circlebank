@@ -77,7 +77,7 @@ class Schedule extends Component{
           <Menu/>
         </Col>
 
-        <Col sm={7} className="whitePage">
+        <Col sm={9} className="whitePage">
           <div className="scheduleTitle whitePage">新歓スケジュール検索</div>
           <SelectField
             floatingLabelText="月"
@@ -101,7 +101,7 @@ class Schedule extends Component{
             ))}
           </SelectField>
         </Col>
-        <Col sm={7} className="whitePage" >
+        <Col sm={9} className="whitePage" >
           <ScheduleResult events={item}/>
         </Col>
 

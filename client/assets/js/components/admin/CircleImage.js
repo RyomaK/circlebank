@@ -28,7 +28,7 @@ class CircleImage extends Component{
     const id = this.props.match.params.id
     this.props.CircleImage(this.state.image,id)
     this.props.adminAddCircleTag(this.props.addTag,id)
-    this.props.history.push('/')
+    this.props.history.push('/admin')
   }
 
   handleChange1(event,index,values1){

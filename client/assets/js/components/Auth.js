@@ -14,7 +14,7 @@ class Auth extends Component{
 
   render(){
     const isLogin = this.props.isLogin
-    if(isLogin==false){
+    if(isLogin==true){
 
       return(
         <div className="contents">

@@ -3,7 +3,7 @@ const loginCheck = (state={isLogin:false},action) => {
   switch(action.type){
 
     case 'LOGIN_CHECK':
-      if(action.number == 100){
+      if(action.number == 1){
         return{
           isLogin:true
         }

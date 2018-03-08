@@ -16,7 +16,7 @@ class AdminCirclePage extends Component{
   handleSubmit(e){
     e.preventDefault()
     this.props.adminSetCircle(this.props.circle);
-    this.props.history.push('/');
+    this.props.history.push('/admin');
   }
 
   handleChange(e){
