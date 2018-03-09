@@ -7,8 +7,8 @@ import {grey50,indigo900} from 'material-ui/styles/colors';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import MapsPersonPin from 'material-ui/svg-icons/maps/person-pin';
 import Home from 'material-ui/svg-icons/action/home';
-import ActionSearch from 'material-ui/svg-icons/action/search';
-import AccountBox from 'material-ui/svg-icons/action/account-box';
+import Map from 'material-ui/svg-icons/action/account-balance';
+import Schedule from 'material-ui/svg-icons/action/schedule';
 import { Row, Col } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import {withRouter} from 'react-router-dom'
@@ -32,15 +32,15 @@ class TabMenu extends Component{
             }}
           />
           <BottomNavigationItem
-            icon={<ActionSearch/>}
+            icon={<Schedule/>}
             onClick={() => {
               this.setState({selectedIndex: 1})
-              this.props.history.push('/menu')
+              this.props.history.push('/schedule')
             }}
           />
           <BottomNavigationItem
 
-            icon={<AccountBox/>}
+            icon={<Map/>}
             onClick={() => {
               this.setState({selectedIndex: 2})
               this.props.history.push('/user')

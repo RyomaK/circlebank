@@ -2,7 +2,6 @@ import React,{ Component } from 'react'
 import { connect } from 'react-redux'
 import {Tabs, Tab} from 'material-ui/Tabs';
 import {Table} from "react-bootstrap"
-import LikeButton from './LikeButton'
 import Events from './Events'
 class Circle extends Component{
   constructor(props) {
@@ -19,7 +18,7 @@ class Circle extends Component{
   render(){
     const styles = {
       headline: {
-        fontSize: 24,
+        fontSize: 20,
         paddingTop: 16,
         marginBottom: 12,
         fontWeight: 400,
@@ -27,11 +26,10 @@ class Circle extends Component{
     };
     const circle = this.props.circle
     return(
-      <div>
+      <div className="whitePage">
         <div className="centerPosition">
           <div className="circleName">
             <span className="circleNameRight">{circle.name}</span>
-            <LikeButton id={circle.id}/>
           </div>
         </div>
         <div className="circleImage">
@@ -45,9 +43,7 @@ class Circle extends Component{
             <div className="centerPosition whitePage">
               <div className="circleInt">
               {circle.message_for_fresh.split('\n').map((message,i)=>{
-
                 return(
-
                   <p className="heightPosi" key={i}>{message}</p>
                 )
               })}

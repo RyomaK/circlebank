@@ -22,13 +22,12 @@ class CircleImage extends Component{
     const url = this.props.match.params.circle_url
     this.props.circleSearch(url)
   }
-
   handleSubmit(e){
     e.preventDefault();
     const id = this.props.match.params.id
     this.props.CircleImage(this.state.image,id)
     this.props.adminAddCircleTag(this.props.addTag,id)
-    this.props.history.push('/')
+    this.props.history.push('/admin')
   }
 
   handleChange1(event,index,values1){
@@ -96,6 +95,7 @@ class CircleImage extends Component{
 
 
   render(){
+    console.log(this.props.tags)
     const {values1,values2,values3} = this.state;
     return(
       <div>
@@ -153,6 +153,7 @@ class CircleImage extends Component{
 }
 
 const mapStateToProps = state => {
+
   return{
     tags: state.allTagSearch.tags,
     addTag: state.adminCircleTag,

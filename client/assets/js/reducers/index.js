@@ -10,6 +10,7 @@ import like from './like'
 import searchWord from './searchWord'
 import circle from './circle'
 import circleTag from './circleTag'
+import events from './events'
 import comment from './comment'
 import adminCircleTag from './admin/adminCircleTag'
 import adminCheck from './admin/adminCheck'
@@ -35,6 +36,7 @@ const reducer = combineReducers({
   like,
   comment,
   circleAll,
+  events,
 
   adminCheck,
   adminCircle,

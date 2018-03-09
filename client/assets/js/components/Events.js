@@ -1,6 +1,5 @@
 import React,{Component} from 'react'
 import {Table} from 'react-bootstrap'
-import EventButton from './EventButton'
 
 class Events extends Component{
   render(){
@@ -15,7 +14,7 @@ class Events extends Component{
           <tbody key={eve.id}>
             <tr>
               <td width="50%">イベント名</td>
-              <td width="50%">{eve.name}<EventButton id={eve.id} /></td>
+              <td width="50%">{eve.name}</td>
             </tr>
             <tr>
               <td>日付</td>
