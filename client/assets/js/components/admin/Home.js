@@ -52,13 +52,13 @@ class Home extends Component{
             <AddButton/>
           </IconButton>
         </span>
-
         </div>
           <Table>
             <TableHeader displaySelectAll={false}>
               <TableRow >
                 <TableHeaderColumn>名前</TableHeaderColumn>
                 <TableHeaderColumn>種類</TableHeaderColumn>
+                <TableHeaderColumn></TableHeaderColumn>
                 <TableHeaderColumn></TableHeaderColumn>
                 <TableHeaderColumn></TableHeaderColumn>
               </TableRow>
@@ -68,6 +68,7 @@ class Home extends Component{
               <TableRow key={circle.id}>
                 <TableRowColumn>{circle.name}</TableRowColumn>
                 <TableRowColumn>{circle.introduction}</TableRowColumn>
+                <TableRowColumn><FlatButton onClick={(event)=>this.handleClick(event,circle.url_name)} >イベント追加</FlatButton></TableRowColumn>
                 <TableRowColumn><FlatButton onClick={(event)=>this.handleClick2(event,circle.id,circle.url_name)} >画像・タグ追加</FlatButton></TableRowColumn>
                 <TableRowColumn><FlatButton onClick={(event)=>this.handleClick1(event,circle.id,circle.url_name)} >削除</FlatButton></TableRowColumn>
               </TableRow>

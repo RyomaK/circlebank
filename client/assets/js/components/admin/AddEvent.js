@@ -59,13 +59,14 @@ const days = [
 class AddEvent extends Component{
   constructor(props) {
     super(props);
-    this.state = {value1:0,value2:0};
+    this.state = {value1:3,value2:0};
   }
   handleSubmit(e){
     e.preventDefault()
     const id = this.props.match.params.id
+    const name = this.props.match.params.name
     this.props.adminSetEvent(id,this.props.events)
-    this.props.history.push('/')
+    this.props.history.push(`/admin/event/${name}`)
 
   }
   handleChange1(event, index, value){
@@ -74,37 +75,19 @@ class AddEvent extends Component{
     const value1=value
     this.setState({value1})
     this.props.EventAgenda(`2018-${months[value1].month}-${days[this.state.value2].month}T00:00:00Z`)
-    console.log(this.props.events)
 
   }
   handleChange2(event, index, value){
     event.preventDefault();
     const value2=value
+
     this.setState({value2})
+    console.log(this.state.value2)
     this.props.EventAgenda(`2018-${months[this.state.value1].month}-${days[value2].month}T00:00:00Z`)
   }
   handleChange(e){
-    switch(e.target.name){
-      case 'name':
-        this.props.EventName(e.target.value)
-      break;
-      case 'fee':
-        this.props.EventFee(e.target.value)
-      break;
-      case 'place':
-        this.props.EventPlace(e.target.value)
-      break;
-      case 'detail':
-        this.props.EventDetail(e.target.value)
-      break;
-      case 'capacity':
-
-        this.props.EventCapacity(e.target.value)
-      break;
-      default:
-      break;
+      this.props.EventName(e.target.value)
     }
-  }
   render(){
     const styles = {
       customWidth: {
@@ -119,7 +102,7 @@ class AddEvent extends Component{
       },
     };
     return(
-      <div>
+      <div className="whitePage">
         <Form horizontal onSubmit={this.handleSubmit.bind(this)}>
         <FormGroup>
     			<Col smOffset={2} sm={8}>
@@ -127,19 +110,6 @@ class AddEvent extends Component{
             name = "name"
             type = "text"
             floatingLabelText="イベント名"
-            floatingLabelFixed={true}
-            fullWidth={true}
-            onChange={this.handleChange.bind(this)}
-            />
-    			</Col>
-    		</FormGroup>
-
-    		<FormGroup>
-    			<Col smOffset={2} sm={8}>
-            <TextField
-            name = "image"
-            type = "text"
-            floatingLabelText="画像"
             floatingLabelFixed={true}
             fullWidth={true}
             onChange={this.handleChange.bind(this)}
@@ -156,7 +126,6 @@ class AddEvent extends Component{
             maxHeight={200}
             >
             {months.map(month => (
-
               <MenuItem key={month.tag} value={month.tag} primaryText={month.month}/>
             ))}
           </SelectField>
@@ -168,67 +137,15 @@ class AddEvent extends Component{
             maxHeight={200}
             >
             {days.map(day => (
-
               <MenuItem key={day.tag} value={day.tag} primaryText={day.month}/>
             ))}
             </SelectField>
-    			</Col>
-    		</FormGroup>
-        <FormGroup>
-    			<Col smOffset={2} sm={8}>
-            <TextField
-            name = "place"
-            type = "text"
-            floatingLabelText="場所"
-            floatingLabelFixed={true}
-            fullWidth={true}
-            onChange={this.handleChange.bind(this)}
-            />
-    			</Col>
-    		</FormGroup><FormGroup>
-    			<Col smOffset={2} sm={8}>
-            <TextField
-            name = "detail"
-            type = "text"
-            floatingLabelText="詳細"
-            floatingLabelFixed={true}
-            fullWidth={true}
-            onChange={this.handleChange.bind(this)}
-            />
-    			</Col>
-    		</FormGroup>
-        <FormGroup>
-    			<Col smOffset={2} sm={8}>
-            <TextField
-            name = "fee"
-            type = "number"
-            floatingLabelText="費用"
-            floatingLabelFixed={true}
-            fullWidth={true}
-            onChange={this.handleChange.bind(this)}
-            />
-    			</Col>
-    		</FormGroup>
-        <FormGroup>
-    			<Col smOffset={2} sm={8}>
-            <TextField
-            name = "capacity"
-            type = "number"
-            floatingLabelText="人数"
-            floatingLabelFixed={true}
-            fullWidth={true}
-            onChange={this.handleChange.bind(this)}
-            />
     			</Col>
     		</FormGroup>
     		<FormGroup>
           <Col smOffset={2} sm={8}>
             <FlatButton label="登録"  backgroundColor="#8AA62F" hoverColor="#7CBD1E" style={styles.customColor} type="submit" />
     		   </Col>
-
-          <Col smOffset={2}sm={8}>
-          <p className="rightside">アカウント作成はコチラ</p>
-          </Col>
     		</FormGroup>
     	   </Form>
        </div>
@@ -250,18 +167,6 @@ const mapDispatchToProps = dispatch => {
       },
       EventAgenda:(name)=>{
         dispatch(EventAgenda(name))
-      },
-      EventPlace:(name)=>{
-        dispatch(EventPlace(name))
-      },
-      EventDetail:(name)=>{
-        dispatch(EventDetail(name))
-      },
-      EventFee:(name)=>{
-        dispatch(EventFee(name))
-      },
-      EventCapacity:(name)=>{
-        dispatch(EventCapacity(name))
       }
     }
   }

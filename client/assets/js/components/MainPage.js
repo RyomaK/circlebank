@@ -14,25 +14,8 @@ class MainPage extends Component{
   render(){
     return(
         <div>
-        <div>
-          <Carousel>
-            <Carousel.Item>
-              <div className="picture">
-              <img src="static/img/users/11.jpg" height='250'/>
-              </div>
-            </Carousel.Item>
-            <Carousel.Item>
-              <div className="picture">
-                <img src="static/img/users/12.JPG" height='250'/>
-              </div>
-            </Carousel.Item>
-            <Carousel.Item>
-            <div className="picture">
-              <img src="static/img/users/13.jpg" height='250'/>
-            </div>
-            </Carousel.Item>
-          </Carousel>
-        </div>
+          <img src="static/img/topImage.jpg" className="topImage"/>
+
           <Col sm={12} className="reset">
             <Menu/>
           </Col>
