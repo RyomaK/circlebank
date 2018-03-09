@@ -25,21 +25,21 @@ class adminEventPage extends Component{
     this.props.adminDeleteEvent(circle_id,event_id,name)
     this.props.history.push(`/admin/delete/${circle_name}`)
   }
-  handleClick(event,circle_id){
+  handleClick(event,circle_id,name){
     event.preventDefault();
-    this.props.history.push(`/admin/add/event/${circle_id}`)
+    this.props.history.push(`/admin/add/event/${name}/${circle_id}`)
   }
   render(){
     return(
         <div>
           <Col smOffset={1} sm={9}>
-          <span>{`${this.props.circle.name}のイベント`}</span><FlatButton　onClick={(event)=>this.handleClick(event,this.props.circle.id)}>イベントを追加する</FlatButton>
+          <span>{`${this.props.circle.name}のイベント`}</span>
           <Table>
             <TableHeader displaySelectAll={false}>
               <TableRow >
                 <TableHeaderColumn>イベント名</TableHeaderColumn>
                 <TableHeaderColumn>日程</TableHeaderColumn>
-                <TableHeaderColumn></TableHeaderColumn>
+                <TableHeaderColumn><FlatButton　onClick={(event)=>this.handleClick(event,this.props.circle.id,this.props.circle.url_name)}>イベントを追加する</FlatButton></TableHeaderColumn>
               </TableRow>
             </TableHeader>
             <TableBody displayRowCheckbox={false}>
