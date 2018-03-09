@@ -66,4 +66,5 @@ type AdminCircleEvents struct {
 	Fee        int       `db:"fee" json:"fee"`
 	CircleID   int       `db:"circle_id" json:"circle_id"`
 	CircleName string    `db:"circle_name" json:"circle_name"`
+	CircleURLName string `db:"circle_url_name" json:"circle_url_name"`
 }

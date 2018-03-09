@@ -66,9 +66,7 @@ func GetTags(db *sql.DB, title ...string) (*[]ClassedTag, error) {
 	for _, v := range title {
 		fmt.Printf("%s\n", v)
 		query := `select distinct tags.id, tags.name
-		from circles 
-		inner join circles_tags on circles.id = circles_tags.circle_id
-		inner join tags on circles_tags.tag_id = tags.id
+		from tags 
 		where  tags.class_name = ?`
 		rows, _ := db.Query(query, v)
 		tag, err := ScanTags(rows)

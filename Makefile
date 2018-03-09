@@ -1,8 +1,14 @@
 DBNAME:=circle_bank
 
+<<<<<<< HEAD
 #DBCONFIG:=root:@/circle_bank?parseTime=true
 DBCONFIG:=root:Kenta71619@/circle_bank?parseTime=true
 ADDR:=9000
+=======
+DBCONFIG:=root:@/circle_bank?parseTime=true
+#DBCONFIG:=root:Kenta71619@/circle_bank?parseTime=true
+ADDR:=8080
+>>>>>>> 57bd9b459f6c39efeb45d73e818513b8aee2183e
 
 install:
 	go get -u github.com/golang/dep/cmd/dep

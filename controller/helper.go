@@ -70,25 +70,10 @@ func getUserEmail(r *http.Request) string {
 	return user.Mail
 }
 
-func IsAdmin(r *http.Request) bool {
-	jwtString := r.Header.Get("Authorization")
-	jwtString = strings.Replace(jwtString, "Bearer ", "", 1)
-	user, err := JwtToData(jwtString)
-	if err != nil {
-		fmt.Printf("err getUser admin %v\n", err)
-		return false
-	}
-	if user.Authority == "adminuser" {
-		return true
-	}
-	return false
-}
-
 func WriteJWT(w http.ResponseWriter, mail string) {
 	jwtString := CreateJWT(&AuthUser{
 		Mail: mail,
 	})
-	fmt.Println(jwtString)
 	//cookieに保存
 	http.SetCookie(w, &http.Cookie{
 		Name:  "Authorization",
