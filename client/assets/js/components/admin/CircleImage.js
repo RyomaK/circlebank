@@ -22,7 +22,6 @@ class CircleImage extends Component{
     const url = this.props.match.params.circle_url
     this.props.circleSearch(url)
   }
-
   handleSubmit(e){
     e.preventDefault();
     const id = this.props.match.params.id

@@ -3,7 +3,6 @@ import Header from './Header'
 import NotFound from './NotFound'
 import SearchForm from '../containers/SearchForm'
 import LoginPage from './LoginPage'
-import SignupPage from './SignupPage'
 import CirclePage from '../containers/CirclePage'
 import MainPage from './MainPage'
 import SearchResult from './SearchResult'
@@ -24,7 +23,6 @@ const App =() => {
             <div>
               <Switch>
                 <Route path='/login' component={LoginPage}/>
-                <Route path='/signup' component={SignupPage}/>
                 <Auth>
                   <div>
                   <div id="Header">

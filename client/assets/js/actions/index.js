@@ -46,32 +46,6 @@ export const image = () => dispatch => {
   });
 }
 
-export const signup = data => dispatch => {
-  var params = new URLSearchParams();
-  params.append('mail',data.email);
-  params.append('name',data.name);
-  params.append('password',data.password);
-
-
-  axios
-  .post('/signup',params).then((results) => {
-    const status = results.status
-    return { status }
-  }).then(({status}) => {
-    switch(status){
-      case 201:
-
-      dispatch({type:'LOGIN'})
-        break;
-      default:
-        break;
-    }
-  })
-  .catch(() => {
-    console.log("エラー")
-  });
-}
-
 export const login = data => dispatch => {
 
   var params = new URLSearchParams();
@@ -546,12 +520,28 @@ export const adminDeleteCircle = (id) => dispatch =>{
     });
 }
 
+export const adminAddTag = (tag) => dispatch => {
+  const Auth = getAuth();
+  console.log(tag)
+  axios
+    .post(`/admin/tag`,tag,{headers:{'Authorization':`Bearer ${Auth}`}})
+    .then((results => {
+      console.log(results)
+      const status = results.status
+    }))
+    .catch((e) => {
+      console.log(e);
+    });
+}
+
+
 export const adminAddCircleTag = (tag,circleId) => dispatch => {
   const Auth = getAuth();
   const tags = tag.tags
   axios
     .post(`/admin/circle/${circleId}/tag`,tags,{headers:{'Authorization':`Bearer ${Auth}`}})
     .then((results => {
+
       const status = results.status
     }))
     .catch((e) => {

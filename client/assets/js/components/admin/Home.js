@@ -52,6 +52,7 @@ class Home extends Component{
             <AddButton/>
           </IconButton>
         </span>
+
         </div>
           <Table>
             <TableHeader displaySelectAll={false}>
@@ -73,6 +74,7 @@ class Home extends Component{
             ))}
             </TableBody>
           </Table>
+          <Link to="/admin/newtag">新規タグ追加</Link>
         </Col>
         </div>
       )

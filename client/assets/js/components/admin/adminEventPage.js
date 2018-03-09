@@ -58,7 +58,6 @@ class adminEventPage extends Component{
   }
 }
 const mapStateToProps = state => {
-  console.log(state)
   return{
     circle: state.circle.circle,
     events: state.circle.events
