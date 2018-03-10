@@ -87,6 +87,7 @@ func (s *Server) Route(addr string) {
 	b.Path("/circle/event").HandlerFunc(admins.AdminCircleEventHandler).Methods("GET")
 	//データ入力
 	b.Path("/tag").HandlerFunc(admins.PostAdminTagHandler).Methods("POST")
+	b.Path("/tag").HandlerFunc(admins.PostAdminTagHandler).Methods("DELETE")
 	b.Path("/circle").HandlerFunc(admins.PostAdminCircleHandler).Methods("POST")
 	b.Path("/circle/{circle_id:[0-9]+}").HandlerFunc(admins.UpdateAdminCircleHandler).Methods("PUT")
 	b.Path("/circle/{circle_id:[0-9]+}").HandlerFunc(admins.DeleteAdminCircleHandler).Methods("DELETE")
@@ -95,6 +96,8 @@ func (s *Server) Route(addr string) {
 	b.Path("/circle/{circle_id:[0-9]+}/event/{event_id:[0-9]+}").HandlerFunc(admins.UpdateAdminCircleEventHandler).Methods("PUT")
 	b.Path("/circle/{circle_id:[0-9]+}/tag").HandlerFunc(admins.PostAdminCircleTagHandler).Methods("POST")
 	b.Path("/circle/{circle_id:[0-9]+}/tag").HandlerFunc(admins.DeleteAdminCircleTagHandler).Methods("DELETE")
+	b.Path("/circle/{circle_id:[0-9]+}/sns").HandlerFunc(admins.InsertCircleSNS).Methods("POST")
+	b.Path("/circle/{circle_id:[0-9]+}/sns").HandlerFunc(admins.InsertCircleSNS).Methods("DELETE")
 	//画像upload
 	b.Path("/circle/{circle_id:[0-9]+}/upload").HandlerFunc(admins.UploadCirclePicture).Methods("POST")
 	b.Path("/circle/{circle_id:[0-9]+}/event/{event_id:[0-9]+}/upload").HandlerFunc(admins.UploadEventPicture).Methods("POST")

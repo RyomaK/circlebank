@@ -9,9 +9,10 @@ import (
 
 func GetCircles(db *sql.DB, page int) (*[]Circle, error) {
 	num := 100
-	query := `select circles.id,circles.name,circles.url_name,number,circles.gender_ratio,circles.image,introduction,message_for_fresh,  delegetes.name as delegate_name ,delegetes.contact as delegate_contact,campus,excite,fee
+	query := `select select circles.id,circles.name,circles.url_name,circles.number,circles.image,circles.bill_image,introduction, delegates.name as delegate_name ,delegates.contact as delegate_contact,campus,circles.entrance_fee,circles.annual_fee,circles.activity_of_week,
+	circles.activity_time,circles.admission_deadline,circles.box_number,circles.booth_number
 	from circles
-	left outer join delegetes on circles.id = delegetes.circle_id
+	left outer join delegates on circles.id = delegetes.circle_id
 	order by circles.id DESC 
 	limit ?,?`
 
@@ -25,7 +26,7 @@ func GetCircles(db *sql.DB, page int) (*[]Circle, error) {
 	return circles, nil
 }
 
-func GetEvents(db *sql.DB, page int,date time.Time) (*[]AdminCircleEvents, error) {
+func GetEvents(db *sql.DB, page int, date time.Time) (*[]AdminCircleEvents, error) {
 	num := 100 //所得件数
 	pageMin := num * (page - 1)
 	pageMax := num + pageMin
@@ -36,31 +37,31 @@ func GetEvents(db *sql.DB, page int,date time.Time) (*[]AdminCircleEvents, error
 			inner join events on events.circle_id = circles.id
 			order by events.agenda DESC 
 			limit  ?,?`
-		rows, err := db.Query(query,pageMin, pageMax)
-		if err != nil{
-			return  &[]AdminCircleEvents{}, err
-		}
-		if rows == nil{
-			return &[]AdminCircleEvents{}, nil
-		}
-		events ,err = ScanAdminCircleEvents(rows)
+		rows, err := db.Query(query, pageMin, pageMax)
 		if err != nil {
 			return &[]AdminCircleEvents{}, err
 		}
-	}else{
+		if rows == nil {
+			return &[]AdminCircleEvents{}, nil
+		}
+		events, err = ScanAdminCircleEvents(rows)
+		if err != nil {
+			return &[]AdminCircleEvents{}, err
+		}
+	} else {
 		query := `select events.id ,events.name,events.image,events.agenda,events.place,events.detail,events.capacity,events.fee,circles.id as circle_id ,circles.name as circle_name,circles.url_name as url_circle_name
 			from circles 
 			inner join events on events.circle_id = circles.id
 			where events.agenda = ?
 			limit  ?,?`
-		rows, err := db.Query(query,date,pageMin, pageMax)
-		if err != nil{
-			return  &[]AdminCircleEvents{}, err
+		rows, err := db.Query(query, date, pageMin, pageMax)
+		if err != nil {
+			return &[]AdminCircleEvents{}, err
 		}
-		if rows == nil{
+		if rows == nil {
 			return &[]AdminCircleEvents{}, nil
 		}
-		events ,err = ScanAdminCircleEvents(rows)
+		events, err = ScanAdminCircleEvents(rows)
 		if err != nil {
 			return &[]AdminCircleEvents{}, err
 		}
@@ -70,8 +71,9 @@ func GetEvents(db *sql.DB, page int,date time.Time) (*[]AdminCircleEvents, error
 }
 
 func InsertCircle(db *sql.DB, circle *Circle) error {
-	query := `insert into circles (name,url_name,number,gender_ratio,introduction,excite,fee,campus,message_for_fresh) values (?,?,?,?,?,?,?,?,?)`
-	result, err := db.Exec(query,  circle.Name, circle.URLName, circle.Number, circle.GenderRatio, circle.Introduction, circle.Excite, circle.Fee, circle.Campus, circle.MessageForFresh)
+	query := `insert into circles (name,url_name,number,introduction,campus,entrance_fee,annual_fee,activity_of_week,activity_time,admission_deadline,box_number,booth_number)
+ 			  values (?,?,?,?,?,?,?,?,?,?,?,?)`
+	result, err := db.Exec(query, circle.Name, circle.URLName, circle.Number, circle.Introduction, circle.Campus, circle.EntranceFee, circle.AnnualFee, circle.ActivityOfWeek, circle.ActivityTime, circle.AdmissionDeadline, circle.BoxNumber, circle.BoothNumber)
 	if err != nil {
 		return err
 	}
@@ -79,10 +81,21 @@ func InsertCircle(db *sql.DB, circle *Circle) error {
 	if err != nil {
 		return err
 	}
-	query = `insert into delegetes (circle_id,name,contact) values(?,?,?)`
-	_, err = db.Exec(query, id, circle.DelegeteName, circle.DelegeteContact)
+	query = `insert into delegates (circle_id,name,contact) values(?,?,?)`
+	_, err = db.Exec(query, id, circle.DelegateName, circle.DelegateContact)
 	if err != nil {
 		return err
+	}
+	return nil
+}
+
+func InsertSNS(db *sql.DB, sns *[]SNS) error {
+	for _, v := range *sns {
+		query := `insert into circle_sns (circle_id,name) valuues(?,?)`
+		_, err := db.Exec(query, v.CircleID, v.Name)
+		if err != nil {
+			return err
+		}
 	}
 	return nil
 }
@@ -124,13 +137,36 @@ func InsertTags(db *sql.DB, tags *[]Tag) error {
 	return nil
 }
 
+func DeleteCircleSNS(db *sql.DB, sns *[]SNS) error {
+	for _, v := range *sns {
+		query := `delete from circle_sns where circle_id = ? and name = ?`
+		_, err := db.Exec(query, v.CircleID, v.Name)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+
+func DeleteTags(db *sql.DB, tags *[]Tag) error {
+	for _, v := range *tags {
+		query := `delete from tags where id = ?`
+		_, err := db.Exec(query, v.ID)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 func DeleteCircle(db *sql.DB, circle_id int) error {
 	query := `delete from circles where id = ?`
 	_, err := db.Exec(query, circle_id)
 	if err != nil {
 		return err
 	}
-	query = `delete from delegetes where circle_id = ?`
+	query = `delete from delegates where circle_id = ?`
 	_, err = db.Exec(query, circle_id)
 	if err != nil {
 		return err
@@ -188,13 +224,13 @@ func DeleteCircleEvent(db *sql.DB, circle_id, event_id int) error {
 }
 
 func UpdateCircle(db *sql.DB, circle_id int, circle *Circle) error {
-	query := `update circles SET name = ? ,url_name = ?,number = ?,gender_ratio = ?,introduction = ?,excite = ? ,fee = ?,campus = ?,message_for_fresh = ? WHERE id = ?`
-	_, err := db.Exec(query, circle.Name, circle.URLName, circle.Number, circle.GenderRatio, circle.Introduction, circle.Excite, circle.Fee, circle.Campus, circle.MessageForFresh, circle_id)
+	query := `update circles SET name = ? ,url_name = ?,number = ?,introduction = ?,campus = ?,entrance_fee = ? , annual_fee = ?,activity_of_week = ?,activity_time = ? ,admission_deadline = ? , box_number = ?,booth_number = ? WHERE id = ?`
+	_, err := db.Exec(query, circle.Name, circle.URLName, circle.Number, circle.Introduction, circle.Campus, circle.EntranceFee, circle.AnnualFee, circle.ActivityOfWeek, circle.ActivityTime, circle.AdmissionDeadline, circle.BoxNumber, circle.BoothNumber, circle_id)
 	if err != nil {
 		return err
 	}
-	query = `update delegetes SET name = ?,contact = ? where circle_id = ?`
-	_, err = db.Exec(query, circle.DelegeteName, circle.DelegeteContact, circle_id)
+	query = `update delegates SET name = ?,contact = ? where circle_id = ?`
+	_, err = db.Exec(query, circle.DelegateName, circle.DelegateContact, circle_id)
 	if err != nil {
 		return err
 	}
@@ -210,4 +246,21 @@ func DeleteCircleTags(db *sql.DB, circle_id int, tags *[]Tag) error {
 		}
 	}
 	return nil
+}
+
+func GetCircleIDAfterInsert(db *sql.DB,circle *Circle)int{
+	query := `select id from circles where url_name = ?`
+	row, _ := db.Query(query,circle.URLName)
+	var id  int
+	row.Scan(&id)
+	return id
+}
+
+
+func GetEventIDAfterInsert(db *sql.DB,event *Event)int{
+	query := `select id from events where circle_id = ? and name = ? `
+	row, _ := db.Query(query,event.ID,event.Name)
+	var id  int
+	row.Scan(&id)
+	return id
 }

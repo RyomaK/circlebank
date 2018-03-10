@@ -10,8 +10,8 @@
 [[projects]]
   name = "github.com/dgrijalva/jwt-go"
   packages = ["."]
-  revision = "dbeaa9332f19a944acb5736b4456cfcc02140e29"
-  version = "v3.1.0"
+  revision = "06ea1031745cb8b3dab3f6a236daf2b0aa468b7e"
+  version = "v3.2.0"
 
 [[projects]]
   name = "github.com/go-sql-driver/mysql"
@@ -35,7 +35,7 @@
   branch = "master"
   name = "github.com/nfnt/resize"
   packages = ["."]
-  revision = "891127d8d1b52734debe1b3c3d7e747502b6c366"
+  revision = "83c6a9932646f83e3267f353373d47347b6036b2"
 
 [[projects]]
   branch = "master"
@@ -53,7 +53,7 @@
   branch = "master"
   name = "golang.org/x/crypto"
   packages = ["bcrypt","blowfish"]
-  revision = "a6600008915114d9c087fad9f03d75087b1a74df"
+  revision = "c7dcf104e3a7a1417abc0230cb0d5240d764159d"
 
 [solve-meta]
   analyzer-name = "dep"

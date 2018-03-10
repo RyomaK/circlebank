@@ -6,7 +6,7 @@ import (
 )
 
 func TestGetTagCircles(t *testing.T) {
-	actual := GetTagCircles(DBConnect("root:@localhost/circle_bank"), "doshisha", "1")
+	actual := GetTagCircles(DBConnect("root:@localhost/circle_bank"), "1")
 	fmt.Printf("%v", actual)
 }
 

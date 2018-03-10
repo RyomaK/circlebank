@@ -18,15 +18,19 @@ func ScanCircle(r *sql.Row) (*Circle, error) {
 		&s.Name,
 		&s.URLName,
 		&s.Number,
-		&s.GenderRatio,
 		&s.Image,
+		&s.BillImage,
 		&s.Introduction,
-		&s.MessageForFresh,
-		&s.DelegeteName,
-		&s.DelegeteContact,
+		&s.DelegateName,
+		&s.DelegateContact,
 		&s.Campus,
-		&s.Excite,
-		&s.Fee,
+		&s.EntranceFee,
+		&s.AnnualFee,
+		&s.ActivityOfWeek,
+		&s.ActivityTime,
+		&s.AdmissionDeadline,
+		&s.BoxNumber,
+		&s.BoothNumber,
 	); err != nil {
 		return &Circle{}, err
 	}
@@ -34,7 +38,10 @@ func ScanCircle(r *sql.Row) (*Circle, error) {
 }
 
 func ScanCircles(rs *sql.Rows) (*[]Circle, error) {
-	structs := []Circle{}
+	var structs []Circle
+	if rs == nil{
+		return nil,nil
+	}
 	for rs.Next() {
 		var s = Circle{}
 		if err := rs.Scan(
@@ -42,15 +49,19 @@ func ScanCircles(rs *sql.Rows) (*[]Circle, error) {
 			&s.Name,
 			&s.URLName,
 			&s.Number,
-			&s.GenderRatio,
 			&s.Image,
+			&s.BillImage,
 			&s.Introduction,
-			&s.MessageForFresh,
-			&s.DelegeteName,
-			&s.DelegeteContact,
+			&s.DelegateName,
+			&s.DelegateContact,
 			&s.Campus,
-			&s.Excite,
-			&s.Fee,
+			&s.EntranceFee,
+			&s.AnnualFee,
+			&s.ActivityOfWeek,
+			&s.ActivityTime,
+			&s.AdmissionDeadline,
+			&s.BoxNumber,
+			&s.BoothNumber,
 		); err != nil {
 			return nil, err
 		}
@@ -160,4 +171,25 @@ func ScanAdminCircleEvents(rs *sql.Rows) (*[]AdminCircleEvents, error) {
 		return &[]AdminCircleEvents{}, err
 	}
 	return &structs, nil
+}
+
+func ScanSNS(rs *sql.Rows)(*[]SNS, error) {
+	var sns []SNS
+	if rs == nil{
+		return nil,nil
+	}
+	for rs.Next() {
+		var s SNS
+		if err := rs.Scan(
+			&s.CircleID,
+			&s.Name,
+		); err != nil {
+			return &[]SNS{}, err
+		}
+		sns = append(sns, s)
+	}
+	if err := rs.Err(); err != nil {
+		return &[]SNS{}, err
+	}
+	return &sns, nil
 }

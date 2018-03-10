@@ -135,8 +135,9 @@ func (a *Admin) PostAdminCircleHandler(w http.ResponseWriter, r *http.Request) {
 		w.Write(res)
 		return
 	}
+	id := model.GetCircleIDAfterInsert(a.DB,&circle)
 	w = SetHeader(w, http.StatusOK)
-	status := StatusCode{Code: http.StatusOK, Message: "regist circle"}
+	status := StatusAndCircle{Code: http.StatusOK, Message: "regist circle",CircleID:id}
 	res, _ := json.Marshal(status)
 	w.Write(res)
 	return
@@ -225,7 +226,7 @@ func (a *Admin) PostAdminCircleEventHandler(w http.ResponseWriter, r *http.Reque
 	if err != nil {
 		log.Printf("post admin event err %v\n", err)
 		w = SetHeader(w, http.StatusBadRequest)
-		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot regist event"}
+		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot register event"}
 		res, _ := json.Marshal(status)
 		w.Write(res)
 		return
@@ -234,7 +235,7 @@ func (a *Admin) PostAdminCircleEventHandler(w http.ResponseWriter, r *http.Reque
 	if err != nil {
 		log.Printf("post admin event err %v\n", err)
 		w = SetHeader(w, http.StatusBadRequest)
-		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot regist event"}
+		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot register event"}
 		res, _ := json.Marshal(status)
 		w.Write(res)
 		return
@@ -255,13 +256,13 @@ func (a *Admin) PostAdminCircleEventHandler(w http.ResponseWriter, r *http.Reque
 	if err != nil {
 		log.Printf("post admin event err %v\n", err)
 		w = SetHeader(w, http.StatusBadRequest)
-		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot regist event"}
+		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot register event"}
 		res, _ := json.Marshal(status)
 		w.Write(res)
 		return
 	}
 	w = SetHeader(w, http.StatusOK)
-	status := StatusCode{Code: http.StatusOK, Message: "regist circle"}
+	status := StatusAndEvent{Code: http.StatusOK, Message: "register events"}
 	res, _ := json.Marshal(status)
 	w.Write(res)
 	return
@@ -563,4 +564,118 @@ func (a *Admin) UploadEventPicture(w http.ResponseWriter, r *http.Request) {
 	status := StatusCode{Code: http.StatusCreated, Message: "upload image"}
 	res, _ := json.Marshal(status)
 	w.Write(res)
+}
+
+func (a *Admin)DeletePostAdminTagHandler(w http.ResponseWriter, r *http.Request) {
+	b, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		log.Printf("post tag err %v\n", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot delete tag"}
+		res, _ := json.Marshal(status)
+		w.Write(res)
+		return
+	}
+	defer r.Body.Close()
+	var tags []model.Tag
+	err = json.Unmarshal(b, &tags)
+	if err != nil {
+		log.Printf("post admin tag err %v\n", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "but shape"}
+		res, _ := json.Marshal(status)
+		w.Write(res)
+		return
+	}
+
+	err = model.DeleteTags(a.DB, &tags)
+	if err != nil {
+		log.Printf("post admin event tag err %v\n", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot delte tag"}
+		res, _ := json.Marshal(status)
+		w.Write(res)
+		return
+	}
+	w = SetHeader(w, http.StatusOK)
+	status := StatusCode{Code: http.StatusOK, Message: "delete circle"}
+	res, _ := json.Marshal(status)
+	w.Write(res)
+	return
+}
+
+func (a *Admin)InsertCircleSNS(w http.ResponseWriter, r *http.Request){
+	b, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		log.Printf("post tag err %v\n", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot sns"}
+		res, _ := json.Marshal(status)
+		w.Write(res)
+		return
+	}
+	defer r.Body.Close()
+	var sns []model.SNS
+	err = json.Unmarshal(b, &sns)
+	if err != nil {
+		log.Printf("post admin tag err %v\n", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "but shape"}
+		res, _ := json.Marshal(status)
+		w.Write(res)
+		return
+	}
+
+	err = model.InsertSNS(a.DB, &sns)
+	if err != nil {
+		log.Printf("post admin event tag err %v\n", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot register sns"}
+		res, _ := json.Marshal(status)
+		w.Write(res)
+		return
+	}
+	w = SetHeader(w, http.StatusOK)
+	status := StatusCode{Code: http.StatusOK, Message: "register sns"}
+	res, _ := json.Marshal(status)
+	w.Write(res)
+	return
+}
+
+func (a *Admin)DeleteCircleSNS(w http.ResponseWriter,r *http.Request){
+	b, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		log.Printf("post tag err %v\n", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot sns"}
+		res, _ := json.Marshal(status)
+		w.Write(res)
+		return
+	}
+	defer r.Body.Close()
+	var sns []model.SNS
+	err = json.Unmarshal(b, &sns)
+	if err != nil {
+		log.Printf("post admin tag err %v\n", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "but shape"}
+		res, _ := json.Marshal(status)
+		w.Write(res)
+		return
+	}
+
+	err = model.DeleteCircleSNS(a.DB, &sns)
+	if err != nil {
+		log.Printf("post admin event tag err %v\n", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot delete sns"}
+		res, _ := json.Marshal(status)
+		w.Write(res)
+		return
+	}
+	w = SetHeader(w, http.StatusOK)
+	status := StatusCode{Code: http.StatusOK, Message: "delete sns"}
+	res, _ := json.Marshal(status)
+	w.Write(res)
+	return
 }

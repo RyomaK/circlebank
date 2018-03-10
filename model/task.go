@@ -7,37 +7,56 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-func GetCircleDetail(db *sql.DB, circle_url_name string) (*CircleDetail, error) {
-	query := `select circles.id,circles.name,circles.url_name,number,circles.gender_ratio,circles.image,introduction,message_for_fresh,  delegetes.name as delegate_name ,delegetes.contact as delegate_contact,campus,excite,fee
+func GetCircleDetail(db *sql.DB, circleURLName string) (*CircleDetail, error) {
+	query := `select circles.id,circles.name,circles.url_name,circles.number,circles.image,circles.bill_image,introduction, delegates.name as delegate_name ,delegates.contact as delegate_contact,campus,circles.entrance_fee,circles.annual_fee,circles.activity_of_week,
+	circles.activity_time,circles.admission_deadline,circles.box_number,circles.booth_number
 	from circles
-	left outer join delegetes on circles.id = delegetes.circle_id
+	left outer join delegates on circles.id = delegates.circle_id
 	where  circles.url_name = ?;`
-	row := db.QueryRow(query, circle_url_name)
+	row := db.QueryRow(query, circleURLName)
 	circle, err := ScanCircle(row)
 	if err != nil {
 		return &CircleDetail{}, err
 	}
-	events, err := GetCircleEvents(db, circle_url_name)
+	events, err := GetCircleEvents(db, circleURLName)
 	if err != nil {
 		fmt.Print(err)
 	}
-
-	tags, err := GetCircleTags(db, circle_url_name)
+	sns ,err := GetSNS(db,circleURLName)
+	if err != nil{
+		fmt.Print(err)
+	}
+	tags, err := GetCircleTags(db, circleURLName)
 	if err != nil {
 		fmt.Print(err)
 	}
 	return &CircleDetail{
 		Circle: *circle,
+		SocialNetworkingSites:*sns,
 		Events: *events,
 		Tags:   *tags,
 	}, nil
 
 }
 
+func GetSNS(db *sql.DB,circleURLName string) (*[]SNS, error){
+	query := `select  circle_sns.circle_id,circle_sns.name
+			  from circles 
+			  inner join circle_sns on circle_sns.circle_id = circles.id 
+			  where circles.url_name = ?`
+	rows, _ := db.Query(query,circleURLName)
+	sns ,err := ScanSNS(rows)
+	if err != nil{
+		return &[]SNS{},err
+	}
+	return sns,nil
+}
+
 func GetUnivCircles(db *sql.DB) (*[]Circle, error) {
-	query := `select circles.id,circles.name,circles.url_name,number,circles.gender_ratio,circles.image,introduction,message_for_fresh,  delegetes.name as delegate_name ,delegetes.contact as delegate_contact,campus,excite,fee
+	query := `select circles.id,circles.name,circles.url_name,circles.number,circles.image,circles.bill_image,introduction, delegates.name as delegate_name ,delegates.contact as delegate_contact,campus,circles.entrance_fee,circles.annual_fee,circles.activity_of_week,
+	circles.activity_time,circles.admission_deadline,circles.box_number,circles.booth_number
 	from circles 
-	left outer join delegetes on circles.id = delegetes.circle_id`
+	left outer join delegates on circles.id = delegates.circle_id`
 	rows, _ := db.Query(query)
 	circles, err := ScanCircles(rows)
 	if err != nil {
@@ -47,10 +66,11 @@ func GetUnivCircles(db *sql.DB) (*[]Circle, error) {
 }
 
 func GetTagCircles(db *sql.DB, tag_id string) (*[]Circle, error) {
-	query := `select circles.id,circles.name,circles.url_name,number,circles.gender_ratio,circles.image,introduction,message_for_fresh, delegetes.name as delegate_name ,delegetes.contact as delegate_contact,campus,excite,fee
+	query := `select circles.id,circles.name,circles.url_name,circles.number,circles.image,circles.bill_image,introduction, delegates.name as delegate_name ,delegates.contact as delegate_contact,campus,circles.entrance_fee,circles.annual_fee,circles.activity_of_week,
+	circles.activity_time,circles.admisson_deadline,circles.box_number,circles.booth_number
 	from circles 
 	inner join circles_tags on circles.id = circles_tags.circle_id
-	left outer join delegetes on circles.id = delegetes.circle_id	
+	left outer join delegates on circles.id = delegates.circle_id	
 	inner join tags on circles_tags.tag_id = tags.id
 	where  tags.id = ?`
 	rows, _ := db.Query(query, tag_id)
