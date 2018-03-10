@@ -308,15 +308,18 @@ export const getEvent = () => dispatch => {
 export const adminSetName = name => dispatch => dispatch({type: 'ADMIN_SET_NAME',name});
 export const adminSetUrl = url => dispatch => dispatch({type: 'ADMIN_SET_URL',url});
 export const adminSetNumber = number => dispatch => dispatch({type: 'ADMIN_SET_NUMBER',number});
-export const adminSetRaitio = raitio => dispatch => dispatch({type: 'ADMIN_SET_RAITIO',raitio});
-export const adminSetImage = image => dispatch => dispatch({type: 'ADMIN_SET_IMAGE',image});
 export const adminSetIntro = intro => dispatch => dispatch({type: 'ADMIN_SET_INTRO',intro});
-export const adminSetMessage = message => dispatch => dispatch({type: 'ADMIN_SET_MESSAGE',message});
 export const adminSetDeleName = name => dispatch => dispatch({type: 'ADMIN_SET_DELENAME',name});
 export const adminSetContact = contact => dispatch => dispatch({type: 'ADMIN_SET_CONTACT',contact});
 export const adminSetCampus = campus => dispatch => dispatch({type: 'ADMIN_SET_CAMPUS',campus});
-export const adminSetExcite = excite => dispatch => dispatch({type: 'ADMIN_SET_EXCITE',excite});
-export const adminSetFee = fee => dispatch => dispatch({type: 'ADMIN_SET_FEE',fee});
+export const adminSetEntrance = entrance => dispatch => dispatch({type: 'ADMIN_SET_ENTRANCE',entrance});
+export const adminSetAnnual = annual => dispatch => dispatch({type: 'ADMIN_SET_ANNUAL',annual});
+export const adminSetWeek = week => dispatch => dispatch({type: 'ADMIN_SET_WEEK',week});
+export const adminSetTime = time => dispatch => dispatch({type: 'ADMIN_SET_TIME',time});
+export const adminSetAdmission = admission => dispatch => dispatch({type: 'ADMIN_SET_ADMISSION',admission});
+export const adminSetBox = box => dispatch => dispatch({type: 'ADMIN_SET_BOX',box});
+export const adminSetBooth = booth => dispatch => dispatch({type: 'ADMIN_SET_BOOTH',booth});
+
 export const adminSetTags = tag => dispatch => dispatch({type: 'ADMIN_CIRCLE_TAG',tag})
 
 export const EventName = name => dispatch => dispatch({type: 'EVENT_NAME',name});
@@ -390,14 +393,19 @@ export const adminSetCircle = circle => dispatch => {
       'name':circle.name,
       'url_name':circle.url_name,
       'number':circle.number,
-      'gender_ratio':circle.gender_ratio,
-      'delegete_name':circle.delegete_name,
+      'image':circle.gender_ratio,
+      'bill_image':circle.delegete_name,
       'introduction':circle.introduction,
-      'message_for_fresh':circle.message_for_fresh,
+      'delegate_name':circle.message_for_fresh,
       'delegete_contact':circle.delegete_contact,
       'campus':circle.campus,
-      'excite':circle.excite,
-      'fee':circle.fee,
+      'entrance_fee':circle.excite,
+      'annual_fee':circle.fee,
+      'activity_week':circle.fee,
+      'activity_time':circle.fee,
+      'admission_deadline':circle.fee,
+      "box_number": 1,
+      "booth_number": 1
 },{headers:{'Authorization':`Bearer ${Auth}`}})
     .then((results) => {
       const status = results.status
