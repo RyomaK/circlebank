@@ -25,22 +25,24 @@ class Header extends Component{
   render(){
     return(
     <div className="header">
-      <Filter>
       <Drawer
       open={this.state.open}
       docked={false}
       onRequestChange={()=>this.handleToggle()}
       >
-          <Link to="/"><MenuItem>ホーム</MenuItem></Link>
           <MenuItem onClick={ e =>{
-            e.preventDefault(); this.props.history.push("/user");
-          }}>マイページ</MenuItem>
+            e.preventDefault(); this.props.history.push("/");
+          }}>ホーム</MenuItem>
+          <MenuItem onClick={ e =>{
+            e.preventDefault(); this.props.history.push("/schedule");
+          }}>新歓予定</MenuItem>
+          <MenuItem onClick={ e =>{
+            e.preventDefault(); this.props.history.push("/schedule");
+          }}>ブース位置</MenuItem>
       </Drawer>
-      </Filter>
       <AppBar
-      title="Circle Bank"
+      title="団体図鑑"
       iconElementLeft={window.parent.screen.width>768?<IconButton><IconMenu /></IconButton>:<div></div>}
-      iconElementRight={<IconButton><Exit /></IconButton>}
       onLeftIconButtonTouchTap={ () => this.handleToggle()}
       onRightIconButtonTouchTap={ () => this.handleClick()}
       style={{backgroundColor:indigo900}}

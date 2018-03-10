@@ -20,7 +20,7 @@ class LoginPage extends Component{
     const isLogin = this.props.isLogin
       if(isLogin == "true"){
         return(
-            <Redirect to="/"/>
+            <Redirect to="/admin"/>
           )
       }else{
         return(

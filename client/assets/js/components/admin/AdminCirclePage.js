@@ -16,8 +16,9 @@ class AdminCirclePage extends Component{
   handleSubmit(e){
     e.preventDefault()
     this.props.adminSetCircle(this.props.circle);
-    this.props.history.push('/');
+    this.props.history.push('/admin');
   }
+
   handleChange(e){
     switch(e.target.name){
       case 'name':
@@ -56,7 +57,6 @@ class AdminCirclePage extends Component{
       case 'excite':
         this.props.adminSetExcite(e.target.value)
       break;
-
       default:
       break;
     }
@@ -73,7 +73,7 @@ class AdminCirclePage extends Component{
     };
     return(
       <div>
-        <Form horizontal onSubmit={this.handleSubmit.bind(this)}>
+        <Form horizontal onSubmit={this.handleSubmit.bind(this)} className="whitePage">
         <FormGroup>
     			<Col smOffset={2} sm={8}>
             <TextField
@@ -209,13 +209,6 @@ class AdminCirclePage extends Component{
             fullWidth={true}
             onChange={this.handleChange.bind(this)}
             />
-    			</Col>
-    		</FormGroup>
-
-        <FormGroup>
-    			<Col smOffset={2} sm={8}>
-            <p>サークル画像</p>
-            <input name="image" type="file"/>
     			</Col>
     		</FormGroup>
     		<FormGroup>

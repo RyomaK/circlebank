@@ -22,13 +22,12 @@ class CircleImage extends Component{
     const url = this.props.match.params.circle_url
     this.props.circleSearch(url)
   }
-
   handleSubmit(e){
     e.preventDefault();
     const id = this.props.match.params.id
     this.props.CircleImage(this.state.image,id)
     this.props.adminAddCircleTag(this.props.addTag,id)
-    this.props.history.push('/')
+    this.props.history.push('/admin')
   }
 
   handleChange1(event,index,values1){
@@ -98,8 +97,9 @@ class CircleImage extends Component{
   render(){
     const {values1,values2,values3} = this.state;
     return(
-      <div>
-        <div>現在のタグ</div>
+      <Col smOffset={1} sm={10} className="whitePage">
+        <Col smOffset={1} sm={3} className="whitePage">
+        <h3>現在のタグ</h3>
         {this.props.tag.map((tag)=> {
           return(
             <div key={tag.id}>
@@ -107,52 +107,60 @@ class CircleImage extends Component{
             </div>
           )
         })}
-        <form onSubmit={this.handleSubmit.bind(this)}>
-          <input type="file" onChange={this.handleChange.bind(this)}/>
-          <FormGroup>
-      			<Col smOffset={2} sm={8}>
-            <SelectField
-              multiple={true}
-              hintText="運動"
-              value={values1}
-              onChange={this.handleChange1.bind(this)}
-            >
-            {this.menuItems1(values1)}
-            </SelectField>
-      			</Col>
-      		</FormGroup>
-          <FormGroup>
-      			<Col smOffset={2} sm={8}>
-            <SelectField
-              multiple={true}
-              hintText="文化"
-              value={values2}
-              onChange={this.handleChange2.bind(this)}
-            >
-            {this.menuItems2(values2)}
-            </SelectField>
-      			</Col>
-      		</FormGroup>
-          <FormGroup>
-      			<Col smOffset={2} sm={8}>
-            <SelectField
-              multiple={true}
-              hintText="その他"
-              value={values3}
-              onChange={this.handleChange3.bind(this)}
-            >
-            {this.menuItems3(values3)}
-            </SelectField>
-      			</Col>
-      		</FormGroup>
-        <button type="submit">送信</button>
-        </form>
-      </div>
+        </Col>
+        <Col sm={4} className="whitePage">
+          <form onSubmit={this.handleSubmit.bind(this)}>
+            <Col sm={12}>
+            <br/>
+            <FormGroup>
+              <SelectField
+                multiple={true}
+                hintText="運動"
+                value={values1}
+                onChange={this.handleChange1.bind(this)}
+              >
+              {this.menuItems1(values1)}
+              </SelectField>
+        		</FormGroup>
+            <FormGroup>
+              <SelectField
+                multiple={true}
+                hintText="文化"
+                value={values2}
+                onChange={this.handleChange2.bind(this)}
+              >
+              {this.menuItems2(values2)}
+              </SelectField>
+        		</FormGroup>
+            <FormGroup>
+              <SelectField
+                multiple={true}
+                hintText="その他"
+                value={values3}
+                onChange={this.handleChange3.bind(this)}
+              >
+              {this.menuItems3(values3)}
+              </SelectField>
+        		</FormGroup>
+            </Col>
+            <Col sm={12}>
+              <h3>サークル画像追加</h3>
+              <input type="file" onChange={this.handleChange.bind(this)}/>
+            </Col>
+            <Col sm={12}>
+            <br/>
+              <FlatButton type="submit">登録</FlatButton>
+            </Col>
+            <br/>
+          </form>
+          </Col>
+      </Col>
     )
   }
 }
 
 const mapStateToProps = state => {
+
   return{
     tags: state.allTagSearch.tags,
     addTag: state.adminCircleTag,
