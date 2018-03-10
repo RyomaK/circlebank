@@ -124,6 +124,8 @@ class AdminCirclePage extends Component{
             <TextField
             name = "introduction"
             type = "text"
+            rows ={6}
+            multiLine={true}
             floatingLabelText="紹介文"
             floatingLabelFixed={true}
             fullWidth={true}
@@ -162,7 +164,7 @@ class AdminCirclePage extends Component{
             name = "campus"
             type = "text"
             floatingLabelText="活動場所"
-            floatingLabelFixed={true}
+
             fullWidth={true}
             onChange={this.handleChange.bind(this)}
             />

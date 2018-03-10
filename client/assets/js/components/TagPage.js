@@ -6,7 +6,9 @@ import { Col} from 'react-bootstrap'
 import { connect } from 'react-redux'
 
 class TagPage extends Component {
+
   render(){
+    console.log(this.props.circle)
     return(
       <div>
         <div>

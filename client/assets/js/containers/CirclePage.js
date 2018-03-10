@@ -8,7 +8,7 @@ import {circleSearch} from '../actions/index'
 import {Col} from "react-bootstrap"
 
 class CirclePage extends Component {
-  componentDidMount(){
+  componentWillMount(){
     const name = this.props.match.params.name;
     this.props.circleSearch(name)
   }
@@ -19,6 +19,7 @@ class CirclePage extends Component {
       textAlign: 'center',
       display: 'inline-block',
     }
+    console.log(this.props)
     return(
       <div>
           <Col smOffset = {2} sm={8} className="circlePage">

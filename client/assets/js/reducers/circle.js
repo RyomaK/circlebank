@@ -15,21 +15,50 @@ const initialState = {
         fee: "",
         university:""
     },
+    sns:[
+    ],
     events: [],
     tags: []
 }
 
 
 const circle = (state=initialState,action) => {
-
+console.log(action)
   switch(action.type){
     case 'CIRCLE':
+    if(action.circle.tags==null&& action.circle.sns==null){
 
       return{
         circle:action.circle.Circle,
         events:action.circle.events,
-        tags:action.circle.tags
+        sns:[],
+        tags:[]
       }
+    }else if(action.circle.sns==null){
+        return{
+          circle:action.circle.Circle,
+          sns:[],
+          events:action.circle.events,
+          tags:action.circle.tags
+        }
+      }else if(actino.circle.tags==null){
+        return{
+          circle:action.circle.Circle,
+          sns:action.circle.sns,
+          events:action.circle.events,
+          tags:[]
+        }
+      }else{
+        return{
+          circle:action.circle.Circle,
+          sns:action.circle.sns,
+          events:action.circle.events,
+          tags:action.circle.tags
+        }
+
+      }
+
+
     default:
     return(
       state
