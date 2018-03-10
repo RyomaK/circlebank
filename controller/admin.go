@@ -625,7 +625,7 @@ func (a *Admin)DeletePostAdminTagHandler(w http.ResponseWriter, r *http.Request)
 	if err != nil {
 		log.Printf("post admin event tag err %v\n", err)
 		w = SetHeader(w, http.StatusBadRequest)
-		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot delte tag"}
+		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot delete tag"}
 		res, _ := json.Marshal(status)
 		w.Write(res)
 		return
