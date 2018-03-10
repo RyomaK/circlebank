@@ -15,6 +15,7 @@ import Schedule from './Schedule'
 import { BrowserRouter, Route, Link, Switch} from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { connect } from 'react-redux'
+import {Col} from 'react-bootstrap'
 
 const App =() => {
   return(
@@ -43,7 +44,7 @@ const App =() => {
                   </div>
                 </Auth>
                 </Switch>
-
+                  
                 <div id="footer">
                   <TabMenu/>
                 </div>

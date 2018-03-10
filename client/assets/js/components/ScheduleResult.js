@@ -4,36 +4,38 @@ import SelectField from 'material-ui/SelectField';
 import {
   Table,
   TableBody,
-  TableHeader,
-  TableHeaderColumn,
   TableRow,
   TableRowColumn,
-  TableFooter
 } from 'material-ui/Table';
 
 import { Col } from 'react-bootstrap'
 import { connect } from 'react-redux'
+import {Link,withRouter} from 'react-router-dom'
 
 
-const ScheduleResult = ({events}) => {
-  return(
-    <div>
-    <Table>
-      <TableBody displayRowCheckbox={false}>
-        {events.map((eve)=>{
-          return(
-              <TableRow key={eve.id}>
-                <TableRowColumn>{eve.name}</TableRowColumn>
-                <TableRowColumn>{eve.circle_name}</TableRowColumn>
-              </TableRow>
-          )
-        })}
-        </TableBody>
-
-    </Table>
-    </div>
-
-  )
+class ScheduleResult extends Component {
+  handleClick(event,url){
+    event.preventDefault()
+    this.props.history.push(`circle/search/${url}`)
+  }
+  render(){
+    return(
+      <div>
+      <Table>
+        <TableBody displayRowCheckbox={false}>
+          {this.props.events.map((eve)=>{
+            return(
+                <TableRow key={eve.id}>
+                  <TableRowColumn>{eve.name}</TableRowColumn>
+                  <TableRowColumn><span onClick={(event)=>this.handleClick(event,eve.circle_url_name)}>{eve.circle_name}</span></TableRowColumn>
+                </TableRow>
+              )
+          })}
+          </TableBody>
+      </Table>
+      </div>
+    )
+  }
 
 }
-export default ScheduleResult
+export default withRouter(connect()(ScheduleResult))

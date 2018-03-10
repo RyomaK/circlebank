@@ -17,11 +17,9 @@ import {connect} from 'react-redux'
 import {tagSearchStart} from '../../actions/index'
 
 class AddTagPage extends Component{
-
   componentDidMount(){
     this.props.getTag()
   }
-
   render(){
     return(
         <div>

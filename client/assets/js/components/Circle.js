@@ -33,7 +33,7 @@ class Circle extends Component{
           </div>
         </div>
         <div className="circleImage">
-          <img src={`static/${circle.image}`} alt="aa" width="100%"/>
+          <img src={`static/${circle.image}`} alt="aa" width="100%"　height="auto"/>
         </div>
       <Tabs
           value={this.state.value}
@@ -78,6 +78,12 @@ class Circle extends Component{
               <td>年会費</td>
               <td>{circle.annual_fee}</td>
             </tr>
+            <tr>
+              <td>Box番号</td>
+              <td>{circle.box_number}</td>
+              <td>ブース番号</td>
+              <td>{circle.booth_number}</td>
+            </tr>
             </tbody>
             </Table>
             </div>
@@ -88,6 +94,8 @@ class Circle extends Component{
             </div>
           </Tab>
         </Tabs>
+        <br/>
+        <br/>
       </div>
     )
   }

@@ -116,6 +116,38 @@ export const loginCheck = () => dispatch => {
     }
 
 
+    export const getEventInfo = date => dispatch => {
+      const Auth = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBdXRob3JpdHkiOiIiLCJNYWlsIjoiYWRtaW5AdXNlcjEyMzQifQ.W8Don6BgvT0KOTUcx8hFamyEcQzIeBB0i1PZgdp_b5g"
+      axios
+      .get(`/admin/circle/event?date=${date}`,{headers:{'Authorization':`Bearer ${Auth}`}})
+      .then((results) => {
+        const status = results.status
+        const events = results.data
+        return { status, events };
+        if (typeof events === undefined) {
+          return { status };
+        }
+      })
+      .then(({status, events})=> {
+        switch (status) {
+          case 200: {
+            dispatch({type:'EVENT_INFO',events})
+            break;
+          }
+          case 401: {
+            dispatch(setLogin(-1));
+            break;
+          }
+          default: {
+            dispatch(setErrorMessage('エラーが発生しました'));
+            break;
+          }
+        }
+      })
+      .catch(() => {
+      });
+    }
+
 export const circleSearch = name => dispatch => {
   axios
   .get(`/api/circle/${name}`)
@@ -244,6 +276,8 @@ export const tagSearchStart = () => dispatch => {
       console.log("エラーtagSearchStart")
     });
 }
+
+
 
 export const tagSearch = id => dispatch => {
     axios
