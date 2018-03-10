@@ -67,7 +67,7 @@ func GetUnivCircles(db *sql.DB) (*[]Circle, error) {
 
 func GetTagCircles(db *sql.DB, tag_id string) (*[]Circle, error) {
 	query := `select circles.id,circles.name,circles.url_name,circles.number,circles.image,circles.bill_image,introduction, delegates.name as delegate_name ,delegates.contact as delegate_contact,campus,circles.entrance_fee,circles.annual_fee,circles.activity_of_week,
-	circles.activity_time,circles.admisson_deadline,circles.box_number,circles.booth_number
+	circles.activity_time,circles.admission_deadline,circles.box_number,circles.booth_number
 	from circles 
 	inner join circles_tags on circles.id = circles_tags.circle_id
 	left outer join delegates on circles.id = delegates.circle_id	
@@ -103,7 +103,7 @@ func GetTags(db *sql.DB, title ...string) (*[]ClassedTag, error) {
 }
 
 func GetCircleTags(db *sql.DB, circle_name string) (*[]Tag, error) {
-	query := `select tags.id, tags.name
+	query := `select tags.id, tags.name,tags.class_name
 			  from circles 
 			  inner join circles_tags on circles.id = circles_tags.circle_id
 			  inner join tags on circles_tags.tag_id = tags.id
@@ -122,6 +122,9 @@ func GetCircleEventDetail(db *sql.DB, circle_name, id string) (*Event, error) {
 		inner join events on events.circle_id = circles.id
 		where circles.url_name = ? and events.id = ?`
 	row := db.QueryRow(query ,circle_name, id)
+	if row == nil{
+		return nil ,nil
+	}
 	event, err := ScanEvent(row)
 	if err != nil {
 		return &Event{}, err

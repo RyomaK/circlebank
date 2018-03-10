@@ -100,6 +100,7 @@ func (s *Server) Route(addr string) {
 	b.Path("/circle/{circle_id:[0-9]+}/sns").HandlerFunc(admins.InsertCircleSNS).Methods("DELETE")
 	//画像upload
 	b.Path("/circle/{circle_id:[0-9]+}/upload").HandlerFunc(admins.UploadCirclePicture).Methods("POST")
+	b.Path("/circle/{circle_id:[0-9]+}/bill/upload").HandlerFunc(admins.UploadCircleBillPicture).Methods("POST")
 	b.Path("/circle/{circle_id:[0-9]+}/event/{event_id:[0-9]+}/upload").HandlerFunc(admins.UploadEventPicture).Methods("POST")
 	//all handler add middleware
 	n := negroni.New()

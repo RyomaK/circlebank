@@ -9,60 +9,76 @@
 
 # WebApi
 ## loginしている時
-### GET```/api/{大学}/circle/{circle_name}```
+### GET```/api/circle/{circle_name}```
 ```json
 {
     "Circle": {
-        "id": 2,
-        "name": "fly speck",
-        "url_name": "flyspeck",
-        "number": 100,
-        "gender_ratio": "1:1",
-        "image": "1",
-        "introduction": "テニス",
-        "message_for_fresh": "いつでもきてねえええ",
-        "delegete_name": "大野",
-        "delegete_contact": "arashi@mail.com",
-        "campus": "京田辺/今出川",
-        "excite": 9,
-        "fee": 3000,
-        "university": "同志社大学"
+        "id": 1,
+        "name": "hands up",
+        "url_name": "handsup",
+        "number": 30,
+        "image": "img/circles/1.png",
+        "bill_image": "img/circle/bill/default.png",
+        "introduction": "アットホームなバスケットボールサークルです",
+        "delegate_name": "田中",
+        "delegate_contact": "tanaka@mail.com",
+        "campus": "京田辺",
+        "entrance_fee": "4000",
+        "annual_fee": "5000",
+        "activity_week": "水曜",
+        "activity_time": "13時から",
+        "admission_deadline": "なし",
+        "box_number": 1,
+        "booth_number": 1
     },
+    "sns": [
+        {
+            "circle_id": "1",
+            "sns": "http://line@"
+        }
+    ],
     "events": [
         {
-            "id": 1,
-            "name": "ほわ音でー",
+            "id": 2,
+            "name": "ホワイトデー",
             "image": "img/users/default.png",
-            "agenda": "2017-02-14T00:00:00Z",
-            "place": "a",
-            "detail": "f",
-            "capacity": 10,
-            "fee": 10
+            "agenda": "2017-02-15T00:00:00Z",
+            "place": "fsad",
+            "detail": "fds",
+            "capacity": 0,
+            "fee": 0
         },
         {
-            "id": 2,
-            "name": "fsa",
+            "id": 4,
+            "name": "水族館デー",
             "image": "img/users/default.png",
-            "agenda": "2017-02-14T00:00:00Z",
-            "place": "fsa",
-            "detail": "fdsa",
-            "capacity": 1,
-            "fee": 1
+            "agenda": "2018-04-06T00:00:00Z",
+            "place": "京都水族館",
+            "detail": "京田辺駅集合です",
+            "capacity": 100,
+            "fee": 1000
         }
     ],
     "tags": [
         {
-            "id": 3,
-            "name": "京田辺"
+            "id": 1,
+            "name": "バスケットボール",
+            "class_name": ""
         },
         {
-            "id": 4,
-            "name": "今出川"
+            "id": 2,
+            "name": "アットホーム",
+            "class_name": ""
+        },
+        {
+            "id": 3,
+            "name": "京田辺",
+            "class_name": ""
         }
     ]
 }
 ```  
-### GET```/api/{大学}/tag```  
+### GET```/api/tag```
 大学毎のtag一覧  
 ```json
 [
@@ -111,7 +127,7 @@
     }
 ]
 ```
-### GET```/api/{大学}/tag/{id}```  
+### GET```/api/tag/{id}```
 idを持っているサークル一覧
 ```json
 [
@@ -120,36 +136,43 @@ idを持っているサークル一覧
         "name": "hands up",
         "url_name": "handsup",
         "number": 30,
-        "gender_ratio": "1:1",
-        "image": "1",
+        "image": "img/circles/1.png",
+        "bill_image": "img/circle/bill/default.png",
         "introduction": "アットホームなバスケットボールサークルです",
-        "message_for_fresh": "いつでもきてね",
-        "delegete_name": "田中",
-        "delegete_contact": "tanaka@mail.com",
+        "delegate_name": "田中",
+        "delegate_contact": "tanaka@mail.com",
         "campus": "京田辺",
-        "excite": 3,
-        "fee": 5000,
-        "university": "同志社大学"
+        "entrance_fee": "4000",
+        "annual_fee": "5000",
+        "activity_week": "水曜",
+        "activity_time": "13時から",
+        "admission_deadline": "なし",
+        "box_number": 1,
+        "booth_number": 1
     },
     {
         "id": 2,
         "name": "fly speck",
         "url_name": "flyspeck",
         "number": 100,
-        "gender_ratio": "1:1",
-        "image": "1",
+        "image": "img/circles/2.png",
+        "bill_image": "img/circle/bill/default.png",
         "introduction": "テニス",
-        "message_for_fresh": "いつでもきてねえええ",
-        "delegete_name": "大野",
-        "delegete_contact": "arashi@mail.com",
+        "delegate_name": "大野",
+        "delegate_contact": "arashi@mail.com",
         "campus": "京田辺/今出川",
-        "excite": 9,
-        "fee": 3000,
-        "university": "同志社大学"
+        "entrance_fee": "4000",
+        "annual_fee": "3000",
+        "activity_week": "金曜,月曜",
+        "activity_time": "金曜は12時",
+        "admission_deadline": "なし",
+        "box_number": 2,
+        "booth_number": 2
     }
 ]
 ```
-### GET```/api/{univ}/circle/{id}/{event_id}```
+
+### GET```/api/circle/{id}/event/{event_id}```
 イベント詳細
 ```json
 {
@@ -318,191 +341,7 @@ ___成功した場合cookieに新しくJwtを付与するから，また"Bearer 
 ```json
 ```
 
-
-## Get ```api/user/like```
-```json
-[
-    {
-        "circle": {
-            "id": 1,
-            "name": "hands up",
-            "url_name": "handsup",
-            "number": 30,
-            "gender_ratio": "1:1",
-            "image": "img/circles/1.png",
-            "introduction": "アットホームなバスケットボールサークルです",
-            "message_for_fresh": "いつでもきてね",
-            "delegete_name": "田中",
-            "delegete_contact": "tanaka@mail.com",
-            "campus": "京田辺",
-            "excite": 3,
-            "fee": 5000,
-            "university": "同志社大学"
-        },
-        "comment": {
-            "id": {
-                "Int64": 4,
-                "Valid": true
-            },
-            "name": {
-                "String": "栗栖",
-                "Valid": true
-            },
-            "gender": {
-                "String": "男",
-                "Valid": true
-            },
-            "point": {
-                "Int64": 22,
-                "Valid": true
-            },
-            "text": {
-                "String": "良すぎ\n",
-                "Valid": true
-            }
-        }
-    },
-    {
-        "circle": {
-            "id": 2,
-            "name": "fly speck",
-            "url_name": "flyspeck",
-            "number": 100,
-            "gender_ratio": "1:1",
-            "image": "1",
-            "introduction": "テニス",
-            "message_for_fresh": "いつでもきてねえええ",
-            "delegete_name": "大野",
-            "delegete_contact": "arashi@mail.com",
-            "campus": "京田辺/今出川",
-            "excite": 9,
-            "fee": 3000,
-            "university": "同志社大学"
-        },
-        "comment": {
-            "id": {
-                "Int64": 0,
-                "Valid": false
-            },
-            "name": {
-                "String": "栗栖",
-                "Valid": true
-            },
-            "gender": {
-                "String": "男",
-                "Valid": true
-            },
-            "point": {
-                "Int64": 0,
-                "Valid": false
-            },
-            "text": {
-                "String": "",
-                "Valid": false
-            }
-        }
-    }
-]
-```
-
-## POST```api/user/like```
-- circle_id ...　お気に入りするサークルのid
-```json
-{
-    "code": 200,
-    "message": "regist like"
-}
-```
-
-## DELETE ```api/user/like```
-- circle_id ...　削除するサークルのid
-```json
-{
-    "code": 200,
-    "message": "delete like"
-}
-```
-
-## GET ```api/user/{circle_name}/comment```
-
-```json
-{
-    "Circle": {
-        "id": 1,
-        "name": "hands up",
-        "url_name": "handsup",
-        "number": 30,
-        "gender_ratio": "1:1",
-        "image": "1",
-        "introduction": "アットホームなバスケットボールサークルです",
-        "message_for_fresh": "いつでもきてね",
-        "delegete_name": "田中",
-        "delegete_contact": "tanaka@mail.com",
-        "campus": "京田辺",
-        "excite": 3,
-        "fee": 5000,
-        "university": "同志社大学"
-    },
-    "comment": {
-        "id": 3,
-        "name": "admin",
-        "gender": "男",
-        "point": 12,
-        "university": "いいね"
-    }
-}
-
-```
-
-##
-
-## POST ```api/user/{circle_name}/comment```
-- circle_id
-- point(1~5?)
-- text
-
-## DELETE ```api/user/{circle_name}/comment```
-
-
-## GET ```admin/{univ}/circle```
-```json
-[
-    {
-        "id": 1,
-        "name": "hands up",
-        "url_name": "handsup",
-        "number": 30,
-        "gender_ratio": "1:1",
-        "image": "1",
-        "introduction": "アットホームなバスケットボールサークルです",
-        "message_for_fresh": "いつでもきてね",
-        "delegete_name": "田中",
-        "delegete_contact": "tanaka@mail.com",
-        "campus": "京田辺",
-        "excite": 3,
-        "fee": 5000,
-        "university": "同志社大学"
-    },
-    {
-        "id": 2,
-        "name": "fly speck",
-        "url_name": "flyspeck",
-        "number": 100,
-        "gender_ratio": "1:1",
-        "image": "1",
-        "introduction": "テニス",
-        "message_for_fresh": "いつでもきてねえええ",
-        "delegete_name": "大野",
-        "delegete_contact": "arashi@mail.com",
-        "campus": "京田辺/今出川",
-        "excite": 9,
-        "fee": 3000,
-        "university": "同志社大学"
-    }
-]
-```
-
-## GET ```admin/{univ}/circle```
+## GET ```admin/circle```
 ___ query ___
 ?page=1~
 無限スクロールの際に必要
@@ -545,101 +384,32 @@ ___ query ___
 ]
 ```
 
-## GET ```admin/{univ}/circle/event```
+## GET ```admin/circle/event```
 ___ query ___
 ?page=1~
+
+(ex)?date=2018-04-29
 無限スクロールの際に必要
 日付順になれべてある
 
-```json
 [
     {
-        "id": 3,
-        "name": "fsa",
+        "id": 8,
+        "name": "新歓ライブ",
         "image": "img/users/default.png",
-        "agenda": "2017-02-14T00:00:00Z",
-        "place": "fsa",
-        "detail": "fdsa",
-        "capacity": 1,
-        "fee": 1,
-        "circle_id": 2,
-        "circle_name": "fly speck"
-    },
-    {
-        "id": 1,
-        "name": "ほわ音でー",
-        "image": "img/users/default.png",
-        "agenda": "2017-02-14T15:41:30Z",
-        "place": "a",
-        "detail": "f",
-        "capacity": 10,
-        "fee": 10,
-        "circle_id": 2,
-        "circle_name": "fly speck"
-    },
-    {
-        "id": 2,
-        "name": "ホワイトデー",
-        "image": "img/users/default.png",
-        "agenda": "2017-02-15T00:00:00Z",
-        "place": "fsad",
-        "detail": "fds",
-        "capacity": 0,
-        "fee": 0,
-        "circle_id": 1,
-        "circle_name": "hands up"
+        "agenda": "2018-04-29T00:00:00Z",
+        "place": "寒梅館",
+        "detail": "9:00からライブします。無料です",
+        "capacity": 100,
+        "fee": 1000,
+        "circle_id": 5,
+        "circle_name": "軽音サークル",
+        "circle_url_name": "music"
     }
 ]
 ```
 
-## GET ```admin/{univ}/circle/{circle_name}```
-```json
-{
-    "Circle": {
-        "id": 1,
-        "name": "hands up",
-        "url_name": "handsup",
-        "number": 30,
-        "gender_ratio": "1:1",
-        "image": "1",
-        "introduction": "アットホームなバスケットボールサークルです",
-        "message_for_fresh": "いつでもきてね",
-        "delegete_name": "田中",
-        "delegete_contact": "tanaka@mail.com",
-        "campus": "京田辺",
-        "excite": 3,
-        "fee": 5000,
-        "university": "同志社大学"
-    },
-    "events": [
-        {
-            "id": 2,
-            "name": "ホワイトデー",
-            "image": "img/users/default.png",
-            "agenda": "2017-02-15T00:00:00Z",
-            "place": "fsad",
-            "detail": "fds",
-            "capacity": 0,
-            "fee": 0
-        }
-    ],
-    "tags": [
-        {
-            "id": 1,
-            "name": "バスケットボール"
-        },
-        {
-            "id": 2,
-            "name": "アットホーム"
-        },
-        {
-            "id": 3,
-            "name": "京田辺"
-        }
-    ]
-}
-```
-## POST ```admin/{univ}/circle```
+## POST ```admin/circle```
 サークルを追加する。
 記入する内容例
 ```json
@@ -659,6 +429,14 @@ ___ query ___
     "university": "同志社大学"
 }
 ```
+戻り値
+```json
+ {
+
+```
+
+
+
 
 ## PUT  ```admin/{univ}/circle/{circle_id}```
 サークルの情報を編集
@@ -763,6 +541,12 @@ jsonでpost
     }
 ]
 ```
+
+```POST /circle/{circle_id:[0-9]+}/bill/upload```
+ビラ画像をアップロード
+
+
+
 
 (おり実ページは、サークルを追加、イベントの追加と同じ感じで)
 ## GET ```api/{univ}/ori```

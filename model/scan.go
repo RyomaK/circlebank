@@ -115,22 +115,23 @@ func ScanEvents(rs *sql.Rows) (*[]Event, error) {
 }
 
 func ScanTags(rs *sql.Rows) (*[]Tag, error) {
-	structs := []Tag{}
+	var tags []Tag
 	var err error
 	for rs.Next() {
 		var s Tag
 		if err = rs.Scan(
 			&s.ID,
 			&s.Name,
+			&s.ClassName,
 		); err != nil {
 			return &[]Tag{}, err
 		}
-		structs = append(structs, s)
+		tags = append(tags, s)
 	}
 	if err = rs.Err(); err != nil {
 		return &[]Tag{}, err
 	}
-	return &structs, nil
+	return &tags, nil
 }
 
 func ScanUser(r *sql.Row) (*User, error) {

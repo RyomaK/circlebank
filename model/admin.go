@@ -9,13 +9,12 @@ import (
 
 func GetCircles(db *sql.DB, page int) (*[]Circle, error) {
 	num := 100
-	query := `select select circles.id,circles.name,circles.url_name,circles.number,circles.image,circles.bill_image,introduction, delegates.name as delegate_name ,delegates.contact as delegate_contact,campus,circles.entrance_fee,circles.annual_fee,circles.activity_of_week,
+	query := `select circles.id,circles.name,circles.url_name,circles.number,circles.image,circles.bill_image,introduction, delegates.name as delegate_name ,delegates.contact as delegate_contact,campus,circles.entrance_fee,circles.annual_fee,circles.activity_of_week,
 	circles.activity_time,circles.admission_deadline,circles.box_number,circles.booth_number
 	from circles
-	left outer join delegates on circles.id = delegetes.circle_id
+	left outer join delegates on circles.id = delegates.circle_id
 	order by circles.id DESC 
 	limit ?,?`
-
 	pageMin := num * (page - 1)
 	pageMax := num + pageMin
 	row, _ := db.Query(query, pageMin, pageMax)
@@ -91,7 +90,7 @@ func InsertCircle(db *sql.DB, circle *Circle) error {
 
 func InsertSNS(db *sql.DB, sns *[]SNS) error {
 	for _, v := range *sns {
-		query := `insert into circle_sns (circle_id,name) valuues(?,?)`
+		query := `insert into circle_sns (circle_id,name) values(?,?)`
 		_, err := db.Exec(query, v.CircleID, v.Name)
 		if err != nil {
 			return err
@@ -186,6 +185,14 @@ func DeleteCircle(db *sql.DB, circle_id int) error {
 
 func UploadCirclePicture(db *sql.DB, circle_id int, image string) error {
 	_, err := db.Exec("update circles SET image = ? WHERE  id = ?", image, circle_id)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func UploadCircleBillPicture(db *sql.DB, circle_id int, image string) error {
+	_, err := db.Exec("update circles SET bill_image = ? WHERE  id = ?", image, circle_id)
 	if err != nil {
 		return err
 	}

@@ -135,9 +135,8 @@ func (a *Admin) PostAdminCircleHandler(w http.ResponseWriter, r *http.Request) {
 		w.Write(res)
 		return
 	}
-	id := model.GetCircleIDAfterInsert(a.DB,&circle)
 	w = SetHeader(w, http.StatusOK)
-	status := StatusAndCircle{Code: http.StatusOK, Message: "regist circle",CircleID:id}
+	status := StatusCode{Code: http.StatusOK, Message: "regist circle"}
 	res, _ := json.Marshal(status)
 	w.Write(res)
 	return
@@ -514,6 +513,40 @@ func (a *Admin) UploadCirclePicture(w http.ResponseWriter, r *http.Request) {
 	w.Write(res)
 }
 
+func (a *Admin)UploadCircleBillPicture(w http.ResponseWriter, r *http.Request){
+	vars := mux.Vars(r)
+	circle_id, err := strconv.Atoi(vars["circle_id"])
+	img, err := imageupload.Process(r, "image")
+	if err != nil {
+		log.Printf("upload circle picture:%v\n", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "not file"}
+		a, _ := json.Marshal(status)
+		w.Write(a)
+		return
+	}
+	thumb, err := imageupload.ThumbnailPNG(img, 300, 300)
+	if err != nil {
+		log.Printf("upload :%v\n", err)
+		return
+	}
+
+	image := "img/circles/bill" + strconv.FormatUint(uint64(circle_id), 10) + ".png"
+	err = model.UploadCircleBillPicture(a.DB, circle_id, image)
+	if err != nil {
+		log.Printf("err %v", err)
+		w = SetHeader(w, http.StatusBadRequest)
+		status := StatusCode{Code: http.StatusBadRequest, Message: "cannot upload"}
+		a, _ := json.Marshal(status)
+		w.Write(a)
+		return
+	}
+	thumb.Save("public/" + image)
+	w = SetHeader(w, http.StatusCreated)
+	status := StatusCode{Code: http.StatusCreated, Message: "upload image"}
+	res, _ := json.Marshal(status)
+	w.Write(res)
+}
 func (a *Admin) UploadEventPicture(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	circle_id, err := strconv.Atoi(vars["circle_id"])
