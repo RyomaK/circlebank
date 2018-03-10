@@ -46,6 +46,26 @@ export const image = () => dispatch => {
   });
 }
 
+export const sns = (data,id) => dispatch => {
+  const Auth = getAuth();
+  axios
+  .post(`circle/${id}/sns`,data,{headers:{'Authorization':`Bearer ${Auth}`}}).then((results) => {
+
+    return { status }
+  }).then(({ status })=>{
+    switch(status){
+      case 200:
+
+      break;
+
+      default:
+      break;
+    }
+  }).catch(() => {
+      console.log("エラー")
+  });
+}
+
 export const login = data => dispatch => {
 
   var params = new URLSearchParams();
@@ -597,6 +617,20 @@ export const circleImage = (image,id) => dispatch => {
     params.append('image',image);
     axios
     .post(`/admin/circle/${id}/upload`,params,{headers:{'Authorization':`Bearer ${Auth}`}})
+    .then((results) => {
+
+      const status = results.status
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+}
+export const billImage = (image,id) => dispatch => {
+    const Auth = getAuth();
+    var params = new FormData();
+    params.append('image',image);
+    axios
+    .post(`/admin/circle/${id}/bill/upload`,params,{headers:{'Authorization':`Bearer ${Auth}`}})
     .then((results) => {
 
       const status = results.status

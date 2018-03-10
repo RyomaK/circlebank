@@ -1,6 +1,15 @@
 import React,{Component} from 'react'
-import {circleImage,adminSetTags,adminAddCircleTag,circleSearch} from '../../actions/index'
+import {circleImage,adminSetTags,adminAddCircleTag,circleSearch,billImage} from '../../actions/index'
 import {withRouter} from 'react-router-dom'
+import {
+  Table,
+  TableBody,
+  TableFooter,
+  TableHeader,
+  TableHeaderColumn,
+  TableRow,
+  TableRowColumn,
+} from 'material-ui/Table';
 import {Col,Form,FormGroup,FormControl} from "react-bootstrap"
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
@@ -15,7 +24,8 @@ class CircleImage extends Component{
                 values2:[],
                 values3:[],
                 tags:[],
-                image:""
+                image:"",
+                bill_image:""
       }
   }
   componentDidMount(){
@@ -26,6 +36,8 @@ class CircleImage extends Component{
     e.preventDefault();
     const id = this.props.match.params.id
     this.props.CircleImage(this.state.image,id)
+    this.props.billImage(this.state.bill_image,id)
+
     this.props.adminAddCircleTag(this.props.addTag,id)
     this.props.history.push('/admin')
   }
@@ -57,6 +69,10 @@ class CircleImage extends Component{
   handleChange(e){
     e.preventDefault();
     this.setState({image:e.target.files[0]})
+  }
+  handleChange1(e){
+    e.preventDefault();
+    this.setState({bill_image:e.target.files[0]})
   }
 
   menuItems1(values) {
@@ -98,17 +114,26 @@ class CircleImage extends Component{
     const {values1,values2,values3} = this.state;
     return(
       <Col smOffset={1} sm={10} className="whitePage">
-        <Col smOffset={1} sm={3} className="whitePage">
+        <Col sm={12}>
         <h3>現在のタグ</h3>
-        {this.props.tag.map((tag)=> {
-          return(
-            <div key={tag.id}>
-              {tag.name}
-            </div>
-          )
-        })}
+        <Table>
+          <TableHeader displaySelectAll={false}>
+            <TableRow >
+              <TableHeaderColumn>タグ</TableHeaderColumn>
+              <TableHeaderColumn></TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
+          <TableBody displayRowCheckbox={false}>
+          {this.props.tag.map( (tag)=> (
+            <TableRow key={tag.id}>
+              <TableRowColumn>{tag.name}</TableRowColumn>
+              <TableRowColumn><FlatButton onClick={(event)=>this.handleClick1(event,tag.id) }>削除</FlatButton></TableRowColumn>
+            </TableRow>
+          ))}
+          </TableBody>
+        </Table>
         </Col>
-        <Col sm={4} className="whitePage">
+        <Col sm={12} className="whitePage">
           <form onSubmit={this.handleSubmit.bind(this)}>
             <Col sm={12}>
             <br/>
@@ -148,6 +173,10 @@ class CircleImage extends Component{
               <input type="file" onChange={this.handleChange.bind(this)}/>
             </Col>
             <Col sm={12}>
+              <h3>ビラ画像追加</h3>
+              <input type="file" onChange={this.handleChange1.bind(this)}/>
+            </Col>
+            <Col sm={12}>
             <br/>
               <FlatButton type="submit">登録</FlatButton>
             </Col>
@@ -180,6 +209,9 @@ const mapDispatchToProps = dispatch => {
       },
       circleSearch:(url) => {
         dispatch(circleSearch(url))
+      },
+      billImage:(image,id)=>{
+        dispatch(billImage(image,id))
       }
     }
   }

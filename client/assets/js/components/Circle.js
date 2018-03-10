@@ -35,6 +35,7 @@ class Circle extends Component{
         <div className="circleImage">
           <img src={`static/${circle.image}`} alt="aa" width="100%"　height="auto"/>
         </div>
+
       <Tabs
           value={this.state.value}
           onChange={this.handleChange.bind(this)}
@@ -49,42 +50,58 @@ class Circle extends Component{
               })}
               </div>
             </div>
+            <div className="circleImage">
+                  <img src={`static/${circle.bill_image}`} alt="ビラ画像" width="100%"　height="auto"/>
+            </div>
+
           </Tab>
           <Tab label="団体詳細" value="b">
             <div>
             <Table className="whitePage">
-            <tbody>
-            <tr>
-              <td width="25%">人数</td>
-              <td width="25%">{circle.number}</td>
-              <td width="25%">代表者</td>
-              <td width="25%">{circle.delegate_name}</td>
-            </tr>
-            <tr>
-              <td>キャンパス</td>
-              <td>{circle.campus}</td>
-              <td>連絡先</td>
-              <td>{circle.campus}</td>
-            </tr>
-            <tr>
-              <td>活動</td>
-              <td>{circle.activity_week}</td>
-              <td>活動時間</td>
-              <td>{circle.acticity_time}</td>
-            </tr>
-            <tr>
-              <td>入会費</td>
-              <td>{circle.entrance_fee}</td>
-              <td>年会費</td>
-              <td>{circle.annual_fee}</td>
-            </tr>
-            <tr>
-              <td>Box番号</td>
-              <td>{circle.box_number}</td>
-              <td>ブース番号</td>
-              <td>{circle.booth_number}</td>
-            </tr>
-            </tbody>
+              <tbody>
+                <tr>
+                  <td width="25%">人数</td>
+                  <td width="25%">{circle.number}</td>
+                  <td width="25%">代表者</td>
+                  <td width="25%">{circle.delegate_name}</td>
+                </tr>
+                <tr>
+                  <td>キャンパス</td>
+                  <td>{circle.campus}</td>
+                  <td>連絡先</td>
+                  <td>{circle.campus}</td>
+                </tr>
+                <tr>
+                  <td>活動</td>
+                  <td>{circle.activity_week}</td>
+                  <td>活動時間</td>
+                  <td>{circle.acticity_time}</td>
+                </tr>
+                <tr>
+                  <td>入会費</td>
+                  <td>{circle.entrance_fee}</td>
+                  <td>年会費</td>
+                  <td>{circle.annual_fee}</td>
+                </tr>
+                <tr>
+                  <td>Box番号</td>
+                  <td>{circle.box_number}</td>
+                  <td>ブース番号</td>
+                  <td>{circle.booth_number}</td>
+                </tr>
+                {
+                  this.props.sns.map((sns,index)=>{
+                    return(
+                      <tr key={index}>
+                        <td>SNS</td>
+                        <td></td>
+                        <td></td>
+                        <td>{sns.sns}</td>
+                      </tr>
+                    )
+                  })
+                }
+              </tbody>
             </Table>
             </div>
           </Tab>
@@ -94,6 +111,8 @@ class Circle extends Component{
             </div>
           </Tab>
         </Tabs>
+
+
         <br/>
         <br/>
       </div>
@@ -102,7 +121,8 @@ class Circle extends Component{
 }
 const mapStateToProps = state => {
     return{
-    events: state.circle.events
+    events: state.circle.events,
+    sns: state.circle.sns
   }
 }
 export default connect(
