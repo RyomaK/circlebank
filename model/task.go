@@ -82,10 +82,10 @@ func GetTagCircles(db *sql.DB, tag_id string) (*[]Circle, error) {
 }
 
 func GetTags(db *sql.DB, title ...string) (*[]ClassedTag, error) {
-	tags := []ClassedTag{}
+	var tags []ClassedTag
 	for _, v := range title {
 		fmt.Printf("%s\n", v)
-		query := `select distinct tags.id, tags.name
+		query := `select distinct tags.id, tags.name ,tags.class_name
 		from tags 
 		where  tags.class_name = ?`
 		rows, _ := db.Query(query, v)

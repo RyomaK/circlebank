@@ -638,6 +638,7 @@ func (a *Admin)DeletePostAdminTagHandler(w http.ResponseWriter, r *http.Request)
 }
 
 func (a *Admin)InsertCircleSNS(w http.ResponseWriter, r *http.Request){
+	vars := mux.Vars(r)
 	b, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		log.Printf("post tag err %v\n", err)
@@ -659,7 +660,7 @@ func (a *Admin)InsertCircleSNS(w http.ResponseWriter, r *http.Request){
 		return
 	}
 
-	err = model.InsertSNS(a.DB, &sns)
+	err = model.InsertSNS(a.DB,vars["circle_id"], &sns)
 	if err != nil {
 		log.Printf("post admin event tag err %v\n", err)
 		w = SetHeader(w, http.StatusBadRequest)

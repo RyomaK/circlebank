@@ -88,10 +88,10 @@ func InsertCircle(db *sql.DB, circle *Circle) error {
 	return nil
 }
 
-func InsertSNS(db *sql.DB, sns *[]SNS) error {
+func InsertSNS(db *sql.DB, circleID string,sns *[]SNS) error {
 	for _, v := range *sns {
 		query := `insert into circle_sns (circle_id,name) values(?,?)`
-		_, err := db.Exec(query, v.CircleID, v.Name)
+		_, err := db.Exec(query, circleID, v.Name)
 		if err != nil {
 			return err
 		}
