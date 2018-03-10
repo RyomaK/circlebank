@@ -541,7 +541,23 @@ jsonでpost
     }
 ]
 ```
-
+## DELETE ```/circle/{circle_id:[0-9]+}/tag```
+タグ削除
+id必須
+```json
+[
+    {
+        "id"  : "1"
+        "name": "野球",
+        "class_name": "運動"
+    },
+    {
+        "id":"41"
+        "name": "女の子可愛い",
+        "class_name": "その他"
+    }
+]
+```
 ```POST /circle/{circle_id:[0-9]+}/bill/upload```
 ビラ画像をアップロード
 

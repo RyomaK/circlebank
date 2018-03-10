@@ -97,7 +97,7 @@ func (s *Server) Route(addr string) {
 	b.Path("/circle/{circle_id:[0-9]+}/tag").HandlerFunc(admins.PostAdminCircleTagHandler).Methods("POST")
 	b.Path("/circle/{circle_id:[0-9]+}/tag").HandlerFunc(admins.DeleteAdminCircleTagHandler).Methods("DELETE")
 	b.Path("/circle/{circle_id:[0-9]+}/sns").HandlerFunc(admins.InsertCircleSNS).Methods("POST")
-	b.Path("/circle/{circle_id:[0-9]+}/sns").HandlerFunc(admins.InsertCircleSNS).Methods("DELETE")
+	b.Path("/circle/{circle_id:[0-9]+}/sns").HandlerFunc(admins.DeleteCircleSNS).Methods("DELETE")
 	//画像upload
 	b.Path("/circle/{circle_id:[0-9]+}/upload").HandlerFunc(admins.UploadCirclePicture).Methods("POST")
 	b.Path("/circle/{circle_id:[0-9]+}/bill/upload").HandlerFunc(admins.UploadCircleBillPicture).Methods("POST")

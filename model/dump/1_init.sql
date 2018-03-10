@@ -7,7 +7,7 @@
 #
 # ホスト: 127.0.0.1 (MySQL 5.7.19)
 # データベース: circle_bank
-# 作成時刻: 2018-03-10 02:13:27 +0000
+# 作成時刻: 2018-03-10 17:01:48 +0000
 # ************************************************************
 
 
@@ -26,17 +26,18 @@
 DROP TABLE IF EXISTS `circle_sns`;
 
 CREATE TABLE `circle_sns` (
-  `circle_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `circle_id` int(11) DEFAULT NULL,
   `name` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`circle_id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `circle_sns` WRITE;
 /*!40000 ALTER TABLE `circle_sns` DISABLE KEYS */;
 
-INSERT INTO `circle_sns` (`circle_id`, `name`)
+INSERT INTO `circle_sns` (`id`, `circle_id`, `name`)
 VALUES
-	(1,'http://line@');
+	(1,1,'http://line@');
 
 /*!40000 ALTER TABLE `circle_sns` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -72,11 +73,12 @@ LOCK TABLES `circles` WRITE;
 
 INSERT INTO `circles` (`id`, `name`, `url_name`, `number`, `image`, `bill_image`, `introduction`, `campus`, `entrance_fee`, `annual_fee`, `activity_of_week`, `activity_time`, `admission_deadline`, `box_number`, `booth_number`)
 VALUES
-	(1,'hands up','handsup',30,'img/circles/1.png','img/circle/bill/default.png','アットホームなバスケットボールサークルです','京田辺','4000','5000','水曜','13時から','なし','1','1'),
-	(2,'fly speck','flyspeck',100,'img/circles/2.png','img/circle/bill/default.png','テニス','京田辺/今出川','4000','3000','金曜,月曜','金曜は12時','なし','2','2'),
-	(3,'Nexus','nexus',100,'img/circles/3.png','img/circle/bill/default.png','軽音','京田辺/今出川','4000','12000','木曜','日による','nasi','3','3'),
-	(4,'平成企画合戦ピテクス','pitex',50,'img/circles/4.png','img/circle/bill/default.png','企画サークル','京田辺/今出川','4000','2000','金曜','色々','の','4','4'),
-	(5,'軽音サークル','music',100,'img/circles/5.png','img/circle/bill/default.png','軽音','今出川','4000','500000','木曜','色々','no-','5','5');
+	(1,'hands up','handsup',30,'img/circles/1.png','img/circles/bill/default.png','アットホームなバスケットボールサークルです','京田辺','4000','5000','水曜','13時から','なし','1','1'),
+	(2,'fly speck','flyspeck',100,'img/circles/2.png','img/circles/bill/default.png','テニス','京田辺/今出川','4000','3000','金曜,月曜','金曜は12時','なし','2','2'),
+	(3,'Nexus','nexus',100,'img/circles/3.png','img/circles/bill/default.png','軽音','京田辺/今出川','4000','12000','木曜','日による','nasi','3','3'),
+	(4,'平成企画合戦ピテクス','pitex',50,'img/circles/4.png','img/circles/bill/default.png','企画サークル','京田辺/今出川','4000','2000','金曜','色々','の','4','4'),
+	(5,'軽音サークル','music',100,'img/circles/5.png','img/circles/bill/default.png','軽音','今出川','4000','500000','木曜','色々','no-','5','5'),
+	(7,'hands up','handsupa',30,'img/circles/default.png','img/circles/bill/default.png','アットホームなバスケットボールサークルです','京田辺','4000','5000','水曜','13時から','なし','10','10');
 
 /*!40000 ALTER TABLE `circles` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -147,7 +149,8 @@ VALUES
 	(2,2,'大野','arashi@mail.com'),
 	(3,3,'谷','sample@sample'),
 	(4,4,'重松','sample@sample'),
-	(5,5,'田中','sample@sample');
+	(5,5,'田中','sample@sample'),
+	(6,7,'田中','tanaka@mail.com');
 
 /*!40000 ALTER TABLE `delegates` ENABLE KEYS */;
 UNLOCK TABLES;
