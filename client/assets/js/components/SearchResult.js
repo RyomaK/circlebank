@@ -1,5 +1,4 @@
 import React,{ Component } from 'react'
-import Menu from './Menu'
 import {Card,CardMedia,CardTitle} from 'material-ui/Card';
 import { Link, Redirect} from 'react-router-dom'
 import { Col } from 'react-bootstrap'
@@ -13,19 +12,17 @@ class SearchResult extends Component{
     }else{
       return(
         <div>
-            <Col sm={3} xsHidden className="reset">
-            <Menu/>
-            </Col>
+
             <div>
               <div>
-                <Col sm={9}>
+                <Col smOffset={2} sm={8}>
                 <h2>検索結果</h2>
-                </Col>
+
               {this.props.item.map( circle => (
-                <Col sm={4} xs={12} className="marginbottom circleName reset" key={circle.id}><Link to={`/circle/search/${circle.url_name}`} >
+                <Col sm={6} xs={12} className="marginbottom circleName reset" key={circle.id}><Link to={`/circle/search/${circle.url_name}`} >
                     <Card>
                     <CardMedia
-                      overlay={<CardTitle title={circle.name} subtitle={circle.introduction}/>}
+                      overlay={<CardTitle title={circle.name}/>}
                     >
                       <img src={`static/${circle.image}`} alt="aa" height="250px;"/>
                     </CardMedia>
@@ -33,6 +30,7 @@ class SearchResult extends Component{
                   </Link>
                   </Col>
               ))}
+              </Col>
               </div>
             </div>
 

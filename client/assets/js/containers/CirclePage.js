@@ -21,10 +21,7 @@ class CirclePage extends Component {
     }
     return(
       <div>
-          <Col sm={3} xsHidden className="reset">
-            <Menu/>
-          </Col>
-          <Col sm={9} className="circlePage">
+          <Col smOffset = {2} sm={8} className="circlePage">
             <Circle circle={this.props.circle}/>
           </Col>
       </div>

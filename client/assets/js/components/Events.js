@@ -20,15 +20,7 @@ class Events extends Component{
               <td>日付</td>
               <td>{`${month}月${day[0]}日`}</td>
             </tr>
-            <tr>
-              <td>場所</td>
-              <td>{eve.place}</td>
-            </tr>
-            <tr>
-              <td>詳細</td>
-              <td>{eve.detail}</td>
-            </tr>
-            </tbody>
+          </tbody>
         )
       })}
       </Table>

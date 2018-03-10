@@ -38,7 +38,7 @@ class TabMenu extends Component{
               this.props.history.push('/schedule')
             }}
           />
-          <BottomNavigationItem
+          {/*<BottomNavigationItem
 
             icon={<Map/>}
             onClick={() => {
@@ -46,7 +46,9 @@ class TabMenu extends Component{
               this.props.history.push('/user')
             }}
           />
+          */}
         </BottomNavigation>
+
       </Paper>
       </Col>
       )

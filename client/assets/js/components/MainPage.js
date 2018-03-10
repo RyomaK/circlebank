@@ -2,15 +2,11 @@ import React,{Component} from 'react'
 import {connect} from 'react-redux'
 import Result from './Result'
 import Schedule from './Schedule'
-import {Carousel,Col} from 'react-bootstrap'
-import {getEvent} from '../actions/index'
+import {Col} from 'react-bootstrap'
 import Menu from './Menu'
 import {Row} from 'react-bootstrap'
 
 class MainPage extends Component{
-  componentDidMount(){
-    this.props.getEvent()
-  }
   render(){
     return(
         <div>
@@ -30,9 +26,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
   return{
-    getEvent:()=> {
-      dispatch(getEvent())
-    }
+
     }
 
 }
