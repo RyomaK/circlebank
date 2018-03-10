@@ -2,16 +2,19 @@ const initialState = {
       name:"" ,
       url_name: "",
       number: 0,
-      gender_ratio: "",
-      image: "",
       introduction: "",
-      message_for_fresh: "",
+      image: "",
+      bill_image:'',
       delegete_name:  "",
       delegete_contact: "",
       campus:"" ,
-      excite:  0,
-      fee: 0,
-      university:"同志社大学"
+      entrance_fee:'',
+      annual_fee: '',
+      activity_week:"",
+      activity_time:"",
+      admission_deadline:"",
+      box_number:0,
+      booth_number:0
   }
 
 const adminSetState = (state=initialState,action) => {
@@ -30,21 +33,9 @@ const adminSetState = (state=initialState,action) => {
       return Object.assign({}, state, {
         number: Number(action.number)
         })
-    case 'ADMIN_SET_RAITIO':
-      return Object.assign({}, state, {
-        gender_ratio: action.raitio
-        })
-    case 'ADMIN_SET_IMAGE':
-      return Object.assign({}, state, {
-        image: action.image
-      })
     case 'ADMIN_SET_INTRO':
       return Object.assign({}, state, {
         introduction: action.intro
-      })
-    case 'ADMIN_SET_MESSAGE':
-      return Object.assign({}, state, {
-        message_for_fresh: action.message
       })
     case 'ADMIN_SET_DELENAME':
       return Object.assign({}, state, {
@@ -58,13 +49,33 @@ const adminSetState = (state=initialState,action) => {
       return Object.assign({}, state, {
         campus: action.campus
       })
-    case 'ADMIN_SET_EXCITE':
+    case 'ADMIN_SET_ENTRANCE':
       return Object.assign({}, state, {
-        excite: Number(action.excite)
+        entrance: action.entrance
       })
-    case 'ADMIN_SET_FEE':
+    case 'ADMIN_SET_ANNUAL':
       return Object.assign({}, state, {
-        fee: Number(action.fee)
+        annual: action.annual
+      })
+    case 'ADMIN_SET_WEEK':
+      return Object.assign({}, state, {
+        week: action.week
+      })
+    case 'ADMIN_SET_TIME':
+      return Object.assign({}, state, {
+        time: action.time
+      })
+    case 'ADMIN_SET_ADMISSION':
+      return Object.assign({}, state, {
+        admission: action.admission
+      })
+    case 'ADMIN_SET_BOX':
+      return Object.assign({}, state, {
+        box: Number(action.box)
+      })
+    case 'ADMIN_SET_BOOTH':
+      return Object.assign({}, state, {
+        booth: Number(action.booth)
       })
     default:
       return(

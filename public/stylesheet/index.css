@@ -8,8 +8,9 @@ html,body{
   height: 100%;	/* 縦の高さを100% */
   width: 100%;
   max-width:100%;	/* 横の幅を100% */
-  background-color:#F8F8F8;
+  background-color:white;
 }
+img { -webkit-backface-visibility: hidden; }
 #wrap{
   max-width: 100%
 }
@@ -30,7 +31,7 @@ html,body{
 
 @media screen and (max-width: 768px) {
   .contents{
-    padding:64px 0 72px 0;
+    padding:64px 0 90px 0;
     max-width:100%;
 
   }
@@ -142,6 +143,7 @@ html,body{
 }
 
 @media screen and (min-width: 768px) {
+  
   .visible{
     display:none
   }

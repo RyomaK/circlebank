@@ -3,6 +3,7 @@ import MenuItem from 'material-ui/MenuItem';
 import SelectField from 'material-ui/SelectField';
 import ScheduleResult from './ScheduleResult'
 import Menu from './Menu'
+import {getEventInfo} from '../actions/index'
 
 import { Col } from 'react-bootstrap'
 import { connect } from 'react-redux'
@@ -52,7 +53,7 @@ class Schedule extends Component{
     event.preventDefault();
     const value2=value
     this.setState({value2})
-    this.setState({value3:`2018-04-${day1[value2].month}T00:00:00Z`})
+    this.props.eventInfo(`2018-04-${day1[value2].month}`)
   }
   render(){
 
@@ -68,9 +69,6 @@ class Schedule extends Component{
         width: "100%",
       },
     };
-    const item = this.props.events.filter((item) => {
-      return item.agenda.includes(this.state.value3)
-    })
     return(
       <div>
         <Col sm={3} xsHidden className="reset">
@@ -102,7 +100,7 @@ class Schedule extends Component{
           </SelectField>
         </Col>
         <Col sm={9} className="whitePage" >
-          <ScheduleResult events={item}/>
+          <ScheduleResult events={this.props.events}/>
         </Col>
 
       </div>
@@ -111,13 +109,15 @@ class Schedule extends Component{
 }
 const mapStateToProps = state => {
   return{
-    events:state.events.events
+    events:state.eventInfo.events
   }
 }
 const mapDispatchToProps = dispatch => {
 
   return{
-
+      eventInfo:(date)=>{
+        dispatch(getEventInfo(date))
+      }
     }
   }
 

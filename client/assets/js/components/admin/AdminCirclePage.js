@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
-import {adminSetName,adminSetUrl,adminSetNumber,adminSetRaitio,
-adminSetImage,adminSetIntro,adminSetMessage,adminSetDeleName,
-adminSetContact,adminSetCampus,adminSetExcite,adminSetFee,
-adminSetCircle,adminSetTags} from '../../actions/index';
+import {adminSetName,adminSetUrl,adminSetNumber,adminSetIntro,
+  adminSetDeleName,adminSetContact,adminSetCampus,adminSetEntrance,
+  adminSetAnnual,adminSetWeek,adminSetTime,adminSetAdmission,
+  adminSetBox,adminSetBooth,adminSetCircle} from '../../actions/index';
 import {withRouter} from 'react-router-dom'
 
 import {Col,Form,FormGroup,FormControl} from "react-bootstrap"
@@ -30,17 +30,8 @@ class AdminCirclePage extends Component{
       case 'number':
         this.props.adminSetNumber(e.target.value)
       break;
-      case 'gender_raitio':
-        this.props.adminSetRaitio(e.target.value)
-      break;
-      case 'image':
-        this.props.adminSetImage(e.target.value)
-      break;
       case 'introduction':
         this.props.adminSetIntro(e.target.value)
-      break;
-      case 'message_for_fresh':
-        this.props.adminSetMessage(e.target.value)
       break;
       case 'delegete_name':
         this.props.adminSetDeleName(e.target.value)
@@ -51,12 +42,28 @@ class AdminCirclePage extends Component{
       case 'campus':
         this.props.adminSetCampus(e.target.value)
       break;
-      case 'fee':
-        this.props.adminSetFee(e.target.value)
+      case 'entrance_fee':
+        this.props.adminSetEntrance(e.target.value)
       break;
-      case 'excite':
-        this.props.adminSetExcite(e.target.value)
+      case 'annual_fee':
+        this.props.adminSetAnnual(e.target.value)
       break;
+      case 'activity_week':
+        this.props.adminSetWeek(e.target.value)
+      break;
+      case 'activity_time':
+        this.props.adminSetTime(e.target.value)
+      break;
+      case 'admission_deadline':
+        this.props.adminSetAdmission(e.target.value)
+      break;
+      case 'box_number':
+        this.props.adminSetBox(e.target.value)
+      break;
+      case 'booth_number':
+        this.props.adminSetBooth(e.target.value)
+      break;
+
       default:
       break;
     }
@@ -104,19 +111,7 @@ class AdminCirclePage extends Component{
             <TextField
             name = "number"
             type = "number"
-            floatingLabelText="メンバー数"
-            floatingLabelFixed={true}
-            fullWidth={true}
-            onChange={this.handleChange.bind(this)}
-            />
-    			</Col>
-    		</FormGroup>
-        <FormGroup>
-    			<Col smOffset={2} sm={8}>
-            <TextField
-            name = "gender_raitio"
-            type = "text"
-            floatingLabelText="男女比"
+            floatingLabelText="人数"
             floatingLabelFixed={true}
             fullWidth={true}
             onChange={this.handleChange.bind(this)}
@@ -129,28 +124,16 @@ class AdminCirclePage extends Component{
             <TextField
             name = "introduction"
             type = "text"
-            floatingLabelText="サークルの種類"
-            floatingLabelFixed={true}
-            fullWidth={true}
-            onChange={this.handleChange.bind(this)}
-            />
-    			</Col>
-    		</FormGroup>
-        <FormGroup>
-    			<Col smOffset={2} sm={8}>
-            <TextField
-            name = "message_for_fresh"
-            type = "text"
-            floatingLabelText="サークル紹介文"
-            floatingLabelFixed={true}
-            fullWidth={true}
+            rows ={6}
             multiLine={true}
-            rows={2}
-            rowsMax={4}
+            floatingLabelText="紹介文"
+            floatingLabelFixed={true}
+            fullWidth={true}
             onChange={this.handleChange.bind(this)}
             />
     			</Col>
     		</FormGroup>
+
         <FormGroup>
     			<Col smOffset={2} sm={8}>
             <TextField
@@ -181,6 +164,18 @@ class AdminCirclePage extends Component{
             name = "campus"
             type = "text"
             floatingLabelText="活動場所"
+
+            fullWidth={true}
+            onChange={this.handleChange.bind(this)}
+            />
+    			</Col>
+    		</FormGroup>
+        <FormGroup>
+    			<Col smOffset={2} sm={8}>
+            <TextField
+            name = "entrance_fee"
+            type = "text"
+            floatingLabelText="入会費"
             floatingLabelFixed={true}
             fullWidth={true}
             onChange={this.handleChange.bind(this)}
@@ -190,11 +185,14 @@ class AdminCirclePage extends Component{
         <FormGroup>
     			<Col smOffset={2} sm={8}>
             <TextField
-            name = "fee"
-            type = "number"
+            name = "annual_fee"
+            type = "text"
             floatingLabelText="年会費"
             floatingLabelFixed={true}
             fullWidth={true}
+            multiLine={true}
+            rows={2}
+            rowsMax={4}
             onChange={this.handleChange.bind(this)}
             />
     			</Col>
@@ -202,9 +200,57 @@ class AdminCirclePage extends Component{
         <FormGroup>
     			<Col smOffset={2} sm={8}>
             <TextField
-            name = "excite"
+            name = "activity_week"
+            type = "text"
+            floatingLabelText="活動日"
+            floatingLabelFixed={true}
+            fullWidth={true}
+            onChange={this.handleChange.bind(this)}
+            />
+    			</Col>
+    		</FormGroup>
+        <FormGroup>
+    			<Col smOffset={2} sm={8}>
+            <TextField
+            name = "activity_time"
+            type = "text"
+            floatingLabelText="活動時間"
+            floatingLabelFixed={true}
+            fullWidth={true}
+            onChange={this.handleChange.bind(this)}
+            />
+    			</Col>
+    		</FormGroup>
+        <FormGroup>
+    			<Col smOffset={2} sm={8}>
+            <TextField
+            name = "admission_deadline"
+            type = "text"
+            floatingLabelText="締め切り"
+            floatingLabelFixed={true}
+            fullWidth={true}
+            onChange={this.handleChange.bind(this)}
+            />
+    			</Col>
+    		</FormGroup>
+        <FormGroup>
+    			<Col smOffset={2} sm={8}>
+            <TextField
+            name = "box_number"
             type = "number"
-            floatingLabelText="活動頻度"
+            floatingLabelText="BOX番号"
+            floatingLabelFixed={true}
+            fullWidth={true}
+            onChange={this.handleChange.bind(this)}
+            />
+    			</Col>
+    		</FormGroup>
+        <FormGroup>
+    			<Col smOffset={2} sm={8}>
+            <TextField
+            name = "booth_number"
+            type = "number"
+            floatingLabelText="ブース番号"
             floatingLabelFixed={true}
             fullWidth={true}
             onChange={this.handleChange.bind(this)}

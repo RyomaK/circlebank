@@ -36,9 +36,7 @@ class Header extends Component{
           <MenuItem onClick={ e =>{
             e.preventDefault(); this.props.history.push("/schedule");
           }}>新歓予定</MenuItem>
-          <MenuItem onClick={ e =>{
-            e.preventDefault(); this.props.history.push("/schedule");
-          }}>ブース位置</MenuItem>
+          
       </Drawer>
       <AppBar
       title="団体図鑑"
