@@ -14,11 +14,18 @@ import FlatButton from 'material-ui/FlatButton';
 import AddTag from './AddTag'
 import {Button,Col} from 'react-bootstrap'
 import {connect} from 'react-redux'
-import {tagSearchStart} from '../../actions/index'
+import {tagSearchStart,deleteTag} from '../../actions/index'
 
 class AddTagPage extends Component{
   componentDidMount(){
     this.props.getTag()
+  }
+  handleClick(event,tag_id,tag_name){
+    event.preventDefault()
+    const data = [{id:tag_id,
+    name:tag_name}]
+    this.props.deleteTag(data)
+    this.props.history.push(`/admin`)
   }
 
   render(){
@@ -40,7 +47,7 @@ class AddTagPage extends Component{
                 {this.props.tags[0].tags.map( tag => (
                   <TableRow key={tag.id}>
                     <TableRowColumn>{tag.name}</TableRowColumn>
-                    <TableRowColumn><FlatButton>削除</FlatButton></TableRowColumn>
+                    <TableRowColumn><FlatButton onClick={(event)=>this.handleClick(event,tag.id,tag.name)}>削除</FlatButton></TableRowColumn>
                   </TableRow>
                 ))}
               </TableBody>
@@ -56,7 +63,7 @@ class AddTagPage extends Component{
                 {this.props.tags[1].tags.map( tag => (
                   <TableRow key={tag.id}>
                     <TableRowColumn>{tag.name}</TableRowColumn>
-                    <TableRowColumn><FlatButton>削除</FlatButton></TableRowColumn>
+                    <TableRowColumn><FlatButton onClick={(event)=>this.handleClick(event,tag.id,tag.name)}>削除</FlatButton></TableRowColumn>
                   </TableRow>
                 ))}
               </TableBody>
@@ -72,7 +79,7 @@ class AddTagPage extends Component{
                 {this.props.tags[2].tags.map( tag => (
                   <TableRow key={tag.id}>
                     <TableRowColumn>{tag.name}</TableRowColumn>
-                    <TableRowColumn><FlatButton>削除</FlatButton></TableRowColumn>
+                    <TableRowColumn><FlatButton onClick={(event)=>this.handleClick(event,tag.id,tag.name)}>削除</FlatButton></TableRowColumn>
                   </TableRow>
                 ))}
               </TableBody>
@@ -95,6 +102,9 @@ const mapDispatchToProps = dispatch => {
       getTag:()=>{
         dispatch(tagSearchStart())
       },
+      deleteTag:(data)=>{
+        dispatch(deleteTag(data))
+      }
 
     }
   }

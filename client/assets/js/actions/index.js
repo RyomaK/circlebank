@@ -483,10 +483,10 @@ export const deleteCircleTag = (circle_id,data) => dispatch => {
       console.log(e);
     });
 }
-export const deleteTag = (circle_id,tag_id) => dispatch => {
+export const deleteTag = (data) => dispatch => {
   const Auth = getAuth();
     axios
-    .delete(`/admin/circle/tag/${circle_id}/${tag_id}`,{headers:{'Authorization':`Bearer ${Auth}`}})
+    .delete(`/admin/tag`,{headers:{'Authorization':`Bearer ${Auth}`},data})
     .then((results) => {
 
       const status = results.status

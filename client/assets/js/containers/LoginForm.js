@@ -71,9 +71,6 @@ class LoginForm extends Component {
           <Col smOffset={2} sm={8}>
             <FlatButton label="Log In"  backgroundColor="#8AA62F" hoverColor="#7CBD1E" style={styles.customColor} type="submit" />
     		   </Col>
-          <Col smOffset={2}sm={8}>
-            <Link to="/signup"><p className="rightside">アカウント作成はコチラ</p></Link>
-          </Col>
     		</FormGroup>
     	   </Form>
        </div>
