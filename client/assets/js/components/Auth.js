@@ -6,7 +6,7 @@ import adminEventPage from './admin/adminEventPage'
 import DeletePage from './admin/DeletePage'
 import CirclePage from '../containers/CirclePage'
 import CircleImage from './admin/CircleImage'
-import AddTagPage from './admin/addTagPage'
+import AddTagPage from './admin/AddTagPage'
 import AddSNS from './admin/AddSNS'
 
 
