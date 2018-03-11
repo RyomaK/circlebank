@@ -155,6 +155,11 @@ func DeleteTags(db *sql.DB, tags *[]Tag) error {
 		if err != nil {
 			return err
 		}
+		query = `delete from circles_tags where tag_id = ?`
+		_, err = db.Exec(query, v.ID)
+		if err != nil {
+			return err
+		}
 	}
 	return nil
 }
