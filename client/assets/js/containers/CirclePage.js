@@ -19,7 +19,6 @@ class CirclePage extends Component {
       textAlign: 'center',
       display: 'inline-block',
     }
-    console.log(this.props)
     return(
       <div>
           <Col smOffset = {2} sm={8} className="circlePage">

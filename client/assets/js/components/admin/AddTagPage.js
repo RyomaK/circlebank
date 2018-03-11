@@ -20,6 +20,7 @@ class AddTagPage extends Component{
   componentDidMount(){
     this.props.getTag()
   }
+
   render(){
     return(
         <div>
@@ -39,7 +40,7 @@ class AddTagPage extends Component{
                 {this.props.tags[0].tags.map( tag => (
                   <TableRow key={tag.id}>
                     <TableRowColumn>{tag.name}</TableRowColumn>
-                    <TableRowColumn></TableRowColumn>
+                    <TableRowColumn><FlatButton>削除</FlatButton></TableRowColumn>
                   </TableRow>
                 ))}
               </TableBody>
@@ -55,7 +56,7 @@ class AddTagPage extends Component{
                 {this.props.tags[1].tags.map( tag => (
                   <TableRow key={tag.id}>
                     <TableRowColumn>{tag.name}</TableRowColumn>
-                    <TableRowColumn></TableRowColumn>
+                    <TableRowColumn><FlatButton>削除</FlatButton></TableRowColumn>
                   </TableRow>
                 ))}
               </TableBody>
@@ -71,7 +72,7 @@ class AddTagPage extends Component{
                 {this.props.tags[2].tags.map( tag => (
                   <TableRow key={tag.id}>
                     <TableRowColumn>{tag.name}</TableRowColumn>
-                    <TableRowColumn></TableRowColumn>
+                    <TableRowColumn><FlatButton>削除</FlatButton></TableRowColumn>
                   </TableRow>
                 ))}
               </TableBody>
@@ -93,7 +94,8 @@ const mapDispatchToProps = dispatch => {
   return{
       getTag:()=>{
         dispatch(tagSearchStart())
-      }
+      },
+
     }
   }
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AddTagPage))

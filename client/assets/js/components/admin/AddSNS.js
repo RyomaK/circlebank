@@ -1,5 +1,5 @@
 import React,{Component} from 'react'
-import {circleSearch,sns} from '../../actions/index'
+import {circleSearch,sns,deletesns} from '../../actions/index'
 import {withRouter} from 'react-router-dom'
 import {Col,Form,FormGroup,FormControl} from "react-bootstrap"
 import {
@@ -21,7 +21,7 @@ class AddSNS extends Component{
   constructor(props){
     super(props)
     this.state={value1:{
-      circle_id:'',
+      id:'',
       sns:''
     }
 
@@ -39,9 +39,17 @@ class AddSNS extends Component{
     this.props.getsns(data,id)
     this.props.history.push('/admin')
   }
+  handleClick(e){
+    e.preventDefault()
+    const id = this.props.match.params.id
+    const box = [{circle_id:String(id),sns:this.props.snsname[0].sns}]
+    this.props.deletesns(box,id)
+    this.props.history.push('/admin')
+
+  }
   handleChange(e){
     const id = this.props.match.params.id
-    this.setState({value1:{circle_id:id,sns:e.target.value}})
+    this.setState({value1:{id:String(id),sns:e.target.value}})
   }
 
 
@@ -79,7 +87,7 @@ class AddSNS extends Component{
             {this.props.snsname.map( (sns,index)=> (
               <TableRow key={index}>
                 <TableRowColumn>{sns.sns}</TableRowColumn>
-                <TableRowColumn><FlatButton onClick={(event)=>this.handleClick1(event,sns.circle_id) }>削除</FlatButton></TableRowColumn>
+                <TableRowColumn><FlatButton onClick={this.handleClick.bind(this) }>削除</FlatButton></TableRowColumn>
               </TableRow>
             ))}
             </TableBody>
@@ -102,6 +110,9 @@ const mapDispatchToProps = dispatch => {
       },
       getsns:(data,id) => {
         dispatch(sns(data,id))
+      },
+      deletesns:(data,id) => {
+        dispatch(deletesns(data,id))
       }
     }
   }

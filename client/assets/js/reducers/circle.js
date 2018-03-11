@@ -23,7 +23,6 @@ const initialState = {
 
 
 const circle = (state=initialState,action) => {
-console.log(action)
   switch(action.type){
     case 'CIRCLE':
     if(action.circle.tags==null&& action.circle.sns==null){
@@ -41,7 +40,7 @@ console.log(action)
           events:action.circle.events,
           tags:action.circle.tags
         }
-      }else if(actino.circle.tags==null){
+      }else if(action.circle.tags==null){
         return{
           circle:action.circle.Circle,
           sns:action.circle.sns,
