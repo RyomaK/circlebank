@@ -1,5 +1,6 @@
 import React,{Component} from 'react'
-import {circleImage,adminSetTags,adminAddCircleTag,circleSearch,billImage} from '../../actions/index'
+import {circleImage,adminSetTags,adminAddCircleTag,circleSearch,billImage
+,deleteCircleTag} from '../../actions/index'
 import {withRouter} from 'react-router-dom'
 import {
   Table,
@@ -31,6 +32,14 @@ class CircleImage extends Component{
   componentDidMount(){
     const url = this.props.match.params.circle_url
     this.props.circleSearch(url)
+  }
+  handleClick(event,tag){
+    event.preventDefault()
+    const id = this.props.match.params.id
+    let deleteTag = []
+    deleteTag = deleteTag.concat(tag)
+    this.props.deleteCircleTag(id,deleteTag)
+    this.props.history.push('/admin')
   }
   handleSubmit(e){
     e.preventDefault();
@@ -70,7 +79,7 @@ class CircleImage extends Component{
     e.preventDefault();
     this.setState({image:e.target.files[0]})
   }
-  handleChange1(e){
+  handleChange4(e){
     e.preventDefault();
     this.setState({bill_image:e.target.files[0]})
   }
@@ -127,7 +136,7 @@ class CircleImage extends Component{
           {this.props.tag.map( (tag)=> (
             <TableRow key={tag.id}>
               <TableRowColumn>{tag.name}</TableRowColumn>
-              <TableRowColumn><FlatButton onClick={(event)=>this.handleClick1(event,tag.id) }>削除</FlatButton></TableRowColumn>
+              <TableRowColumn><FlatButton onClick={(event)=>this.handleClick(event,tag) }>削除</FlatButton></TableRowColumn>
             </TableRow>
           ))}
           </TableBody>
@@ -174,7 +183,7 @@ class CircleImage extends Component{
             </Col>
             <Col sm={12}>
               <h3>ビラ画像追加</h3>
-              <input type="file" onChange={this.handleChange1.bind(this)}/>
+              <input type="file" onChange={this.handleChange4.bind(this)}/>
             </Col>
             <Col sm={12}>
             <br/>
@@ -212,6 +221,9 @@ const mapDispatchToProps = dispatch => {
       },
       billImage:(image,id)=>{
         dispatch(billImage(image,id))
+      },
+      deleteCircleTag:(circle_id,data)=>{
+        dispatch(deleteCircleTag(circle_id,data))
       }
     }
   }

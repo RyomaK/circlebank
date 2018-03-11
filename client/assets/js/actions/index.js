@@ -45,12 +45,30 @@ export const image = () => dispatch => {
       console.log("エラー")
   });
 }
+export const deletesns = (data,id) => dispatch => {
+  const Auth = getAuth();
+  axios
+  .delete(`admin/circle/10/sns`,{headers:{'Authorization':`Bearer ${Auth}`},data}).then((results) => {
+    const status = results.status
+    return { status }
+  }).then(({ status })=>{
+    switch(status){
+      case 200:
 
+      break;
+
+      default:
+      break;
+    }
+  }).catch(() => {
+      console.log("エラー")
+  });
+}
 export const sns = (data,id) => dispatch => {
   const Auth = getAuth();
   axios
-  .post(`circle/${id}/sns`,data,{headers:{'Authorization':`Bearer ${Auth}`}}).then((results) => {
-
+  .post(`admin/circle/${id}/sns`,data,{headers:{'Authorization':`Bearer ${Auth}`}}).then((results) => {
+    const status = results.status
     return { status }
   }).then(({ status })=>{
     switch(status){
@@ -438,6 +456,61 @@ export const adminGetCircle = () => dispatch => {
       console.log(e);
     });
 }
+export const deleteCircleTag = (circle_id,data) => dispatch => {
+  const Auth = getAuth();
+    axios
+    .delete(`admin/circle/${circle_id}/tag`,{headers:{'Authorization':`Bearer ${Auth}`},data})
+    .then((results) => {
+
+      const status = results.status
+      return { status}
+    }).then(({ status}) => {
+      switch (status) {
+        case 200: {
+          break;
+        }
+        case 401: {
+          dispatch(setLogin(-1));
+          break;
+        }
+        default: {
+          dispatch(setErrorMessage('エラーが発生しました'));
+          break;
+        }
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+}
+export const deleteTag = (circle_id,tag_id) => dispatch => {
+  const Auth = getAuth();
+    axios
+    .delete(`/admin/circle/tag/${circle_id}/${tag_id}`,{headers:{'Authorization':`Bearer ${Auth}`}})
+    .then((results) => {
+
+      const status = results.status
+      return { status}
+    }).then(({ status}) => {
+      switch (status) {
+        case 200: {
+          break;
+        }
+        case 401: {
+          dispatch(setLogin(-1));
+          break;
+        }
+        default: {
+          dispatch(setErrorMessage('エラーが発生しました'));
+          break;
+        }
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+}
+
 
 
 export const adminSetCircle = circle => dispatch => {
