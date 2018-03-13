@@ -13,6 +13,9 @@ import FlatButton from 'material-ui/FlatButton';
 import { connect } from 'react-redux'
 
 class CircleEdit extends Component{
+  componentDidMount(){
+
+  }
   handleSubmit(e){
     e.preventDefault()
     this.props.adminSetCircle(this.props.circle);
@@ -20,6 +23,7 @@ class CircleEdit extends Component{
   }
 
   handleChange(e){
+    console.log(this.props.circle)
     switch(e.target.name){
       case 'name':
         this.props.adminSetName(e.target.value)
@@ -69,6 +73,7 @@ class CircleEdit extends Component{
     }
   }
   render(){
+
     const styles = {
       customWidth: {
         width: '100%',
@@ -309,6 +314,18 @@ const mapDispatchToProps = dispatch => {
       },
       adminSetExcite:(name)=>{
         dispatch(adminSetExcite(name))
+      },
+      adminSetAdmission:(name)=>{
+        dispatch(adminSetAdmission(name))
+      },
+      adminSetAdmission:(name)=>{
+        dispatch(adminSetAdmission(name))
+      },
+      adminSetAdmission:(name)=>{
+        dispatch(adminSetAdmission(name))
+      },
+      adminSetAdmission:(name)=>{
+        dispatch(adminSetAdmission(name))
       },
       adminSetMessage:(name)=>{
         dispatch(adminSetMessage(name))
