@@ -71,11 +71,11 @@ const adminSetState = (state=initialState,action) => {
       })
     case 'ADMIN_SET_BOX':
       return Object.assign({}, state, {
-        box: Number(action.box)
+        box: action.box
       })
     case 'ADMIN_SET_BOOTH':
       return Object.assign({}, state, {
-        booth: Number(action.booth)
+        booth:action.booths
       })
     default:
       return(

@@ -237,7 +237,7 @@ class AdminCirclePage extends Component{
     			<Col smOffset={2} sm={8}>
             <TextField
             name = "box_number"
-            type = "number"
+            type = "text"
             floatingLabelText="BOX番号"
             floatingLabelFixed={true}
             fullWidth={true}
@@ -249,7 +249,7 @@ class AdminCirclePage extends Component{
     			<Col smOffset={2} sm={8}>
             <TextField
             name = "booth_number"
-            type = "number"
+            type = "text"
             floatingLabelText="ブース番号"
             floatingLabelFixed={true}
             fullWidth={true}
@@ -312,6 +312,12 @@ const mapDispatchToProps = dispatch => {
       },
       adminSetMessage:(name)=>{
         dispatch(adminSetMessage(name))
+      },
+      adminSetBox:(name) => {
+        dispatch(adminSetBox(name))
+      },
+      adminSetBooth:(name)=> {
+        dispatch(adminSetBooth(name))
       }
 
     }
