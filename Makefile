@@ -1,6 +1,5 @@
 DBNAME:=circle_bank
 
-DBCONFIG:="rda74_ori:Orijitsu_0401@tcp(public.rda74.tyo1.database-hosting.conoha.io:3306)/rda74_ori?parseTime=true"
 #DBCONFIG:=root:@/circle_bank?parseTime=true
 ADDR:=8080
 
