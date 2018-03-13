@@ -526,13 +526,13 @@ export const adminSetCircle = circle => dispatch => {
       'delegate_name':circle.message_for_fresh,
       'delegete_contact':circle.delegete_contact,
       'campus':circle.campus,
-      'entrance_fee':circle.excite,
-      'annual_fee':circle.fee,
-      'activity_week':circle.fee,
-      'activity_time':circle.fee,
-      'admission_deadline':circle.fee,
-      "box_number": 1,
-      "booth_number": 1
+      'entrance_fee':circle.entrance_fee,
+      'annual_fee':circle.annual_fee,
+      'activity_week':circle.activity_week,
+      'activity_time':circle.activity_time,
+      'admission_deadline':circle.admission_deadline,
+      "box_number": circle.box_number,
+      "booth_number": circle.booth_number
 },{headers:{'Authorization':`Bearer ${Auth}`}})
     .then((results) => {
       const status = results.status

@@ -51,31 +51,31 @@ const adminSetState = (state=initialState,action) => {
       })
     case 'ADMIN_SET_ENTRANCE':
       return Object.assign({}, state, {
-        entrance: action.entrance
+        entrance_fee: action.entrance
       })
     case 'ADMIN_SET_ANNUAL':
       return Object.assign({}, state, {
-        annual: action.annual
+        annual_fee: action.annual
       })
     case 'ADMIN_SET_WEEK':
       return Object.assign({}, state, {
-        week: action.week
+        activity_week: action.week
       })
     case 'ADMIN_SET_TIME':
       return Object.assign({}, state, {
-        time: action.time
+        activity_time: action.time
       })
     case 'ADMIN_SET_ADMISSION':
       return Object.assign({}, state, {
-        admission: action.admission
+        admission_deadline: action.admission
       })
     case 'ADMIN_SET_BOX':
       return Object.assign({}, state, {
-        box: action.box
+        box_number: action.box
       })
     case 'ADMIN_SET_BOOTH':
       return Object.assign({}, state, {
-        booth:action.booths
+        booth_number:action.booth
       })
     default:
       return(

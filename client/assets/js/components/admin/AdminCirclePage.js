@@ -20,6 +20,7 @@ class AdminCirclePage extends Component{
   }
 
   handleChange(e){
+    console.log(this.props.circle)
     switch(e.target.name){
       case 'name':
         this.props.adminSetName(e.target.value)
@@ -190,9 +191,6 @@ class AdminCirclePage extends Component{
             floatingLabelText="年会費"
             floatingLabelFixed={true}
             fullWidth={true}
-            multiLine={true}
-            rows={2}
-            rowsMax={4}
             onChange={this.handleChange.bind(this)}
             />
     			</Col>
@@ -286,12 +284,6 @@ const mapDispatchToProps = dispatch => {
       adminSetNumber:(name)=>{
         dispatch(adminSetNumber(name))
       },
-      adminSetRaitio:(name)=>{
-        dispatch(adminSetRaitio(name))
-      },
-      adminSetImage:(name)=>{
-        dispatch(adminSetImage(name))
-      },
       adminSetIntro:(name)=>{
         dispatch(adminSetIntro(name))
       },
@@ -304,14 +296,20 @@ const mapDispatchToProps = dispatch => {
       adminSetCampus:(name)=>{
         dispatch(adminSetCampus(name))
       },
-      adminSetFee:(name)=>{
-        dispatch(adminSetFee(name))
+      adminSetEntrance:(name)=>{
+        dispatch(adminSetEntrance(name))
       },
-      adminSetExcite:(name)=>{
-        dispatch(adminSetExcite(name))
+      adminSetAnnual:(name)=>{
+        dispatch(adminSetAnnual(name))
       },
-      adminSetMessage:(name)=>{
-        dispatch(adminSetMessage(name))
+      adminSetWeek:(name)=>{
+        dispatch(adminSetWeek(name))
+      },
+      adminSetTime:(name)=>{
+        dispatch(adminSetTime(name))
+      },
+      adminSetAdmission:(name)=>{
+        dispatch(adminSetAdmission(name))
       },
       adminSetBox:(name) => {
         dispatch(adminSetBox(name))
