@@ -49,8 +49,8 @@ type Circle struct {
 	ActivityOfWeek    string `db:"activity_week" json:"activity_week"`
 	ActivityTime      string `db:"activity_time" json:"activity_time"`
 	AdmissionDeadline string `db:"admission_deadline" json:"admission_deadline"`
-	BoxNumber         int    `db:"box_number" json:"box_number"`
-	BoothNumber       int    `db:"booth_number" json:"booth_number"`
+	BoxNumber         string    `db:"box_number" json:"box_number"`
+	BoothNumber       string   `db:"booth_number" json:"booth_number"`
 }
 
 type Event struct {
