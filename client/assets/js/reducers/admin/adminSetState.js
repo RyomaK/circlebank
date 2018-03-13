@@ -5,16 +5,16 @@ const initialState = {
       introduction: "",
       image: "",
       bill_image:'',
-      delegete_name:  "",
-      delegete_contact: "",
+      delegate_name:  "",
+      delegate_contact: "",
       campus:"" ,
       entrance_fee:'',
       annual_fee: '',
       activity_week:"",
       activity_time:"",
       admission_deadline:"",
-      box_number:0,
-      booth_number:0
+      box_number:"",
+      booth_number:""
   }
 
 const adminSetState = (state=initialState,action) => {
@@ -39,11 +39,11 @@ const adminSetState = (state=initialState,action) => {
       })
     case 'ADMIN_SET_DELENAME':
       return Object.assign({}, state, {
-        delegete_name: action.name
+        delegate_name: action.name
       })
     case 'ADMIN_SET_CONTACT':
       return Object.assign({}, state, {
-        delegete_contact: action.contact
+        delegate_contact: action.contact
       })
     case 'ADMIN_SET_CAMPUS':
       return Object.assign({}, state, {

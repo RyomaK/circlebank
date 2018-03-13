@@ -69,13 +69,13 @@ class Circle extends Component{
                   <td>キャンパス</td>
                   <td>{circle.campus}</td>
                   <td>連絡先</td>
-                  <td>{circle.campus}</td>
+                  <td>{circle.delegate_contact}</td>
                 </tr>
                 <tr>
                   <td>活動</td>
                   <td>{circle.activity_week}</td>
                   <td>活動時間</td>
-                  <td>{circle.acticity_time}</td>
+                  <td>{circle.activity_time}</td>
                 </tr>
                 <tr>
                   <td>入会費</td>
