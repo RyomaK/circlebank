@@ -34,10 +34,10 @@ class AdminCirclePage extends Component{
       case 'introduction':
         this.props.adminSetIntro(e.target.value)
       break;
-      case 'delegete_name':
+      case 'delegate_name':
         this.props.adminSetDeleName(e.target.value)
       break;
-      case 'delegete_contact':
+      case 'delegate_contact':
         this.props.adminSetContact(e.target.value)
       break;
       case 'campus':
@@ -138,7 +138,7 @@ class AdminCirclePage extends Component{
         <FormGroup>
     			<Col smOffset={2} sm={8}>
             <TextField
-            name = "delegete_name"
+            name = "delegate_name"
             type = "text"
             floatingLabelText="代表者"
             floatingLabelFixed={true}
@@ -150,7 +150,7 @@ class AdminCirclePage extends Component{
         <FormGroup>
     			<Col smOffset={2} sm={8}>
             <TextField
-            name = "delegete_contact"
+            name = "delegate_contact"
             type = "text"
             floatingLabelText="連絡先"
             floatingLabelFixed={true}
