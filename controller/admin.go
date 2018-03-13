@@ -68,6 +68,7 @@ func (a *Admin) AdminCircleEventHandler(w http.ResponseWriter, r *http.Request) 
 		w.Write(res)
 	} else {
 		if events == nil{
+			w = SetHeader(w,http.StatusOK)
 			status := StatusCode{Code: http.StatusOK, Message: "not found"}
 			res, _ := json.Marshal(status)
 			w.Write(res)
