@@ -427,14 +427,18 @@ export const adminCheck = () => dispatch => {
 }
 
 
-export const adminGetCircle = () => dispatch => {
+export const adminGetCircle = (page) => dispatch => {
   const Auth = getAuth();
     axios
-    .get('/admin/circle',{headers:{'Authorization':`Bearer ${Auth}`}})
+    .get(`/admin/circle?page=${page}`,{headers:{'Authorization':`Bearer ${Auth}`}})
     .then((results) => {
 
       const status = results.status
-      const circle = results.data
+      let circle = results.data
+      if (circle === null){
+          circle = []
+        return {status,circle}
+      }
       return { status, circle }
     }).then(({ status, circle }) => {
       switch (status) {
