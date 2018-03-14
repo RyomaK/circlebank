@@ -17,7 +17,7 @@ import FlatButton from 'material-ui/FlatButton';
 import FontIcon from 'material-ui/FontIcon';
 import IconButton from 'material-ui/IconButton';
 import AddButton from 'material-ui/svg-icons/content/add';
-import {adminGetCircle,adminDeleteCircle} from '../../actions/index'
+import {adminGetCircle,adminDeleteCircle,adminCircleSearch} from '../../actions/index'
 
 class Home extends Component{
   componentDidMount(){
@@ -49,8 +49,12 @@ class Home extends Component{
     event.preventDefault()
     this.props.history.push(`admin/add/circle`)
   }
+  handleClick6(event,id,url){
+    event.preventDefault()
+    this.props.adminCircleSearch(url)
+    this.props.history.push(`admin/edit/circle/${id}`)
+  }
   render(){
-    console.log(this.props.circles.circle)
     return(
         <div>
         <Col smOffset={1} sm={10}>
@@ -70,12 +74,14 @@ class Home extends Component{
                 <TableHeaderColumn></TableHeaderColumn>
                 <TableHeaderColumn></TableHeaderColumn>
                 <TableHeaderColumn></TableHeaderColumn>
+                <TableHeaderColumn></TableHeaderColumn>
               </TableRow>
             </TableHeader>
             <TableBody displayRowCheckbox={false}>
             {this.props.circles.circle.map( circle => (
               <TableRow key={circle.id}>
                 <TableRowColumn><span onClick={(event)=>this.handleClick4(event,circle.url_name)}>{circle.name}</span></TableRowColumn>
+                <TableRowColumn><FlatButton onClick={(event)=>this.handleClick6(event,circle.id,circle.url_name)} >編集</FlatButton></TableRowColumn>
                 <TableRowColumn><FlatButton onClick={(event)=>this.handleClick3(event,circle.id,circle.url_name)} >SNS追加</FlatButton></TableRowColumn>
                 <TableRowColumn><FlatButton onClick={(event)=>this.handleClick(event,circle.url_name)} >イベント追加</FlatButton></TableRowColumn>
                 <TableRowColumn><FlatButton onClick={(event)=>this.handleClick2(event,circle.id,circle.url_name)} >画像・タグ追加</FlatButton></TableRowColumn>
@@ -103,6 +109,9 @@ const mapDispatchToProps = dispatch => {
       },
       DeleteCircle:(id)=>{
         dispatch(adminDeleteCircle(id))
+      },
+      adminCircleSearch:(url)=>{
+        dispatch(adminCircleSearch(url))
       }
     }
   }

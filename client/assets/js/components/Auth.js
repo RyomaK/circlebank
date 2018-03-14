@@ -8,6 +8,7 @@ import CirclePage from '../containers/CirclePage'
 import CircleImage from './admin/CircleImage'
 import AddTagPage from './admin/AddTagPage'
 import AddSNS from './admin/AddSNS'
+import CircleEdit from './admin/CircleEdit'
 
 
 import { Redirect, Route} from 'react-router-dom'
@@ -32,6 +33,7 @@ class Auth extends Component{
           <Route exact path='/admin/newtag' component={AddTagPage}/>
           <Route exact path='/admin/sns/:name/:id' component={AddSNS}/>
           <Route exact path='/admin/circle/search/:name' component={CirclePage}/>
+          <Route exact path='/admin/edit/circle/:id' component={CircleEdit}/>
         </div>
       )
     }else{

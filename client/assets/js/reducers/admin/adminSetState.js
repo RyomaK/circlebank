@@ -13,8 +13,8 @@ const initialState = {
       activity_week:"",
       activity_time:"",
       admission_deadline:"",
-      box_number:"",
-      booth_number:""
+      box_number:"なし",
+      booth_number:"なし"
   }
 
 const adminSetState = (state=initialState,action) => {
@@ -77,6 +77,10 @@ const adminSetState = (state=initialState,action) => {
       return Object.assign({}, state, {
         booth_number:action.booth
       })
+    case 'CIRCLE_EDIT':
+      return (
+        state=action.circle.Circle
+      )
     default:
       return(
         state
