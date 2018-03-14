@@ -85,7 +85,7 @@ img { -webkit-backface-visibility: hidden; }
   }
 
   .fontChange1{
-    font-size:10px;
+    font-size:14px;
   }
   .menucolor{
     background-color: white;
@@ -143,7 +143,7 @@ img { -webkit-backface-visibility: hidden; }
 }
 
 @media screen and (min-width: 768px) {
-  
+
   .visible{
     display:none
   }

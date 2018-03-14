@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {adminSetName,adminSetUrl,adminSetNumber,adminSetIntro,
   adminSetDeleName,adminSetContact,adminSetCampus,adminSetEntrance,
   adminSetAnnual,adminSetWeek,adminSetTime,adminSetAdmission,
-  adminSetBox,adminSetBooth,adminSetCircle} from '../../actions/index';
+  adminSetBox,adminSetBooth,adminSetCircle,adminEditCircle} from '../../actions/index';
 import {withRouter} from 'react-router-dom'
 
 import {Col,Form,FormGroup,FormControl} from "react-bootstrap"
@@ -13,17 +13,14 @@ import FlatButton from 'material-ui/FlatButton';
 import { connect } from 'react-redux'
 
 class CircleEdit extends Component{
-  componentDidMount(){
-
-  }
   handleSubmit(e){
     e.preventDefault()
-    this.props.adminSetCircle(this.props.circle);
+    const id = this.props.match.params.id
+    this.props.adminEditCircle(id,this.props.circle)
     this.props.history.push('/admin');
   }
 
   handleChange(e){
-    console.log(this.props.circle)
     switch(e.target.name){
       case 'name':
         this.props.adminSetName(e.target.value)
@@ -37,10 +34,10 @@ class CircleEdit extends Component{
       case 'introduction':
         this.props.adminSetIntro(e.target.value)
       break;
-      case 'delegete_name':
+      case 'delegate_name':
         this.props.adminSetDeleName(e.target.value)
       break;
-      case 'delegete_contact':
+      case 'delegate_contact':
         this.props.adminSetContact(e.target.value)
       break;
       case 'campus':
@@ -73,7 +70,6 @@ class CircleEdit extends Component{
     }
   }
   render(){
-
     const styles = {
       customWidth: {
         width: '100%',
@@ -94,6 +90,7 @@ class CircleEdit extends Component{
             floatingLabelText="サークル名"
             floatingLabelFixed={true}
             fullWidth={true}
+            value ={this.props.circle.name}
             onChange={this.handleChange.bind(this)}
             />
     			</Col>
@@ -106,6 +103,7 @@ class CircleEdit extends Component{
             type = "text"
             floatingLabelText="URL名"
             floatingLabelFixed={true}
+            value ={this.props.circle.url_name}
             fullWidth={true}
             onChange={this.handleChange.bind(this)}
             />
@@ -118,6 +116,7 @@ class CircleEdit extends Component{
             type = "number"
             floatingLabelText="人数"
             floatingLabelFixed={true}
+            value ={this.props.circle.number}
             fullWidth={true}
             onChange={this.handleChange.bind(this)}
             />
@@ -131,6 +130,7 @@ class CircleEdit extends Component{
             type = "text"
             rows ={6}
             multiLine={true}
+            value ={this.props.circle.introduction}
             floatingLabelText="紹介文"
             floatingLabelFixed={true}
             fullWidth={true}
@@ -142,9 +142,10 @@ class CircleEdit extends Component{
         <FormGroup>
     			<Col smOffset={2} sm={8}>
             <TextField
-            name = "delegete_name"
+            name = "delegate_name"
             type = "text"
             floatingLabelText="代表者"
+            value ={this.props.circle.delegate_name}
             floatingLabelFixed={true}
             fullWidth={true}
             onChange={this.handleChange.bind(this)}
@@ -154,10 +155,11 @@ class CircleEdit extends Component{
         <FormGroup>
     			<Col smOffset={2} sm={8}>
             <TextField
-            name = "delegete_contact"
+            name = "delegate_contact"
             type = "text"
             floatingLabelText="連絡先"
             floatingLabelFixed={true}
+            value ={this.props.circle.delegate_contact}
             fullWidth={true}
             onChange={this.handleChange.bind(this)}
             />
@@ -169,7 +171,8 @@ class CircleEdit extends Component{
             name = "campus"
             type = "text"
             floatingLabelText="活動場所"
-
+            floatingLabelFixed={true}
+            value ={this.props.circle.campus}
             fullWidth={true}
             onChange={this.handleChange.bind(this)}
             />
@@ -182,6 +185,7 @@ class CircleEdit extends Component{
             type = "text"
             floatingLabelText="入会費"
             floatingLabelFixed={true}
+            value ={this.props.circle.entrance_fee}
             fullWidth={true}
             onChange={this.handleChange.bind(this)}
             />
@@ -194,10 +198,8 @@ class CircleEdit extends Component{
             type = "text"
             floatingLabelText="年会費"
             floatingLabelFixed={true}
+            value ={this.props.circle.annual_fee}
             fullWidth={true}
-            multiLine={true}
-            rows={2}
-            rowsMax={4}
             onChange={this.handleChange.bind(this)}
             />
     			</Col>
@@ -209,6 +211,7 @@ class CircleEdit extends Component{
             type = "text"
             floatingLabelText="活動日"
             floatingLabelFixed={true}
+            value ={this.props.circle.activity_week}
             fullWidth={true}
             onChange={this.handleChange.bind(this)}
             />
@@ -221,6 +224,7 @@ class CircleEdit extends Component{
             type = "text"
             floatingLabelText="活動時間"
             floatingLabelFixed={true}
+            value ={this.props.circle.activity_time}
             fullWidth={true}
             onChange={this.handleChange.bind(this)}
             />
@@ -233,6 +237,7 @@ class CircleEdit extends Component{
             type = "text"
             floatingLabelText="締め切り"
             floatingLabelFixed={true}
+            value ={this.props.circle.admission_deadline}
             fullWidth={true}
             onChange={this.handleChange.bind(this)}
             />
@@ -245,6 +250,7 @@ class CircleEdit extends Component{
             type = "text"
             floatingLabelText="BOX番号"
             floatingLabelFixed={true}
+            value ={this.props.circle.box_number}
             fullWidth={true}
             onChange={this.handleChange.bind(this)}
             />
@@ -257,6 +263,7 @@ class CircleEdit extends Component{
             type = "text"
             floatingLabelText="ブース番号"
             floatingLabelFixed={true}
+            value ={this.props.circle.booth_number}
             fullWidth={true}
             onChange={this.handleChange.bind(this)}
             />
@@ -291,12 +298,6 @@ const mapDispatchToProps = dispatch => {
       adminSetNumber:(name)=>{
         dispatch(adminSetNumber(name))
       },
-      adminSetRaitio:(name)=>{
-        dispatch(adminSetRaitio(name))
-      },
-      adminSetImage:(name)=>{
-        dispatch(adminSetImage(name))
-      },
       adminSetIntro:(name)=>{
         dispatch(adminSetIntro(name))
       },
@@ -309,34 +310,30 @@ const mapDispatchToProps = dispatch => {
       adminSetCampus:(name)=>{
         dispatch(adminSetCampus(name))
       },
-      adminSetFee:(name)=>{
-        dispatch(adminSetFee(name))
+      adminSetEntrance:(name)=>{
+        dispatch(adminSetEntrance(name))
       },
-      adminSetExcite:(name)=>{
-        dispatch(adminSetExcite(name))
+      adminSetAnnual:(name)=>{
+        dispatch(adminSetAnnual(name))
       },
-      adminSetAdmission:(name)=>{
-        dispatch(adminSetAdmission(name))
+      adminSetWeek:(name)=>{
+        dispatch(adminSetWeek(name))
       },
-      adminSetAdmission:(name)=>{
-        dispatch(adminSetAdmission(name))
-      },
-      adminSetAdmission:(name)=>{
-        dispatch(adminSetAdmission(name))
+      adminSetTime:(name)=>{
+        dispatch(adminSetTime(name))
       },
       adminSetAdmission:(name)=>{
         dispatch(adminSetAdmission(name))
-      },
-      adminSetMessage:(name)=>{
-        dispatch(adminSetMessage(name))
       },
       adminSetBox:(name) => {
         dispatch(adminSetBox(name))
       },
       adminSetBooth:(name)=> {
         dispatch(adminSetBooth(name))
+      },
+      adminEditCircle:(id,circle)=>{
+        dispatch(adminEditCircle(id,circle))
       }
-
     }
   }
 

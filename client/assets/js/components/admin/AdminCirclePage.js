@@ -20,7 +20,6 @@ class AdminCirclePage extends Component{
   }
 
   handleChange(e){
-    console.log(this.props.circle)
     switch(e.target.name){
       case 'name':
         this.props.adminSetName(e.target.value)

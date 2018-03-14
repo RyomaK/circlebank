@@ -550,6 +550,28 @@ export const adminSetCircle = circle => dispatch => {
       console.log(e);
     });
 }
+export const adminEditCircle = (id,circle) => dispatch =>{
+    const Auth = getAuth();
+    axios
+    .put(`/admin/circle/${id}`,circle,{headers:{'Authorization':`Bearer ${Auth}`}})
+    .then((results) => {
+
+      const status = results.status
+      return{status}
+    }).then(({status})=>{
+      switch(status){
+        case 200:
+          dispatch(adminGetCircle())
+          break;
+        default:
+          break;
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+}
+
 
 export const adminGetEvent = (name) => dispatch => {
   const Auth = getAuth();
@@ -653,6 +675,38 @@ export const adminDeleteCircle = (id) => dispatch =>{
     .catch((e) => {
       console.log(e);
     });
+}
+
+export const adminCircleSearch = name => dispatch => {
+  axios
+  .get(`/api/circle/${name}`)
+  .then((results) => {
+    const status = results.status
+    const circle = results.data
+    return { status, circle };
+    if (typeof circle === undefined) {
+      return { status };
+    }
+  })
+  .then(({status, circle})=> {
+    switch (status) {
+      case 200: {
+        dispatch({type:'CIRCLE_EDIT',circle})
+        break;
+      }
+      case 401: {
+        dispatch(setLogin(-1));
+        break;
+      }
+      default: {
+        dispatch(setErrorMessage('エラーが発生しました'));
+        break;
+      }
+    }
+  })
+  .catch(() => {
+    dispatch(setSearchWord('notFound'));
+  });
 }
 
 export const adminAddTag = (tag) => dispatch => {
