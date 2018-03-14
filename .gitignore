@@ -2,3 +2,5 @@
 .DS_Store
 cmd/circle/cirle
 Makefile
+nohup.out
+public/img/

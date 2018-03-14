@@ -1,6 +1,11 @@
 DBNAME:=circle_bank
+<<<<<<< HEAD
 #DBCONFIG:=root:@/circle_bank?parseTime=true
 DBCONFIG:=root:Kenta71619@/circle_bank?parseTime=true
+=======
+
+DBCONFIG:=root:@/circle_bank?parseTime=true
+>>>>>>> 61e5369... fix
 ADDR:=8080
 
 install:
