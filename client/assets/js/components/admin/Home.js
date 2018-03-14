@@ -1,6 +1,6 @@
 import React,{Component} from 'react'
 import {Link,withRouter} from 'react-router-dom'
-import {Button,Col} from 'react-bootstrap'
+import {Button,Col,Pager} from 'react-bootstrap'
 import {connect} from 'react-redux';
 import Paper from 'material-ui/Paper';
 import {
@@ -20,8 +20,12 @@ import AddButton from 'material-ui/svg-icons/content/add';
 import {adminGetCircle,adminDeleteCircle,adminCircleSearch} from '../../actions/index'
 
 class Home extends Component{
+  constructor(props) {
+    super(props);
+    this.state = {value:1};
+  }
   componentDidMount(){
-    this.props.getCircle();
+    this.props.getCircle(this.state.value);
   }
   handleClick(event,name){
     event.preventDefault();
@@ -54,6 +58,18 @@ class Home extends Component{
     this.props.adminCircleSearch(url)
     this.props.history.push(`admin/edit/circle/${id}`)
   }
+  handlePreClick(e){
+    e.preventDefault()
+    if(this.state.value != 1){
+      this.props.getCircle(this.state.value-1)
+      this.setState({value:this.state.value-1})
+    }
+  }
+  handleNexClick(e){
+    e.preventDefault()
+      this.props.getCircle(this.state.value+1)
+      this.setState({value:this.state.value+1})
+  }
   render(){
     return(
         <div>
@@ -66,6 +82,7 @@ class Home extends Component{
           </IconButton>
         </span>
         </div>
+          <h4>{`${this.state.value}`}ページ目</h4>
           <Table>
             <TableHeader displaySelectAll={false}>
               <TableRow >
@@ -90,6 +107,12 @@ class Home extends Component{
             ))}
             </TableBody>
           </Table>
+          <div>
+          <Pager>
+            <Pager.Item onClick={this.handlePreClick.bind(this)}>Previous</Pager.Item>{' '}
+            <Pager.Item onClick={this.handleNexClick.bind(this)}>Next</Pager.Item>
+          </Pager>
+          </div>
           <Link to="/admin/newtag">新規タグ追加</Link>
         </Col>
         </div>
@@ -104,8 +127,8 @@ const  mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
   return{
-      getCircle:() => {
-        dispatch(adminGetCircle())
+      getCircle:(page) => {
+        dispatch(adminGetCircle(page))
       },
       DeleteCircle:(id)=>{
         dispatch(adminDeleteCircle(id))
