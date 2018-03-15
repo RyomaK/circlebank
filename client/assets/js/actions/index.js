@@ -26,6 +26,8 @@ export const setProIma = image => dispatch => dispatch({type: 'PRO_IMAGE',image}
 export const setfilter = item => dispatch => dispatch({type: 'SET_ITEM',item});
 export const tagReset = () => dispatch => dispatch({type: 'TAG_RESET'});
 
+export const setLoad = () => dispatch => dispatch({type:'LOAD_START'})
+
 export const image = () => dispatch => {
   axios
   .get('/static/img/users/2.png').then((results) => {

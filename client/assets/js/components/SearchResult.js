@@ -1,9 +1,17 @@
 import React,{ Component } from 'react'
 import {Card,CardMedia,CardTitle} from 'material-ui/Card';
-import { Link, Redirect} from 'react-router-dom'
+import { Link, Redirect, withRouter} from 'react-router-dom'
+import {setLoad} from '../actions/index'
 import { Col } from 'react-bootstrap'
 import { connect } from 'react-redux'
 class SearchResult extends Component{
+  componentDidMount(){
+    this.props.setLoad()
+  }
+  handleClick(event,url){
+    event.preventDefault()
+    this.props.history.push(`/circle/search/${url}`)
+  }
   render(){
     if(this.props.item==false){
       return(
@@ -12,7 +20,6 @@ class SearchResult extends Component{
     }else{
       return(
         <div>
-
             <div>
               <div>
                 <Col smOffset={2} sm={8}>
@@ -45,6 +52,11 @@ const mapStateToProps = state => {
     item: state.circleAll.item,
   }
 }
-export default connect(
-  mapStateToProps
-)(SearchResult)
+const mapDispatchToProps = dispatch => {
+  return{
+    setLoad:()=>{
+      dispatch(setLoad())
+    }
+  }
+}
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SearchResult))
