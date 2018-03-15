@@ -16,7 +16,7 @@ class TagPage extends Component {
             <Col smOffset={2} sm={8}>
             <h2>検索結果</h2>
           {this.props.circle.map( circle => (
-            <Col sm={6} className="marginbottom circleName reset" key={circle.id}><Link to={`/circle/search/${circle.url_name}`} >
+            <Col sm={6} className="marginbottom circleName cardReset" key={circle.id}><Link to={`/circle/search/${circle.url_name}`} >
                 <Card>
                 <CardMedia
                   overlay={<CardTitle title={circle.name}/>}

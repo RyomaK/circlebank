@@ -30,6 +30,10 @@ img { -webkit-backface-visibility: hidden; }
 
 
 @media screen and (max-width: 768px) {
+  .cardReset{
+    padding:0;
+    margin:0;
+  }
   .contents{
     padding:64px 0 90px 0;
     max-width:100%;
@@ -143,6 +147,9 @@ img { -webkit-backface-visibility: hidden; }
 }
 
 @media screen and (min-width: 768px) {
+    .cardReset{
+
+    }
 
   .visible{
     display:none
