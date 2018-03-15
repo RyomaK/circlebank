@@ -36,7 +36,6 @@ func GetUserPass(db *sql.DB, mail string) string {
 	return pass
 }
 
-
 func IsLogin(db *sql.DB, mail, pass string) bool {
 	row := db.QueryRow(`SELECT * from users where mail = ? `, mail)
 	user, err := ScanUser(row)
@@ -70,7 +69,7 @@ func Regist(db *sql.DB, user User) error {
 	if err != nil {
 		return err
 	}
-	_, err = stmt.Exec( user.Name, user.Mail, user.Password)
+	_, err = stmt.Exec(user.Name, user.Mail, user.Password)
 	if err != nil {
 		return err
 	}

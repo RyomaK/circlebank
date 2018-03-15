@@ -39,8 +39,8 @@ func ScanCircle(r *sql.Row) (*Circle, error) {
 
 func ScanCircles(rs *sql.Rows) (*[]Circle, error) {
 	var structs []Circle
-	if rs == nil{
-		return nil,nil
+	if rs == nil {
+		return nil, nil
 	}
 	for rs.Next() {
 		var s = Circle{}
@@ -174,10 +174,10 @@ func ScanAdminCircleEvents(rs *sql.Rows) (*[]AdminCircleEvents, error) {
 	return &structs, nil
 }
 
-func ScanSNS(rs *sql.Rows)(*[]SNS, error) {
+func ScanSNS(rs *sql.Rows) (*[]SNS, error) {
 	var sns []SNS
-	if rs == nil{
-		return nil,nil
+	if rs == nil {
+		return nil, nil
 	}
 	for rs.Next() {
 		var s SNS

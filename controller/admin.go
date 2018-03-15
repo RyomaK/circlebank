@@ -26,7 +26,7 @@ func (a *Admin) AdminCircleHandler(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 	q := r.URL.Query()
 	page, err := strconv.Atoi(q.Get("page"))
-	if err != nil {
+	if err != nil || page > 100 || page < 1 {
 		page = 1
 	}
 	circles, err := model.GetCircles(a.DB, page)
@@ -50,16 +50,16 @@ func (a *Admin) AdminCircleEventHandler(w http.ResponseWriter, r *http.Request) 
 	defer r.Body.Close()
 	q := r.URL.Query()
 	page, err := strconv.Atoi(q.Get("page"))
-	if err != nil {
+	if err != nil || page > 100 || page < 1 {
 		page = 1
 	}
 	date := q.Get("date")
-	t , err:= time.Parse("2006-01-02",date)
-	if err != nil{
+	t, err := time.Parse("2006-01-02", date)
+	if err != nil {
 		t = time.Time{}
 	}
 
-	events, err := model.GetEvents(a.DB, page,t)
+	events, err := model.GetEvents(a.DB, page, t)
 	if err != nil {
 		log.Printf("adminCircle err %v", err)
 		w = SetHeader(w, http.StatusNotFound)
@@ -67,7 +67,7 @@ func (a *Admin) AdminCircleEventHandler(w http.ResponseWriter, r *http.Request) 
 		res, _ := json.Marshal(status)
 		w.Write(res)
 	} else {
-		if events == nil{
+		if events == nil {
 			status := StatusCode{Code: http.StatusOK, Message: "not found"}
 			res, _ := json.Marshal(status)
 			w.Write(res)
@@ -490,7 +490,7 @@ func (a *Admin) UploadCirclePicture(w http.ResponseWriter, r *http.Request) {
 		w.Write(a)
 		return
 	}
-	thumb, err := imageupload.ThumbnailPNG(img, 300, 300)
+	thumb, err := imageupload.ThumbnailPNG(img, 700, 500)
 	if err != nil {
 		log.Printf("upload :%v\n", err)
 		return
@@ -513,7 +513,7 @@ func (a *Admin) UploadCirclePicture(w http.ResponseWriter, r *http.Request) {
 	w.Write(res)
 }
 
-func (a *Admin)UploadCircleBillPicture(w http.ResponseWriter, r *http.Request){
+func (a *Admin) UploadCircleBillPicture(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	circle_id, err := strconv.Atoi(vars["circle_id"])
 	img, err := imageupload.Process(r, "image")
@@ -525,7 +525,7 @@ func (a *Admin)UploadCircleBillPicture(w http.ResponseWriter, r *http.Request){
 		w.Write(a)
 		return
 	}
-	thumb, err := imageupload.ThumbnailPNG(img, 300, 300)
+	thumb, err := imageupload.ThumbnailPNG(img, 700, 500)
 	if err != nil {
 		log.Printf("upload :%v\n", err)
 		return
@@ -599,7 +599,7 @@ func (a *Admin) UploadEventPicture(w http.ResponseWriter, r *http.Request) {
 	w.Write(res)
 }
 
-func (a *Admin)DeletePostAdminTagHandler(w http.ResponseWriter, r *http.Request) {
+func (a *Admin) DeletePostAdminTagHandler(w http.ResponseWriter, r *http.Request) {
 	b, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		log.Printf("post tag err %v\n", err)
@@ -637,7 +637,7 @@ func (a *Admin)DeletePostAdminTagHandler(w http.ResponseWriter, r *http.Request)
 	return
 }
 
-func (a *Admin)InsertCircleSNS(w http.ResponseWriter, r *http.Request){
+func (a *Admin) InsertCircleSNS(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	b, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -660,7 +660,7 @@ func (a *Admin)InsertCircleSNS(w http.ResponseWriter, r *http.Request){
 		return
 	}
 
-	err = model.InsertSNS(a.DB,vars["circle_id"], &sns)
+	err = model.InsertSNS(a.DB, vars["circle_id"], &sns)
 	if err != nil {
 		log.Printf("post admin event tag err %v\n", err)
 		w = SetHeader(w, http.StatusBadRequest)
@@ -676,7 +676,7 @@ func (a *Admin)InsertCircleSNS(w http.ResponseWriter, r *http.Request){
 	return
 }
 
-func (a *Admin)DeleteCircleSNS(w http.ResponseWriter,r *http.Request){
+func (a *Admin) DeleteCircleSNS(w http.ResponseWriter, r *http.Request) {
 	b, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		log.Printf("post tag err %v\n", err)

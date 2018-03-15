@@ -3,10 +3,11 @@ package controller
 import (
 	"database/sql"
 	"encoding/json"
+	"html/template"
 	"net/http"
 
-	"log"
 	"github.com/ryomak/circlebank/model"
+	"log"
 )
 
 type User struct {
@@ -15,14 +16,13 @@ type User struct {
 
 // login handler
 func (u *User) LoginHandler(w http.ResponseWriter, r *http.Request) {
-	mail := r.FormValue("mail")
-	password := r.FormValue("password")
+	mail := template.HTMLEscapeString(r.FormValue("mail"))
+	password := template.HTMLEscapeString(r.FormValue("password"))
 	if model.IsLogin(u.DB, mail, password) {
 		WriteJWT(w, mail)
 		w = SetHeader(w, http.StatusOK)
 		return
 	}
-
 	status := StatusCode{Code: http.StatusNotAcceptable, Message: "error login"}
 	a, _ := json.Marshal(status)
 	w = SetHeader(w, http.StatusUnauthorized)
@@ -68,4 +68,3 @@ func (u *User) SignUpHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 }
-

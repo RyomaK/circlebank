@@ -11,10 +11,11 @@ type CircleDetail struct {
 	Tags                  []Tag   `db:"tags" json:"tags"`
 }
 
-type SNS struct{
+type SNS struct {
 	CircleID string `db:"circle_id" json:"circle_id"`
-	Name string `db:"sns" json:"sns"`
+	Name     string `db:"sns" json:"sns"`
 }
+
 /*
 type Circle struct {
 	ID              uint   `db:"id" json:"id"`
@@ -49,8 +50,8 @@ type Circle struct {
 	ActivityOfWeek    string `db:"activity_week" json:"activity_week"`
 	ActivityTime      string `db:"activity_time" json:"activity_time"`
 	AdmissionDeadline string `db:"admission_deadline" json:"admission_deadline"`
-	BoxNumber         string    `db:"box_number" json:"box_number"`
-	BoothNumber       string   `db:"booth_number" json:"booth_number"`
+	BoxNumber         string `db:"box_number" json:"box_number"`
+	BoothNumber       string `db:"booth_number" json:"booth_number"`
 }
 
 type Event struct {

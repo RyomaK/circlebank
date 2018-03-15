@@ -3,7 +3,6 @@ package controller
 import (
 	"database/sql"
 	"encoding/json"
-	"fmt"
 	"net/http"
 
 	"log"
@@ -32,20 +31,19 @@ func (e *Event) EventDetailHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(a)
 }
 
-func (e *Event) RecentEventHandler(w http.ResponseWriter, r *http.Request){
+func (e *Event) RecentEventHandler(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 	q := r.URL.Query()
 	page, err := strconv.Atoi(q.Get("page"))
-	if err != nil {
+	if err != nil || page > 100 || page < 1 {
 		page = 1
 	}
 	date := q.Get("date")
-	t , err:= time.Parse("2006-01-02",date)
-	if err != nil{
+	t, err := time.Parse("2006-01-02", date)
+	if err != nil {
 		t = time.Time{}
 	}
-	fmt.Printf("%+v\n%v\n",t,date)
-	events, err := model.GetEvents(e.DB, page,t)
+	events, err := model.GetEvents(e.DB, page, t)
 	if err != nil {
 		log.Printf("adminCircle err %v", err)
 		w = SetHeader(w, http.StatusNotFound)
