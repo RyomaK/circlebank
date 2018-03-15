@@ -22,8 +22,8 @@ func GetCircleDetail(db *sql.DB, circleURLName string) (*CircleDetail, error) {
 	if err != nil {
 		fmt.Print(err)
 	}
-	sns ,err := GetSNS(db,circleURLName)
-	if err != nil{
+	sns, err := GetSNS(db, circleURLName)
+	if err != nil {
 		fmt.Print(err)
 	}
 	tags, err := GetCircleTags(db, circleURLName)
@@ -31,25 +31,25 @@ func GetCircleDetail(db *sql.DB, circleURLName string) (*CircleDetail, error) {
 		fmt.Print(err)
 	}
 	return &CircleDetail{
-		Circle: *circle,
-		SocialNetworkingSites:*sns,
-		Events: *events,
-		Tags:   *tags,
+		Circle:                *circle,
+		SocialNetworkingSites: *sns,
+		Events:                *events,
+		Tags:                  *tags,
 	}, nil
 
 }
 
-func GetSNS(db *sql.DB,circleURLName string) (*[]SNS, error){
+func GetSNS(db *sql.DB, circleURLName string) (*[]SNS, error) {
 	query := `select  circle_sns.circle_id,circle_sns.name
 			  from circles 
 			  inner join circle_sns on circle_sns.circle_id = circles.id 
 			  where circles.url_name = ?`
-	rows, _ := db.Query(query,circleURLName)
-	sns ,err := ScanSNS(rows)
-	if err != nil{
-		return &[]SNS{},err
+	rows, _ := db.Query(query, circleURLName)
+	sns, err := ScanSNS(rows)
+	if err != nil {
+		return &[]SNS{}, err
 	}
-	return sns,nil
+	return sns, nil
 }
 
 func GetUnivCircles(db *sql.DB) (*[]Circle, error) {
@@ -121,9 +121,9 @@ func GetCircleEventDetail(db *sql.DB, circle_name, id string) (*Event, error) {
 		from circles
 		inner join events on events.circle_id = circles.id
 		where circles.url_name = ? and events.id = ?`
-	row := db.QueryRow(query ,circle_name, id)
-	if row == nil{
-		return nil ,nil
+	row := db.QueryRow(query, circle_name, id)
+	if row == nil {
+		return nil, nil
 	}
 	event, err := ScanEvent(row)
 	if err != nil {
@@ -137,7 +137,7 @@ func GetCircleEvents(db *sql.DB, circle_name string) (*[]Event, error) {
 		from circles
 		inner join events on events.circle_id = circles.id
 		where circles.url_name = ?;`
-	rows, _ := db.Query(query,circle_name)
+	rows, _ := db.Query(query, circle_name)
 	events, err := ScanEvents(rows)
 	if err != nil {
 		return &[]Event{}, err
@@ -145,3 +145,21 @@ func GetCircleEvents(db *sql.DB, circle_name string) (*[]Event, error) {
 	return events, nil
 }
 
+func SearchCircles(db *sql.DB, key string, page int) (*[]Circle, error) {
+	num := 100
+	query := `select circles.id,circles.name,circles.url_name,circles.number,circles.image,circles.bill_image,introduction, delegates.name as delegate_name ,delegates.contact as delegate_contact,campus,circles.entrance_fee,circles.annual_fee,circles.activity_of_week,
+	circles.activity_time,circles.admission_deadline,circles.box_number,circles.booth_number from circles left outer join delegates on circles.id = delegates.circle_id where circles.name like concat('%' ,?, '%')  order by url_name asc limit ?,?`
+	pageMin := num * (page - 1)
+	pageMax := num + pageMin
+	rows, err := db.Query(query, key, pageMin, pageMax)
+
+	fmt.Print(key)
+	if rows == nil {
+		return nil, nil
+	}
+	circles, err := ScanCircles(rows)
+	if err != nil {
+		return nil, err
+	}
+	return circles, nil
+}

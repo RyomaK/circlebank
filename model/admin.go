@@ -88,7 +88,7 @@ func InsertCircle(db *sql.DB, circle *Circle) error {
 	return nil
 }
 
-func InsertSNS(db *sql.DB, circleID string,sns *[]SNS) error {
+func InsertSNS(db *sql.DB, circleID string, sns *[]SNS) error {
 	for _, v := range *sns {
 		query := `insert into circle_sns (circle_id,name) values(?,?)`
 		_, err := db.Exec(query, circleID, v.Name)
@@ -146,7 +146,6 @@ func DeleteCircleSNS(db *sql.DB, sns *[]SNS) error {
 	}
 	return nil
 }
-
 
 func DeleteTags(db *sql.DB, tags *[]Tag) error {
 	for _, v := range *tags {
@@ -260,19 +259,18 @@ func DeleteCircleTags(db *sql.DB, circle_id int, tags *[]Tag) error {
 	return nil
 }
 
-func GetCircleIDAfterInsert(db *sql.DB,circle *Circle)int{
+func GetCircleIDAfterInsert(db *sql.DB, circle *Circle) int {
 	query := `select id from circles where url_name = ?`
-	row, _ := db.Query(query,circle.URLName)
-	var id  int
+	row, _ := db.Query(query, circle.URLName)
+	var id int
 	row.Scan(&id)
 	return id
 }
 
-
-func GetEventIDAfterInsert(db *sql.DB,event *Event)int{
+func GetEventIDAfterInsert(db *sql.DB, event *Event) int {
 	query := `select id from events where circle_id = ? and name = ? `
-	row, _ := db.Query(query,event.ID,event.Name)
-	var id  int
+	row, _ := db.Query(query, event.ID, event.Name)
+	var id int
 	row.Scan(&id)
 	return id
 }

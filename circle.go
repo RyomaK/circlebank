@@ -74,6 +74,7 @@ func (s *Server) Route(addr string) {
 	//event
 	a.Path("/circle/{circle_name}/{event_id:[0-9]+}").HandlerFunc(events.EventDetailHandler).Methods("GET")
 	a.Path("/event").HandlerFunc(events.RecentEventHandler).Methods("GET")
+	a.Path("/search/circle").HandlerFunc(circles.SearchCircleHandler).Methods("GET")
 
 	//subrouter-Admin
 	admin := mux.NewRouter()

@@ -20,17 +20,18 @@ type StatusCode struct {
 	Message string `json:"message"`
 }
 
-type StatusAndCircle struct{
-	Code    int    `json:"code"`
-	Message string `json:"message"`
-	CircleID int `json:"circle_id"`
+type StatusAndCircle struct {
+	Code     int    `json:"code"`
+	Message  string `json:"message"`
+	CircleID int    `json:"circle_id"`
 }
 
-type StatusAndEvent struct{
+type StatusAndEvent struct {
 	Code    int    `json:"code"`
 	Message string `json:"message"`
-	EventID int `json:"event_id"`
+	EventID int    `json:"event_id"`
 }
+
 const SecretKey = "75c92a074c341e9964329c0550c2673730ed8479c885c43122c90a2843177d5ef21cb50cfadcccb20aeb730487c11e09ee4dbbb02387242ef264e74cbee97213"
 
 func SetHeader(w http.ResponseWriter, status int) http.ResponseWriter {
@@ -91,4 +92,11 @@ func WriteJWT(w http.ResponseWriter, mail string) {
 		Value: jwtString,
 		Path:  "/",
 	})
+}
+
+func escapeSQLString(s string) string {
+	if !strings.ContainsAny(s, "%-;#") {
+		return s
+	}
+	return s[:len(s)-1]
 }

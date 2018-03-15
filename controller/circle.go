@@ -2,11 +2,13 @@ package controller
 
 import (
 	"net/http"
+	"text/template"
 
 	"database/sql"
 	"encoding/json"
 
 	"log"
+	"strconv"
 
 	"github.com/gorilla/mux"
 	"github.com/ryomak/circlebank/model"
@@ -92,4 +94,29 @@ func (c *Circle) TagCirclesHandler(w http.ResponseWriter, r *http.Request) {
 	w = SetHeader(w, http.StatusOK)
 	w.Write(a)
 
+}
+
+func (c *Circle) SearchCircleHandler(w http.ResponseWriter, r *http.Request) {
+	defer r.Body.Close()
+	q := r.URL.Query()
+	page, err := strconv.Atoi(q.Get("page"))
+	if err != nil || page > 100 || page < 1 {
+		page = 1
+	}
+	key := template.HTMLEscapeString(q.Get("key"))
+	circles, err := model.SearchCircles(c.DB, escapeSQLString(key), page)
+	if err != nil {
+		log.Printf("err %v", err)
+		w = SetHeader(w, http.StatusInternalServerError)
+		status := StatusCode{Code: http.StatusInternalServerError, Message: "error"}
+		res, _ := json.Marshal(status)
+		w.Write(res)
+		return
+	}
+	res, err := json.Marshal(circles)
+	if err != nil {
+		log.Printf("err %v", err)
+	}
+	w = SetHeader(w, http.StatusOK)
+	w.Write(res)
 }
