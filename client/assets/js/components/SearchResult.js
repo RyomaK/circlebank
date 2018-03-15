@@ -19,7 +19,7 @@ class SearchResult extends Component{
                 <h2>検索結果</h2>
 
               {this.props.item.map( circle => (
-                <Col sm={6} xs={12} className="marginbottom circleName reset" key={circle.id}><Link to={`/circle/search/${circle.url_name}`} >
+                <Col sm={6} xs={12} className="marginbottom circleName cardReset" key={circle.id}><Link to={`/circle/search/${circle.url_name}`} >
                     <Card>
                     <CardMedia
                       overlay={<CardTitle title={circle.name}/>}
