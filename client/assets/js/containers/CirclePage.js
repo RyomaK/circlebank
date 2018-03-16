@@ -4,12 +4,13 @@ import Menu from '../components/Menu'
 import Paper from 'material-ui/Paper';
 import { connect } from 'react-redux'
 import { Link, withRouter} from 'react-router-dom'
-import {circleSearch} from '../actions/index'
+import {circleSearch,SearchReset} from '../actions/index'
 import {Col} from "react-bootstrap"
 
 class CirclePage extends Component {
   componentWillMount(){
     const name = this.props.match.params.name;
+    this.props.SearchReset()
     this.props.circleSearch(name)
   }
   render(){
@@ -38,6 +39,9 @@ const mapDispatchToProps= dispatch => {
   return{
     circleSearch: word => {
       dispatch(circleSearch(word))
+    },
+    SearchReset:()=>{
+      dispatch(SearchReset())
     }
   }
 }

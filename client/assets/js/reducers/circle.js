@@ -18,48 +18,53 @@ const initialState = {
     sns:[
     ],
     events: [],
-    tags: []
-}
+    tags: [],
+    isLoading:true
+  }
 
 
 const circle = (state=initialState,action) => {
   switch(action.type){
     case 'CIRCLE':
     if(action.circle.tags==null&& action.circle.sns==null){
-
       return{
         circle:action.circle.Circle,
         events:action.circle.events,
         sns:[],
-        tags:[]
+        tags:[],
+        isLoading:false
       }
     }else if(action.circle.sns==null){
         return{
           circle:action.circle.Circle,
           sns:[],
           events:action.circle.events,
-          tags:action.circle.tags
+          tags:action.circle.tags,
+          isLoading:false
         }
       }else if(action.circle.tags==null){
         return{
           circle:action.circle.Circle,
           sns:action.circle.sns,
           events:action.circle.events,
-          tags:[]
+          tags:[],
+          isLoading:false
         }
       }else{
         return{
           circle:action.circle.Circle,
           sns:action.circle.sns,
           events:action.circle.events,
-          tags:action.circle.tags
+          tags:action.circle.tags,
+          isLoading:false
         }
-
       }
-
-
+      case 'LOAD_START':
+        return Object.assign({},state,{
+            isLoading:true
+          })
     default:
-    return(
+    return (
       state
     )
   }
