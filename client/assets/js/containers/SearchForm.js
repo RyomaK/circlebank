@@ -17,7 +17,7 @@ class SearchForm  extends Component{
   handleChange(e){
     e.preventDefault();
     const length = e.target.value.length
-    if(length < 3 && e.target.value != ''){
+    if(length < 4 && e.target.value != ''){
       this.props.setWord(e.target.value)
       this.props.Search(e.target.value)
     }else if(e.target.value == ''){
@@ -36,7 +36,6 @@ class SearchForm  extends Component{
         return item.name.includes(this.props.searchWord)
       }
     })
-
   return(
     <div className="relative">
       <div className="searchForm">

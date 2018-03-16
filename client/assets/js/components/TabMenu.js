@@ -38,15 +38,6 @@ class TabMenu extends Component{
               this.props.history.push('/schedule')
             }}
           />
-          {/*<BottomNavigationItem
-
-            icon={<Map/>}
-            onClick={() => {
-              this.setState({selectedIndex: 2})
-              this.props.history.push('/user')
-            }}
-          />
-          */}
         </BottomNavigation>
 
       </Paper>

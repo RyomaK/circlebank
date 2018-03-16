@@ -5,7 +5,6 @@ import {ImageUpload,setImage} from '../actions/index'
 class ImageUp extends Component{
   handleSubmit(e){
     e.preventDefault();
-    console.log(this.props.image)
     this.props.ImageUp(this.props.image);
   }
   handleChange(e){
