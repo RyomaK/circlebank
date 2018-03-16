@@ -220,21 +220,21 @@ export const circleSearch = name => dispatch => {
   });
 }
 
-export const circleSearchAll1 = () => dispatch=> {
+export const SearchReset = () => dispatch => dispatch({type:'SEARCH_RESET'})
+
+export const Search = word => dispatch => {
   axios
-  .get('/api/circle')
+  .get(`/api/search/circle?key=${word}`)
   .then((results) => {
     const status = results.status
-    const circles = results.data
-    if (typeof circles === undefined) {
-      return { status };
-    }
-    return { status, circles };
+    let circles = results.data
+      return { status, circles };
+
   })
-  .then(({status,circles})=>{
+  .then(({status, circles})=> {
     switch (status) {
       case 200: {
-        dispatch({type:'SEARCLE_FILTER',circles});
+        dispatch({type:'CERCLE_SEARCH',circles});
         break;
       }
       case 401: {
@@ -248,7 +248,6 @@ export const circleSearchAll1 = () => dispatch=> {
     }
   })
   .catch(() => {
-    console.log("error");
   });
 }
 

@@ -30,7 +30,7 @@ class Circle extends Component{
     return(
       <div>
       {isLoading ? <div className="Loading"><CircularProgress size={80} thickness={7} /></div>:
-          <div className="whitePage">
+          <div>
             <div className="centerPosition">
               <div className="circleName">
                 <span className="circleNameRight">{circle.name}</span>

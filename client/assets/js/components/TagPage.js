@@ -17,7 +17,7 @@ class TagPage extends Component {
 
   render(){
     return(
-      <div>
+      <div className="relative">
         <div>
           <div>
             <Col smOffset={2} sm={8}>

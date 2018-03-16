@@ -26,10 +26,28 @@ img { -webkit-backface-visibility: hidden; }
 }
 /*Header*/
 
+.relative{
+  position:relative;
+}
+
+.candidate a{
+  color:black;
+  text-decoration: none;
+}
 
 
 
 @media screen and (max-width: 768px) {
+  .candidate{
+    padding-left:20px;
+    width:100vw;
+    background-color:white;
+    position:absolute;
+    top:60px;
+    z-index:9999;
+    max-height: 200px;
+    overflow: scroll;
+  }
   .Loading{
     text-align:center;
     margin-top:100px;
@@ -151,6 +169,17 @@ img { -webkit-backface-visibility: hidden; }
 }
 
 @media screen and (min-width: 768px) {
+  .candidate{
+    padding-left:20px;
+    width:100vw;
+    background-color:white;
+    position:absolute;
+    top:60px;
+    z-index:9999;
+    display: block;
+    max-height: 200px;
+    overflow: scroll;
+  }
     .cardReset{
 
     }

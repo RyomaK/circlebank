@@ -1,49 +1,60 @@
 import React,{Component}from 'react'
-import PropTypes from 'prop-types'
+import Candidate from '../components/Candidate'
 import { Link, withRouter} from 'react-router-dom'
 import { connect } from 'react-redux'
 import { FormControl, Button, Grid, Row, Col } from 'react-bootstrap'
-import { setSearchWord,circleSearch,circleSearchAll,setfilter} from '../actions/index'
+import { setSearchWord,circleSearch,Search,setfilter,SearchReset} from '../actions/index'
 import IconButton from 'material-ui/IconButton';
 import ActionSearch from 'material-ui/svg-icons/action/search';
 class SearchForm  extends Component{
-  componentDidMount(){
-    this.props.circleSearchAll()
-  }
+
   handleSubmit(event,item){
     event.preventDefault();
     this.props.setfilter(item);
+    this.props.SearchReset()
     this.props.history.push('/circle/name/search');
   }
   handleChange(e){
     e.preventDefault();
-    this.props.setWord(e.target.value)
+    const length = e.target.value.length
+    if(length < 3 && e.target.value != ''){
+      this.props.setWord(e.target.value)
+      this.props.Search(e.target.value)
+    }else if(e.target.value == ''){
+      this.props.setWord(e.target.value)
+      this.props.SearchReset()
+    }else{
+      this.props.setWord(e.target.value)
+    }
   }
   render(){
     const circle = this.props.circle
     const item = circle.filter((item) => {
       if(this.props.searchWord==''){
-        return false
+        return []
+      }else{
+        return item.name.includes(this.props.searchWord)
       }
-      return item.name.includes(this.props.searchWord)
     })
-  return(
-  <div className="searchForm">
-    <div className="searchFormBox">
-        <form onSubmit = {(event)=>this.handleSubmit(event,item)}>
-          <Col xs={9} sm={11}>
-          <input
-            type="text"
-            onChange = {this.handleChange.bind(this)}
-            className="search1"
-            />
-          </Col>
-          <button type="submit" className="searchFormButton">検索</button>
-          {/*<IconButton type ="submit"><ActionSearch  className="search"/></IconButton>*/}
-        </form>
-    </div>
-  </div>
 
+  return(
+    <div className="relative">
+      <div className="searchForm">
+        <div className="searchFormBox">
+            <form onSubmit = {(event)=>this.handleSubmit(event,item)}>
+              <Col xs={9} sm={11}>
+              <input
+                type="text"
+                onChange = {this.handleChange.bind(this)}
+                className="search1"
+                />
+              </Col>
+              <button type="submit" className="searchFormButton">検索</button>
+            </form>
+        </div>
+      </div>
+      <Candidate item={item}/>
+    </div>
     )
   }
 }
@@ -58,14 +69,14 @@ const mapDispatchToProps= dispatch => {
     setWord: word => {
       dispatch(setSearchWord(word))
     },
-    circleSearch: word => {
-      dispatch(circleSearch(word))
-    },
-    circleSearchAll: () => {
-      dispatch(circleSearchAll())
+    Search: word => {
+      dispatch(Search(word))
     },
     setfilter:item => {
       dispatch(setfilter(item))
+    },
+    SearchReset:()=>{
+      dispatch(SearchReset())
     }
   }
 }
