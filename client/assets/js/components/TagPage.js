@@ -28,7 +28,7 @@ class TagPage extends Component {
                   <CardMedia
                     overlay={<CardTitle title={circle.name}/>}
                   >
-                    <img src={`static/${circle.image}`} alt="aa" height="250px;"/>
+                    <img src={`static/${circle.image}`} alt="サークル画像" height="250px;"/>
                   </CardMedia>
                 </Card>
                 </Col>
