@@ -3,4 +3,8 @@
 cmd/circle/cirle
 Makefile
 nohup.out
-public/img/
+public/img/circles/*.png
+public/img/circles/*.jpg
+public/img/circles/bill/*.jpg
+public/img/circles/bill/*.png
+public/img/events/*/png
