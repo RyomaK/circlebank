@@ -1,6 +1,5 @@
 import React,{Component} from 'react'
 import {connect} from 'react-redux'
-import Result from './Result'
 import Schedule from './Schedule'
 import {Col} from 'react-bootstrap'
 import Menu from './Menu'
@@ -11,7 +10,6 @@ class MainPage extends Component{
     return(
         <div>
           <img src="static/img/topImage.jpg" className="topImage"/>
-
           <Col sm={12} className="reset">
             <Menu/>
           </Col>

@@ -19,7 +19,7 @@ class SearchResult extends Component{
               <div>
                 <Col smOffset={2} sm={8}>
                 <h2>検索結果</h2>
-                {this.props.item.map( circle => (
+                {this.props.circle.map( circle => (
                   <Col sm={6} className="marginbottom circleName cardReset rerative" key={circle.id} onClick={(event)=>this.handleClick(event,circle.url_name)}>
                       <Card>
                       <CardMedia
@@ -40,7 +40,7 @@ class SearchResult extends Component{
 
 const mapStateToProps = state => {
   return{
-    item: state.circleAll.item,
+    circle: state.circleAll.item
   }
 }
 const mapDispatchToProps = dispatch => {

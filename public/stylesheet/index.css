@@ -304,11 +304,6 @@ img { -webkit-backface-visibility: hidden; }
   width:100%;
 }
 
-
-
-
-
-
 .rightside{
   text-align: right;
   margin-top:10px;
@@ -384,13 +379,6 @@ input[type="text"]:focus{
   border-radius:10px;
 }
 
-.commentbox{
-  background-color:#FDC44F;
-  padding-top: 5px;
-  padding-left: 5px;
-  height:40px;
-}
-
 .padbottom{
   margin-bottom:10px;
 }
@@ -449,10 +437,6 @@ input[type="text"]:focus{
   display:inline-block;
   padding-top:10px;
   size:25px;
-}
-
-.circleName{
-  font-family: 'Anton', sans-serif;
 }
 
 .admintag{
