@@ -44,7 +44,7 @@ class Circle extends Component{
               onChange={this.handleChange.bind(this)}
              className="fontChange1 whitePage">
               <Tab label="団体紹介" value="a">
-                <div className="centerPosition whitePage">
+                <div>
                   <div className="circleInt">
                   {circle.introduction.split('\n').map((message,i)=>{
                     return(
@@ -62,32 +62,46 @@ class Circle extends Component{
                 <Table className="whitePage">
                   <tbody>
                     <tr>
-                      <td width="25%">人数</td>
-                      <td width="25%">{circle.number}</td>
-                      <td width="25%">代表者</td>
-                      <td width="25%">{circle.delegate_name}</td>
+                      <td width="50%">人数</td>
+                      <td width="50%">{circle.number}</td>
+                    </tr>
+                    <tr>
+                      <td width="50%">代表者</td>
+                      <td width="50%">{circle.delegate_name}</td>
                     </tr>
                     <tr>
                       <td>キャンパス</td>
                       <td>{circle.campus}</td>
+                    </tr>
+                    <tr>
                       <td>連絡先</td>
                       <td>{circle.delegate_contact}</td>
                     </tr>
                     <tr>
                       <td>活動</td>
                       <td>{circle.activity_week}</td>
+                    </tr>
+                    <tr>
                       <td>活動時間</td>
                       <td>{circle.activity_time}</td>
                     </tr>
                     <tr>
                       <td>入会費</td>
                       <td>{circle.entrance_fee}</td>
+                    </tr>
+                    <tr>
                       <td>年会費</td>
                       <td>{circle.annual_fee}</td>
                     </tr>
                     <tr>
+                      <td>入会締切日</td>
+                      <td>{circle.admission_deadline}</td>
+                    </tr>
+                    <tr>
                       <td>Box番号</td>
                       <td>{circle.box_number}</td>
+                    </tr>
+                    <tr>
                       <td>ブース番号</td>
                       <td>{circle.booth_number}</td>
                     </tr>
@@ -96,8 +110,6 @@ class Circle extends Component{
                         return(
                           <tr key={index}>
                             <td>SNS</td>
-                            <td></td>
-                            <td></td>
                             <td>{sns.sns}</td>
                           </tr>
                         )
