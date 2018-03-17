@@ -3,5 +3,5 @@
 cmd/circle/cirle
 Makefile
 nohup.out
-public/img/circles
-public/img/events
+public/img/circles/
+public/img/events/
