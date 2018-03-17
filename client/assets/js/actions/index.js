@@ -251,38 +251,36 @@ export const Search = word => dispatch => {
   });
 }
 
-
-export const circleSearchAll = ()=> dispatch => {
-    axios
-    .get('/api/circle')
-    .then((results) => {
-      const status = results.status
-      const circles = results.data
-      if (typeof circles === undefined) {
-        return { status };
-      }
+export const Search1 = word => dispatch => {
+  axios
+  .get(`/api/search/circle?key=${word}`)
+  .then((results) => {
+    const status = results.status
+    let circles = results.data
       return { status, circles };
-    })
-    .then(({status, circles})=> {
-      switch (status) {
-        case 200: {
-          dispatch({type:'CERCLE_SEARCH',circles});
-          break;
-        }
-        case 401: {
-          dispatch(setLogin(-1));
-          break;
-        }
-        default: {
-          dispatch(setErrorMessage('エラーが発生しました'));
-          break;
-        }
+
+  })
+  .then(({status, circles})=> {
+    switch (status) {
+      case 200: {
+        dispatch({type:'SET_ITEM',circles});
+        break;
       }
-    })
-    .catch(() => {
-      console.log("circleStart");
-    });
+      case 401: {
+        dispatch(setLogin(-1));
+        break;
+      }
+      default: {
+        dispatch(setErrorMessage('エラーが発生しました'));
+        break;
+      }
+    }
+  })
+  .catch(() => {
+  });
 }
+
+
 
 export const tagSearchStart = () => dispatch => {
     axios

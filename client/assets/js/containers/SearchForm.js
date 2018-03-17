@@ -3,21 +3,21 @@ import Candidate from '../components/Candidate'
 import { Link, withRouter} from 'react-router-dom'
 import { connect } from 'react-redux'
 import { FormControl, Button, Grid, Row, Col } from 'react-bootstrap'
-import { setSearchWord,circleSearch,Search,setfilter,SearchReset} from '../actions/index'
+import { setSearchWord,circleSearch,Search,Search1,setfilter,SearchReset} from '../actions/index'
 import IconButton from 'material-ui/IconButton';
 import ActionSearch from 'material-ui/svg-icons/action/search';
 class SearchForm  extends Component{
 
   handleSubmit(event,item){
     event.preventDefault();
-    this.props.setfilter(item);
+    this.props.Search1(this.props.searchWord)
     this.props.SearchReset()
     this.props.history.push('/circle/name/search');
   }
   handleChange(e){
     e.preventDefault();
     const length = e.target.value.length
-    if(length < 4 && e.target.value != ''){
+    if(length == 2 && e.target.value != ''){
       this.props.setWord(e.target.value)
       this.props.Search(e.target.value)
     }else if(e.target.value == ''){
@@ -71,8 +71,8 @@ const mapDispatchToProps= dispatch => {
     Search: word => {
       dispatch(Search(word))
     },
-    setfilter:item => {
-      dispatch(setfilter(item))
+    Search1: word => {
+      dispatch(Search1(word))
     },
     SearchReset:()=>{
       dispatch(SearchReset())
