@@ -54,7 +54,7 @@ func (s *Server) Route(addr string) {
 	r.HandleFunc("/logout", Index).Methods("GET")
 	r.HandleFunc("/signup", Index).Methods("GET")
 	r.HandleFunc("/", Index)
-
+	r.HandleFunc("/ok", OK)
 	//static
 	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("public"))))
 

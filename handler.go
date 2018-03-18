@@ -10,3 +10,6 @@ func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
 func Index(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "public/index.html")
 }
+func OK(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("OK"))
+}
