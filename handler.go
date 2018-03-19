@@ -5,8 +5,12 @@ import (
 )
 
 func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "public/index.html")
+	w.Header().Set("location", "/")
+	w.WriteHeader(http.StatusTemporaryRedirect)
 }
 func Index(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "public/index.html")
+}
+func ScheduleHandler(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "public/index.html")
 }
