@@ -292,6 +292,7 @@ img { -webkit-backface-visibility: hidden; }
 }
 
 .circleName{
+  color:#1A237E;
   padding-top:20px;
   font-size:30px;
 }
@@ -423,7 +424,6 @@ input[type="text"]:focus{
 }
 
 .addButton{
-
   height: 10px;
 }
 .adminHome{

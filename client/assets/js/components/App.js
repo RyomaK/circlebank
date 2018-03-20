@@ -26,25 +26,24 @@ const App =() => {
                 <Route path='/login' component={LoginPage}/>
                 <Auth>
                   <div>
-                  <div id="Header">
-                  <Header />
-                  </div>
-                  <div className="contents">
-                  <SearchForm/>
-                  <Switch>
-                    <Route exact path='/' component={MainPage}/>
-                    <Route exact path='/circle/name/search' component={SearchResult}/>
-                    <Route exact path='/circle/search/:name' component={CirclePage}/>
-                    <Route exact path='/tag/:id' component={TagPage}/>
-                    <Route exact path='/menu' component={SmartPage}/>
-                    <Route exact path ="/schedule" component={Schedule}/>
-                    <Route component={ NotFound }/>
-                  </Switch>
-                  </div>
+                    <div id="Header">
+                    <Header />
+                    </div>
+                    <div className="contents">
+                      <SearchForm/>
+                      <Switch>
+                        <Route exact path='/' component={MainPage}/>
+                        <Route exact path='/circle/name/search' component={SearchResult}/>
+                        <Route exact path='/circle/search/:name' component={CirclePage}/>
+                        <Route exact path='/tag/:id' component={TagPage}/>
+                        <Route exact path='/menu' component={SmartPage}/>
+                        <Route exact path ="/schedule" component={Schedule}/>
+                        <Route component={ NotFound }/>
+                      </Switch>
+                    </div>
                   </div>
                 </Auth>
-                </Switch>
-                  
+                </Switch>              
                 <div id="footer">
                   <TabMenu/>
                 </div>

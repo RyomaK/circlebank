@@ -8,10 +8,8 @@ const circleTag = (state={circle:[{id:0}],isLoad:false},action) => {
       }else{
         return{
           circle:[]
-        }    
+        }
       }
-
-
     case 'TAG_RESET':
     return {
         circle:[{id:0}]
