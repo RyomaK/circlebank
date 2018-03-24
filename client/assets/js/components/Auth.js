@@ -10,9 +10,7 @@ import AddTagPage from './admin/AddTagPage'
 import AddSNS from './admin/AddSNS'
 import CircleEdit from './admin/CircleEdit'
 
-
-import { Redirect, Route} from 'react-router-dom'
-import { loginCheck } from '../actions/index'
+import { Route} from 'react-router-dom'
 import { connect } from 'react-redux'
 
 class Auth extends Component{
@@ -50,12 +48,6 @@ const mapStateToProps = state => {
     isLogin: state.loginCheck.isLogin,
   }
 }
-const mapDispatchToProps = dispatch => {
-  return{
-
-  }
-}
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(Auth)
