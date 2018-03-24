@@ -45,7 +45,6 @@ class AddSNS extends Component{
     const box = [{circle_id:String(id),sns:this.props.snsname[0].sns}]
     this.props.deletesns(box,id)
     this.props.history.push('/admin')
-
   }
   handleChange(e){
     const id = this.props.match.params.id
